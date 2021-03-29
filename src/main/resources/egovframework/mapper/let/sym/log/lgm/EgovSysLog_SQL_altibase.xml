@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysLogDAO">
+
+    <!-- 시스템로그 VO -->
+
+    <!-- 시스템로그 맵 -->
+    <resultMap id="SysLogVO" type="egovframework.let.sym.log.lgm.service.SysLog">
+        <result property="requstId" column="REQUST_ID"/>
+        <result property="occrrncDe" column="OCCRRNC_DE"/>
+        <result property="srvcNm" column="SVC_NM"/>
+        <result property="methodNm" column="METHOD_NM"/>
+        <result property="processSeCode" column="PROCESS_SE_CODE"/>
+        <result property="processSeCodeNm" column="PROCESS_SE_CODE_NM"/>
+        <result property="processTime" column="PROCESS_TIME"/>
+        <result property="rqesterIp" column="RQESTER_IP"/>
+        <result property="rqesterId" column="RQESTER_ID"/>
+        <result property="rqsterNm" column="RQESTER_NM"/>
+    </resultMap>
+
+    <!-- 시스템 로그 등록 -->
+    <insert id="logInsertSysLog" parameterType="egovframework.let.sym.log.lgm.service.SysLog">
+        
+            INSERT INTO LETTNSYSLOG 
+                ( REQUST_ID
+                  , SVC_NM
+                  , METHOD_NM
+                  , PROCESS_SE_CODE
+                  , PROCESS_TIME
+                  , RQESTER_ID
+                  , RQESTER_IP
+                  , OCCRRNC_DE )
+            VALUES ( #{requstId}
+                  , #{srvcNm}
+                  , #{methodNm}
+                  , #{processSeCode}
+                  , #{processTime}
+                  , #{rqesterId}
+                  , #{rqesterIp}
+                  , TO_CHAR(sysdate, 'YYYYMMDD'))
+        
+    </insert>
+
+    <!-- 시스템 로그 상세 조회 -->
+    <select id="selectSysLog" parameterType="egovframework.let.sym.log.lgm.service.SysLog" resultMap="SysLogVO">
+           
+            SELECT 
+                  a.REQUST_ID
+                , a.OCCRRNC_DE
+                , a.SVC_NM
+                , a.METHOD_NM
+                , a.PROCESS_SE_CODE
+                , c.CODE_NM AS PROCESS_SE_CODE_NM
+                , a.PROCESS_TIME
+                , a.RQESTER_IP
+                , a.RQESTER_ID
+                , b.USER_NM AS RQESTER_NM
+            FROM
+                LETTNSYSLOG a
+            LEFT OUTER JOIN COMVNUSERMASTER b
+                ON a.RQESTER_ID = b.ESNTL_ID
+            LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+                ON TRIM(a.PROCESS_SE_CODE) = c.CODE
+            WHERE 
+                c.CODE_ID = 'COM033'
+            AND a.REQUST_ID = #{requstId}
+            
+    </select>
+
+    <!-- 시스템 로그 목록 조회 -->
+    <select id="selectSysLogInf" parameterType="egovframework.let.sym.log.lgm.service.SysLog" resultMap="SysLogVO">
+           
+        SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+            SELECT 
+                  a.REQUST_ID
+                , a.OCCRRNC_DE
+                , a.SVC_NM
+                , a.METHOD_NM
+                , a.PROCESS_SE_CODE
+                , c.CODE_NM AS PROCESS_SE_CODE_NM
+                , a.PROCESS_TIME
+                , a.RQESTER_IP
+                , a.RQESTER_ID
+                , b.USER_NM AS RQESTER_NM
+            FROM
+                LETTNSYSLOG a
+            LEFT OUTER JOIN COMVNUSERMASTER b
+                ON a.RQESTER_ID = b.ESNTL_ID
+            LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+                ON TRIM(a.PROCESS_SE_CODE) = c.CODE
+            WHERE 
+                c.CODE_ID = 'COM033'
+            
+        <if test="searchWrd != null and searchWrd != ''">AND
+                   c.CODE_NM LIKE '%' || #{searchWrd} }} '%' 
+        </if>
+        <if test="searchBgnDe != null and searchBgnDe != ''">AND
+                   TRIM(a.OCCRRNC_DE) BETWEEN #{searchBgnDe} AND #{searchEndDe} 
+        </if>       
+                   
+            ORDER BY a.OCCRRNC_DE DESC 
+            ) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+        
+    </select>
+
+    <!-- 시스템 로그 총건수 -->
+    <select id="selectSysLogInfCnt" parameterType="egovframework.let.sym.log.lgm.service.SysLog" resultType="java.lang.Integer">
+         
+            SELECT COUNT(a.REQUST_ID) as cnt
+            FROM
+                LETTNSYSLOG a
+            LEFT OUTER JOIN COMVNUSERMASTER b
+                ON a.RQESTER_ID = b.ESNTL_ID
+            LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+                ON TRIM(a.PROCESS_SE_CODE) = c.CODE
+            WHERE 
+                c.CODE_ID = 'COM033'
+            
+        <if test="searchWrd != null and searchWrd != ''">AND
+                   c.CODE_NM LIKE '%' || #{searchWrd} }} '%'  
+        </if>
+        <if test="searchBgnDe != null and searchBgnDe != ''">AND
+                   TRIM(a.OCCRRNC_DE) BETWEEN #{searchBgnDe} AND #{searchEndDe}  
+        </if>
+    </select>
+
+    <!-- 시스템 로그 전날 로그 요약  등록 -->
+    <insert id="logInsertSysLogSummary">
+        
+            INSERT INTO LETTSSYSLOGSUMMARY 
+                SELECT TO_CHAR(b.CREAT_DT, 'YYYYMMDD') as OCCRRNC_DE 
+                     , 'Member-login' as  SVC_NM
+                     , 'actionLogin' as METHOD_NM
+                     , SUM(CASE WHEN b.CONECT_MTHD = 'I' THEN 1 ELSE 0 END) AS CREAT_CO
+                     , SUM(CASE WHEN b.CONECT_MTHD = 'U' THEN 1 ELSE 0 END) AS UPDT_CO
+                     , SUM(CASE WHEN b.CONECT_MTHD = 'R' THEN 1 ELSE 0 END) AS RDCNT
+                     , SUM(CASE WHEN b.CONECT_MTHD = 'O' THEN 1 ELSE 0 END) AS DELETE_CO
+                     , 0 AS OUTPT_CO
+                     , 0 AS ERROR_CO
+                  FROM LETTNLOGINLOG b
+                 WHERE NOT EXISTS (SELECT c.OCCRRNC_DE 
+                                     FROM LETTSSYSLOGSUMMARY c
+                                    WHERE TRIM(c.OCCRRNC_DE) = TO_CHAR((SYSDATE -1 ), 'YYYYMMDD')
+                                  )
+                   AND TO_CHAR(b.CREAT_DT, 'YYYYMMDD') = TO_CHAR((SYSDATE -1 ), 'YYYYMMDD')
+                 GROUP BY TO_CHAR(b.CREAT_DT, 'YYYYMMDD')
+                        , b.CONECT_MTHD
+        
+    </insert>
+
+    <!-- 시스템 로그 6개월전 로그 삭제 -->
+    <delete id="logDeleteSysLogSummary">
+        
+            DELETE FROM LETTNLOGINLOG
+             WHERE TO_CHAR(CREAT_DT, 'YYYYMMDD') &lt; TO_CHAR((SYSDATE -210 ), 'YYYYMMDD')
+        
+    </delete>
+
+</mapper>

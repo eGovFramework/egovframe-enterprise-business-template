@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="progrmManageDAO">
+
+
+    <!-- 프로그램목록 관리 -->
+	<resultMap id="progrmManage" type="egovframework.let.sym.prm.service.ProgrmManageVO">
+		<result property="progrmFileNm" column="progrmFileNm"/>
+		<result property="progrmStrePath" column="progrmStrePath"/>
+		<result property="progrmKoreanNm" column="progrmKoreanNm"/>
+		<result property="progrmDc" column="progrmDc"/>
+		<result property="URL" column="URL"/>
+	</resultMap> 
+
+	<select id="selectProgrmList_D" parameterType="comDefaultVO" resultMap="progrmManage">
+		
+	       SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+				SELECT 
+					  PROGRM_FILE_NM   AS "progrmFileNm"
+					, PROGRM_STRE_PATH AS "progrmStrePath"
+					, PROGRM_KOREAN_NM  AS "progrmKoreanNm" 
+					, dbms_lob.substr(PROGRM_DC, 10, 1)||'...' AS "progrmDc"
+					, URL              AS "URL"
+				FROM LETTNPROGRMLIST
+				WHERE PROGRM_KOREAN_NM like  '%'|| #{searchKeyword}||'%'
+	       ) TB )  WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+		 
+	</select> 
+
+	<!-- 총건수 조회  					, PROGRM_DC        AS "progrmDc" -->
+	<select id="selectProgrmListTotCnt_S" parameterType="comDefaultVO" resultType="int">
+		
+		SELECT COUNT(*) AS "totcnt"
+		  FROM LETTNPROGRMLIST
+	    WHERE PROGRM_KOREAN_NM like  '%'|| #{searchKeyword}||'%'
+		
+	</select>
+
+	<!-- 파일명존재여부 조회 -->
+	<select id="selectProgrmNMTotCnt" parameterType="comDefaultVO" resultType="int">
+		
+		SELECT COUNT(*) AS "totcnt"
+		  FROM LETTNPROGRMLIST
+		 WHERE PROGRM_FILE_NM = #{searchKeyword}
+		
+	</select>
+
+	<select id="selectProgrm_D" parameterType="comDefaultVO" resultType="egovframework.let.sym.prm.service.ProgrmManageVO">
+		
+			SELECT
+				  PROGRM_FILE_NM   AS "progrmFileNm" 
+				, PROGRM_STRE_PATH AS "progrmStrePath" 
+				, PROGRM_KOREAN_NM  AS "progrmKoreanNm" 
+				, PROGRM_DC        AS "progrmDc" 
+				, URL              AS "URL"
+			FROM LETTNPROGRMLIST
+			WHERE PROGRM_FILE_NM = #{searchKeyword}
+		
+	</select>
+	
+	<insert id="insertProgrm_S">
+		
+			INSERT INTO LETTNPROGRMLIST 
+				( PROGRM_FILE_NM
+				  , PROGRM_STRE_PATH
+				  , PROGRM_KOREAN_NM
+				  , PROGRM_DC
+				  , URL )
+			VALUES ( #{progrmFileNm}
+				  , #{progrmStrePath}
+				  , #{progrmKoreanNm}
+				  , #{progrmDc}
+				  , #{URL} )
+		
+	</insert>
+
+	<update id="updateProgrm_S">
+		
+			UPDATE LETTNPROGRMLIST 
+			SET PROGRM_STRE_PATH=#{progrmStrePath}
+				, PROGRM_KOREAN_NM=#{progrmKoreanNm}
+				, PROGRM_DC      =#{progrmDc}
+				, URL            =#{URL}
+			WHERE PROGRM_FILE_NM=#{progrmFileNm}
+		
+	</update>
+
+	<delete id="deleteProgrm_S">
+		                          
+			DELETE FROM LETTNPROGRMLIST              
+			WHERE PROGRM_FILE_NM=#{progrmFileNm}                 
+		                                
+	</delete> 
+
+	<delete id="deleteAllProgrm">
+		                          
+			DELETE FROM LETTNPROGRMLIST WHERE PROGRM_FILE_NM &lt;&gt; 'dir'
+		                                
+	</delete> 
+
+	<!-- 메뉴정보 총건수 조회 -->
+	<select id="selectProgrmListTotCnt" parameterType="egovframework.let.sym.prm.service.ProgrmManageVO" resultType="int">
+		
+		SELECT COUNT(PROGRM_FILE_NM) AS "totcnt" FROM LETTNPROGRMLIST
+		
+	</select>
+</mapper>

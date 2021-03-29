@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LoginLogDAO">
+
+	<!-- 로그인로그 VO -->
+
+	<!-- 로그인로그 맵 -->
+	<resultMap id="LoginLogVO" type="egovframework.let.sym.log.clg.service.LoginLog">
+		<result property="logId" column="LOG_ID"/>
+		<result property="creatDt" column="CREAT_DT"/>
+		<result property="loginMthd" column="CONECT_MTHD"/>
+		<result property="loginIp" column="CONECT_IP"/>
+		<result property="loginId" column="CONECT_ID"/>
+		<result property="loginNm" column="LOGIN_NM"/>
+	</resultMap>
+
+	<!-- 로그인 로그 등록 -->
+	<insert id="logInsertLoginLog" parameterType="egovframework.let.sym.log.clg.service.LoginLog">
+		
+			INSERT INTO LETTNLOGINLOG 
+				( LOG_ID
+				  , CONECT_MTHD
+				  , CONECT_ID
+				  , CONECT_IP
+				  , ERROR_OCCRRNC_AT
+				  , ERROR_CODE
+				  , CREAT_DT )
+			VALUES ( #{logId}
+				  , #{loginMthd}
+				  , #{loginId}
+				  , #{loginIp}
+				  , #{errOccrrAt}
+				  , #{errorCode}
+				  , sysdate)
+		
+	</insert>
+
+	<!-- 로그인 로그 상세  조회 -->
+	<select id="selectLoginLog" parameterType="egovframework.let.sym.log.clg.service.LoginLog" resultMap="LoginLogVO">
+			
+			SELECT 
+				  a.LOG_ID
+				, a.CREAT_DT
+				, a.CONECT_MTHD
+				, a.CONECT_IP
+				, a.CONECT_ID
+				, b.USER_NM AS LOGIN_NM
+			FROM
+				LETTNLOGINLOG a
+			LEFT OUTER JOIN COMVNUSERMASTER b
+				ON a.CONECT_ID = b.ESNTL_ID
+			WHERE 
+				a.LOG_ID = #{logId}
+			
+	</select>
+
+	<!-- 로그인 로그 목록  조회 -->
+	<select id="selectLoginLogInf" parameterType="egovframework.let.sym.log.clg.service.LoginLog" resultMap="LoginLogVO">
+			
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				  a.LOG_ID
+				, a.CREAT_DT
+				, a.CONECT_MTHD
+				, a.CONECT_IP
+				, a.CONECT_ID
+				, b.USER_NM AS LOGIN_NM
+			FROM
+				LETTNLOGINLOG a
+			LEFT OUTER JOIN COMVNUSERMASTER b
+				ON a.CONECT_ID = b.ESNTL_ID
+			WHERE 
+				1 = 1
+			
+		<if test="searchWrd != null and searchWrd != ''">AND
+					a.CONECT_MTHD LIKE '%' || #{searchWrd} }} '%' 
+		</if>
+		<if test="searchBgnDe != null and searchBgnDe != ''">AND
+					TO_CHAR(a.CREAT_DT, 'YYYYMMDD') BETWEEN #{searchBgnDe} AND #{searchEndDe} 
+		</if>		
+					
+			ORDER BY a.CREAT_DT DESC 
+			) TB ) WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+		
+	</select>
+
+	<!-- 로그인 로그 총건수 -->
+	<select id="selectLoginLogInfCnt" parameterType="egovframework.let.sym.log.clg.service.LoginLog" resultType="java.lang.Integer">
+		 
+			SELECT COUNT(a.LOG_ID) as cnt
+			FROM
+				LETTNLOGINLOG a
+			LEFT OUTER JOIN COMVNUSERMASTER b
+				ON a.CONECT_ID = b.ESNTL_ID
+			WHERE 
+				1 = 1
+			
+		<if test="searchWrd != null and searchWrd != ''">AND
+					a.CONECT_MTHD LIKE '%' || #{searchWrd} }} '%' 
+		</if>
+		<if test="searchBgnDe != null and searchBgnDe != ''">AND
+					TO_CHAR(a.CREAT_DT, 'YYYYMMDD') BETWEEN #{searchBgnDe} AND #{searchEndDe} 
+		</if>
+	</select>
+
+</mapper>

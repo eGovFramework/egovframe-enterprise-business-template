@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menuManageDAO">
+
+	
+	<select id="selectMenuCreatManageList_D" parameterType="comDefaultVO" resultType="egovMap">
+		
+                SELECT * 
+                FROM  
+                    (SELECT rownum rn, TB.* 
+                     FROM 
+			            (SELECT AUTHOR_CODE   AS "authorCode",
+								AUTHOR_NM     AS "authorNm",
+								AUTHOR_DC     AS "authorDc",
+								AUTHOR_CREAT_DE AS "authorCreatDe",
+							   (SELECT COUNT(B.AUTHOR_CODE)
+								FROM   LETTNMENUCREATDTLS B
+								WHERE  B.AUTHOR_CODE = A.AUTHOR_CODE ) AS "chkYeoBu"
+						FROM    LETTNAUTHORINFO A
+						WHERE   A.AUTHOR_CODE like '%'||#{searchKeyword}||'%') TB
+
+                    ) Z
+                WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+        
+	</select> 
+
+	<select id="selectMenuCreatManageTotCnt_S" parameterType="comDefaultVO" resultType="int">
+		
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM LETTNAUTHORINFO
+			 WHERE AUTHOR_CODE like '%'||#{searchKeyword}||'%'
+		
+	</select>
+
+	<select id="selectMenuCreatList_D" parameterType="egovframework.let.sym.mnu.mcm.service.MenuCreatVO" resultType="egovMap">
+		
+			SELECT
+				  A.MENU_NO AS "menuNo"
+				, A.MENU_ORDR AS "menuOrdr"
+				, A.MENU_NM AS "menuNm"
+				, A.UPPER_MENU_NO AS "upperMenuId"
+			    , (SELECT count(B.MENU_NO) 
+			         FROM LETTNMENUCREATDTLS B   
+			        WHERE B.MENU_NO  = A.MENU_NO 
+			          AND B.AUTHOR_CODE = #{authorCode}) AS "chkYeoBu"
+			FROM LETTNMENUINFO A
+			WHERE A.MENU_NO &gt; 0
+			ORDER BY A.MENU_ORDR
+		 
+	</select> 
+
+	<insert id="insertMenuCreat_S">
+		
+			INSERT INTO LETTNMENUCREATDTLS ( AUTHOR_CODE ,MENU_NO )
+			VALUES (  #{authorCode}, #{menuNo} )
+		
+	</insert>
+
+	<select id="selectMenuCreatCnt_S" parameterType="egovframework.let.sym.mnu.mcm.service.MenuCreatVO" resultType="int">
+		
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM LETTNAUTHORINFO
+			 WHERE AUTHOR_CODE = #{authorCode}
+		
+	</select>
+
+	<delete id="updateMenuCreat_S">
+		 
+		    UPDATE LETTNMENUCREATDTLS  
+		       SET MAPNG_CREAT_ID=#{mapCreatId} 
+		     WHERE AUTHOR_CODE=#{authorCode}
+		                                
+	</delete> 
+
+	<delete id="deleteMenuCreat_S">
+		                          
+			DELETE FROM LETTNMENUCREATDTLS              
+			 WHERE AUTHOR_CODE=#{authorCode}                
+		                                
+	</delete> 
+
+	<select id="selectAuthorByUsr" parameterType="comDefaultVO" resultType="egovframework.let.sym.mnu.mcm.service.MenuCreatVO">
+		
+		select AUTHOR_CODE AS "authorCode" from LETTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #{searchKeyword} )
+		
+	</select>
+
+	<select id="selectUsrByPk" parameterType="comDefaultVO" resultType="int">
+		
+		select count(AUTHOR_CODE) from LETTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #{searchKeyword} )
+		
+	</select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!--  System Log Aspect -->
+	<bean id="logManage" class="egovframework.let.sym.log.clg.service.EgovLoginLogAspect" />
+
+	<aop:config>
+		<aop:aspect id="logManageAspect" ref="logManage">
+		  <!--  로그인 Method -->
+	      <aop:before pointcut="execution(public * egovframework.let.uat.uia.service.EgovLoginService.actionLogin(..))" method="logLogin" />
+	      <!--  로그아웃 Method
+	      <aop:before pointcut="execution(public * egovframework.let.uat.uia.web.EgovLoginController.actionLogout(..))" method="logLogout" />
+	       -->
+		</aop:aspect>
+	</aop:config>
+	
+</beans>
