@@ -42,7 +42,7 @@ public class EgovComUtlController {
 	protected EgovPropertyService propertiesService;
 
 	@Resource(name = "egovPageLinkWhitelist")
-    protected List<String> egovWhitelist;
+    	protected List<String> egovWhitelist;
 	
 	/**
 	 * JSP 호출작업만 처리하는 공통 함수
@@ -59,7 +59,7 @@ public class EgovComUtlController {
 			link = "cmm/error/egovError";
 		} else {
 			if(link.indexOf(",")>-1){
-			    link=link.substring(0,link.indexOf(","));
+			    link = link.substring(0,link.indexOf(","));
 			}
 		}
 		
@@ -72,7 +72,7 @@ public class EgovComUtlController {
 		// whitelist목록에 있는 경우 결과가 true, 결과가 false인경우 FAIL처리
 		if (egovWhitelist.contains(link) == false) {
 			LOGGER.debug("Page Link WhiteList Error! Please check whitelist!"+link);
-			link="cmm/error/egovError";
+			link = "cmm/error/egovError";
 		}
 		// 안전한 경로 문자열로 조치
 		link = EgovWebUtil.filePathBlackList(link);
