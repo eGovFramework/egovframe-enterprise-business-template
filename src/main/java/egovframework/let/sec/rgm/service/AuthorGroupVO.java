@@ -46,7 +46,7 @@ public class AuthorGroupVO extends AuthorGroup {
 	 */
 	public AuthorGroup getAuthorGroup()
     {
-    	return getAuthorGroup();
+    	return super.getAuthorGroup();
     }
 	/**
 	 * setAuthorGroup
@@ -54,7 +54,7 @@ public class AuthorGroupVO extends AuthorGroup {
 	 */	
     public void setAuthorGroup(AuthorGroup authorGroup)
     {
-    	setAuthorGroup(authorGroup);
+    	super.setAuthorGroup(authorGroup);
     }
 
 }
