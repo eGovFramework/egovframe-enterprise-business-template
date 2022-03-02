@@ -79,7 +79,7 @@
  	</select>
  	
 	<insert id="insertBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
-		<selectKey keyProperty="nttNo" resultType="java.lang.Long">
+		<selectKey keyProperty="nttNo" resultType="java.lang.Long" order="BEFORE">
 			SELECT IFNULL(MAX(SORT_ORDR),0)+1 AS NTT_NO  FROM LETTNBBS
 			WHERE BBS_ID = #{bbsId}
 		</selectKey>
@@ -102,7 +102,7 @@
 	</insert>
 	
 	<insert id="replyBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
-		<selectKey keyProperty="nttNo" resultType="java.lang.Long">
+		<selectKey keyProperty="nttNo" resultType="java.lang.Long" order="BEFORE">
 			SELECT IFNULL(MAX(NTT_NO),0)+1 AS NTT_NO  FROM LETTNBBS
 			WHERE BBS_ID = #{bbsId} AND SORT_ORDR = #{sortOrdr}
 		</selectKey>			
@@ -154,6 +154,9 @@
 			WHERE
 				a.BBS_ID = #{bbsId}
 		
+			<if test="useAt != ''">AND
+				a.USE_AT = #{useAt}
+			</if>
 			<if test="searchCnd == 0">AND
 					a.NTT_SJ LIKE CONCAT ('%', #{searchWrd},'%') 		
 			</if>
@@ -181,6 +184,9 @@
 			WHERE
 				a.BBS_ID = #{bbsId}
 		
+			<if test="useAt != ''">AND
+				a.USE_AT = #{useAt}
+			</if>
 			<if test="searchCnd == 0">AND
 					a.NTT_SJ LIKE CONCAT ('%', #{searchWrd},'%') 		
 			</if>

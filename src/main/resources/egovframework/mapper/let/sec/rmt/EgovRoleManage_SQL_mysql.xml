@@ -42,7 +42,7 @@
                    ROLE_CREAT_DE
               FROM LETTNROLEINFO
              WHERE 1=1
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 ROLE_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
             </if>
             ORDER BY ROLE_CREAT_DE DESC
@@ -94,7 +94,7 @@
 			SELECT COUNT(*) totcnt
 			FROM LETTNROLEINFO
 			WHERE 1=1
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				ROLE_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
 			</if>
 	</select>

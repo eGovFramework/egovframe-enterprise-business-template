@@ -13,65 +13,60 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript" src="<c:url value="/js/EgovMainMenu.js"/>"></script>
-<script type="text/javascript">
-<!--
-/* ********************************************************
- * 상세내역조회 함수
- ******************************************************** */
-function fn_MovePage(nodeNum) {
-    var nodeValues = treeNodes[nodeNum].split("|");
-    //parent.main_right.location.href = nodeValues[5];
-    document.menuListForm.action = "${pageContext.request.contextPath}"+nodeValues[5];
-    //alert(document.menuListForm.action);
-    document.menuListForm.submit();
-}
-//-->
-</script>
-<!-- 메뉴 시작 -->
-<div id="LoginStatus">
-	  <fieldset><legend>조건정보 영역</legend>
-	  	<%
-        LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO");
-        if(loginVO == null){
-        %>
-        <ul>
-	  		<li>로그인정보 없음</li>
-	  		<li><a href="<c:url value='/uat/uia/egovLoginUsr.do'/>"><img src="<c:url value='/images/leftmenu/login.jpg' />" alt="로그인" /></a></li>
-	  		<li>로그인후 사용하십시오</li>
-	  	</ul>
-	  	<%
-        }else{
-	  	%>
-            <c:set var="loginName" value="<%= loginVO.getName()%>"/>
-            <ul>
-	  	    <li><a href="#LINK" onclick="alert('개인정보 확인 등의 링크 제공'); return false;">
-            <c:out value="${loginName}"/> 님</a></li>
-            <li><a href="<c:url value='/uat/uia/actionLogout.do'/>">
-            <img src="<c:url value='/images/leftmenu/logout.jpg' />" alt="로그아웃" /></a></li>
-            <li>최근접속:2011-10-12 13:24</li>
-            </ul>
-	  	<%
-	  	}
-        %>
-	  </fieldset>
-</div>
-<div id="nav">
-	<div class="top"></div>
-    <div class="nav_style">
-     <script type="text/javascript">
-     <!--
-         var Tree = new Array;
-         if(document.menuListForm.tmp_menuNm != null){
-             for (var j = 0; j < document.menuListForm.tmp_menuNm.length; j++) {
-                 Tree[j] = document.menuListForm.tmp_menuNm[j].value;
-             }
-         }
-         createTree(Tree, true, document.getElementById("baseMenuNo").value);
-     //-->
-     </script>
-    </div>
-	<div class="bottom"></div>
-</div>
 
-<!-- //메뉴 끝 -->
+<div class="nav">
+	<div class="inner">
+	
+	<script type="text/javascript">
+		// 메뉴 목록 추출
+		var menuList = new Array;
+		if(document.menuListForm.tmp_menuNm != null){
+			
+			for (var j = 0; j < document.menuListForm.tmp_menuNm.length; j++) {
+				menuList[j] = document.menuListForm.tmp_menuNm[j].value;
+			}
+		}
+		var leftStartMenuValue = document.getElementById("baseMenuNo").value;
+		if (leftStartMenuValue==null || leftStartMenuValue=="" || leftStartMenuValue=="null") leftStartMenuValue = '1000000';
+		console.log("leftStartMenuValue = "+leftStartMenuValue);
+		
+		// 서브 메뉴 생성
+		function subMenuTag(menuList, mainMenuNo) {
+			var subMenuTag = "";
+			menuList.forEach(function(item,index){
+				var itemList = item.split('|');
+				
+				if ( mainMenuNo == itemList[1] ) {
+					subMenuTag += '<li><a href="<c:url value='/'/>'+itemList[5].substr(1)+'">'+itemList[2]+'</a></li>';
+				}
+			});
+			if (subMenuTag != "") subMenuTag = "<ul>"+subMenuTag+"</ul>";
+			return subMenuTag;
+		}
+	
+		var topMenuTag = "";
+		var mainMenuTag = "";
+		
+		menuList.forEach(function(item,index){
+			console.log(item,index);
+			var itemList = item.split('|');
+			switch(leftStartMenuValue) {
+			case itemList[0]:
+				topMenuTag = "<h2>"+itemList[2]+"</h2>";
+			    break;
+			case itemList[1]:
+				mainMenuTag += '<li><a href="<c:url value='/'/>'+itemList[5].substr(1)+'">'+itemList[2]+'</a>'
+								+ subMenuTag(menuList, itemList[0])
+								+ '</li>';
+			    break;
+			default:
+			    break;
+			}
+		});
+	
+		document.write(topMenuTag + '<ul>' + mainMenuTag + '</ul>');
+		
+	</script>
+	
+	</div>
+</div>

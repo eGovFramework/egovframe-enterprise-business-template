@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.sec.gmt.service.GroupManage;
 import egovframework.let.sec.gmt.service.GroupManageVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

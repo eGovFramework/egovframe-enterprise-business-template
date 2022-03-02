@@ -22,9 +22,9 @@ import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
 import egovframework.let.uat.uia.service.EgovLoginService;
 import egovframework.let.utl.sim.service.EgovClntInfo;
-import egovframework.rte.fdl.cmmn.trace.LeaveaTrace;
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.fdl.cmmn.trace.LeaveaTrace;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 
 /**
@@ -130,10 +130,10 @@ public class EgovLoginController {
 			} else {
 				throw new IllegalStateException("No AuthenticationProcessingFilter");
 			}
-						
+			
 			springSecurity.doFilter(new RequestWrapperForSecurity(request, resultVO.getUserSe()+ resultVO.getId(), resultVO.getUniqId()), response, null);
-						
-			return "forward:/uat/uia/actionMain.do"; // 성공 시 페이지.. (redirect 불가)
+			
+			return "forward:/cmm/main/mainPage.do"; // 성공 시 페이지.. (redirect 불가)
 
 		} else {
 

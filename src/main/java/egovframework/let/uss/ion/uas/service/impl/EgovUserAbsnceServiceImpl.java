@@ -6,7 +6,7 @@ import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

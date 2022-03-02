@@ -2,7 +2,7 @@ package egovframework.let.sym.log.clg.service;
 
 import egovframework.com.cmm.LoginVO;
 
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 import javax.annotation.Resource;
 

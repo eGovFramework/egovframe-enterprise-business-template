@@ -10,9 +10,9 @@ import egovframework.let.sym.prm.service.EgovProgrmManageService;
 import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

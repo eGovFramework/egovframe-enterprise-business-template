@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 /**

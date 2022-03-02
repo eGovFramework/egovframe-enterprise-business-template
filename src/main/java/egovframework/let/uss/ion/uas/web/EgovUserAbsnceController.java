@@ -6,8 +6,8 @@ import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
 
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

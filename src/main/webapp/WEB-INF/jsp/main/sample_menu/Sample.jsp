@@ -15,161 +15,177 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<title>표준프레임워크 경량환경 내부업무템플릿</title>
-<link href="css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	
+<title>내부업무 사이트 > 샘플화면(기능별 생성)</title>
 </head>
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>	
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-	<!-- header 시작 -->
-	<div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-	<div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>		
-	<!-- //header 끝 -->	
-	<!-- container 시작 -->
-	<div id="container">
-		<!-- 좌측메뉴 시작 -->
-		<div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-		<!-- //좌측메뉴 끝 -->
-			<!-- 현재위치 네비게이션 시작 -->
-			<div id="content">
-				<div id="cur_loc">
-					<div id="cur_loc_align">
-						<ul>
-							<li>HOME</li>
-							<li>&gt;</li>
-							<li>샘플</li>
-							<li>&gt;</li>
-							<li><strong>샘플화면</strong></li>
-						</ul>
-					</div>
-				</div>
-				<!-- 검색 필드 박스 시작 -->
-				<div id="search_field">
-					<div id="search_field_loc"><h2><strong>샘플화면(기능별 생성)</strong></h2></div>
-					<form action="form_action.jsp" method="post">
-					  	<fieldset><legend>조건정보 영역</legend>	  
-					  	<div class="sf_start">
-					  		<ul id="search_first_ul">
-					  			<li>
-								    <label for="search_select">상태정보</label>
-									<select name="search_select" id="search_select">
-									    <option value="0" selected="selected">승인</option>
-									    <option value="1">비승인</option>
-									</select>						
-					  			</li>
-					  			<li>
-					  			<label>가입일자</label>
-								<input type="text" name="st_date" /><img src="images/calendar.gif" width="19" height="19" alt="" />
-					  			~ <input type="text" name="en_date" /><img src="images/calendar.gif" width="19" height="19" alt="" />
-					  			</li>		
-					  		</ul>
-					  		<ul id="search_second_ul">
-					  			<li><label for="username">사용자명</label></li>
-					  			<li><input type="text" name="username" id="username" /></li>
-					  			<li>
-									<div class="buttons" style="float:right;">
-										<a href="#"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-									    <a href="#">등록 </a>
-									    <a href="#">삭제</a>
-									</div>	  				  			
-					  			</li>
-					  		</ul>			
-						</div>			
-						</fieldset>
-					</form>
-				</div>
-				<!-- //검색 필드 박스 끝 -->
-				<div id="page_info"><div id="page_info_align"></div></div>					
-				<!-- table add start -->
-				<div class="default_tablestyle">
-					<table summary="사용자목록관리" cellpadding="0" cellspacing="0">
-					<caption>사용자목록관리</caption>
-					<colgroup>
-    					<col width="38" >
-    					<col width="130" >  
-    					<col width="50" >
-    					<col width="50" >
-    					<col width="%" >
-    					<col width="%" >
-					</colgroup>
-					<thead>
-					<tr>
-						<th scope="col" class="f_field">선택</th>
-						<th scope="col">아이디</th>
-						<th scope="col">상태</th>
-						<th scope="col">회원명</th>
-						<th scope="col">권한그룹</th>
-						<th scope="col">등록일</th>
-					</tr>
-					</thead>
-					<tbody>		  			
-					<!-- loop 시작 -->								
-					<tr>
-						<td><strong>1</strong></td>
-						<td><a href="#">admin_test01_0707</a></td>
-						<td>승인</td>
-						<td>홍길동</td>
-						<td>관리자</td>
-						<td>2011-07-01</td>
-					</tr>
-					<tr>
-						<td><strong>2</strong></td>
-						<td><a href="#">admin_test01_0707</a></td>
-						<td>승인</td>
-						<td>홍길동</td>
-						<td>관리자</td>
-						<td>2011-07-01</td>
-					</tr>
-					<tr>
-						<td><strong>3</strong></td>
-						<td><a href="#">admin_test01_0707</a></td>
-						<td>승인</td>
-						<td>홍길동</td>
-						<td>관리자</td>
-						<td>2011-07-01</td>
-					</tr>
-					<tr>
-						<td><strong>4</strong></td>
-						<td><a href="#">admin_test01_0707</a></td>
-						<td>승인</td>
-						<td>홍길동</td>
-						<td>관리자</td>
-						<td>2011-07-01</td>
-					</tr>
-					<tr>
-						<td><strong>5</strong></td>
-						<td><a href="#">admin_test01_0707</a></td>
-						<td>승인</td>
-						<td>홍길동</td>
-						<td>관리자</td>
-						<td>2011-07-01</td>
-					</tr>													
-					</tbody>
-					</table> 
-				</div>
-				<!-- 페이지 네비게이션 시작 -->
-				<div id="paging_div">
-					<ul class="paging_align">
-						<li class="first"><img src="<c:url value='/'/>images/btn/btn_prev.gif" alt="prev" /></li>
-						<li><a href="#">1</a></li>
-						<li>2</li>
-						<li>3</li>
-						<li>4</li>
-						<li>5</li>
-						<li class="first"><img src="<c:url value='/'/>images/btn/btn_next.gif" alt="next" /></li>
-					</ul>
-				</div>							
-			</div>
-			<!-- //페이지 네비게이션 끝 -->	
-			<!-- //content 끝 -->	
-	</div>	
-	<!-- //container 끝 -->
-	<!-- footer 시작 -->
-	<div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-	<!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+        <c:import url="/sym/mms/EgovHeader.do" />
+        <!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+                        <c:import url="/sym/mms/EgovMenuLeft.do" />
+                        <!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">샘플</a></li>
+                                        <li>샘플화면</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+                                <h1 class="tit_1">샘플</h1>
+
+                                <h2 class="tit_2">샘플화면</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition2">
+                                    <span class="lb">상태정보</span>
+                                    <label class="item f_select" for="sel1">
+                                        <select name="" id="sel1" title="조건">
+                                            <option value="">승인</option>
+                                            <option value="">비승인</option>
+                                        </select>
+                                    </label>
+
+                                    <span class="lb ml20">가입일자</span>
+
+                                    <input class="f_date" type="text" value="2021-07-11">
+                                    <a href="" class="btn btn_calendar mr10">달력</a>
+                                    <input class="f_date" type="text" value="2021-07-11">
+                                    <a href="" class="btn btn_calendar">달력</a>
+
+                                    <label for="usernm" class="lb ml20">사용자명</label>
+                                    <span class="item f_search">
+                                        <input class="f_input w_130" type="text" name="" id="usernm" title="검색어">
+                                        <button class="btn" type="submit">조회</button>
+                                    </span>
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <div class="btn_area al_r">
+                                    <a href="" class="item btn btn_blue_46 w_100">등록</a>
+                                    <a href="" class="item btn btn_blue_46 w_100">삭제</a>
+                                </div>
+
+                                <!-- 게시판 -->
+                                <div class="board_list">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width: 80px;">
+                                            <col style="width: auto;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 150px;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">선택</th>
+                                                <th scope="col">아이디</th>
+                                                <th scope="col">상태</th>
+                                                <th scope="col">회원명</th>
+                                                <th scope="col">권한그룹</th>
+                                                <th scope="col">등록일</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span class="f_chk_only">
+                                                        <input type="checkbox" name="">
+                                                    </span>
+                                                </td>
+                                                <td><a href="" class="lnk">admin_test01_0707</a></td>
+                                                <td>승인</td>
+                                                <td>홍길동</td>
+                                                <td>관리자</td>
+                                                <td>2021-06-13</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="f_chk_only">
+                                                        <input type="checkbox" name="">
+                                                    </span>
+                                                </td>
+                                                <td><a href="" class="lnk">admin_test01_0707</a></td>
+                                                <td>승인</td>
+                                                <td>홍길동</td>
+                                                <td>관리자</td>
+                                                <td>2021-06-13</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="f_chk_only">
+                                                        <input type="checkbox" name="">
+                                                    </span>
+                                                </td>
+                                                <td><a href="" class="lnk">admin_test01_0707</a></td>
+                                                <td>승인</td>
+                                                <td>홍길동</td>
+                                                <td>관리자</td>
+                                                <td>2021-06-13</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="board_list_bot">
+                                    <div class="paging" id="paging_div">
+                                        <ul>
+                                            <li class="btn"><a href="" class="first">처음</a></li>
+                                            <li class="btn"><a href="" class="btn prev">이전</a></li>
+                                            <li><strong>1</strong></li>
+                                            <li><a href="">2</a></li>
+                                            <li><a href="">3</a></li>
+                                            <li><a href="">4</a></li>
+                                            <li><a href="">5</a></li>
+                                            <li><a href="">6</a></li>
+                                            <li><a href="">7</a></li>
+                                            <li><a href="">8</a></li>
+                                            <li><a href="">9</a></li>
+                                            <li><a href="">10</a></li>
+                                            <li class="btn"><a href="" class="btn next">다음</a></li>
+                                            <li class="btn"><a href="" class="btn last">마지막</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--// 게시판 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <c:import url="/sym/mms/EgovFooter.do" />
+        <!--// Footer -->
+    </div>
+    
 </body>
 </html>

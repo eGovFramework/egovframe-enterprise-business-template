@@ -7,7 +7,7 @@ import egovframework.let.sym.prm.service.EgovProgrmManageService;
 import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

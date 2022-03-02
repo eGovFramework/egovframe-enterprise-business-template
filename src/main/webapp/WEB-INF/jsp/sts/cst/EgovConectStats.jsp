@@ -20,9 +20,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
-<title>접속통계 조회</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	<script src="<c:url value='/'/>js/jquery.js"></script>
+	<script src="<c:url value='/'/>js/jqueryui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+
+<title>내부업무 사이트 > 내부서비스관리 > 접속통계관리</title>
 <script type="text/javascript" src="<c:url value='/js/EgovCalPopup.js' />"></script>
 <script type="text/javaScript" language="javascript">
 /* ********************************************************
@@ -88,13 +99,13 @@ function fnInitAll(){
         document.listForm.fromDate.value = toDay;
         document.listForm.toDate.value = toDay;
         toDay = year + "-" + mon + "-" + day;
-        document.listForm.fDate.value = toDay;
-        document.listForm.tDate.value = toDay;
+        document.listForm.searchBgnDe.value = toDay;
+        document.listForm.searchEndDe.value = toDay;
     } else if (document.listForm.fromDate.value != "" && document.listForm.toDate.value != "") {
         var fromDate = document.listForm.fromDate.value;
         var toDate = document.listForm.toDate.value;
-        document.listForm.fDate.value = fromDate.substring(0, 4) + "-" + fromDate.substring(4, 6) + "-" + fromDate.substring(6, 8);
-        document.listForm.tDate.value = toDate.substring(0, 4) + "-" + toDate.substring(4, 6) + "-" + toDate.substring(6, 8);
+        document.listForm.searchBgnDe.value = fromDate.substring(0, 4) + "-" + fromDate.substring(4, 6) + "-" + fromDate.substring(6, 8);
+        document.listForm.searchEndDe.value = toDate.substring(0, 4) + "-" + toDate.substring(4, 6) + "-" + toDate.substring(6, 8);
     }
     // 기간구분
     var pdKind = document.listForm.pdKind.value;
@@ -129,187 +140,225 @@ function getNextWeek(v,t){
     str[str.length]=e.getDate(); 
     return str.join(""); 
 }
+
+function fn_egov_init_date(){
+	
+	$("#searchBgnDe").datepicker(
+	        {dateFormat:'yy-mm-dd'
+	         , showOn: 'button'
+	         , buttonImage: '<c:url value='/images/ico_calendar.png'/>'
+	         , buttonImageOnly: true
+	         
+	         , showMonthAfterYear: true
+	         , showOtherMonths: true
+		     , selectOtherMonths: true
+		     , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+				
+	         , changeMonth: true // 월선택 select box 표시 (기본은 false)
+	         , changeYear: true  // 년선택 selectbox 표시 (기본은 false)
+	         , showButtonPanel: true // 하단 today, done  버튼기능 추가 표시 (기본은 false)
+	});
+
+
+	$("#searchEndDe").datepicker( 
+        {dateFormat:'yy-mm-dd'
+         , showOn: 'button'
+         , buttonImage: '<c:url value='/images/ico_calendar.png'/>'
+         , buttonImageOnly: true
+         
+         , showMonthAfterYear: true
+         , showOtherMonths: true
+	     , selectOtherMonths: true
+	     , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+			
+         , changeMonth: true // 월선택 select box 표시 (기본은 false)
+         , changeYear: true  // 년선택 selectbox 표시 (기본은 false)
+         , showButtonPanel: true // 하단 today, done  버튼기능 추가 표시 (기본은 false)
+	});
+}
+
 </script>
 </head>
-<body onload="javascript:fnInitAll();">
-<noscript class="noScriptTitle">자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부서비스관리</li>
-                            <li>&gt;</li>
-                            <li>사용현황관리</li>
-                            <li>&gt;</li>
-                            <li><strong>접속통계관리</strong></li>
-                        </ul>
-                    </div>
-                </div>
-                <form name="listForm" action="<c:url value='/sts/selectConectStats.do'/>" method="post">
-                <input type="submit" id="invisible" class="invisible"/>
-                    <input type="hidden" name="pdKind" value='<c:out value="${statsInfo.pdKind}"/>'/>
-                    <input type="hidden" name="statsKind" value='<c:out value="${statsInfo.statsKind}"/>'/>
-                    <input type="hidden" name="detailStatsKind" value=""/>
 
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>접속 통계 관리</strong></h2></div>
-                        <fieldset><legend>조건정보 영역</legend>    
-                        <div class="sf_start">
-                            <ul id="search_first_ul">
-                                <li>
-                                    <label for="fDate">기간 : </label>
-				                    <input type="hidden" name="cal_url" value="<c:url value='/sym/cmm/EgovNormalCalPopup.do'/>" />
+<style type="text/css">
+.ui-datepicker-trigger {
+	margin-left: 10px;
+	vertical-align: middle;
+}
+</style>
+
+<body onload="fnInitAll(); fn_egov_init_date();">
+<noscript class="noScriptTitle">자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+		<!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+						<!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부서비스관리</a></li>
+                                        <li><a href="">사용현황관리</a></li>
+                                        <li>접속통계관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="listForm" action="<c:url value='/sts/selectConectStats.do'/>" method="post">
+								
+			                    <input type="hidden" name="pdKind" value='<c:out value="${statsInfo.pdKind}"/>'/>
+			                    <input type="hidden" name="statsKind" value='<c:out value="${statsInfo.statsKind}"/>'/>
+			                    <input type="hidden" name="detailStatsKind" value=""/>
+
+                                <h1 class="tit_1">내부서비스관리</h1>
+
+                                <h2 class="tit_2">접속통계관리</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition2">
+                                	
+                                	<input type="hidden" name="cal_url" value="<c:url value='/sym/cmm/EgovNormalCalPopup.do'/>" />
 				                    <input type="hidden" name="fromDate" value="${statsInfo.fromDate}" size="10"/>
 				                    <input type="hidden" name="toDate" value="${statsInfo.toDate}" size="10"/>
-				                    <input type="text" name="fDate" value="" size="10"  title="시작일자(새창)" id="fDate"/>
-				                    <a href="#noscript" onclick="fn_egov_NormalCalendar(document.listForm, document.listForm.fromDate, document.listForm.fDate,'','<c:url value='/sym/cmm/EgovselectNormalCalendar.do'/>'); return false;" style="selector-dummy:expression(this.hideFocus=false);"><img src="<c:url value='/images/calendar.gif' />" alt="달력(새창)"></a>
-				                    &nbsp;~&nbsp;<input type="text" name="tDate" value="" size="10"  title="종료일자(새창)" id="tDate" />
-				                    <a href="#noscript" onclick="fn_egov_NormalCalendar(document.listForm, document.listForm.toDate, document.listForm.tDate,'','<c:url value='/sym/cmm/EgovselectNormalCalendar.do'/>'); return false;" style="selector-dummy:expression(this.hideFocus=false);"><img src="<c:url value='/images/calendar.gif' />" alt="달력(새창)"></a>
-                                </li>
-                                <li>
-                                    <label for="PD">기간구분 : </label>
-					                  <select id="PD" name="PD" class="select" onChange="javascript:fnChangePdKind();"  title="기간구분">
-					                    <option value='Y' selected>연도별</option>
-					                    <option value='M'>월별</option>
-					                    <option value='D'>일별</option>
-					                  </select>
-                                </li>
-                                <li>
-                                    <label for="STKIND">통계구분 : </label>
-					                  <select id="STKIND" name="STKIND" class="select" onChange="javascript:fnChangeStsKind();"  title="통계구분">
-					                    <option value='SERVICE' selected>서비스별</option>
-					                    <!-- option value='PRSONAL'>개인별</option-->
-					                  </select>
-					                  <!-- 접속통계정보만 확인하므로 개인별 검색조건은 주석
-					                  <input name="person" type="text" size="15" value="" onChange="fnChangePerson();"  title="" id="person">
-					                  -->
-                                </li>       
-                            </ul>
-                            <ul id="search_second_ul">
-                                <li>
-                                    <div class="buttons" style="float:right;">
-                                        <a href="#LINK" onclick="fnSearch(); return false;"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                        <!-- a href="#LINK" onclick="fnInitAll(); return false;">초기화</a-->
-                                    </div>                              
-                                </li>
-                            </ul>           
-                        </div>          
-                        </fieldset>
-                </div>
-                <!-- //검색 필드 박스 끝 -->
+                                	
+                                	<input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="${searchVO.searchBgnDe}" title="시작일자입력" />&nbsp ~ &nbsp
+                                    <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="${searchVO.searchEndDe}" title="종료일자입력" >
+                                    
+                                    <label class="f_select ml20" for="PD">
+                                        <select id="PD" name="PD" class="select" onchange="fnChangePdKind();" title="기간구분 선택">
+                                            <option value="Y" selected="">연도별</option>
+                                            <option value="M">월별</option>
+                                            <option value="D">일별</option>
+                                          </select>
+                                    </label>
+                                    <label class="f_select" for="STKIND">
+                                        <select id="STKIND" name="STKIND" class="select" onchange="fnChangeStsKind();" title="통계구분">
+                                            <option value="SERVICE" selected="">서비스별</option>
+                                          </select>
+                                    </label>
 
-                <div id="page_info"><div id="page_info_align"></div></div>                    
-                <!-- table add start -->
-                
-			        <!-- 서비스별 결과 -->
-			        <c:if test='${statsInfo.statsKind == "SERVICE" }'>
-			        <div class="default_tablestyle">
-	                    <table summary="기간, 기간구분, 통계구분을 입력하여 MOPAS 접속통계를 조회한다." cellpadding="0" cellspacing="0">
-	                    <caption>서비스별 접속 통계</caption>
-	                    <colgroup>
-	                    <col width="10%" >
-	                    <col width="30%" >  
-	                    <col width="10%" >
-	                    <col width="10%" >
-	                    <col width="10%" >
-	                    <col width="10%" >
-	                    <col width="10%" >
-	                    <col width="10%" >
-	                    </colgroup>
-	                    <thead>
-	                    <tr>
-	                        <th scope="col" class="f_field" nowrap="nowrap">일자</th>
-	                        <th scope="col" nowrap="nowrap">메소드명</th>
-	                        <th scope="col" nowrap="nowrap">생성(로그인)</th>
-	                        <th scope="col" nowrap="nowrap">수정(미사용)</th>
-	                        <th scope="col" nowrap="nowrap">조회(미사용)</th>
-	                        <th scope="col" nowrap="nowrap">삭제(미사용)</th>
-	                        <th scope="col" nowrap="nowrap">출력(미사용)</th>
-	                        <th scope="col" nowrap="nowrap">에러(미사용)</th>
-	                    </tr>
-	                    </thead>
-	                    <tbody>
-    	                    <c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
-    	                      <tr>
-    			                  <td nowrap="nowrap">${resultInfo.statsDate}</td>
-    			                  <td nowrap="nowrap">&nbsp;${resultInfo.conectMethod}</td>
-    			                  <td nowrap="nowrap">${resultInfo.creatCo}</td>
-    			                  <td nowrap="nowrap">${resultInfo.updtCo}</td>
-    			                  <td nowrap="nowrap">${resultInfo.inqireCo}</td>
-    			                  <td nowrap="nowrap">${resultInfo.deleteCo}</td>
-    			                  <td nowrap="nowrap">${resultInfo.outptCo}</td>
-    			                  <td nowrap="nowrap">${resultInfo.errorCo}</td>
-    	                      </tr>
-    	                     </c:forEach>
-                             <c:if test="${fn:length(conectStats) == 0 }">
-                                <tr>
-                                    <td colspan="8"> 조회된 접속 통계가 없습니다.</td>
-                                </tr>
-                            </c:if>
-	                    </tbody>
-	                    </table>
-	                    </div>
-			        </c:if>
-			        
-			        <!-- 개인별 결과 -->
-			        <c:if test='${statsInfo.statsKind == "PRSONAL" }'>
-                        <div class="">
-                        <!-- 막대그래프 시작 -->
-                        <span><b>1. 그래프 (단위, 횟수)</b></span>
-                            <table width="660" cellpadding="8"  border="0">
-                            <c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
-                            <tr>
-                                <td width="80px">${resultInfo.statsDate}</td>
-                                <td>
-                                   <img src="<c:url value='/images/left_bg.gif'/>" 
-                                       width="<c:out value='${resultInfo.statsCo * statsInfo.maxUnit}'/>" 
-                                       height="10" align="left" alt=""/>&nbsp;(${resultInfo.statsCo}&nbsp;회)
-		                        </td>
-		                    </tr>
-                            </c:forEach>
-		                    </table>
-		                <!-- 막대그래프 끝 -->
-		                        
-                        <!-- 테이블표 시작 -->
-                        <br/>
-                        <span><b>2. 텍스트 (단위, 횟수)</b></span>
-                          <table width="660" cellpadding="8" class="table-search" border="0">
-	                        <c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
-	                        <!-- loop 시작 -->                                
-	                          <tr>
-	                              <td width="80px">${resultInfo.statsDate}</td>
-	                              <td align="left">${resultInfo.statsCo}&nbsp;회</td>
-	                          </tr>
-	                         </c:forEach>
-	                      </table>
-                         <!-- 테이블표  끝 -->
-                         
-                         </div>
-                    </c:if>
-            </form>
+                                    <a href="#LINK" class="item btn btn_blue_46 w_100 ml10" onclick="fnSearch(); return false;"><spring:message code='button.inquire' /></a><!-- 조회 -->
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <!-- 게시판 -->
+                                <!-- 서비스별 결과 -->
+                                <c:if test='${statsInfo.statsKind == "SERVICE" }'>
+	                                <div class="board_list">
+	                                    <table summary="기간, 기간구분, 통계구분을 입력하여 MOPAS 접속통계를 조회한다.">
+	                                    	<caption>서비스별 접속 통계</caption>
+	                                        <colgroup>
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                            <col style="width: ;">
+	                                        </colgroup>
+	                                        <thead>
+	                                            <tr>
+	                                                <th scope="col">일자</th>
+	                                                <th scope="col">메소드명</th>
+	                                                <th scope="col">생성(로그인)</th>
+	                                                <th scope="col">수정(미사용)</th>
+	                                                <th scope="col">조회(미사용)</th>
+	                                                <th scope="col">출력(미사용)</th>
+	                                                <th scope="col">삭제(미사용)</th>
+	                                                <th scope="col">에러(미사용)</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        	
+	                                        	<c:if test="${fn:length(conectStats) == 0 }">
+	                                        		<tr>
+	                                        			<td colspan="8"> 조회된 접속 통계가 없습니다.</td>
+	                                        		</tr>
+	                                        	</c:if>
+	                                        	
+	                                        	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
+	                                        		<tr>
+	                                        			<td>${resultInfo.statsDate}</td>
+	                                        			<td>${resultInfo.conectMethod}</td>
+	                                        			<td>${resultInfo.creatCo}</td>
+	                                        			<td>${resultInfo.updtCo}</td>
+	                                        			<td>${resultInfo.inqireCo}</td>
+	                                        			<td>${resultInfo.deleteCo}</td>
+	                                        			<td>${resultInfo.outptCo}</td>
+	                                        			<td>${resultInfo.errorCo}</td>
+	                                        		</tr>
+	                                        	</c:forEach>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
+                                </c:if>
+                                
+                                <!-- 개인별 결과 -->
+                                <c:if test='${statsInfo.statsKind == "PRSONAL" }'>
+	                                <div class="board_list">
+	                                	<!-- 막대그래프 시작 -->
+	                                	<span><b>1. 그래프 (단위, 횟수)</b></span>
+	                                    <table summary="">
+	                                    	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
+		                                        <thead>
+		                                            <tr>
+		                                                <th scope="col">${resultInfo.statsDate}</th>
+		                                            </tr>
+		                                        </thead>
+		                                        <tbody>
+	                                        		<tr>
+	                                        			<td>
+	                                        				<img src="<c:url value='/images_old/left_bg.gif'/>" width="<c:out value='${resultInfo.statsCo * statsInfo.maxUnit}'/>" height="10" align="left" alt=""/>&nbsp;(${resultInfo.statsCo}&nbsp;회)
+	                                        			</td>
+	                                        		</tr>
+		                                        </tbody>
+		                                    </c:forEach>
+	                                    </table>
+	                                    <!-- 막대그래프 끝 -->
+	                                    
+	                                    <!-- 테이블표 시작 -->
+	                                    <span><b>2. 텍스트 (단위, 횟수)</b></span>
+	                                    <table summary="">
+	                                    	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
+                                        		<tr>
+                                        			<td>${resultInfo.statsDate}</td>
+                                        			<td>${resultInfo.statsCo}&nbsp;회</td>
+                                        		</tr>
+		                                    </c:forEach>
+	                                    </table>
+	                                    <!-- 테이블표  끝 -->
+	                                </div>
+                                </c:if>
+                                <!--// 게시판 -->
+                                
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+        </div>
+
+		<!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
     </div>
-    <!-- //전체 레이어 끝 -->
- </body>
+</body>
 </html>

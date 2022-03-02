@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.sts.com.StatsVO;
 import egovframework.let.sts.cst.service.EgovConectStatsService;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

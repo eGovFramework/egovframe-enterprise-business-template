@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-    	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 내부업무의 기능 작동과정에서 Exception 발생시 후처리를 위한 AOP설정  -->
     <aop:config>
@@ -14,7 +14,7 @@
     </aop:config>
     
     <!-- Exception 발생시 후처리를 위해 표준프레임워크 실행환경의 ExceptionTransfer를 활용하도록  설정-->
-    <bean id="exceptionTransfer" class="egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer">
+    <bean id="exceptionTransfer" class="org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer">
         <property name="exceptionHandlerService">
             <list>
                 <ref bean="defaultExceptionHandleManager" />
@@ -24,7 +24,7 @@
     </bean>
 
     <!-- Exception 발생에 대한 기본Excpton처리를 위해 표준프레임워크 실행환경의 DefaultExceptionTransfer를 활용하도록  설정-->
-    <bean id="defaultExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
+    <bean id="defaultExceptionHandleManager" class="org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
         <property name="reqExpMatcher">
             <ref bean="antPathMater"/>
         </property>
@@ -41,7 +41,7 @@
     </bean>
 
     <!-- Exception 발생에 대한 기타Excpton처리를 위해 표준프레임워크 실행환경의 DefaultExceptionTransfer를 활용하도록  설정-->
-    <bean id="otherExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
+    <bean id="otherExceptionHandleManager" class="org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
         <property name="reqExpMatcher">
             <ref bean="antPathMater"/>
         </property>

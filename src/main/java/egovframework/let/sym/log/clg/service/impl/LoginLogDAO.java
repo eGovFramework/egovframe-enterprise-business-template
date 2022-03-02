@@ -4,7 +4,7 @@ import java.util.List;
 
 import egovframework.let.sym.log.clg.service.LoginLog;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

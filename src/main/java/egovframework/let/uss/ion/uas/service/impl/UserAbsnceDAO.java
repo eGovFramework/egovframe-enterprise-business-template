@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 /**

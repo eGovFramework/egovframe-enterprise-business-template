@@ -4,7 +4,7 @@
 var treeNodes			= new Array();
 var openTreeNodes	    = new Array();
 var treeIcons			= new Array(6);
-//var imgpath         = "/images/tree/";
+//var imgpath         = "/images/";
 
 /*
  * 노드 , 트리 구성 이미지 정보

@@ -6,7 +6,7 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 /**

@@ -5,9 +5,9 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sym.mnu.mcm.service.EgovMenuCreateManageService;
 import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 
@@ -120,6 +120,7 @@ public class EgovMenuCreateManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
+		
 		model.addAttribute("list_menulist", menuCreateManageService.selectMenuCreatList(menuCreatVO));
 		model.addAttribute("resultVO", menuCreatVO);
 

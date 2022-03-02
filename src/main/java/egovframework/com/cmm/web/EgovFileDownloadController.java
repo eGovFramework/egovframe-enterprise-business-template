@@ -12,7 +12,7 @@ import java.util.Map;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -156,36 +156,29 @@ public class EgovFileDownloadController {
 
 					FileCopyUtils.copy(in, out);
 					out.flush();
-				} catch (Exception ex) {
+				} catch (IOException ex) {
 					LOGGER.debug("IGNORED: {}", ex.getMessage());
 				} finally {
 					if (in != null) {
 						try {
 							in.close();
-						} catch (Exception ignore) {
+						} catch (IOException ignore) {
 							LOGGER.debug("IGNORED: {}", ignore.getMessage());
 						}
 					}
 					if (out != null) {
 						try {
 							out.close();
-						} catch (Exception ignore) {
+						} catch (IOException ignore) {
 							LOGGER.debug("IGNORED: {}", ignore.getMessage());
 						}
 					}
 				}
 
 			} else {
-				response.setContentType("application/x-msdownload");
-
-				PrintWriter printwriter = response.getWriter();
-				printwriter.println("<html>");
-				printwriter.println("<br><br><br><h2>Could not get file name:<br>" + fvo.getOrignlFileNm() + "</h2>");
-				printwriter.println("<br><br><br><center><h3><a href='javascript: history.go(-1)'>Back</a></h3></center>");
-				printwriter.println("<br><br><br>&copy; webAccess");
-				printwriter.println("</html>");
-				printwriter.flush();
-				printwriter.close();
+		
+				request.getRequestDispatcher("/cmm/error/egovBizException.jsp").forward(request, response);
+							
 			}
 		}
 	}

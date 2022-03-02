@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 /**
  * EgovComAbstractDAO.java 클래스

@@ -18,20 +18,27 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%
   /* Image Path 설정 */
-  String imagePath_icon   = "/images/egovframework/sym/mpm/icon/";
-  String imagePath_button = "/images/egovframework/sym/mpm/button/";
+  String imagePath_icon   = "/images_old/egovframework/sym/mpm/icon/";
+  String imagePath_button = "/images_old/egovframework/sym/mpm/button/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	<script src="<c:url value='/'/>js/jquery.js"></script>
+	<script src="<c:url value='/'/>js/jqueryui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
 
-<title>메뉴생성관리</title>
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
+<title>내부업무 사이트 > 내부시스템관리 > 메뉴생성관리</title>
+
 <script type="text/javaScript">
 <!--
 /* ********************************************************
@@ -65,135 +72,157 @@ function selectMenuCreatManageList() {
  ******************************************************** */
 function selectMenuCreat(vAuthorCode) {
     document.menuCreatManageForm.authorCode.value = vAuthorCode;
-    document.menuCreatManageForm.action = "<c:url value='/sym/mnu/mcm/EgovMenuCreatSelect.do'/>";
-    window.open("#", "_menuCreat", "scrollbars = yes, top=100px, left=100px, height=700px, width=850px");    
-    document.menuCreatManageForm.target = "_menuCreat";
-    document.menuCreatManageForm.submit();  
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/mnu/mcm/EgovMenuCreatSelect.do'/>?authorCode=" + vAuthorCode + '" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 850,
+        height: 900,
+        title: "템플릿 목록"
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
 }
+
+/**********************************************************
+ * 모달 종료 버튼
+ ******************************************************** */
+function fn_egov_modal_remove() {
+	$('#modalPan').remove();
+}
+
 <c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
 //-->
 </script>
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-            <form name="menuCreatManageForm" action ="<c:url value='/sym/mpm/EgovMenuCreatManageSelect.do'/>" method="post">
-            <input type="submit" id="invisible" class="invisible"/>
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>메뉴관리</li>
-                            <li>&gt;</li>
-                            <li><strong>메뉴생성관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">메뉴관리</a></li>
+                                        <li>메뉴생성관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="menuCreatManageForm" action ="<c:url value='/sym/mpm/EgovMenuCreatManageSelect.do'/>" method="post">
+								
+								<input name="checkedMenuNoForDel" type="hidden" />
+								<input name="authorCode" type="hidden" />
+								<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">메뉴생성관리</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition2">
+                                    <span class="lb mr10">보안설정대상 ID : </span>
+                                    <span class="item f_search">
+                                        <input id="searchKeyword" class="f_input w_350" name="searchKeyword" type="text" value="" maxlength="60" title="검색조건"/>
+                                        <button class="btn" type="submit" onclick="javascript:selectMenuCreatManageList(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                    </span>
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <!-- 게시판 -->
+                                <div class="board_list">
+                                    <table summary="메뉴생성관리  목록화면으로 권한코드, 권한명, 권한설명, 메뉴생성여부, 메뉴생성으로 구성됨">
+                                    	<caption>메뉴생성관리 목록</caption>
+                                        <colgroup>
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">권한코드</th>
+                                                <th scope="col">권한명</th>
+                                                <th scope="col">권한설명</th>
+                                                <th scope="col">메뉴생성여부</th>
+                                                <th scope="col">메뉴생성</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	
+                                        	<c:if test="${empty list_menumanage}">
+                                        		<tr>
+                                        			<td colspan="5"><spring:message code="common.nodata.msg" /></td>
+                                        		</tr>
+                                        	</c:if>
+                                        	
+                                        	<c:forEach var="result" items="${list_menumanage}" varStatus="status">
+                                            <tr>
+                                                <td><c:out value="${result.authorCode}"/></td>
+                                                <td><c:out value="${result.authorNm}"/></td>
+                                                <td><c:out value="${result.authorDc}"/></td>
+                                                <td>
+                                                	<c:if test="${result.chkYeoBu > 0}">Y</c:if>
+                                                	<c:if test="${result.chkYeoBu == 0}">N</c:if>
+                                                </td>
+                                                <td>
+                                                	<a href="#LINK'" class="lnk" onclick="selectMenuCreat('<c:out value="${result.authorCode}"/>'); return false;" >메뉴생성</a>
+                                                </td>
+                                            </tr>
+                                            </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+								<!-- 페이지 네비게이션 시작 -->
+                                <div class="board_list_bot">
+                                    <div class="paging" id="paging_div">
+                                        <ul>
+                                            <ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="linkPage"/>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- //페이지 네비게이션 끝 -->
+                                <!--// 게시판 -->
+                                
+                                <input type="hidden" name="req_menuNo">
+                                
+                                </form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>메뉴생성관리</strong></h2></div>
-					
-						<input name="checkedMenuNoForDel" type="hidden" />
-						<input name="authorCode"          type="hidden" />
-						<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
-
-                        <fieldset><legend>조건정보 영역</legend>    
-                        <div class="sf_start">
-                            <ul id="search_first_ul">
-                                <li>
-                                    <label for="searchKeyword">보안설정대상ID : </label>
-                                    <input id="searchKeyword" name="searchKeyword" type="text" size="80" value=""  maxlength="60" title="검색조건"/> 
-                                </li>
-                            </ul>
-                            <ul id="search_second_ul">
-                                <li>
-                                    <div class="buttons" style="float:right;">
-                                        <a href="#LINK" onclick="javascript:selectMenuCreatManageList(); return false;"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                    </div>                              
-                                </li>
-                            </ul>           
-                        </div>          
-                        </fieldset>
-                </div>
-                <!-- //검색 필드 박스 끝 -->
-                <div id="page_info"><div id="page_info_align"></div></div>                    
-                <!-- table add start -->
-                <div class="default_tablestyle">
-                    <table summary="메뉴생성관리  목록화면으로 권한코드, 권한명, 권한설명, 메뉴생성여부, 메뉴생성으로 구성됨" cellpadding="0" cellspacing="0">
-                    <caption>메뉴생성관리 목록</caption>
-                    <colgroup>
-                    <col width="20%" >
-                    <col width="20%" >  
-                    <col width="20%" >
-                    <col width="20%" >
-                    <col width="20%" >
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" class="f_field" nowrap="nowrap">권한코드</th>
-                        <th scope="col" nowrap="nowrap">권한명</th>
-                        <th scope="col" nowrap="nowrap">권한 설명</th>
-                        <th scope="col" nowrap="nowrap">메뉴생성여부</th>
-                        <th scope="col" nowrap="nowrap">메뉴생성</th>
-                    </tr>
-                    </thead>
-                    <tbody>                 
-
-                    <c:forEach var="result" items="${list_menumanage}" varStatus="status">
-                    <!-- loop 시작 -->                                
-                      <tr>
-					    <td nowrap="nowrap"  ><c:out value="${result.authorCode}"/></td>
-					    <td nowrap="nowrap"  ><c:out value="${result.authorNm}"/></td>
-					    <td nowrap="nowrap"  ><c:out value="${result.authorDc}"/></td>
-					    <td nowrap="nowrap"  >
-					          <c:if test="${result.chkYeoBu > 0}">Y</c:if>
-					          <c:if test="${result.chkYeoBu == 0}">N</c:if>
-					    </td>
-					    <td nowrap="nowrap" >
-                            <a href="<c:url value='/sym/mnu/mcm/EgovMenuCreatSelect.do'/>?authorCode='<c:out value="${result.authorCode}"/>'"  onclick="selectMenuCreat('<c:out value="${result.authorCode}"/>'); return false;">메뉴생성</a>
-					    </td>
-                      </tr>
-                     </c:forEach>     
-                    </tbody>
-                    </table>
-                </div>
-
-                <!-- 페이지 네비게이션 시작 -->
-                <div id="paging_div">
-                    <ul class="paging_align">
-                        <ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="linkPage"/>
-                    </ul>
-                </div>                          
-                <!-- //페이지 네비게이션 끝 -->  
-
-                <input type="hidden" name="req_menuNo">
-            </form>
-
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+        </div>
+
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
     </div>
-    <!-- //전체 레이어 끝 -->
- </body>
+    
+</body>
 </html>

@@ -5,8 +5,8 @@ import egovframework.let.sec.ram.service.AuthorRoleManage;
 import egovframework.let.sec.ram.service.AuthorRoleManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorRoleManageService;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

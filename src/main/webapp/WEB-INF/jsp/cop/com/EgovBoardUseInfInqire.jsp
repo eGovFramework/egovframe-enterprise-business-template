@@ -21,8 +21,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="boardUseInf" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javascript">
@@ -40,128 +48,141 @@
     }
     
 </script>
+
 <title>게시판 사용정보 상세조회 및 수정</title>
 
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
-
 </head>
-<body >
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header_mainsize"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부서비스관리</li>
-                            <li>&gt;</li>
-                            <li>내부업무개시판관리</li>
-                            <li>&gt;</li>
-                            <li><strong>게시판사용관리</strong></li>
-                        </ul>
+
+<body>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+        <c:import url="/sym/mms/EgovHeader.do" />
+        <!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+                        <c:import url="/sym/mms/EgovMenuLeft.do" />
+                        <!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부서비스관리</a></li>
+                                        <li><a href="">내부업무게시판관리</a></li>
+                                        <li>게시판사용관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="boardUseInf" method="post" action="<c:url value='/cop/com/updateBBSUseInf.do'/>">
+								
+								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />
+								<input type="hidden" name="bbsId" value="<c:out value='${bdUseVO.bbsId}'/>" />
+								<input type="hidden" name="trgetId" value="<c:out value='${bdUseVO.trgetId}'/>" />
+
+                                <h1 class="tit_1">내부서비스관리</h1>
+
+                                <h2 class="tit_2">게시판 사용정보 수정</h2>
+                                
+                                <div class="board_view2">
+                                    <table summary="게시판명, 커뮤니티/ 동호회명, 사용여부 입니다">
+                                        <colgroup>
+                                            <col style="width: 200px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min">게시판명</span>
+                                            </td>
+                                            <td>
+                                            	<c:out value="${bdUseVO.bbsNm}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min">커뮤니티 / 동호회명</span>
+                                            </td>
+                                            <td>
+                                            	<c:choose>
+                                            		<c:when test="${not empty bdUseVO.cmmntyNm}">
+                                            			<c:out value="${bdUseVO.cmmntyNm}" />
+                                            		</c:when>
+                                            		<c:when test="${not empty bdUseVO.clbNm}">
+                                            			<c:out value="${bdUseVO.clbNm}" />
+                                            		</c:when>
+                                            		<c:otherwise>(시스템  활용)</c:otherwise>
+                                            	</c:choose>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                            	<label>사용여부</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
+                                                <label for="rdo1" class="f_rdo mr30 on">
+                                                    <input type="radio" id="rdo1" name="aaa"  value="Y" <c:if test="${bdUseVO.useAt == 'Y'}"> checked="checked"</c:if>>
+                                                    <spring:message code="button.use" /><!-- 사용 -->
+                                                </label>
+                                                <label for="rdo2" class="f_rdo">
+                                                    <input type="radio" id="rdo2" name="aa" value="N" <c:if test="${bdUseVO.useAt == 'N'}"> checked="checked"</c:if>>
+                                                    <spring:message code="button.notUsed" /><!-- 사용중지 -->
+                                                </label>
+                                                <br/><form:errors path="useAt" />
+                                            </td>
+                                        </tr>
+                                        
+                                        <c:choose>
+                                        	<c:when test="${not empty bdUseVO.provdUrl}">
+		                                        <tr>
+		                                            <td class="lb">
+		                                                <span class="min">제공 URL</span>
+		                                            </td>
+		                                            <td>
+		                                                <a href="<c:url value="${bdUseVO.provdUrl}" />" class="lnk"><c:url value="${bdUseVO.provdUrl}" /></a>
+		                                            </td>
+		                                        </tr>
+                                        	</c:when>
+                                        </c:choose>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="<c:url value='/cop/com/updateBBSUseInf2.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_bbsUseInf(); return false;"><spring:message code="button.save"/></a><!-- 저장 -->
+                                        <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_select_bbsUseInfs(); return false;"><spring:message code="button.list"/></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                </form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>게시판 사용정보 수정</strong></h2></div>
-                </div>
-                <form name="boardUseInf" method="post" action="<c:url value='/cop/com/updateBBSUseInf.do'/>">
-					<div style="visibility:hidden;display:none;"><input name="iptSubmit" type="submit" value="전송" title="전송"></div>
-					<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />
-					<input type="hidden" name="bbsId" value="<c:out value='${bdUseVO.bbsId}'/>" />
-					<input type="hidden" name="trgetId" value="<c:out value='${bdUseVO.trgetId}'/>" />
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table summary="게시판명, 커뮤니티/ 동호회명, 사용여부  입니다">
-					      <tr> 
-					        <th scope="col" width="20%" height="23" class="" nowrap >게시판명</th>
-					        <td width="80%" nowrap colspan="3">
-					        <c:out value="${bdUseVO.bbsNm}" />
-					        </td>
-					      </tr>
-					      <tr> 
-					        <th scope="col" width="20%" height="23" class="" nowrap >커뮤니티/ 동호회명</th>
-					        <td width="80%" nowrap colspan="3">
-					        <c:choose>
-					            <c:when test="${not empty bdUseVO.cmmntyNm}">
-					                <c:out value="${bdUseVO.cmmntyNm}" />
-					            </c:when>
-					            <c:when test="${not empty bdUseVO.clbNm}">
-					                <c:out value="${bdUseVO.clbNm}" />
-					            </c:when>
-					            <c:otherwise>(시스템  활용)</c:otherwise>
-					        </c:choose>
-					        </td>
-					      </tr>
-					      <tr> 
-					        <th scope="col" width="20%" height="23" class="required_text" nowrap >
-					            <label>사용여부</label>    
-                                <img src="<c:url value='/images/required.gif' />" width="15" height="15" alt="required"/>
-					        </th>
-					        <td width="80%" nowrap colspan="3">
-					            <spring:message code="button.use" /> : <input type="radio" name="useAt" class="radio2" value="Y" <c:if test="${bdUseVO.useAt == 'Y'}"> checked="checked"</c:if>>&nbsp;
-					            <spring:message code="button.notUsed" /> : <input type="radio" name="useAt" class="radio2" value="N" <c:if test="${bdUseVO.useAt == 'N'}"> checked="checked"</c:if>>
-					            <br/><form:errors path="useAt" /> 
-					        </td>   
-					    
-					      </tr>
-					      <c:choose>
-					      <c:when test="${not empty bdUseVO.provdUrl}">
-					      <tr> 
-					        <th width="20%" height="23" class="" nowrap >제공 URL</th>
-					        <td width="80%" nowrap colspan="3">
-					            <a href="<c:url value="${bdUseVO.provdUrl}" />" target="_blank">
-					                <c:url value="${bdUseVO.provdUrl}" />
-					            </a>
-					        </td>
-					      </tr>
-					      </c:when>
-					      </c:choose>
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                      <!-- 목록/저장버튼  -->
-                      <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr>
-                            <td> 
-						      <a href="<c:url value='/cop/com/updateBBSUseInf2.do'/>" onclick="fn_egov_updt_bbsUseInf(); return false;">저장</a> 
-						    </td>
-						    <td width="10"></td>
-						    <td><span class="button">
-						      <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>" onclick="fn_egov_select_bbsUseInfs(); return false;">목록</a> 
-                            </span></td>
-                        </tr>
-                      </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-                </form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+        <c:import url="/sym/mms/EgovFooter.do" />
+        <!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

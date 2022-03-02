@@ -4,8 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
 
+import egovframework.com.cmm.EgovWebUtil;
 import egovframework.com.cmm.SessionVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
@@ -56,7 +58,6 @@ public class EgovImageProcessController extends HttpServlet {
 	 * @param response
 	 * @throws Exception
 	 */
-	@SuppressWarnings("resource")
 	@RequestMapping("/cmm/fms/getImage.do")
 	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletResponse response) throws Exception {
 
@@ -68,15 +69,20 @@ public class EgovImageProcessController extends HttpServlet {
 		vo.setAtchFileId(atchFileId);
 		vo.setFileSn(fileSn);
 
+		if (fileSn == null || fileSn.equals("")) {
+			int newMaxFileSN = fileService.getMaxFileSN(vo);
+			vo.setFileSn(Integer.toString(newMaxFileSN - 1));
+		}
 		FileVO fvo = fileService.selectFileInf(vo);
 
-		File file = new File(fvo.getFileStreCours(), fvo.getStreFileNm());
+		//String fileLoaction = fvo.getFileStreCours() + fvo.getStreFileNm();
+		File file = null;
 		FileInputStream fis = null;
-		new FileInputStream(file);
 
 		BufferedInputStream in = null;
 		ByteArrayOutputStream bStream = null;
 		try {
+		    file = new File(fvo.getFileStreCours(), fvo.getStreFileNm());
 			fis = new FileInputStream(file);
 			in = new BufferedInputStream(fis);
 			bStream = new ByteArrayOutputStream();
@@ -93,13 +99,12 @@ public class EgovImageProcessController extends HttpServlet {
 				} else {
 					type = "image/" + fvo.getFileExtsn().toLowerCase();
 				}
-				type = "image/" + fvo.getFileExtsn().toLowerCase();
 
 			} else {
 				LOGGER.debug("Image fileType is null.");
 			}
 
-			response.setHeader("Content-Type", type);
+			response.setHeader("Content-Type", EgovWebUtil.removeCRLF(type));
 			response.setContentLength(bStream.size());
 
 			bStream.writeTo(response.getOutputStream());
@@ -107,27 +112,27 @@ public class EgovImageProcessController extends HttpServlet {
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			LOGGER.debug("{}", e);
 		} finally {
 			if (bStream != null) {
 				try {
 					bStream.close();
-				} catch (Exception est) {
+				} catch (IOException est) {
 					LOGGER.debug("IGNORED: {}", est.getMessage());
 				}
 			}
 			if (in != null) {
 				try {
 					in.close();
-				} catch (Exception ei) {
+				} catch (IOException ei) {
 					LOGGER.debug("IGNORED: {}", ei.getMessage());
 				}
 			}
 			if (fis != null) {
 				try {
 					fis.close();
-				} catch (Exception efis) {
+				} catch (IOException efis) {
 					LOGGER.debug("IGNORED: {}", efis.getMessage());
 				}
 			}

@@ -13,9 +13,9 @@ import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
 import egovframework.let.sym.ccm.cde.service.CmmnDetailCodeVO;
 import egovframework.let.sym.ccm.cde.service.EgovCcmCmmnDetailCodeManageService;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

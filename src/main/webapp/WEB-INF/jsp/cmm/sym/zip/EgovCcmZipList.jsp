@@ -19,10 +19,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>우편번호 목록</title>
+<title>내부업무 사이트 > 내부시스템관리 > 우편번호관리</title>
 <script type="text/javaScript" language="javascript">
 <!--
 /* ********************************************************
@@ -78,136 +85,139 @@ function fn_egov_detail_Zip(zip,sn){
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-            <form name="listForm" action="<c:url value='/sym/ccm/zip/EgovCcmZipList.do'/>" method="post">
-            <input type="submit" id="invisible" class="invisible"/>
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>코드관리</li>
-                            <li>&gt;</li>
-                            <li><strong>우편번호관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">코드관리</a></li>
+                                        <li>우편번호관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="listForm" action="<c:url value='/sym/ccm/zip/EgovCcmZipList.do'/>" method="post">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">우편번호관리</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition">
+                                    <label class="item f_select" for="sel1">
+                                        <select id="sel1" name="searchCondition" class="select" title="searchCondition">
+                                            <option selected="" value="">선택하세요</option>
+                                            <option value='1' <c:if test="${searchVO.searchCondition == '1'}">selected="selected"</c:if>>우편번호</option>
+                                            <option value='2' <c:if test="${searchVO.searchCondition == '2'}">selected="selected"</c:if>>시도명</option>
+                                            <option value='3' <c:if test="${searchVO.searchCondition == '3'}">selected="selected"</c:if>>시군구명</option>
+                                            <option value='4' <c:if test="${searchVO.searchCondition == '4'}">selected="selected"</c:if>>읍면동명</option>
+                                            <option value='5' <c:if test="${searchVO.searchCondition == '5'}">selected="selected"</c:if>>리건물명</option>
+                                        </select>
+                                    </label>
+                                    <span class="item f_search">
+                                        <input class="f_input w_500" name="searchKeyword" type="text" value="${searchVO.searchKeyword}" maxlength="35" id="searchKeyword">
+                                        <button class="btn" type="submit" onclick="fn_egov_search_Zip(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                    </span>
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <div class="board_list_top">
+                                    <div class="left_col">
+                                    </div>
+
+                                    <div class="right_col">
+                                        <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="fn_egov_regist_Zip(); return false;"><spring:message code='button.create' /></a><!-- 등록 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_regist_ExcelZip(); return false;">엑셀등록</a><!-- 엑셀등록 -->
+                                    </div>
+                                </div>
+
+                                <!-- 게시판 -->
+                                <div class="board_list">
+                                    <table summary="우편번호와 주소를 출력하는 우편번호 목록 테이블이다.">
+                                    	<caption>공통코드 목록</caption>
+                                        <colgroup>
+                                            <col style="width: 80px;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">순번</th>
+                                                <th scope="col">우편번호</th>
+                                                <th scope="col">주소</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	
+                                        	<c:if test="${fn:length(resultList) == 0}">
+                                        		<tr>
+                                        			<td colspan=3><spring:message code="common.nodata.msg" /></td>
+                                        		</tr>
+                                        	</c:if>
+                                        	
+                                        	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
+                                            <tr>
+                                                <td><c:out value="${(searchVO.pageIndex - 1) * searchVO.pageSize + status.count}"/></td>
+                                                <td><a href="#LINK" class="lnk" onclick="javascript:fn_egov_detail_Zip('${resultInfo.zip}','${resultInfo.sn}');"><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></a></td>
+                                                <td>${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
+                                            </tr>
+                                            </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+								<!-- 페이지 네비게이션 시작 -->
+                                <div class="board_list_bot">
+                                    <div class="paging" id="paging_div">
+                                        <ul>
+                                            <ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_pageview" />
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- // 페이지 네비게이션 끝 -->
+                                <!--// 게시판 -->
+                                
+                                <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
+                                
+                                </form>
+
+								<form name="Form" method="post" action="<c:url value='/sym/ccm/zip/EgovCcmZipDetail.do'/>">
+								    <input type="hidden" name="zip">
+								    <input type="hidden" name="sn">
+								</form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>우편번호 목록</strong></h2></div>
-                        
-                        <fieldset><legend>조건정보 영역</legend>    
-                        <div class="sf_start">
-                            <ul id="search_first_ul">
-                                <li>
-    							    <select name="searchCondition" class="select" title="searchCondition">
-							           <option selected value=''>--선택하세요--</option>
-							           <option value='1' <c:if test="${searchVO.searchCondition == '1'}">selected="selected"</c:if>>우편번호</option>
-							           <option value='2' <c:if test="${searchVO.searchCondition == '2'}">selected="selected"</c:if>>시도명</option>
-							           <option value='3' <c:if test="${searchVO.searchCondition == '3'}">selected="selected"</c:if>>시군구명</option>
-							           <option value='4' <c:if test="${searchVO.searchCondition == '4'}">selected="selected"</c:if>>읍면동명</option>
-							           <option value='5' <c:if test="${searchVO.searchCondition == '5'}">selected="selected"</c:if>>리건물명</option>
-							       </select>
-                                </li>
-                                <li>
-                                    <input name="searchKeyword" type="text" size="35" value="${searchVO.searchKeyword}"  maxlength="35" id="searchKeyword">
-                                </li>
-                            </ul>
-                            <ul id="search_second_ul">
-                                <li>
-                                    <div class="buttons" style="float:right;">
-                                        <a href="#noscript" onclick="fn_egov_search_Zip(); return false;"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                        <a href="#noscript" onclick="fn_egov_regist_Zip(); return false;">등록</a>
-                                        <a href="#noscript" onclick="fn_egov_regist_ExcelZip(); return false;">엑셀등록</a> 
-                                    </div>                              
-                                </li>
-                            </ul>           
-                        </div>          
-                        </fieldset>
-                </div>
-                <!-- //검색 필드 박스 끝 -->
-                <div id="page_info"><div id="page_info_align"></div></div>                    
-                <!-- table add start -->
-                <div class="default_tablestyle">
-                    <table summary="우편번호와 주소를 출력하는 우편번호 목록 테이블이다." cellpadding="0" cellspacing="0">
-                    <caption>공통코드 목록</caption>
-                    <colgroup>
-                    <col width="10%" >
-                    <col width="20%" >  
-                    <col width="70%" >
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" class="f_field" nowrap="nowrap">순번</th>
-                        <th scope="col" nowrap="nowrap">우편번호</th>
-                        <th scope="col" nowrap="nowrap">주소</th>
-                    </tr>
-                    </thead>
-                    <tbody>                 
-
-                    <c:forEach items="${resultList}" var="resultInfo" varStatus="status">
-                    <!-- loop 시작 -->                                
-						<tr style="cursor:pointer;cursor:hand;" onclick="javascript:fn_egov_detail_Zip('${resultInfo.zip}','${resultInfo.sn}');">
-						    <td class="lt_text3" nowrap="nowrap"><c:out value="${(searchVO.pageIndex - 1) * searchVO.pageSize + status.count}"/></td>
-						    <td class="lt_text3" nowrap="nowrap"><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></td>
-						    <td class="lt_text"  nowrap="nowrap">${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
-						</tr>   
-                    </c:forEach>     
-                    <c:if test="${fn:length(resultList) == 0}">
-                        <tr> 
-                            <td colspan=3>
-                                <spring:message code="common.nodata.msg" />
-                            </td>
-                        </tr>                                              
-                    </c:if>
-                    </tbody>
-                    </table>
-                </div>
-
-                <!-- 페이지 네비게이션 시작 -->
-                <div id="paging_div">
-                    <ul class="paging_align">
-				        <ui:pagination paginationInfo = "${paginationInfo}"
-				                type="image"
-				                jsFunction="fn_egov_pageview"
-				                />
-                    </ul>
-                </div>                          
-                <!-- //페이지 네비게이션 끝 -->  
-                
-                <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
-            </form>
-
-			<form name="Form" method="post" action="<c:url value='/sym/ccm/zip/EgovCcmZipDetail.do'/>">
-			    <input type="hidden" name="zip">
-			    <input type="hidden" name="sn">
-			    <input type="submit" class="invisible"/>
-			</form>
-
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+        </div>
+
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
     </div>
-    <!-- //전체 레이어 끝 -->
- </body>
+    
+</body>
 </html>

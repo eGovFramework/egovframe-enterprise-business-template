@@ -6,7 +6,7 @@ import egovframework.let.sec.gmt.service.EgovGroupManageService;
 import egovframework.let.sec.gmt.service.GroupManage;
 import egovframework.let.sec.gmt.service.GroupManageVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

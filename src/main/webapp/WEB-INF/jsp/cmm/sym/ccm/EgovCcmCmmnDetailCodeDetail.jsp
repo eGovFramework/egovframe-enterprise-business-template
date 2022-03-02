@@ -20,11 +20,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
-
-<title>공통상세코드 상세조회</title>
+<title>내부업무 사이트 > 내부시스템관리 > 상세코드관리</title>
 <script type="text/javaScript" language="javascript">
 <!--
 /* ********************************************************
@@ -66,110 +72,136 @@ function fnDelete(){
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>코드관리</li>
-                            <li>&gt;</li>
-                            <li><strong>상세공통코드관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">코드관리</a></li>
+                                        <li>상세코드관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="Form" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do'/>">
+								
+								<input type="hidden" name="codeId">
+								<input type="hidden" name="code">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">상세코드관리</h2>
+                                
+                                <div class="board_view2">
+                                    <table summary="코드ID명, 코드, 코드명, 코드설명, 사용여부가 나타나 있는 공통상세코드 상세조회 테이블이다.">
+                                        <colgroup>
+                                            <col style="width: 190px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="codeIdNm">코드ID</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                            	${result.codeIdNm}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min">코드</span>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                            	${result.code}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min">코드명</span>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                            	${result.codeNm}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="codeDc">코드설명</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <textarea class="f_txtar w_full h_80" cols="30" rows="10" id="codeDc">${result.codeDc}</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                            	<label for="useAt">사용여부</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select" for="useAt">
+                                                    <select id="useAt" name="useAt">
+                                                        <option value="Y" <c:if test="${result.useAt == 'Y'}">selected="selected"</c:if> >Yes</option>
+                                                        <option value="N" <c:if test="${result.useAt == 'N'}">selected="selected"</c:if> >No</option>
+                                                    </select>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                    	<c:if test="${result.useAt == 'Y'}">
+                                        	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fnDelete(); return false;"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        </c:if>
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnModify(); return false;"><spring:message code='button.update' /></a><!-- 수정 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fnList(); return false;"><spring:message code='button.list' /></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                <!-- 검색조건 유지 -->
+                                <input name="cmd" type="hidden" value="<c:out value='save'/>"/>
+                                
+                                </form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>공통상세코드 상세조회</strong></h2></div>
-                </div>
+            </div>
+        </div>
 
-                <form name="Form" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do'/>">
-                    <input type="submit" id="invisible" class="invisible"/>
-				    <input type="hidden" name="codeId">
-				    <input type="hidden" name="code">
-
-                    <div class="modify_user" >
-                        <table summary="코드ID명, 코드, 코드명, 코드설명, 사용여부가 나타나 있는 공통상세코드 상세조회 테이블이다.">
-						  <tr> 
-						    <th width="20%" height="23" class="required_text" scope="row" nowrap >코드ID명<img src="${ImgUrl}/required.gif" alt="필수"  width="15" height="15"></th>
-						    <td>${result.codeIdNm}</td>
-						  </tr>
-						  <tr>
-						    <th width="20%" height="23" class="required_text" scope="row" nowrap >코드<img src="${ImgUrl}/required.gif" alt="필수"  width="15" height="15"></th>          
-						    <td>${result.code}</td>    
-						  </tr> 
-						  <tr>
-						    <th width="20%" height="23" class="required_text" scope="row" nowrap >코드명<img src="${ImgUrl}/required.gif" alt="필수"  width="15" height="15"></th>          
-						    <td>${result.codeNm}</td>    
-						  </tr> 
-						  <tr> 
-						    <th height="23" class="required_text" scope="row" ><label for="codeDc">코드설명</label><img src="${ImgUrl}/required.gif" alt="필수"  width="15" height="15"></th>
-						    <td><textarea class="textarea"  cols="75" rows="14"  style="width:450px;" id="codeDc">${result.codeDc}</textarea></td>
-						  </tr> 
-						  <tr> 
-						    <th width="20%" height="23" class="required_text" scope="row" nowrap ><label for="useAt">사용여부</label><img src="${ImgUrl}/required.gif" alt="필수"  width="15" height="15"></th>
-						    <td>
-						        <select name="useAt" id="useAt">
-						            <option value="Y" <c:if test="${result.useAt == 'Y'}">selected="selected"</c:if> >Yes</option>
-						            <option value="N" <c:if test="${result.useAt == 'N'}">selected="selected"</c:if> >No</option>               
-						        </select>
-						    </td>    
-						  </tr>     
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                        <!-- 목록/저장버튼  -->
-                        <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="#noscript" onclick="fnModify(); return false;">수정</a>
-                          </td>
-                          <c:if test="${result.useAt == 'Y'}"> 
-	                          <td width="10"></td>
-	                          <td>
-	                            <a href="#noscript" onclick="fnDelete(); return false;">삭제</a> 
-	                          </td>
-                          </c:if>
-                          <td width="10"></td>
-                          <td>
-                            <a href="#noscript" onclick="fnList(); return false;">목록</a>
-                          </td>
-                        </tr>
-                        </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-
-                    <!-- 검색조건 유지 -->
-                    <input name="cmd" type="hidden" value="<c:out value='save'/>"/>
-                    <!-- 검색조건 유지 -->
-                </form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

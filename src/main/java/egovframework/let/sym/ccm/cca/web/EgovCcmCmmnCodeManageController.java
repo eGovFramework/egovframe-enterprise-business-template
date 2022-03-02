@@ -9,8 +9,8 @@ import egovframework.let.sym.ccm.cca.service.EgovCcmCmmnCodeManageService;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

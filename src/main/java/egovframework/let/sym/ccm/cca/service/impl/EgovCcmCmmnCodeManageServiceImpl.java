@@ -6,7 +6,7 @@ import egovframework.let.sym.ccm.cca.service.CmmnCode;
 import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
 import egovframework.let.sym.ccm.cca.service.EgovCcmCmmnCodeManageService;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

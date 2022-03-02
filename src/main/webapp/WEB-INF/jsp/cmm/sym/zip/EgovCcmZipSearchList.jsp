@@ -19,12 +19,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-<meta http-equiv="content-language" content="ko">
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/zip.css'/>" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+
 <title>우편번호 찾기</title>
-<script type="text/javascript" src="<c:url value='/js/showModalDialogCallee.js'/>" ></script>
 <script type="text/javaScript" language="JavaScript">
 <!--
 /* ********************************************************
@@ -54,11 +59,15 @@ function fn_egov_return_Zip(zip,addr){
 	retVal.vZip  = vZip;
 	retVal.sAddr = sAddr;
 	
-    setReturnValue(retVal);
-	
-	parent.window.returnValue = retVal;
-	parent.window.close();
-}	
+	parent.parent.fn_egov_returnValue(retVal);
+}
+
+/* ********************************************************
+ * 취소처리
+ ******************************************************** */
+function fn_egov_cancel_popup() {
+	parent.parent.fn_egov_modal_remove();
+}
 //-->
 </script>
 </head>
@@ -67,66 +76,78 @@ function fn_egov_return_Zip(zip,addr){
 <!-- 자바스크립트 경고 태그  -->
 <noscript class="noScriptTitle">자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
-<form name="listForm" action="<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" method="post">
-    <input name="searchCondition" type="hidden" size="35" value="4" /> 
-    <table style="width:550px" cellpadding="8" class="table-search" border="0">
-        <tr>
-            <td style="width:35%" class="title_left">
-                <img src="<c:url value='/images/tit_icon.gif'/>" width="16" height="16" hspace="3" align="middle" alt="제목"/> 우편번호 찾기
-            </td>
-            <td style="width:60%" class="title_right">
-                동명을 입력하시오. <input name="searchKeyword" type="text" size="20" value="${searchVO.searchKeyword}"  maxlength="20" title="동명"/> 
-            </td>
-            <th style="width:5%">
-                <table border="0" cellspacing="0" cellpadding="0">
-                    <tr> 
-                        <td><img src="<c:url value='/images/bu2_left.gif'/>" alt="조회" width="8" height="20" /></td>
-                        <td class="btnBackground" nowrap="nowrap">
-                            <input type="submit" value="조회" onclick="javascript:fn_egov_search_Zip();" class="btnNew" style="height:20px;width:26px;padding:0px 0px 0px 0px;" >
-                        </td>
-                        <td><img src="<c:url value='/images/bu2_right.gif'/>" alt="조회" width="8" height="20" /></td>
-                        <td width="10"></td>
-                    </tr>
-                </table>
-            </th>  
-        </tr>
-    </table>
+	<form name="listForm" action="<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" method="post">
     
-    <table style="width:550px" cellpadding="0" class="table-line" border="0" summary="우편번호 건색 결과를 알려주는 테이블입니다.우편번호 및 주소 내용을 담고 있습니다">
-        <thead>
-            <tr>  
-            	<th class="title" style="width:25%" scope="col" nowrap="nowrap">우편번호</th>
-            	<th class="title" style="width:75%" scope="col" nowrap="nowrap">주소</th>
-            </tr>
-        </thead>    
-        <tbody>
-            <c:forEach items="${resultList}" var="resultInfo" varStatus="status">
-                <tr style="cursor:pointer;cursor:hand;" onclick="javascript:fn_egov_return_Zip( '${resultInfo.zip}', '${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm}');">
-                	<td class="lt_text3" nowrap="nowrap" ><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></td>
-                	<td class="lt_text" nowrap="nowrap" >${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
-                </tr>   
-            </c:forEach>
-        </tbody>  
-    </table>
-    
-    <table style="width:550px" cellspacing="0" cellpadding="0" border="0">
-        <tr>
-        	<td height="3px"></td>
-        </tr>
-    </table>
-    
-    <div align="center">
-        	<ul class="paging_align">
-        		<ui:pagination paginationInfo = "${paginationInfo}"
-        				type="image"
-        				jsFunction="fn_egov_pageview"
-        				/>
-        	</ul>
+    <input name="searchCondition" type="hidden" size="35" value="4" />
+
+	<!-- 우편번호 찾기 팝업 -->
+    <div class="popup POP_POST_SEARCH">
+        <div class="pop_inner">
+            <div class="pop_header">
+                <h1>우편번호 찾기</h1>
+                <button type="button" class="close" onclick="fn_egov_cancel_popup(); return false;">닫기</button>
+            </div>
+
+            <div class="pop_container">
+                <!-- 검색조건 -->
+                <div class="condition2">
+                    <label for="" class="lb mr10">동 명 : </label>
+                    <span class="item f_search">
+                        <input class="f_input w_500" name="searchKeyword" type="text" value="${searchVO.searchKeyword}" maxlength="20" title="동명"/>
+                        <button class="btn" type="submit" onclick="javascript:fn_egov_search_Zip();"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                    </span>
+                </div>
+                <!--// 검색조건 -->
+
+                <!-- 게시판 -->
+                <div class="board_list">
+                    <table summary="우편번호 건색 결과를 알려주는 테이블입니다.우편번호 및 주소 내용을 담고 있습니다">
+                        <colgroup>
+                            <col style="width: 30%;">
+                            <col style="width: auto;">
+                            <col style="width: 150px;">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">우편번호</th>
+                                <th scope="col">주소</th>
+                                <th scope="col">선택</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
+                            <tr>
+                                <td><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></td>
+                                <td class="al_l">${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
+                                <td>
+                                	<a href="#LINK" class="btn btn_blue_30 w_80" onclick="javascript:fn_egov_return_Zip( '${resultInfo.zip}', '${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm}');">
+                                		선택
+                                	</a>
+                                </td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+
+				<!-- 페이지 네비게이션 시작 -->
+                <div class="board_list_bot">
+                    <div class="paging" id="paging_div">
+                        <ul>
+                            <ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_pageview" />
+                        </ul>
+                    </div>
+                </div>
+                <!-- // 페이지 네비게이션 끝 -->
+                <!--// 게시판 -->
+            </div>
+        </div>
     </div>
-     
+    <!--// 우편번호 찾기 팝업 -->
+    
     <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
-</form>
+    
+	</form>
+    
 </body>
 </html>
-
-

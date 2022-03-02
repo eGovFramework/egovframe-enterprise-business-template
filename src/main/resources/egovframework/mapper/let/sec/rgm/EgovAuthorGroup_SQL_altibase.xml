@@ -47,13 +47,13 @@
              WHERE 1 = 1    
                
             <if test="searchKeyword != null and searchKeyword != ''">
-                <if test="searchCondition == 1">AND
+                <if test='searchCondition == "1"'>AND
                        A.USER_ID LIKE '%'||#{searchKeyword}||'%'
                 </if>
-	            <if test="searchCondition == 2">AND
+	            <if test='searchCondition == "2"'>AND
                        A.USER_NM LIKE '%'||#{searchKeyword}||'%'
 	            </if>
-	            <if test="searchCondition == 3">AND
+	            <if test='searchCondition == "3"'>AND
 	                   A.GROUP_ID = #{searchKeyword}
 	            </if>
             </if>
@@ -108,13 +108,13 @@
                 ON A.USER_ID = B.SCRTY_DTRMN_TRGET_ID
              WHERE 1 = 1   
             <if test="searchKeyword != null and searchKeyword != ''">
-                <if test="searchCondition == 1">AND
+                <if test='searchCondition == "1"'>AND
                        A.USER_ID LIKE '%'||#{searchKeyword}||'%'
                 </if>
-                <if test="searchCondition == 2">AND
+                <if test='searchCondition == "2"'>AND
                        A.USER_NM LIKE '%'||#{searchKeyword}||'%'
                 </if>
-                <if test="searchCondition == 3">AND
+                <if test='searchCondition == "3"'>AND
                        A.GROUP_ID = #{searchKeyword}
                 </if>
             </if>

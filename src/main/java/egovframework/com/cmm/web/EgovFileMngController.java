@@ -6,7 +6,7 @@ import java.util.Map;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

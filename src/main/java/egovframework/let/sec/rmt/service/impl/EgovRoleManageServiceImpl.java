@@ -6,7 +6,7 @@ import egovframework.let.sec.rmt.service.EgovRoleManageService;
 import egovframework.let.sec.rmt.service.RoleManage;
 import egovframework.let.sec.rmt.service.RoleManageVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

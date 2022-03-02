@@ -24,7 +24,7 @@
             SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE
               FROM LETTNAUTHORGROUPINFO
              WHERE 1=1
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
             </if>
             ORDER BY GROUP_CREAT_DE DESC
@@ -67,7 +67,7 @@
 			SELECT COUNT(*) totcnt
 			FROM LETTNAUTHORGROUPINFO
 			WHERE 1=1
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
 			</if>
 	</select>

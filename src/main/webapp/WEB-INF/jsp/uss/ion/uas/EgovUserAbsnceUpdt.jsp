@@ -22,9 +22,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
 <title>사용자부재 수정</title>
 <script type="text/javascript" src="<c:url value='/js/EgovMultiFile.js'/>"></script>
@@ -44,7 +50,7 @@ function fncUserAbsnceUpdate() {
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/updtUserAbsnce.do'/>";
 
-    if(confirm("저장 하시겠습니까?")){
+    if(confirm('<spring:message code="common.update.msg" />')){
         varFrom.submit();
     }
 }
@@ -52,7 +58,7 @@ function fncUserAbsnceUpdate() {
 function fncUserAbsnceDelete() {
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>";
-    if(confirm("삭제 하시겠습니까?")){
+    if(confirm('<spring:message code="common.delete.msg" />')){
         varFrom.submit();
     }
 }
@@ -62,112 +68,125 @@ function fncUserAbsnceDelete() {
 
 <body>
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>사용자관리</li>
-                            <li>&gt;</li>
-                            <li><strong>사용자부재 수정</strong></li>
-                        </ul>
+<body>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">사용자관리</a></li>
+                                        <li>사용자부재관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form:form modelAttribute="userAbsnce" action="${pageContext.request.contextPath}/uss/ion/uas/addUserAbsnce.do" method="post">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">사용자부재관리</h2>
+
+                                <div class="board_view2">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width: 190px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="userId">사용자ID</label>
+                                            </td>
+                                            <td>
+                                                <input name="userId" id="userId" class="f_txt" title="사용자ID" type="text" value="<c:out value='${userAbsnce.userId}'/>" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="userNm">사용자명</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <input name="userNm" id="userNm" class="f_txt" title="사용자명" type="text" value="<c:out value='${userAbsnce.userNm}'/>" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                            	<label for="userAbsnceAt">부재여부</label>
+                                            </td>
+                                            <td>
+                                                <label class="f_select" for="userAbsnceAt">
+                                                    <select name="userAbsnceAt" id="userAbsnceAt" title="부재여부">
+                                                        <option value="Y" <c:if test="${userAbsnce.userAbsnceAt == 'Y'}">selected</c:if> >Y</option>
+                                                        <option value="N" <c:if test="${userAbsnce.userAbsnceAt == 'N'}">selected</c:if> >N</option>
+                                                    </select>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="lastUpdusrPnttm">등록일시</label>
+                                            </td>
+                                            <td>
+                                                <input name="lastUpdusrPnttm" id="lastUpdusrPnttm" class="f_txt" title="등록일시" type="text" value="<c:out value="${userAbsnce.lastUpdusrPnttm}"/>" maxLength="50" readonly>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                    	<a href="<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>?userId=<c:out value='${userAbsnceVO.userId}'/>&amp;selAbsnceAt=<c:out value='${userAbsnceVO.selAbsnceAt}'/>" class="btn btn_skyblue_h46 w_100" onclick="fncUserAbsnceDelete(); return false;">
+                                    		<spring:message code="button.delete" />
+                                    	</a><!-- 삭제 -->
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fncUserAbsnceInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList(); return false;">
+                                        	<spring:message code="button.list" />
+                                        </a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                <!-- 검색조건 유지 -->
+                                <input type="hidden" name="searchCondition" value="<c:out value='${userAbsnceVO.searchCondition}'/>">
+                                <input type="hidden" name="searchKeyword" value="<c:out value='${userAbsnceVO.searchKeyword}'/>">
+                                <input type="hidden" name="pageIndex" value="<c:out value='${userAbsnceVO.pageIndex}'/>">
+                                <input type="hidden" name="selAbsnceAt" value="<c:out value='${userAbsnceVO.selAbsnceAt}'/>">
+                                
+                                </form:form>
+                                
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>사용자부재 수정</strong></h2></div>
-                </div>
-                <form:form commandName="userAbsnce" action="${pageContext.request.contextPath}/uss/ion/uas/updtUserAbsnce.do" method="post">  
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table summary="사용자부재정보를 수정한다.">
-                              <tr> 
-							    <th class="required_text" width="20%" scope="row" nowrap="nowrap">사용자ID
-                                <!-- <img src="/images/egovframework/cmm/uss/umt/icon/required.gif" width="15" height="15" alt="" />
-                                 -->
-                                </th>
-							    <td nowrap="nowrap"><input name="userId" id="userId" title="사용자ID" type="text" value="<c:out value='${userAbsnce.userId}'/>" size="30" class="readOnlyClass" readonly></td>
-							  </tr>
-							  <tr>
-							    <th class="required_text" width="20%" scope="row" nowrap="nowrap">사용자명
-                                <!-- <img src="/images/egovframework/cmm/uss/umt/icon/required.gif" width="15" height="15" alt="" />
-                                 -->
-                                </th>
-							    <td nowrap="nowrap"><input name="userNm" id="userNm" title="사용자명" type="text" value="<c:out value='${userAbsnce.userNm}'/>" maxLength="50" size="30"  class="readOnlyClass" readonly></td>
-							  </tr>
-							  <tr>
-							    <th class="required_text" width="20%" scope="row" nowrap="nowrap">부재여부
-                                <!-- <img src="/images/egovframework/cmm/uss/umt/icon/required.gif" width="15" height="15" alt="" />
-                                 -->
-                                </th>
-							    <td nowrap="nowrap">
-							      <select name="userAbsnceAt" id="userAbsnceAt" title="부재여부">
-							          <option value="Y" <c:if test="${userAbsnce.userAbsnceAt == 'Y'}">selected</c:if> >Y</option>
-							          <option value="N" <c:if test="${userAbsnce.userAbsnceAt == 'N'}">selected</c:if> >N</option>
-							      </select>
-							   </td> 
-							  </tr>
-							  <tr>
-							    <th class="required_text" width="20%" scope="row" nowrap="nowrap">등록일시
-                                <!-- <img src="/images/egovframework/cmm/uss/umt/icon/required.gif" width="15" height="15" alt="" />
-                                 -->
-                                </th>
-							    <td nowrap="nowrap"><input name="lastUpdusrPnttm" id="lastUpdusrPnttm" title="등록일시" type="text" value="<c:out value="${userAbsnce.lastUpdusrPnttm}"/>" maxLength="50" size="20" class="readOnlyClass" readonly></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                        <!-- 목록/저장버튼  -->
-                        <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="#LINK" onclick="JavaScript:fncUserAbsnceUpdate(); return false;"><spring:message code="button.save" /></a> 
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>?userId=<c:out value='${userAbsnceVO.userId}'/>&amp;selAbsnceAt=<c:out value='${userAbsnceVO.selAbsnceAt}'/>" onclick="fncUserAbsnceDelete(); return false;"><spring:message code="button.delete" /></a> 
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" onclick="fncSelectUserAbsnceList(); return false;"><spring:message code="button.list" /></a> 
-                          </td>
-                        </tr>
-                        </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-
-					<!-- 검색조건 유지 -->
-					<input type="hidden" name="searchCondition" value="<c:out value='${userAbsnceVO.searchCondition}'/>">
-					<input type="hidden" name="searchKeyword" value="<c:out value='${userAbsnceVO.searchKeyword}'/>">
-					<input type="hidden" name="pageIndex" value="<c:out value='${userAbsnceVO.pageIndex}'/>">
-					<input type="hidden" name="selAbsnceAt" value="<c:out value='${userAbsnceVO.selAbsnceAt}'/>">
-                    <!-- 검색조건 유지 -->
-                </form:form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

@@ -27,10 +27,10 @@ FROM(
         <if test='sbscrbSttus != "0"'>
             AND sttus LIKE  #{sbscrbSttus}
         </if>
-        <if test="searchCondition == 0">
+        <if test='searchCondition == "0"'>
             AND userId LIKE #{searchKeyword}
         </if>
-        <if test="searchCondition == 1">
+        <if test='searchCondition == "1"'>
             AND userNm LIKE '%' #{searchKeyword} '%'
         </if>
         ORDER BY sbscrbDe DESC
@@ -59,10 +59,10 @@ FROM(
             <if test='sbscrbSttus != "0"'>
                 AND sttus LIKE  #{sbscrbSttus}
             </if>
-            <if test="searchCondition == 0">
+            <if test='searchCondition == "0"'>
                 AND userId LIKE #{searchKeyword}
             </if>
-            <if test="searchCondition == 1">
+            <if test='searchCondition == "1"'>
                 AND userNm LIKE '%' #{searchKeyword} '%'
             </if>
     </select>

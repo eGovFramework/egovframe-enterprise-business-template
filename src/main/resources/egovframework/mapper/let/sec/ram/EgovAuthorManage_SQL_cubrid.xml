@@ -23,7 +23,7 @@
               FROM LETTNAUTHORINFO
              WHERE 1=1
                       
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE '%'||#{searchKeyword}||'%'
             </if>
                     
@@ -78,7 +78,7 @@
             SELECT COUNT(*) totcnt
             FROM LETTNAUTHORINFO
             WHERE 1=1
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE '%'||#{searchKeyword}||'%'
             </if>
     </select>

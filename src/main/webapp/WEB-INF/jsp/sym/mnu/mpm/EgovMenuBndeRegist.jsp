@@ -14,24 +14,28 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
   /* Image Path 설정 */
-  String imagePath_icon   = "/images/egovframework/sym/mpm/icon";
-  String imagePath_button = "/images/egovframework/sym/mpm/button/";
+  String imagePath_icon   = "/images_old/egovframework/sym/mpm/icon";
+  String imagePath_button = "/images_old/egovframework/sym/mpm/button/";
 %>
 <c:url var="ImgUrl" value="/images"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+<title>내부업무 사이트 > 내부시스템관리 > 메뉴목록관리</title>
 
-<title>메뉴일괄등록</title>
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
 <script  language="javascript1.2" type="text/javaScript">
 /* ********************************************************
  * 메뉴일괄생성처리 함수
@@ -83,82 +87,89 @@ function checkFile(){
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>메뉴관리</li>
-                            <li>&gt;</li>
-                            <li><strong>메뉴목록관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">메뉴관리</a></li>
+                                        <li>메뉴목록관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form name="menuManageRegistForm" action ="<c:url value='/sym/mpm/EgovMenuBndeRegist.do'/>" method="post" enctype="multipart/form-data">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">메뉴목록관리</h2>
+
+                                <div class="board_view2">
+                                    <table summary="메뉴일괄등록">
+                                        <colgroup>
+                                            <col style="width: 190px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min"><label for="file">일괄파일</label></span>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <input type="file" id="file" class="f_file" name="file" title="일괄파일"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:insertMenuManage(); return false;"><spring:message code='button.save' /></a><!-- 저장 -->
+                                        <a href="<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList(); return false;"><spring:message code='button.list' /></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                <!-- 검색조건 유지 -->
+                                <input name="cmd" type="hidden" value="<c:out value='bndeInsert'/>"/>
+                                
+                                </form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>메뉴일괄등록</strong></h2></div>
-                </div>
-                <form name="menuManageRegistForm" action ="<c:url value='/sym/mpm/EgovMenuBndeRegist.do'/>" method="post" enctype="multipart/form-data">
-                <input type="submit" id="invisible" class="invisible"/>
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table summary="메뉴일괄등록">
-                          <tr> 
-                            <th width="20%" height="23" class="required_text" scope="row"><label for="file">일괄파일</label>
-                            <img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"></th>
-                            <td width="80%" nowrap="nowrap">
-                              <input type = "file" id="file" name="file" size="40" title="일괄파일"/>
-                            </td>
-                          </tr> 
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                        <!-- 목록/저장버튼  -->
-                        <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>" onclick="selectList(); return false;">목록</a> 
-                          </td>
-                          <td>
-                            <a href="#LINK" onclick="javascript:insertMenuManage(); return false;">일괄등록</a> 
-                          </td>
-                        </tr>
-                        </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-
-                    <!-- 검색조건 유지 -->
-                    <input name="cmd" type="hidden" value="<c:out value='bndeInsert'/>"/>
-                    <!-- 검색조건 유지 -->
-                </form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

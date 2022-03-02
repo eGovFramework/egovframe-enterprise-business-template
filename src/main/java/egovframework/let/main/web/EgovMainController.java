@@ -9,8 +9,8 @@ import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 
-import egovframework.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +98,7 @@ public class EgovMainController {
 
 		// 공지사항 메인컨텐츠 조회 끝 -----------------------------------
 
-		// 업무게시판 메인 컨텐츠 조회 시작 -------------------------------
+		// 자료실 메인 컨텐츠 조회 시작 -------------------------------
 		boardVO.setPageUnit(5);
 		boardVO.setPageSize(10);
 		boardVO.setBbsId("BBSMSTR_CCCCCCCCCCCC");
@@ -113,11 +113,84 @@ public class EgovMainController {
 
 		model.addAttribute("bbsList", bbsMngService.selectBoardArticles(boardVO, "BBSA02").get("resultList"));
 
-		// 업무게시판 메인컨텐츠 조회 끝 -----------------------------------
+		// 자료실 메인컨텐츠 조회 끝 -----------------------------------
 
 		return "main/EgovMainView";
 	}
 
+	
+	
+	/**
+     * Header Page를 조회한다.
+     * @param menuManageVO MenuManageVO
+     * @return 출력페이지정보 "EgovIncHeader"
+     * @exception Exception
+     */
+    @RequestMapping(value="/sym/mms/EgovHeader.do")
+    public String selectHeader(
+    		@ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
+    		@RequestParam(value="flag", required=false) String flag,
+    		ModelMap model)
+            throws Exception {
+
+    	LoginVO user =
+    		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
+    	if(EgovUserDetailsHelper.isAuthenticated() && user!=null){
+    		menuManageVO.setTmp_Id(user.getId());
+        	menuManageVO.setTmp_Password(user.getPassword());
+        	menuManageVO.setTmp_UserSe(user.getUserSe());
+        	menuManageVO.setTmp_Name(user.getName());
+        	menuManageVO.setTmp_Email(user.getEmail());
+        	menuManageVO.setTmp_OrgnztId(user.getOrgnztId());
+        	menuManageVO.setTmp_UniqId(user.getUniqId());
+        	
+    		model.addAttribute("list_headmenu", menuManageService.selectMainMenuHead(menuManageVO));
+    		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeft(menuManageVO));
+    	}else{
+    		menuManageVO.setAuthorCode("ROLE_ANONYMOUS");
+//    		
+//    		model.addAttribute("list_headmenu", menuManageService.selectMainMenuHeadByAuthor(menuManageVO));
+//    		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeftByAuthor(menuManageVO));
+//    		
+    	}
+
+    	return "main/inc/EgovIncHeader"; // 업무화면의 상단메뉴 화면
+
+    }
+
+	/**
+     * Footer Page를 조회한다.
+     * @param 
+     * @return 출력페이지정보 "EgovIncFooter"
+     * @exception Exception
+     */
+    @RequestMapping(value="/sym/mms/EgovFooter.do")
+    public String selectFooter(ModelMap model) throws Exception {
+    	return "main/inc/EgovIncFooter";
+    }
+    
+    /**
+     * 좌측메뉴를 조회한다.
+     * @param 
+     * @return 출력페이지정보 "EgovIncLeftmenu"
+     * @exception Exception
+     */
+    @RequestMapping(value="/sym/mms/EgovMenuLeft.do")
+    public String selectMenuLeft(ModelMap model) throws Exception {
+
+    	//LoginVO user = EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
+
+    	//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+    	if(EgovUserDetailsHelper.isAuthenticated()){
+    		//인증된 경우 처리할 사항 추가 ...
+    		model.addAttribute("lastLogoutDateTime", "로그아웃 타임: 2021-08-12 11:30");
+    		//최근 로그아웃 시간 등에 대한 확보 후 메인 컨텐츠로 활용
+    	}
+
+      	return "main/inc/EgovIncLeftmenu";
+    }
+	
+	
 	/**
      * Head메뉴를 조회한다.
      * @param menuManageVO MenuManageVO

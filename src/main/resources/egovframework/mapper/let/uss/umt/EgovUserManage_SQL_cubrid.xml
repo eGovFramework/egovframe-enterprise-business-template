@@ -24,10 +24,10 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         <if test='sbscrbSttus != "0"'>
             AND EMPLYR_STTUS_CODE LIKE  #{sbscrbSttus}
         </if>
-        <if test="searchCondition == 0">
+        <if test='searchCondition == "0"'>
             AND EMPLYR_ID LIKE #{searchKeyword}
         </if>
-        <if test="searchCondition == 1">
+        <if test='searchCondition == "1"'>
             AND USER_NM LIKE '%' ||#{searchKeyword}|| '%'
         </if>
         ORDER BY 12 DESC
@@ -41,10 +41,10 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
             <if test='sbscrbSttus != "0"'>
                 AND EMPLYR_STTUS_CODE LIKE  #{sbscrbSttus}
             </if>
-            <if test="searchCondition == 0">
+            <if test='searchCondition == "0"'>
                 AND EMPLYR_ID LIKE #{searchKeyword}
             </if>
-            <if test="searchCondition == 1">
+            <if test='searchCondition == "1"'>
                 AND USER_NM LIKE '%' ||#{searchKeyword}|| '%'
             </if>
     </select>

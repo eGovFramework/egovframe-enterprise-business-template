@@ -16,25 +16,25 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%
-  /* Image Path 설정 */
-  String imagePath_icon   = "/images/egovframework/sym/mpm/icon/";
-  String imagePath_button = "/images/egovframework/sym/mpm/button/";
-%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
 <title>메뉴생성</title>
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
+
 <script type="text/javaScript">
 <!--
-var imgpath = "<c:url value='/'/>images/tree/";
+var imgpath = "<c:url value='/'/>images/";
 //-->
 </script>
 <script language="javascript1.2" type="text/javaScript" src="<c:url value='/js/EgovMenuCreat.js'/>"></script>
@@ -81,6 +81,14 @@ function fMenuCreatSiteMap() {
     id = document.menuCreatManageForm.authorCode.value;
     window.open("<c:url value='/sym/mpm/EgovMenuCreatSiteMapSelect.do'/>?authorCode="+id,'Pop_SiteMap','scrollbars=yes, width=550, height=700');
 }
+
+/* ********************************************************
+ * 취소처리
+ ******************************************************** */
+function fn_egov_cancel_popup() {
+	parent.fn_egov_modal_remove();
+}
+
 <c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
 -->
 </script>
@@ -88,102 +96,78 @@ function fMenuCreatSiteMap() {
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    
-        
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
-                <form name="menuCreatManageForm" action ="/sym/mpm/EgovMenuCreatSiteMapSelect.do" method="post">
-                <input type="submit" id="invisible" class="invisible"/>
-	                <input name="checkedMenuNoForInsert" type="hidden" >
-	                <input name="checkedAuthorForInsert"  type="hidden" >
-
-	                <!-- 검색 필드 박스 시작 -->
-	                <div id="search_field">
-	                    <div id="search_field_loc"><h2><strong>메뉴생성</strong></h2></div>
-	                        <fieldset><legend>조건정보 영역</legend>    
-	                        <div class="sf_start">
-	                            <ul id="search_first_ul">
-	                                <li>
-	                                    <label for="authorCode">권한코드 : </label>
-	                                    <input id="authorCode" name="authorCode" type="text" size="30"  maxlength="30" title="권한코드" value="${resultVO.authorCode}" readonly="readonly"> 
-	                                </li>
-	                            </ul>
-	                            <ul id="search_second_ul">
-	                                <li>
-	                                    <div class="buttons" style="float:right;">
-	                                        <a href="#LINK" onclick="fInsertMenuCreat(); return false;">메뉴생성</a>
-	                                    </div>                              
-	                                </li>
-	                            </ul>           
-	                        </div>          
-	                        </fieldset>
-	                </div>
-	                <!-- //검색 필드 박스 끝 -->
-	                <div id="page_info"><div id="page_info_align"></div></div>                    
+	<form name="menuCreatManageForm" action ="/sym/mpm/EgovMenuCreatSiteMapSelect.do" method="post">
 	
-	                <!-- table add start -->
-	                <div >
-	                    <c:forEach var="result1" items="${list_menulist}" varStatus="status" > 
-                            <input type="hidden" name="tmp_menuNmVal" value="${result1.menuNo}|${result1.upperMenuId}|${result1.menuNm}|${result1.progrmFileNm}|${result1.chkYeoBu}|">
-                        </c:forEach>
-	                    <table summary="메뉴일괄등록" cellpadding="0" cellspacing="0">
-	                        <caption>메뉴일괄등록</caption>
-						    <tr>
-							    <td width='20'>&nbsp;</td>
-							    <td>
-								    <!-- div class="tree" style="position:absolute; left:24px; top:70px; width:179px; height:25px; z-index:10;" -->
-								    <div class="tree" >
-								        <script language="javascript" type="text/javaScript">
-								            var chk_Object = true;
-								            var chk_browse = "";
-								            if (eval(document.menuCreatManageForm.authorCode)=="[object]") chk_browse = "IE";
-								            if (eval(document.menuCreatManageForm.authorCode)=="[object NodeList]") chk_browse = "Fox";
-								            if (eval(document.menuCreatManageForm.authorCode)=="[object Collection]") chk_browse = "safai";
-								
-								            var Tree = new Array;
-								            if(chk_browse=="IE"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object]"){
-								               alert("메뉴 목록 데이타가 존재하지 않습니다.");
-								               chk_Object = false;
-								            }
-								            if(chk_browse=="Fox"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object NodeList]"){
-								               alert("메뉴 목록 데이타가 존재하지 않습니다.");
-								               chk_Object = false;
-								            }
-								            if(chk_browse=="safai"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object Collection]"){
-								                   alert("메뉴 목록 데이타가 존재하지 않습니다.");
-								                   chk_Object = false;
-								            }
-								            if( chk_Object ){
-								                for (var j = 0; j < document.menuCreatManageForm.tmp_menuNmVal.length; j++) {
-								                    Tree[j] = document.menuCreatManageForm.tmp_menuNmVal[j].value;
-								                }
-								                createTree(Tree);
-								            }else{
-								                alert("메뉴가 존재하지 않습니다. 메뉴 등록 후 사용하세요.");
-								                window.close();
-								            }
-								        </script>
-								    </div>
-						       </td> 
-						   </tr>
-						</table>
-				     </div>
-	                 <input type="hidden" name="req_menuNo">
-	            </form>
-
+	<input name="checkedMenuNoForInsert" type="hidden" >
+	<input name="checkedAuthorForInsert"  type="hidden" >
+	
+    <!-- 그룹 조회 팝업 -->
+    <div class="popup POP_MENU_CREATE">
+        <div class="pop_inner">
+            <div class="pop_header">
+                <h1>메뉴 생성</h1>
+                <button type="button" class="close" onclick="fn_egov_cancel_popup(); return false;">닫기</button>
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+
+            <div class="pop_container">
+                <!-- 검색조건 -->
+                <div class="condition2">
+                    <label for="authorCode" class="lb mr10">권한코드 : </label>
+                    <input id="authorCode" class="f_txt item" name="authorCode" type="text" maxlength="30" title="권한코드" value="${resultVO.authorCode}" readonly="readonly">
+                    <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="fInsertMenuCreat(); return false;">메뉴생성</a>
+                </div>
+                <!--// 검색조건 -->
+
+                <!-- Tree -->
+                <div class="tree_ui tree-ui">
+                
+                	<c:forEach var="result1" items="${list_menulist}" varStatus="status" >
+                		<input type="hidden" name="tmp_menuNmVal" value="${result1.menuNo}|${result1.upperMenuId}|${result1.menuNm}|${result1.progrmFileNm}|${result1.chkYeoBu}|">
+                	</c:forEach>
+                	
+                    <script language="javascript" type="text/javaScript">
+			            var chk_Object = true;
+			            var chk_browse = "";
+			            if (eval(document.menuCreatManageForm.authorCode)=="[object]") chk_browse = "IE";
+			            if (eval(document.menuCreatManageForm.authorCode)=="[object NodeList]") chk_browse = "Fox";
+			            if (eval(document.menuCreatManageForm.authorCode)=="[object Collection]") chk_browse = "safai";
+			
+			            var Tree = new Array;
+			            if(chk_browse=="IE"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object]"){
+			               alert("메뉴 목록 데이타가 존재하지 않습니다.");
+			               chk_Object = false;
+			            }
+			            if(chk_browse=="Fox"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object NodeList]"){
+			               alert("메뉴 목록 데이타가 존재하지 않습니다.");
+			               chk_Object = false;
+			            }
+			            if(chk_browse=="safai"&&eval(document.menuCreatManageForm.tmp_menuNmVal)!="[object Collection]"){
+			                   alert("메뉴 목록 데이타가 존재하지 않습니다.");
+			                   chk_Object = false;
+			            }
+			            if( chk_Object ){
+			                for (var j = 0; j < document.menuCreatManageForm.tmp_menuNmVal.length; j++) {
+			                    Tree[j] = document.menuCreatManageForm.tmp_menuNmVal[j].value;
+			                }
+			                createTree(Tree);
+			            }else{
+			                alert("메뉴가 존재하지 않습니다. 메뉴 등록 후 사용하세요.");
+			                window.close();
+			            }
+			        </script>
+                    
+                </div>
+                <!--// Tree -->
+            </div>
+        </div>
+    </div>
+    <!--// 그룹 조회 팝업 -->
     
-    <!-- //전체 레이어 끝 -->
- </body>
+    <input type="hidden" name="req_menuNo">
+    
+    </form>
+    
+</body>
 </html>

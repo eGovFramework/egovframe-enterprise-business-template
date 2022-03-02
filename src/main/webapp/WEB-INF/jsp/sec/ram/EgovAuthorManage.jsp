@@ -20,10 +20,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<title>권한 목록</title>
+<title>내부업무 사이트 > 내부시스템관리 > 권한관리</title>
 
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
@@ -119,7 +126,7 @@ function fncAddAuthorInsert() {
 function fncAuthorDeleteList() {
 
     if(fncManageChecked()) {    
-        if(confirm("삭제하시겠습니까?")) {
+        if(confirm('<spring:message code="common.delete.msg" />')) {
             document.listForm.action = "<c:url value='/sec/ram/EgovAuthorListDelete.do'/>";
             document.listForm.submit();
         } 
@@ -157,124 +164,156 @@ function press() {
 </script>
 </head>
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>사용자권한관리</li>
-                            <li>&gt;</li>
-                            <li><strong>권한 관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">사용자권한관리</a></li>
+                                        <li>권한관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/ram/EgovAuthorList.do'/>" method="post">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">권한관리</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition2">
+                                    <span class="lb mr10">권한 명 : </span>
+                                    <span class="item f_search">
+                                        <input id="searchKeyword" class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${authorManageVO.searchKeyword}'/>" title="검색" onkeypress="press();" />
+                                        <button class="btn" type="submit" onclick="javascript:fncSelectAuthorList('1')" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                    </span>
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <div class="board_list_top">
+                                    <div class="left_col">
+                                    </div>
+
+                                    <div class="right_col">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorDeleteList()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.create' /></a><!-- 등록 -->
+                                    </div>
+                                </div>
+
+                                <!-- 게시판 -->
+                                <div class="board_list">
+                                    <table summary="권한관리에  관한 테이블입니다.권한ID,권한 명,설명, 등록일자, 롤 정보의 내용을 담고 있습니다.">
+                                    	<caption>사용자목록관리</caption>
+                                        <colgroup>
+                                            <col style="width: 80px;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: auto;">
+                                            <col style="width: 80px;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    <span class="f_chk_only chkAll">
+                                                        <input type="checkbox" name="checkAll" title="선택여부" onclick="javascript:fncCheckAll()">
+                                                    </span>
+                                                </th>
+                                                <th scope="col">권한코드</th>
+                                                <th scope="col">권한명</th>
+                                                <th scope="col">설명</th>
+                                                <th scope="col">등록일자</th>
+                                                <th scope="col">롤정보</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        
+                                        	<c:if test="${empty authorList}">
+                                        		<tr>
+                                        			<td colspan="6"><spring:message code="common.nodata.msg" /></td>
+                                        		</tr>
+                                        	</c:if>
+                                        	
+                                        	<c:forEach var="author" items="${authorList}" varStatus="status">
+                                            <tr>
+                                                <td>
+                                                    <span class="f_chk_only">
+                                                        <input type="checkbox" name="delYn" title="선택">
+                                                        <input type="hidden" name="checkId" value="<c:out value="${author.authorCode}"/>" />
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="#LINK" class="lnk" onclick="javascript:fncSelectAuthor('<c:out value="${author.authorCode}"/>')">
+                                                    	<c:out value="${author.authorCode}"/>
+                                                    </a>
+                                                </td>
+                                                <td><c:out value="${author.authorNm}"/></td>
+                                                <td><c:out value="${author.authorDc}"/></td>
+                                                <td><c:out value="${author.authorCreatDe}"/></td>
+                                                <td>
+                                                    <a href="#LINK" class="btn btn_blue_30 w_70" onclick="javascript:fncSelectAuthorRole('<c:out value="${author.authorCode}"/>')">
+                                                    	이동
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+								<!-- 페이지 네비게이션 시작 -->
+								<c:if test="${!empty authorManageVO.pageIndex }">
+                                <div class="board_list_bot">
+                                    <div class="paging" id="paging_div">
+                                        <ul>
+                                            <ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="linkPage" />
+                                        </ul>
+                                    </div>
+                                </div>
+                                </c:if>
+                                <!-- //페이지 네비게이션 끝 -->
+                                <!--// 게시판 -->
+                                
+                                <input type="hidden" name="authorCode"/>
+                                <input type="hidden" name="authorCodes"/>
+                                <input type="hidden" name="pageIndex" value="<c:out value='${authorManageVO.pageIndex}'/>"/>
+                                <input type="hidden" name="searchCondition"/>
+                                
+                                </form:form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <form:form id="listForm" name="listForm" action="<c:url value='/sec/ram/EgovAuthorList.do'/>" method="post">
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>권한 목록</strong></h2></div>
-                        <fieldset><legend>조건정보 영역</legend>    
-                        <div class="sf_start">
-                            <ul id="search_first_ul">
-                                <li>
-                                    <label for="searchKeyword">권한 명 : </label>
-                                    <input id="searchKeyword" name="searchKeyword" type="text" value="<c:out value='${authorManageVO.searchKeyword}'/>" size="25" title="검색" onkeypress="press();" /> 
-                                </li>
-                            </ul>
-                            <ul id="search_second_ul">
-                                <li>
-                                    <div class="buttons" style="float:right;">
-                                        <a href="#LINK" onclick="javascript:fncSelectAuthorList('1')" style="selector-dummy:expression(this.hideFocus=false);"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                        <a href="#LINK" onclick="javascript:fncAddAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);">등록</a>
-                                        <a href="#LINK" onclick="javascript:fncAuthorDeleteList()" style="selector-dummy:expression(this.hideFocus=false);">삭제</a>
-                                    </div>                              
-                                </li>
-                            </ul>           
-                        </div>          
-                        </fieldset>
-                </div>
-                
-                <div id="page_info"><div id="page_info_align"></div></div>
-                <!-- table add start -->
-                <div class="default_tablestyle">
-                    <table summary="권한관리에  관한 테이블입니다.권한ID,권한 명,설명, 등록일자, 롤 정보의 내용을 담고 있습니다." cellpadding="0" cellspacing="0">
-                    <caption>사용자목록관리</caption>
-                    <colgroup>
-                        <col width="5%" >
-                        <col width="10%" >  
-                        <col width="25%" >
-                        <col width="40%" >
-                        <col width="15%" >
-                        <col width="5%" >
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" class="f_field" nowrap="nowrap"><input type="checkbox" name="checkAll" title="선택여부" class="check2" onclick="javascript:fncCheckAll()"></th>
-                        <th scope="col" nowrap="nowrap">권한 코드</th>
-                        <th scope="col" nowrap="nowrap">권한 명</th>
-                        <th scope="col" nowrap="nowrap">설명</th>
-                        <th scope="col" nowrap="nowrap">등록일자</th>
-                        <th scope="col" nowrap="nowrap">롤 정보</th>
-                    </tr>
-                    </thead>
-                    <tbody>                 
-
-                    <c:forEach var="author" items="${authorList}" varStatus="status">
-                    <!-- loop 시작 -->                                
-                      <tr>
-					    <td nowrap="nowrap"><input type="checkbox" name="delYn" class="check2" title="선택"><input type="hidden" name="checkId" value="<c:out value="${author.authorCode}"/>" /></td>
-					    <td nowrap="nowrap"><a href="#LINK" onclick="javascript:fncSelectAuthor('<c:out value="${author.authorCode}"/>')"><c:out value="${author.authorCode}"/></a></td>
-					    <td nowrap="nowrap"><c:out value="${author.authorNm}"/></td>
-					    <td nowrap="nowrap"><c:out value="${author.authorDc}"/></td>
-					    <td nowrap="nowrap"><c:out value="${author.authorCreatDe}"/></td>
-					    <td nowrap="nowrap"><a href="#LINK" onclick="javascript:fncSelectAuthorRole('<c:out value="${author.authorCode}"/>')"><img src="<c:url value='/images/img_search.gif'/>" width="15" height="15" align="middle" alt="롤 정보"></a></td>
-                      </tr>
-                     </c:forEach>     
-                    </tbody>
-                    </table>
-                </div>
-
-                <!-- 페이지 네비게이션 시작 -->
-                <c:if test="${!empty authorManageVO.pageIndex }">
-	                <div id="paging_div">
-	                <ul class="paging_align">
-                        <ui:pagination paginationInfo = "${paginationInfo}"  type="image" jsFunction="linkPage" />
-                    </ul>
-	                </div>                          
-                <!-- //페이지 네비게이션 끝 -->  
-				    <div align="right">
-				        <input type="text" name="message" value="<c:out value='${message}'/>" size="30" readonly="readonly" title="메시지"/>
-				    </div>
-				</c:if>
-				<input type="hidden" name="authorCode"/>
-				<input type="hidden" name="authorCodes"/>
-				<input type="hidden" name="pageIndex" value="<c:out value='${authorManageVO.pageIndex}'/>"/>
-				<input type="hidden" name="searchCondition"/>
-            </form:form>
-
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+        </div>
+
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
     </div>
-    <!-- //전체 레이어 끝 -->
- </body>
+    
+</body>
 </html>

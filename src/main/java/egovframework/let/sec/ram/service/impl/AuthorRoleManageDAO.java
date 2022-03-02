@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.sec.ram.service.AuthorRoleManage;
 import egovframework.let.sec.ram.service.AuthorRoleManageVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

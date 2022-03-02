@@ -145,16 +145,16 @@
 			FROM LETTHPROGRMCHANGEDTLS
 			WHERE 1=1
 		 
-        <if test="searchCondition == 1">AND
+        <if test='searchCondition == "1"'>AND
             binary(PROCESS_STTUS_CODE) like #{searchKeyword}  
         </if>        
-        <if test="searchCondition == 2">AND
+        <if test='searchCondition == "2"'>AND
             binary(PROCESS_STTUS_CODE) = #{searchKeyword}   
         </if>
-        <if test="searchCondition == 3">AND
+        <if test='searchCondition == "3"'>AND
           REQUST_DE between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
-        <if test="searchCondition == 4">AND
+        <if test='searchCondition == "4"'>AND
             binary(RQESTER_ID) like  CONCAT('%', #{searchKeyword}, '%')   
         </if>
            ORDER BY REQUST_NO ASC
@@ -168,16 +168,16 @@
 		  FROM LETTHPROGRMCHANGEDTLS
 			WHERE 1=1
 		 
-        <if test="searchCondition == 1">AND
+        <if test='searchCondition == "1"'>AND
             binary(PROCESS_STTUS_CODE) like #{searchKeyword}  
         </if>        
-        <if test="searchCondition == 2">AND
+        <if test='searchCondition == "2"'>AND
             binary(PROCESS_STTUS_CODE) = #{searchKeyword}   
         </if>
-        <if test="searchCondition == 3">AND
+        <if test='searchCondition == "3"'>AND
           REQUST_DE between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
-        <if test="searchCondition == 4">AND
+        <if test='searchCondition == "4"'>AND
             binary(RQESTER_ID) like  CONCAT('%', #{searchKeyword}, '%')   
         </if>
 	</select>

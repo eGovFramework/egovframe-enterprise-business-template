@@ -21,9 +21,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
-<title>게시판 사용등록</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	<script src="<c:url value='/'/>js/jquery.js"></script>
+	<script src="<c:url value='/'/>js/jqueryui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	
+<title>내부업무 사이트 > 내부서비스관리 > 게시판사용관리</title>
 <script type="text/javascript" src="<c:url value='/js/showModalDialog.js'/>" ></script>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="boardUseInf" staticJavascript="true" xhtml="true" cdata="false"/>
@@ -50,24 +61,35 @@
     }
     
     function fn_egov_inqire_bbsInf(){
-        var retVal;
-        var url = "<c:url value='/cop/com/openPopup.do?requestUrl=/cop/bbs/SelectBBSMasterInfsPop.do&width=890&height=520'/>";      
-        var openParam = "dialogWidth: 890px; dialogHeight: 520px; resizable: 0, scroll: 1, center: 1";  
         
-        retVal = window.showModalDialog(url,"p_cmmntyInqire", openParam);
-        if(retVal != null){
-            var tmp = retVal.split("|");
-            document.boardUseInf.bbsId.value = tmp[0];
-            document.boardUseInf.bbsNm.value = tmp[1];
-        }        
+        var $dialog = $('<div id="modalPan"></div>')
+    	.html('<iframe style="border: 0px; " src="' + "<c:url value='/cop/bbs/SelectBBSMasterInfsPop.do'/>" +'" width="100%" height="100%"></iframe>')
+    	.dialog({
+        	autoOpen: false,
+            modal: true,
+            width: 1100,
+            height: 700,
+            title: "게시판 정보"
+    	});
+        $(".ui-dialog-titlebar").hide();
+    	$dialog.dialog('open');
     }
     
-    function showModalDialogCallback(retVal) {
+    function fn_egov_returnValue(retVal){
     	if(retVal != null){
             var tmp = retVal.split("|");
             document.boardUseInf.bbsId.value = tmp[0];
             document.boardUseInf.bbsNm.value = tmp[1];
-        } 
+        }
+    	
+    	fn_egov_modal_remove();
+	}
+    
+    /**********************************************************
+     * 모달 종료 버튼
+     ******************************************************** */
+    function fn_egov_modal_remove() {
+    	$('#modalPan').remove();
     }
     
     function fn_egov_selectTargetType(obj) {
@@ -111,108 +133,113 @@
     } */
 </script>
 
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
-
 </head>
-<body >
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header_mainsize"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부서비스관리</li>
-                            <li>&gt;</li>
-                            <li>내부업무개시판관리</li>
-                            <li>&gt;</li>
-                            <li><strong>게시판사용관리</strong></li>
-                        </ul>
+
+<body>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+        <c:import url="/sym/mms/EgovHeader.do" />
+        <!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+                        <c:import url="/sym/mms/EgovMenuLeft.do" />
+                        <!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부서비스관리</a></li>
+                                        <li><a href="">내부업무게시판관리</a></li>
+                                        <li>게시판사용관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form:form modelAttribute="boardUseInf" name="boardUseInf" method="post">
+								
+								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />
+								<input type="hidden" name="param_trgetType" value="" />
+
+                                <h1 class="tit_1">내부서비스관리</h1>
+
+                                <h2 class="tit_2">게시판사용관리</h2>
+                                
+                                <div class="board_view2">
+                                    <table summary="게시판명, 커뮤니티 동호회 정보 입니다">
+                                        <colgroup>
+                                            <col style="width: 200px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="bbsNm"><spring:message code="cop.bbsNm" /></label><!-- 게시판명 -->
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <span class="f_search2 w_500">
+                                                    <input name="bbsId" type="hidden" />
+                                                    <input name="bbsNm" type="text" value="" maxlength="40" title="게시판명" readonly />
+                                                    <button type="button" class="btn" onclick="fn_egov_inqire_bbsInf();">조회</button>
+                                                </span>
+                                                <br/><form:errors path="bbsId" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="trgetType"><spring:message code="cop.trgetNm" /></label><!-- 커뮤니티 / 동호회명 -->
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select" for="qestnrTrget">
+                                                    <select name="trgetType" class="select" title="" onchange="fn_egov_selectTargetType(this)">
+                                                        <option selected value=''>선택하세요</option>
+                                                        <option value="SYSTEM" >시스템</option>
+                                                    </select>
+                                                </label>
+                                                <input type="hidden" name="trgetId" value="" />
+                                                <input type="text" class="f_txt w_500 ml10" name="trgetNm" value="" title="" readOnly />
+                                                <br/><form:errors path="trgetId" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fn_egov_regist_bbsUseInf(); "><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>?searchCondition=1" class="btn btn_blue_46 w_100" onclick="JavaScript:fn_egov_select_bbsUseInfs(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                </form:form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>게시판 사용등록</strong></h2></div>
-                </div>
-				<form:form commandName="boardUseInf" name="boardUseInf" method="post">
-					<div style="visibility:hidden;display:none;"><input name="iptSubmit" type="submit" value="전송" title="전송"></div>
-					<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />
-					<input type="hidden" name="param_trgetType" value="" />
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table summary="게시판명, 커뮤니티 동호회 정보  입니다">
-					      <tr>   
-					        <th width="30%" height="23" class="required_text" nowrap ><spring:message code="cop.bbsNm" /><img src="<c:url value='/images/required.gif' />" width="15" height="15" alt="required"/>
-					        </th>
-					        <td width="70%" nowrap colspan="3">
-					          <input name="bbsId" type="hidden" /> 
-					          <input name="bbsNm" type="text" size="40" value=""  maxlength="40" title="게시판명" readonly /> 
-					          &nbsp;<a href="#LINK" onclick="fn_egov_inqire_bbsInf();" style="selector-dummy: expression(this.hideFocus=false);"><img src="<c:url value='/images/img_search.gif' />"
-					                    width="15" height="15" align="middle" alt="새창" /></a>
-					        <br/><form:errors path="bbsId" />                   
-					        </td>
-					      </tr>
-					      <tr> 
-					        <th width="30%" height="23" class="required_text" nowrap >
-					            <label for="trgetType">
-					                <spring:message code="cop.trgetNm" />
-					            </label>    
-					            <img src="<c:url value='/images/required.gif' />" width="15" height="15" alt="required"/>
-					        </th>
-					        <td width="70%" nowrap colspan="3">
-					           <select name="trgetType" class="select" title="" onChange="javascript:fn_egov_selectTargetType(this)"  >
-					               <option selected value=''>--선택하세요--</option>
-					               <option value="SYSTEM" >시스템</option>            
-					           </select>
-					           <input type="hidden" name="trgetId" value="" />
-					           <input type="text" name="trgetNm" value=""  size="40" title="" readOnly />
-					           <br/><form:errors path="trgetId" />
-					        </td>
-					      </tr>
-                        </table>
-                    </div>
-
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                      <!-- 목록/저장버튼  -->
-                      <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td><a href="#LINK" onclick="JavaScript:fn_egov_regist_bbsUseInf(); "><spring:message code="button.save" /></a> 
-                          </td>
-					      <td width="10"></td>
-                          <td><a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>?searchCondition=1" onclick="JavaScript:fn_egov_select_bbsUseInfs(); return false;"><spring:message code="button.list" /></a> 
-					      </td>  
-                        </tr>
-                      </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-                </form:form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+        <c:import url="/sym/mms/EgovFooter.do" />
+        <!--// Footer -->
+    </div>
 </body>
 </html>
-

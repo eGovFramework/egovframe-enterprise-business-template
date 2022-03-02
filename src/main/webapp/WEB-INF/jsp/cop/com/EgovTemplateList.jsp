@@ -20,8 +20,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
 <script type="text/javascript">
     function press(event) {
@@ -47,141 +54,146 @@
         document.frm.submit();          
     }
 </script>
-<title>템플릿 목록</title>
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
+
+<title>내부업무 사이트 > 내부서비스관리 > 게시판템플릿목록</title>
 </head>
+
 <body>
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>      
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부서비스관리</li>
-                            <li>&gt;</li>
-                            <li>내부업무개시판관리</li>
-                            <li>&gt;</li>
-                            <li><strong>개시판템플릿관리</strong></li>
-                        </ul>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+        <c:import url="/sym/mms/EgovHeader.do" />
+        <!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+                        <c:import url="/sym/mms/EgovMenuLeft.do" />
+                        <!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부서비스관리</a></li>
+                                        <li><a href="">내부업무게시판관리</a></li>
+                                        <li>게시판템플릿관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+                                <h1 class="tit_1">내부서비스관리</h1>
+
+                                <h2 class="tit_2">게시판템플릿관리</h2>
+                                
+                                <!-- 검색조건 -->
+                                <div class="condition">
+                                
+                                	<form name="frm" action ="<c:url value='/cop/com/selectTemplateInfs.do'/>" method="post">
+			                        
+			                        <input type="hidden" name="tmplatId" value="" />
+			                        <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
+                                
+                                    <label class="item f_select" for="sel1">
+                                        <select id="sel1" name="searchCnd" title="검색조건" class="select">
+                                            <option value="0" <c:if test="${searchVO.searchCnd == '0'}">selected="selected"</c:if> >템플릿명</option>
+                                            <option value="1" <c:if test="${searchVO.searchCnd == '1'}">selected="selected"</c:if> >템플릿구분</option>
+                                         </select>
+                                    </label>
+
+                                    <span class="item f_search">
+                                        <input class="f_input w_500" name="searchWrd" title="검색어" type="text" value='<c:out value="${searchVO.searchWrd}"/>' maxlength="35" onkeypress="press(event);">
+                                        <button class="btn" type="submit" onclick="javascript:fn_egov_select_tmplatInfo('1'); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                    </span>
+
+                                    <a href="<c:url value='/cop/com/addTemplateInf.do'/>" class="item btn btn_blue_46 w_100" onclick="javascript:fn_egov_insert_addTmplatInfo(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+                                    
+                                    </form>
+                                    
+                                </div>
+                                <!--// 검색조건 -->
+
+                                <!-- 게시판 -->
+                                <div class="board_list">
+                                    <table summary="번호,게시판 명,사용 커뮤니티 명,사용 동호회 명,등록일시,사용여부  목록입니다">
+                                    	<caption>게시판 템플릿 목록</caption>
+                                        <colgroup>
+                                            <col style="width: 80px;">
+                                            <col style="width: 150px;">
+                                            <col style="width: 130px;">
+                                            <col style="width: auto;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 150px;">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">번호</th>
+                                                <th scope="col">템플릿명</th>
+                                                <th scope="col">템플릿구분</th>
+                                                <th scope="col">템플릿경로</th>
+                                                <th scope="col">사용여부</th>
+                                                <th scope="col">등록일자</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	
+                                        	<c:if test="${fn:length(resultList) == 0}">
+	                                        	<tr>
+	                                        		<td colspan="6" ><spring:message code="common.nodata.msg" /></td>
+	                                        	</tr>
+                                        	</c:if>
+                                        	
+                                        	<c:forEach var="result" items="${resultList}" varStatus="status">
+	                                            <tr>
+	                                                <td><c:out value="${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}"/></td>
+	                                                <td>
+	                                                	<a href="<c:url value='/cop/com/selectTemplateInf.do'/>?tmplatId=<c:out value='${result.tmplatId}'/>" class="lnk">
+	                                                		<c:out value="${result.tmplatNm}"/>
+	                                                	</a>
+	                                                </td>
+	                                                <td><c:out value="${result.tmplatSeCodeNm}"/></td>
+	                                                <td class="al"><c:out value="${result.tmplatCours}"/></td>
+	                                                <td>
+	                                                	<c:if test="${result.useAt == 'N'}"><spring:message code="button.notUsed" /></c:if>
+	                                                	<c:if test="${result.useAt == 'Y'}"><spring:message code="button.use" /></c:if>
+	                                                </td>
+	                                                <td><c:out value="${result.frstRegisterPnttm}"/></td>
+	                                            </tr>
+                                            </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+								<!-- 페이지 네비게이션 시작 -->
+                                <div class="board_list_bot">
+                                    <div class="paging" id="paging_div">
+                                        <ul>
+                                            <ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_select_tmplatInfo"  />
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- //페이지 네비게이션 끝 --> 
+                                <!--// 게시판 -->
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>개시판템플릿목록</strong></h2></div>
-                    <form name="frm" action ="<c:url value='/cop/com/selectTemplateInfs.do'/>" method="post">
-                        <input type="hidden" name="tmplatId" value="" />
-                        <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
-                        <input type="submit" id="invisible" class="invisible"/>
-                        
-                        <fieldset><legend>조건정보 영역</legend>    
-                        <div class="sf_start">
-                            <ul id="search_first_ul">
-                                <li>
-                                    <select name="searchCnd" title="검색조건" class="select">
-                                       <option value="0" <c:if test="${searchVO.searchCnd == '0'}">selected="selected"</c:if> >템플릿명</option>
-                                       <option value="1" <c:if test="${searchVO.searchCnd == '1'}">selected="selected"</c:if> >템플릿구분</option>   
-                                    </select>
-                                </li>
-                                <li>
-                                    <input name="searchWrd" title="검색어" type="text" size="35" value='<c:out value="${searchVO.searchWrd}"/>'  maxlength="35" onkeypress="press(event);"> 
-                                </li>       
-                            </ul>
-                            <ul id="search_second_ul">
-                                <li>
-                                    <div class="buttons" style="float:right;">
-                                        <a href="<c:url value='/cop/com/selectTemplateInfs.do'/>" onclick="javascript:fn_egov_select_tmplatInfo('1'); return false;" ><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                        <a href="<c:url value='/cop/com/addTemplateInf.do'/>" onclick="javascript:fn_egov_insert_addTmplatInfo(); return false;" >등록</a>
-                                    </div>                              
-                                </li>
-                            </ul>           
-                        </div>          
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- //검색 필드 박스 끝 -->
-
-                <div id="page_info"><div id="page_info_align"></div></div>                    
-                <!-- table add start -->
-                <div class="default_tablestyle">
-                    <table summary="번호,게시판명,사용 커뮤니티 명,사용 동호회 명,등록일시,사용여부   목록입니다" cellpadding="0" cellspacing="0">
-                    <caption>게시판 템플릿 목록</caption>
-                    <colgroup>
-                    <col width="10%" >
-                    <col width="15%" >  
-                    <col width="10%" >
-                    <col width="32%" >
-                    <col width="10%" >
-                    <col width="10%" >
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col" class="f_field" nowrap="nowrap">번호</th>
-                        <th scope="col" nowrap="nowrap">템플릿명</th>
-                        <th scope="col" nowrap="nowrap">템플릿구분</th>
-                        <th scope="col" nowrap="nowrap">템플릿경로</th>
-                        <th scope="col" nowrap="nowrap">사용여부</th>
-                        <th scope="col" nowrap="nowrap">등록일자</th>
-                    </tr>
-                    </thead>
-                    <tbody>                 
-
-                    <c:forEach var="result" items="${resultList}" varStatus="status">
-                    <!-- loop 시작 -->                                
-                      <tr>
-                        <td class="listCenter" nowrap="nowrap"><c:out value="${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}"/></td>            
-                        <td class="listLeft" nowrap="nowrap">
-                            <a href="<c:url value='/cop/com/selectTemplateInf.do'/>?tmplatId=<c:out value='${result.tmplatId}'/>">
-                                <c:out value="${result.tmplatNm}"/>
-                            </a>
-                        </td>
-                        <td nowrap="nowrap"><c:out value="${result.tmplatSeCodeNm}"/></td>
-                        <td nowrap="nowrap"><c:out value="${result.tmplatCours}"/></td>
-                        <td nowrap="nowrap">
-                            <c:if test="${result.useAt == 'N'}"><spring:message code="button.notUsed" /></c:if>
-                            <c:if test="${result.useAt == 'Y'}"><spring:message code="button.use" /></c:if>
-                        </td>  
-                        <td nowrap="nowrap"><c:out value="${result.frstRegisterPnttm}"/></td    >       
-                      </tr>
-                     </c:forEach>     
-                     <c:if test="${fn:length(resultList) == 0}">
-                      <tr>
-                        <td nowrap colspan="5" ><spring:message code="common.nodata.msg" /></td>  
-                      </tr>      
-                     </c:if>
-                    </tbody>
-                    </table>
-                </div>
-                <!-- 페이지 네비게이션 시작 -->
-                <div id="paging_div">
-                    <ul class="paging_align">
-                       <ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_select_tmplatInfo"  />
-                    </ul>
-                </div>                          
-                <!-- //페이지 네비게이션 끝 -->  
             </div>
-            <!-- //content 끝 -->    
-        </div>  
-        <!-- //container 끝 -->
-        <!-- footer 시작 -->
-        <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-        <!-- //footer 끝 -->
+        </div>
+
+        <!-- Footer -->
+        <c:import url="/sym/mms/EgovFooter.do" />
+        <!--// Footer -->
     </div>
-    <!-- //전체 레이어 끝 -->
- </body>
+    
+</body>
 </html>

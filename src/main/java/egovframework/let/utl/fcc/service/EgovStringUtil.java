@@ -828,7 +828,7 @@ public class EgovStringUtil {
 
 	    rtnStr = strTxt.toString();
 
-	} catch (Exception e) {
+	} catch (IllegalArgumentException e) {
 		LOGGER.debug("{}", e);
 	}
 

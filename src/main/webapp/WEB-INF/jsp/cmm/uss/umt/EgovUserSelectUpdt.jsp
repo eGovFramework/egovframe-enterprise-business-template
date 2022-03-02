@@ -21,14 +21,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
 <title>사용자 상세 및 수정</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="userManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
-<script type="text/javascript" src="<c:url value='/js/EgovZipPopup.js' />" ></script>
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
 function fnListPage(){
@@ -71,246 +76,306 @@ function fn_egov_dn_info_setting(dn) {
     
     frm.subDn.value = dn;
 }
+
+function fn_egov_ZipSearch(){
+    
+    var $dialog = $('<div id="modalPan"></div>')
+	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/cmm/EgovCcmZipSearchList.do'/>" +'" width="100%" height="100%"></iframe>')
+	.dialog({
+    	autoOpen: false,
+        modal: true,
+        width: 1100,
+        height: 700
+	});
+    $(".ui-dialog-titlebar").hide();
+	$dialog.dialog('open');
+}
+
+function fn_egov_returnValue(retVal){
+	
+	if (retVal) {
+		document.getElementById("zip_view").value  = retVal.sAddr;
+	}
+	
+	fn_egov_modal_remove();
+}
+
+/**********************************************************
+ * 모달 종료 버튼
+ ******************************************************** */
+function fn_egov_modal_remove() {
+	$('#modalPan').remove();
+}
 //-->
 </script>
 
 </head>
 <body>
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li><strong>사용자관리</strong></li>
-                        </ul>
+<body>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">사용자관리</a></li>
+                                        <li>사용자등록관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form:form modelAttribute="userManageVO" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserSelectUpdt.do" name="userManageVO" method="post" >
+								
+								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
+								<input name="checkedIdForDel" type="hidden" />
+								<!-- 검색조건 유지 -->
+								<input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
+								<input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
+								<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
+								<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
+								<!-- 우편번호검색 -->
+								<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
+								<!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
+								<input type="hidden" name="userTyForPassword" value="<c:out value='${userManageVO.userTy}'/>" />
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">업무사용자 상세조회(수정)</h2>
+
+                                <div class="board_view2">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width: 160px;">
+                                            <col style="width: auto;">
+                                            <col style="width: 160px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="emplyrId">사용자아이디</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input path="emplyrId" id="emplyrId" class="f_txt w_full" maxlength="20" readonly="readonly" />
+                                                <form:errors path="emplyrId" />
+                                                <form:hidden path="uniqId" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="moblphonNo">핸드폰번호</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="moblphonNo" id="moblphonNo" class="f_txt w_full" maxlength="15" />
+                                                <form:errors path="moblphonNo" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="passwordHint">비밀번호힌트</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select w_full" for="passwordHint">
+                                                    <form:select path="passwordHint" id="passwordHint" name="passwordHint" title="비밀번호힌트">
+                                                    	<form:option value="" label="선택하세요"/>
+                                                    	<form:options items="${passwordHint_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                </label>
+                                                <form:errors path="passwordHint" cssClass="error"/>
+                                            </td>
+                                            <td class="lb">
+                                                <label for="passwordCnsr">비밀번호정답</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input class="f_txt w_full" path="passwordCnsr" id="passwordCnsr" maxlength="100" />
+                                                <form:errors path="passwordCnsr" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="emplyrNm">이름</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input path="emplyrNm" id="emplyrNm" class="f_txt w_full" maxlength="60" />
+                                                <form:errors path="emplyrNm" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="insttCode">소속기관</label>
+                                            </td>
+                                            <td>
+                                                <label class="f_select w_full" for="insttCode">
+                                                    <form:select path="insttCode" id="insttCode" name="insttCode" title="소속기관">
+                                                    	<form:option value="" label="선택하세요"/>
+                                                    	<form:options items="${insttCode_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                </label>
+                                                <form:errors path="insttCode" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="orgnztId">부서</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select w_full" for="orgnztId">
+                                                    <form:select path="orgnztId" id="orgnztId" name="orgnztId" title="부서">
+                                                    	<form:option value="" label="선택하세요"/>
+                                                    	<form:options items="${orgnztId_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                </label>
+                                                <form:errors path="orgnztId" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="ofcpsNm">직위명</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="ofcpsNm" id="ofcpsNm" class="f_txt w_full" maxlength="30" />
+                                                <form:errors path="ofcpsNm" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="emailAdres">이메일주소</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="emailAdres" id="emailAdres" class="f_txt w_full" maxlength="50" />
+                                                <form:errors path="emailAdres" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="areaNo">집전화<br>지역번호</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="areaNo" id="areaNo" class="f_txt w_70" maxlength="4" title="전화번호 첫번째" />
+                                                <span class="f_txt_inner mr5 ml5">-</span>
+                                                <form:input path="homemiddleTelno" id="homemiddleTelno" class="f_txt w_70" maxlength="4" title="전화번호 두번째" />
+                                                <span class="f_txt_inner mr5 ml5">-</span>
+                                                <form:input path="homeendTelno" id="homeendTelno" class="f_txt w_70" maxlength="4" title="전화번호 세번째" />
+                                                <form:errors path="areaNo" />
+                                                <form:errors path="homemiddleTelno" />
+                                                <form:errors path="homeendTelno" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="offmTelno">사무실<br>전화번호</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="offmTelno" id="offmTelno" class="f_txt w_full" maxlength="15" />
+                                                <form:errors path="offmTelno" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="fxnum">팩스번호</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="fxnum" id="fxnum" class="f_txt w_full" maxlength="15" />
+                                                <form:errors path="fxnum" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="homeadres">주소</label>
+                                            </td>
+                                            <td>
+                                                <span class="f_search2 w_150">
+                                                    <form:input path="homeadres" id="zip_view" maxlength="100" readonly="readonly"/>
+                                                    <form:errors path="homeadres" />
+                                                    <input name="zip_view" id="zip_view" type="hidden" value="<c:out value='${userManageVO.zip}'/>" maxlength="8" readonly="readonly"/>
+                                                    <form:hidden path="zip" />
+                                                    	<button type="button" class="btn" onclick="fn_egov_ZipSearch();">조회</button>
+                                                    <form:errors path="zip" />
+                                                </span>
+                                                <span class="f_txt_inner ml15">(우편번호 검색)</span>
+                                            </td>
+                                            <td class="lb">
+                                                <label for="detailAdres">상세주소</label>
+                                            </td>
+                                            <td>
+                                                <form:input path="detailAdres" id="detailAdres" class="f_txt w_full" maxlength="50" />
+                                                <form:errors path="detailAdres" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="emplyrSttusCode">사용자상태<br>코드</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select w_full" for="emplyrSttusCode">
+                                                    <form:select path="emplyrSttusCode" id="emplyrSttusCode" name="emplyrSttusCode" title="사용자상태코드">
+	                                                    <form:option value="" label="선택하세요"/>
+	                                                    <form:options items="${emplyrSttusCode_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                </label>
+                                                <form:errors path="emplyrSttusCode" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="groupId">권한그룹</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <label class="f_select w_full" for="groupId">
+                                                    <form:select path="groupId" id="groupId" name="groupId" title="그룹아이디">
+                                                    	<form:option value="" label="선택하세요"/>
+                                                    	<form:options items="${groupId_result}" itemValue="code" itemLabel="codeNm"/>
+                                                    </form:select>
+                                                </label>
+                                                <form:errors path="groupId" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                        <a href="<c:url value='/uss/umt/user/EgovUserDelete.do'/>" class="btn btn_skyblue_h46 w_100" onclick="fnDeleteUser('<c:out value='${userManageVO.userTy}'/>:<c:out value='${userManageVO.uniqId}'/>'); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        <a href="<c:url value='/uss/umt/user/EgovUserPasswordUpdtView.do'/>" class="btn btn_skyblue_h46 w_100" onclick="fnPasswordMove(); return false;"><spring:message code="button.passwordUpdate" /></a><!-- 비밀번호변경 -->
+                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.userManageVO.reset();"><spring:message code="button.reset" /></a><!-- 초기화 -->
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fnUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                <form:hidden path="password" />
+                                
+                                </form:form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>업무사용자 상세조회(수정)</strong></h2></div>
-                </div>
-		        <form:form commandName="userManageVO" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserSelectUpdt.do" name="userManageVO" method="post" >
-		        
-			        <!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
-			        <input name="checkedIdForDel" type="hidden" />
-			        <!-- 검색조건 유지 -->
-			        <input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
-			        <input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
-			        <input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
-			        <input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
-			        <!-- 우편번호검색 -->
-			        <input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
-			        <!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
-			        <input type="hidden" name="userTyForPassword" value="<c:out value='${userManageVO.userTy}'/>" />
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table>
-                            <tr> 
-                                <th width="20%" height="23" class="required_text"  >사용자아이디
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="emplyrId" id="emplyrId" cssClass="txaIpt" size="20" maxlength="20" readonly="readonly" />
-				                    <form:errors path="emplyrId" cssClass="error"/>
-				                    <form:hidden path="uniqId" />
-				                </td>
-				                <th width="20%" height="23" class="required_text"  >핸드폰번호&nbsp;&nbsp;</th>
-				                <td width="30%" >
-				                    <form:input path="moblphonNo" id="moblphonNo" cssClass="txaIpt" size="20" maxlength="15" />
-				                    <form:errors path="moblphonNo" cssClass="error" />
-				                </td>
-                            </tr>
-                            <tr> 
-                                <th width="20%" height="23" class="required_text"  >비밀번호힌트
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:select path="passwordHint" id="passwordHint">
-				                        <form:option value="" label="--선택하세요--"/>
-				                        <form:options items="${passwordHint_result}" itemValue="code" itemLabel="codeNm"/>
-				                    </form:select>
-				                    <form:errors path="passwordHint" cssClass="error"/>
-				                </td>
-                                <th width="20%" height="23" class="required_text" >비밀번호정답
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="passwordCnsr" id="passwordCnsr" cssClass="txaIpt" size="50" maxlength="100" />
-				                    <form:errors path="passwordCnsr" cssClass="error"/>
-				                </td>
-                            </tr>
-
-                            <tr> 
-                                <th width="20%" height="23" class="required_text">이름
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="emplyrNm" id="emplyrNm" cssClass="txaIpt" size="20"  maxlength="60" />
-				                    <form:errors path="emplyrNm" cssClass="error" />
-				                </td>
-                                <th width="20%" height="23" class="required_text">소속기관&nbsp;&nbsp;</th>
-				                <td width="30%" >
-				                    <form:select path="insttCode" id="insttCode">
-				                        <form:option value="" label="--선택하세요--"/>
-				                        <form:options items="${insttCode_result}" itemValue="code" itemLabel="codeNm"/>
-				                    </form:select>
-				                    <form:errors path="insttCode" cssClass="error"/>
-				                </td>
-                            </tr>
-
-                            <tr> 
-                                <th width="20%" height="23" class="required_text">부서
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:select path="orgnztId" id="orgnztId">
-				                        <form:option value="" label="--선택하세요--"/>
-				                        <form:options items="${orgnztId_result}" itemValue="code" itemLabel="codeNm"/>
-				                    </form:select>
-				                    <form:errors path="orgnztId" cssClass="error"/>
-				                </td>
-                                <th width="20%" height="23" class="required_text"  >직위명&nbsp;&nbsp;</th>
-				                <td width="30%" >
-				                    <form:input path="ofcpsNm" id="ofcpsNm" cssClass="txaIpt" size="20" maxlength="30" />
-				                    <form:errors path="ofcpsNm" cssClass="error" />
-				                </td>
-                            </tr>
-
-                            <tr>
-                                <th width="20%" height="23" class="required_text" >이메일주소
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="emailAdres" id="emailAdres" cssClass="txaIpt" size="20" maxlength="50" />
-				                    <form:errors path="emailAdres" cssClass="error" />
-				                </td>
-                                <th width="20%" height="23" class="required_text"  >집전화지역번호
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="areaNo" id="areaNo" cssClass="txaIpt" size="4" maxlength="4" />
-				                    - <form:input path="homemiddleTelno" id="homemiddleTelno" cssClass="txaIpt" size="4" maxlength="4" />
-				                    - <form:input path="homeendTelno" id="homeendTelno" cssClass="txaIpt" size="4" maxlength="4" />
-				                    <form:errors path="areaNo" cssClass="error" />
-				                    <form:errors path="homemiddleTelno" cssClass="error" />
-				                    <form:errors path="homeendTelno" cssClass="error" />
-				                </td>
-                            </tr>
-
-                            <tr> 
-                                <th width="20%" height="23" class="required_text"  >사무실전화번호</th>
-				                <td width="30%" >
-				                    <form:input path="offmTelno" id="offmTelno" cssClass="txaIpt" size="20" maxlength="15" />
-				                    <form:errors path="offmTelno" cssClass="error" />
-				                </td>
-                                <th width="20%" height="23" class="required_text"  >팩스번호</th>
-				                <td width="30%" >
-				                    <form:input path="fxnum" id="fxnum" cssClass="txaIpt" size="20" maxlength="15" />
-				                    <form:errors path="fxnum" cssClass="error" />
-				                </td>
-                            </tr>
-
-                            <tr>
-                                <th width="20%" height="23" class="required_text"  >주소
-                                </th>
-				                <td width="30%" >
-				                    <form:input path="homeadres" id="homeadres" cssClass="txaIpt" size="40" maxlength="100" readonly="readonly"/>
-				                    <form:errors path="homeadres" cssClass="error" />
-				                    <input name="zip_view" id="zip_view" type="hidden" size="20" value="<c:out value='${userManageVO.zip}'/>"  maxlength="8" readonly="readonly"/>
-				                    <form:hidden path="zip" />
-				                        <a href="#LINK" onclick="fn_egov_ZipSearch(document.userManageVO, document.userManageVO.zip, document.userManageVO.zip_view, document.userManageVO.homeadres);">
-				                            <img src="<c:url value='/images/btn/icon_zip_search.gif'/>" alt=""/>(우편번호 검색)
-				                        </a>
-				                    <form:errors path="zip" cssClass="error" />
-                                </td>
-                                <th width="20%" height="23" class="required_text"  >상세주소&nbsp;&nbsp;</th>
-				                <td width="30%" >
-				                    <form:input path="detailAdres" id="detailAdres" cssClass="txaIpt" size="40" maxlength="50" />
-				                    <form:errors path="detailAdres" cssClass="error" />
-				                </td>
-                            </tr>
-
-                            <tr> 
-                                <th width="20%" height="23" class="required_text"  > 사용자상태코드
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:select path="emplyrSttusCode" id="emplyrSttusCode">
-				                        <form:option value="" label="--선택하세요--"/>
-				                        <form:options items="${emplyrSttusCode_result}" itemValue="code" itemLabel="codeNm"/>
-				                    </form:select>
-				                    <form:errors path="emplyrSttusCode" cssClass="error"/>
-				                </td>
-                                <th width="20%" height="23" class="required_text"  >권한그룹
-                                    <img src="<c:url value='/'/>images/required.gif" width="15" height="15" alt="필수" />
-                                </th>
-				                <td width="30%" >
-				                    <form:select path="groupId" id="groupId">
-				                        <form:option value="" label="--선택하세요--"/>
-				                        <form:options items="${groupId_result}" itemValue="code" itemLabel="codeNm"/>
-				                    </form:select>
-				                    <form:errors path="groupId" cssClass="error"/>
-				                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-
-                       <!-- 목록/저장버튼  -->
-                       <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="#LINK" onclick="JavaScript:fnUpdate(); return false;"><spring:message code="button.save" /></a>
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="<c:url value='/uss/umt/user/EgovUserDelete.do'/>" onclick="fnDeleteUser('<c:out value='${userManageVO.userTy}'/>:<c:out value='${userManageVO.uniqId}'/>'); return false;"><spring:message code="button.delete" /></a> 
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a>
-                          </td>      
-                          <td width="10"></td>
-                          <td>
-                            <a href="<c:url value='/uss/umt/user/EgovUserPasswordUpdtView.do'/>" onclick="fnPasswordMove(); return false;"><spring:message code="button.passwordUpdate" /></a>
-                          </td>      
-                          <td width="10"></td>
-                          <td>
-                            <a href="#LINK" onclick="javascript:document.userManageVO.reset();"><spring:message code="button.reset" /></a>
-                          </td>      
-
-                        </tr>
-                       </table>
-                    </div>
-                    <!-- 버튼 끝 -->    
-                    <form:hidden path="password" />                       
-                </form:form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

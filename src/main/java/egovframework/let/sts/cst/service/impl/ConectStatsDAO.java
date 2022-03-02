@@ -4,7 +4,7 @@ import java.util.List;
 
 import egovframework.let.sts.com.StatsVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

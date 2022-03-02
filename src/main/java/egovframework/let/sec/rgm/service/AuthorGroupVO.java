@@ -40,21 +40,6 @@ public class AuthorGroupVO extends AuthorGroup {
 	public void setAuthorGroupList(List<AuthorGroupVO> authorGroupList) {
 		this.authorGroupList = authorGroupList;
 	}
-	/**
-	 * getAuthorGroup
-	 * @return AuthorGroup
-	 */
-	public AuthorGroup getAuthorGroup()
-    {
-    	return getAuthorGroup();
-    }
-	/**
-	 * setAuthorGroup
-	 * @param authorGroup AuthorGroup 
-	 */	
-    public void setAuthorGroup(AuthorGroup authorGroup)
-    {
-    	setAuthorGroup(authorGroup);
-    }
+
 
 }

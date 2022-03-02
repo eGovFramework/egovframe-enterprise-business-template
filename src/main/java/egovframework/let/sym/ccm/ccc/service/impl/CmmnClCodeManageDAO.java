@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

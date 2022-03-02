@@ -48,26 +48,27 @@
             document.getElementById('file_upload_imposbl').style.display = "block";
         }
     }
-//-->    
+//-->
 </script>
 
 <input type="hidden" name="atchFileId" value="${atchFileId}">
 <input type="hidden" name="fileSn" >
 <input type="hidden" name="fileListCnt" value="${fileListCnt}">
-        <c:forEach var="fileVO" items="${fileList}" varStatus="status">
-           <c:choose>
-               <c:when test="${updateFlag=='Y'}">
-                   <c:out value="${fileVO.orignlFileNm}"/>&nbsp;[<c:out value="${fileVO.fileMg}"/>&nbsp;byte]
-                   <img  alt="파일 삭제" src="<c:url value='/images/btn/bu5_close.gif'/>" 
-                        width="19" height="18" onClick="fn_egov_deleteFile('<c:out value="${fileVO.atchFileId}"/>','<c:out value="${fileVO.fileSn}"/>');" />
-               </c:when>
-               <c:otherwise>
-                   <a href="#LINK" onclick="javascript:fn_egov_downFile('<c:out value="${fileVO.atchFileId}"/>','<c:out value="${fileVO.fileSn}"/>')">
-                   <c:out value="${fileVO.orignlFileNm}"/>&nbsp;[<c:out value="${fileVO.fileMg}"/>&nbsp;byte]
-                   </a>        
-               </c:otherwise>
-           </c:choose>
-        </c:forEach>
-        <c:if test="${fn:length(fileList) == 0}">
-        </c:if>
-      
+
+<c:forEach var="fileVO" items="${fileList}" varStatus="status">
+	<c:choose>
+		<c:when test="${updateFlag=='Y'}">
+			<c:out value="${fileVO.orignlFileNm}"/>&nbsp;<span>[<c:out value="${fileVO.fileMg}"/>&nbsp;byte]</span>
+			<input type="button" value="삭제" onClick="fn_egov_deleteFile('<c:out value="${fileVO.atchFileId}"/>','<c:out value="${fileVO.fileSn}"/>');">
+		</c:when>
+		<c:otherwise>
+			<a href="#LINK" onclick="javascript:fn_egov_downFile('<c:out value="${fileVO.atchFileId}"/>','<c:out value="${fileVO.fileSn}"/>')">
+				<c:out value="${fileVO.orignlFileNm}"/>
+			</a>
+			&nbsp;[<c:out value="${fileVO.fileMg}"/>&nbsp;byte]
+		</c:otherwise>
+	</c:choose>
+	<div style="padding: 3px;"></div>
+</c:forEach>
+<c:if test="${fn:length(fileList) == 0}">
+</c:if>

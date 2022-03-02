@@ -5,8 +5,8 @@ import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorManageService;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 
@@ -73,7 +73,7 @@ public class EgovAuthorManageController {
 	 */
 	@RequestMapping(value = "/sec/ram/EgovAuthorList.do")
 	public String selectAuthorList(@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) throws Exception {
-
+		
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(authorManageVO.getPageIndex());

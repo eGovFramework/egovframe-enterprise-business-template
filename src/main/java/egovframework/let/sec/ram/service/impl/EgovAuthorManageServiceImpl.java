@@ -6,7 +6,7 @@ import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorManageService;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

@@ -20,82 +20,89 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
 <title>로그인 로그 상세</title>
 </head>
 
-<body style=";margin-left:10px;;margin-top:10px;">
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-    <!-- header 시작 -->
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-        <!-- 좌측메뉴 시작 -->
-        <!-- //좌측메뉴 끝 -->
-                <!-- 검색 필드 박스 시작 -->
-                <h2><strong>로그인 로그 정보</strong></h2>
-                <form name="Form" method="post" action="#LINK" >
-                <input type="submit" id="invisible" class="invisible"/>
-                    <div class="popop_detail" >
-                        <table width="50%">
-					     <tr> 
-					        <th width="20%" height="23" align="center">로그ID</th>
-					        <td width="80%" nowrap >&nbsp;&nbsp;
-					          <c:out value="${result.logId}"/>
-					        </td>
-					      </tr>
-					     <tr> 
-					        <th width="20%" height="23" align="center">발생일자</th>
-					        <td width="80%" nowrap >&nbsp;&nbsp;
-					          <c:out value="${result.creatDt}"/>
-					        </td>
-					      </tr>
-					     <tr> 
-					        <th width="20%" height="23" align="center">로그유형</th>
-					        <td width="80%" nowrap >&nbsp;&nbsp;
-					          <c:out value="${result.loginMthd}"/>
-					        </td>
-					      </tr>
-					     <tr> 
-					        <th width="20%" height="23" align="center">요청자</th>
-					        <td width="80%" nowrap >&nbsp;&nbsp;
-					          <c:out value="${result.loginNm}"/>
-					        </td>
-					      </tr>
-					     <tr> 
-					        <th width="20%" height="23" align="center">요청자IP</th>
-					        <td width="80%" nowrap >&nbsp;&nbsp;
-					          <c:out value="${result.loginIp}"/>
-					        </td>
-					      </tr>
-                        </table>
-                    </div>
+<script type="text/javascript">
 
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                        <!-- 목록/저장버튼  -->
-                        <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="#LINK" onclick="javascript:window.close(); return false;">닫기</a> 
-                          </td>
+/* ********************************************************
+ * 취소처리
+ ******************************************************** */
+function fn_egov_cancel_popup() {
+	parent.fn_egov_modal_remove();
+}
+
+</script>
+
+<body>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+	<form name="Form" method="post" action="#LINK" >
+	
+	<!-- 로그인 로그 정보 팝업 -->
+    <div class="popup POP_LOGIN_LOG">
+        <div class="pop_inner">
+            <div class="pop_header">
+                <h1>로그인 로그 정보</h1>
+                <button type="button" class="close" onclick="fn_egov_cancel_popup(); return false;">닫기</button>
+            </div>
+
+            <div class="pop_container">
+                <div class="board_view2">
+                    <table>
+                        <colgroup>
+                            <col style="width: 190px;">
+                            <col style="width: auto;">
+                        </colgroup>
+                        <tr>
+                            <td class="lb">
+                                <span class="min">로그ID</span>
+                            </td>
+                            <td><c:out value="${result.logId}"/></td>
                         </tr>
-                        </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-
-                    <!-- 검색조건 유지 -->
-                    <!-- 검색조건 유지 -->
-                </form>
-
-            <!-- //content 끝 -->    
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <!-- //footer 끝 -->
-<!-- //전체 레이어 끝 -->
+                        <tr>
+                            <td class="lb">
+                                <span class="min">발생일자</span>
+                            </td>
+                            <td><c:out value="${result.creatDt}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="lb">
+                                <span class="min">로그유형</span>
+                            </td>
+                            <td><c:out value="${result.loginMthd}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="lb">
+                                <span class="min">요청자</span>
+                            </td>
+                            <td><c:out value="${result.loginNm}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="lb">
+                                <span class="min">요청자IP</span>
+                            </td>
+                            <td><c:out value="${result.loginIp}"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// 로그인 로그 정보 팝업 -->
+    
+    </form>
+    
 </body>
 </html>
 

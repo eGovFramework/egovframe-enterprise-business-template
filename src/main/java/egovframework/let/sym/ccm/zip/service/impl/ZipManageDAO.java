@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 

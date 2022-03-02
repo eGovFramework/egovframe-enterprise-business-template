@@ -16,19 +16,19 @@
 			  FROM  LETTCZIP
 			 WHERE	1 = 1
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				ZIP = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				CTPRVN_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 3">AND
+			<if test='searchCondition == "3"'>AND
 				SIGNGU_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 4">AND
+			<if test='searchCondition == "4"'>AND
 				EMD_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 5">AND
+			<if test='searchCondition == "5"'>AND
 				LI_BULD_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 			 LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
@@ -40,19 +40,19 @@
 			  FROM  LETTCZIP
 			 WHERE	1 = 1
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				ZIP = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				CTPRVN_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 3">AND
+			<if test='searchCondition == "3"'>AND
 				SIGNGU_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 4">AND
+			<if test='searchCondition == "4"'>AND
 				EMD_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
-			<if test="searchCondition == 5">AND
+			<if test='searchCondition == "5"'>AND
 				LI_BULD_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 	</select>

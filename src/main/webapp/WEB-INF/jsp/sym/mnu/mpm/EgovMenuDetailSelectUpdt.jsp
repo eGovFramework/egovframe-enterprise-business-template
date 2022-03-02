@@ -23,15 +23,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
 
-<meta http-equiv="Content-Language" content="ko" >
-<link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
+<title>내부업무 사이트 > 내부시스템관리 > 메뉴목록관리</title>
 
-<title>메뉴상세조회및 수정</title>
-<style type="text/css">
-    h1 {font-size:12px;}
-    caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}
-</style>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="menuManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript">
@@ -88,138 +91,162 @@ function press() {
 </head>
 
 <body>
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
-<!-- 전체 레이어 시작 -->
-<div id="wrap">
-    <!-- header 시작 -->
-    <div id="header"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/sym/mms/EgovMainMenuHead.do" /></div>        
-    <!-- //header 끝 --> 
-    <!-- container 시작 -->
-    <div id="container">
-        <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/sym/mms/EgovMainMenuLeft.do" /></div>
-        <!-- //좌측메뉴 끝 -->
-            <!-- 현재위치 네비게이션 시작 -->
-            <div id="content">
-                <div id="cur_loc">
-                    <div id="cur_loc_align">
-                        <ul>
-                            <li>HOME</li>
-                            <li>&gt;</li>
-                            <li>내부시스템관리</li>
-                            <li>&gt;</li>
-                            <li>메뉴관리</li>
-                            <li>&gt;</li>
-                            <li><strong>메뉴목록관리</strong></li>
-                        </ul>
+<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
+
+    <!-- Skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <!-- Header -->
+		<c:import url="/sym/mms/EgovHeader.do" />
+		<!--// Header -->
+
+        <div class="container">
+            <div class="sub_layout">
+                <div class="sub_in">
+                    <div class="layout">
+                        <!-- Left menu -->
+						<c:import url="/sym/mms/EgovMenuLeft.do" />
+						<!--// Left menu -->
+        
+                        <div class="content_wrap">
+                            <div id="contents" class="content">
+                                 <!-- Location -->
+                                <div class="location">
+                                    <ul>
+                                        <li><a class="home" href="">Home</a></li>
+                                        <li><a href="">내부시스템관리</a></li>
+                                        <li><a href="">메뉴관리</a></li>
+                                        <li>메뉴목록관리</li>
+                                    </ul>
+                                </div>
+                                <!--// Location -->
+
+								<form:form modelAttribute="menuManageVO" name="menuManageVO" action ="<c:url value='/sym/mnu/mpm/EgovMenuDetailSelectUpdt.do' />" method="post">
+
+                                <h1 class="tit_1">내부시스템관리</h1>
+
+                                <h2 class="tit_2">메뉴목록관리</h2>
+
+                                <div class="board_view2">
+                                    <table summary="메뉴상세정보">
+                                        <colgroup>
+                                            <col style="width: 190px;">
+                                            <col style="width: auto;">
+                                            <col style="width: 190px;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tr>
+                                            <td class="lb">
+                                                <span class="min"><label for="menuNo">메뉴번호</label></span>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <input class="f_txt" type="text" value="<c:out value="${menuManageVO.menuNo}"/>" id="" readonly="readonly">
+                                                <form:hidden path="menuNo" />
+                                                <form:errors path="menuNo" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="menuOrdr">메뉴순서</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input id="" class="f_txt" path="menuOrdr" maxlength="10" title="메뉴순서"/>
+                                                <form:errors path="menuOrdr" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="menuNm">메뉴명</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input id="" class="f_txt" path="menuNm" maxlength="30" title="메뉴명"/>
+                                                <form:errors path="menuNm" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="upperMenuId">상위메뉴번호</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td>
+                                                <form:input id="" class="f_txt" path="upperMenuId" maxlength="10" title="상위메뉴No"/>
+                                                <form:errors path="upperMenuId" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="progrmFileNm">프로그램파일명</label>
+                                                <span class="req">필수</span>
+                                            </td>
+                                            <td colspan="3">
+                                                <span class="f_search2 w_500">
+                                                    <input id="" type="text" name="progrmFileNm_view" size="60" disabled="disabled" value="${menuManageVO.progrmFileNm}" readonly="readonly">
+                                                    <form:input path="progrmFileNm" type="hidden" maxlength="60" title="프로그램파일명" />
+                                                    <form:errors path="progrmFileNm" />
+                                                    <button type="button" class="btn" onclick="searchFileNm();return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                                </span>
+                                                <span class="f_txt_inner ml15">(프로그램파일명 검색)</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="relateImageNm">관련이미지명</label>
+                                            </td>
+                                            <td>
+                                                <form:input id="" class="f_txt" path="relateImageNm" maxlength="30" title="관련이미지명"/>
+                                                <form:errors path="relateImageNm" />
+                                            </td>
+                                            <td class="lb">
+                                                <label for="relateImagePath">관련이미지경로</label>
+                                            </td>
+                                            <td>
+                                                <form:input id="" class="f_txt" path="relateImagePath" maxlength="30" title="관련이미지경로"/>
+                                                <form:errors path="relateImagePath" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="lb">
+                                                <label for="menuDc">메뉴설명</label>
+                                            </td>
+                                            <td colspan="3">
+                                                <form:textarea id="" class="f_txtar w_full h_200" path="menuDc" rows="10" cols="30" title="메뉴설명"/>
+                                                <form:errors path="menuDc" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+								<!-- 목록/저장버튼  -->
+                                <div class="board_view_bot">
+                                    <div class="left_col btn3">
+                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="deleteMenuManage(document.getElementById('menuManageVO')); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                    </div>
+
+                                    <div class="right_col btn1">
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:updateMenuManage(document.getElementById('menuManageVO')); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                    </div>
+                                </div>
+                                <!-- // 목록/저장버튼 끝  -->
+                                
+                                <!-- 검색조건 유지 -->
+                                <input type="hidden" name="tmp_SearchElementName" value=""/>
+                                <input type="hidden" name="tmp_SearchElementVal" value=""/>
+                                <input name="cmd" type="hidden" value="update"/>
+                                
+                                </form:form>
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- 검색 필드 박스 시작 -->
-                <div id="search_field">
-                    <div id="search_field_loc"><h2><strong>메뉴상세조회및 수정</strong></h2></div>
-                </div>
-                <form:form commandName="menuManageVO" name="menuManageVO" action ="<c:url value='/sym/mnu/mpm/EgovMenuDetailSelectUpdt.do' />" method="post">
+            </div>
+        </div>
 
-                    <div class="modify_user" >
-                        <table summary="메뉴상세정보">
-                          <tr> 
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="menuNo">메뉴번호</label><img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"/></th>
-                            <td width="35%" >
-                              &nbsp;<c:out value="${menuManageVO.menuNo}"/> 
-                        
-                              <form:hidden path="menuNo" />
-                              <form:errors path="menuNo" />
-                            </td>
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="menuOrdr">메뉴순서</label><img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"/></th>
-                            <td width="35%" >
-                              &nbsp;
-                              <form:input path="menuOrdr" size="10" maxlength="10" title="메뉴순서"/>
-                              <form:errors path="menuOrdr" />
-                            </td>
-                          </tr> 
-                          <tr> 
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="menuNm">메뉴명</label><img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"/></th>
-                            <td width="35%" nowrap="nowrap">&nbsp;
-                              <form:input path="menuNm" size="30" maxlength="30" title="메뉴명"/>
-                              <form:errors path="menuNm" />
-                            </td>
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="upperMenuId">상위메뉴번호</label><img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"/></th>
-                            <td width="35%" nowrap="nowrap">&nbsp;
-                              <form:input path="upperMenuId" size="10" maxlength="10" title="상위메뉴No"/>
-                              <form:errors path="upperMenuId" />
-                            </td>
-                          </tr>
-                          <tr> 
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="progrmFileNm">프로그램파일명</label><img src="${ImgUrl}/required.gif" width="15" height="15" alt="필수"/></th>
-                            <td width="85%" colspan="3" nowrap="nowrap">
-                                &nbsp;
-                                <input type="text" name="progrmFileNm_view" size="60" disabled="disabled" value="${menuManageVO.progrmFileNm}">
-                                <form:input path="progrmFileNm" size="60" maxlength="60" title="프로그램파일명" cssStyle="display:none" />
-                                <form:errors path="progrmFileNm" />
-                                <a href="<c:url value='/sym/prm/EgovProgramListSearch.do'/>?tmp_SearchElementName=progrmFileNm" target="_blank" title="새창으로 이동" onclick="searchFileNm();return false;"  style="selector-dummy:expression(this.hideFocus=false);"><img src="<c:url value='/images/img_search.gif' />"
-                                 alt='' width="15" height="15" />(프로그램파일명 검색)</a>
-                            </td>
-                          </tr>
-                          <tr> 
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="relateImageNm">관련이미지명</label></th>
-                            <td width="35%" nowrap="nowrap">&nbsp;
-                              <form:input path="relateImageNm" size="30" maxlength="30" title="관련이미지명"/>
-                              <form:errors path="relateImageNm" />
-                            </td>
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="relateImagePath">관련이미지경로</label></th>
-                            <td width="35%" nowrap="nowrap">&nbsp;
-                              <form:input path="relateImagePath" size="30" maxlength="30" title="관련이미지경로"/>
-                              <form:errors path="relateImagePath" />
-                            </td>
-                          </tr>
-                          <tr> 
-                            <th width="15%" height="23" class="required_text" scope="row"><label for="menuDc">메뉴설명</label></th>
-                            <td colspan="3" nowrap="nowrap">&nbsp;
-                              <form:textarea path="menuDc" rows="14" cols="75" title="메뉴설명"/>
-                              <form:errors path="menuDc"/>
-                            </td>
-                          </tr> 
-                        </table>
-                    </div>
-
-                    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-                    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-                        <!-- 목록/저장버튼  -->
-                        <table border="0" cellspacing="0" cellpadding="0" align="center">
-                        <tr> 
-                          <td>
-                            <a href="<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>" onclick="selectList(); return false;">목록</a> 
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="#LINK" onclick="javascript:updateMenuManage(document.getElementById('menuManageVO')); return false;"><spring:message code="button.save" /></a> 
-                          </td>
-                          <td width="10"></td>
-                          <td>
-                            <a href="#LINK" onclick="deleteMenuManage(document.getElementById('menuManageVO')); return false;"><spring:message code="button.delete" /></a> 
-                          </td>
-                        </tr>
-                        </table>
-                    </div>
-                    <!-- 버튼 끝 -->                           
-
-                    <!-- 검색조건 유지 -->
-                    <input type="hidden" name="tmp_SearchElementName" value=""/>
-                    <input type="hidden" name="tmp_SearchElementVal" value=""/>
-                    <input name="cmd"    type="hidden"   value="update"/>
-                    <!-- 검색조건 유지 -->
-                </form:form>
-
-            </div>  
-            <!-- //content 끝 -->    
-    </div>  
-    <!-- //container 끝 -->
-    <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
-</div>
-<!-- //전체 레이어 끝 -->
+        <!-- Footer -->
+		<c:import url="/sym/mms/EgovFooter.do" />
+		<!--// Footer -->
+    </div>
+    
 </body>
 </html>
-

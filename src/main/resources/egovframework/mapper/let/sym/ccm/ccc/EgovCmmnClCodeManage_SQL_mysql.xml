@@ -12,10 +12,10 @@
 			  FROM  LETTCCMMNCLCODE
 			 WHERE  1 = 1
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				CL_CODE = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				CL_CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 			<if test="searchCondition == &quot;CodeList&quot;">AND
@@ -30,10 +30,10 @@
 			  FROM  LETTCCMMNCLCODE
 			 WHERE  1 = 1
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				CL_CODE = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 3">AND
+			<if test='searchCondition == "3"'>AND
 				CL_CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 	</select>

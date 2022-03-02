@@ -5,8 +5,8 @@ import java.util.HashMap;
 import egovframework.let.sym.log.clg.service.EgovLoginLogService;
 import egovframework.let.sym.log.clg.service.LoginLog;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 

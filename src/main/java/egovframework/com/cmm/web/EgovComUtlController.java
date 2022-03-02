@@ -1,7 +1,7 @@
 package egovframework.com.cmm.web;
 
 import egovframework.com.cmm.EgovWebUtil;
-import egovframework.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
 
 import java.util.List;
 

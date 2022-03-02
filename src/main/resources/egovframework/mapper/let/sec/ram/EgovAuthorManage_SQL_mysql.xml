@@ -16,7 +16,7 @@
                    AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
               FROM LETTNAUTHORINFO
              WHERE 1=1
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
             </if>
             ORDER BY AUTHOR_CREAT_DE DESC
@@ -65,7 +65,7 @@
             SELECT COUNT(*) totcnt
             FROM LETTNAUTHORINFO
             WHERE 1=1
-            <if test="searchCondition == 1">AND
+            <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
             </if> 
     </select>

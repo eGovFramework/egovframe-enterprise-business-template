@@ -6,7 +6,7 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.mnu.mcm.service.EgovMenuCreateManageService;
 import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 import javax.annotation.Resource;
 

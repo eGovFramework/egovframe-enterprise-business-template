@@ -5,7 +5,7 @@ import java.util.List;
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 
-import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 
 import org.springframework.stereotype.Repository;
 /**

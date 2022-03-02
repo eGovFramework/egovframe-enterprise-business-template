@@ -19,10 +19,10 @@
 			     ,  LETTCCMMNCLCODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				A.CODE_ID = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				A.CODE_ID_NM LIKE '%'||#{searchKeyword}||'%'
 			</if>
 			<if test="searchCondition == &quot;clCode&quot;">AND
@@ -48,10 +48,10 @@
 			     ,  LETTCCMMNCLCODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				CODE_ID = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				CODE_ID_NM LIKE '%'||#{searchKeyword}||'%'
 			</if>
 	</select>

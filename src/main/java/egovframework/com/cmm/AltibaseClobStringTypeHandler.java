@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
-import egovframework.rte.psl.orm.ibatis.support.AbstractLobTypeHandler;
+import org.egovframe.rte.psl.orm.ibatis.support.AbstractLobTypeHandler;
 
 /**
  * iBATIS TypeHandler implementation for Strings that get mapped to CLOBs.
@@ -89,7 +89,7 @@ public class AltibaseClobStringTypeHandler extends AbstractLobTypeHandler {
 			if (rd != null) {
 				try {
 					rd.close();
-				} catch (Exception ignore) {
+				} catch (IOException ignore) {
 					LOGGER.debug("IGNORE: {}", ignore.getMessage());
 				}
 			}

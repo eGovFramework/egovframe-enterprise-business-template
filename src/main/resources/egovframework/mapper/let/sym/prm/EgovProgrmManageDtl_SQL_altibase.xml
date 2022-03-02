@@ -197,16 +197,16 @@
 					   FROM LETTHPROGRMCHANGEDTLS
 				WHERE 1=1
 		 
-        <if test="searchCondition == 1">AND
+        <if test='searchCondition == "1"'>AND
             PROCESS_STTUS_CODE like #{searchKeyword}  
         </if>        
-        <if test="searchCondition == 2">AND
+        <if test='searchCondition == "2"'>AND
             PROCESS_STTUS_CODE = #{searchKeyword}   
         </if>
-        <if test="searchCondition == 3">AND
+        <if test='searchCondition == "3"'>AND
           to_char(REQUST_DE, 'YYYY-MM-DD') between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
-        <if test="searchCondition == 4">AND
+        <if test='searchCondition == "4"'>AND
            RQESTER_ID like  '%'||#{searchKeyword}||'%'   
         </if>
            ORDER BY REQUST_NO ASC
@@ -221,16 +221,16 @@
 		  FROM LETTHPROGRMCHANGEDTLS
 			WHERE 1=1
 		 
-        <if test="searchCondition == 1">AND
+        <if test='searchCondition == "1"'>AND
             PROCESS_STTUS_CODE like #{searchKeyword}  
         </if>        
-        <if test="searchCondition == 2">AND
+        <if test='searchCondition == "2"'>AND
             PROCESS_STTUS_CODE = #{searchKeyword}   
         </if>
-        <if test="searchCondition == 3">AND
+        <if test='searchCondition == "3"'>AND
           to_char(REQUST_DE, 'YYYY-MM-DD') between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
-        <if test="searchCondition == 4">AND
+        <if test='searchCondition == "4"'>AND
            RQESTER_ID like  '%'||#{searchKeyword}||'%'   
         </if>
 	</select>

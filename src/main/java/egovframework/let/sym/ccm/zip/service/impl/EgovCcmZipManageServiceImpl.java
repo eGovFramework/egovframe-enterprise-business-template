@@ -7,14 +7,14 @@ import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
 
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import egovframework.rte.fdl.excel.EgovExcelService;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.excel.EgovExcelService;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-//import egovframework.rte.fdl.excel.EgovExcelService;
+//import org.egovframe.rte.fdl.excel.EgovExcelService;
 
 
 /**

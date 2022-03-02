@@ -15,13 +15,13 @@
 			 WHERE 	B.USE_AT  = 'Y'
 			   AND  A.CODE_ID = B.CODE_ID
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				A.CODE_ID = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				A.CODE    = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 3">AND
+			<if test='searchCondition == "3"'>AND
 				A.CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 			 LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
@@ -35,13 +35,13 @@
 			 WHERE 	B.USE_AT  = 'Y'
 			   AND  A.CODE_ID = B.CODE_ID
 		
-			<if test="searchCondition == 1">AND
+			<if test='searchCondition == "1"'>AND
 				A.CODE_ID = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 2">AND
+			<if test='searchCondition == "2"'>AND
 				A.CODE    = #{searchKeyword}
 			</if>
-			<if test="searchCondition == 3">AND
+			<if test='searchCondition == "3"'>AND
 				A.CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 	</select>

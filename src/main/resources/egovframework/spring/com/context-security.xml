@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:egov-security="http://maven.egovframe.go.kr/schema/egov-security"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
-		http://maven.egovframe.go.kr/schema/egov-security http://maven.egovframe.go.kr/schema/egov-security/egov-security-3.10.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://maven.egovframe.go.kr/schema/egov-security http://maven.egovframe.go.kr/schema/egov-security/egov-security-4.0.0.xsd">
 
     <security:http pattern="/css/**" security="none"/>
 	<security:http pattern="/html/**" security="none"/>
@@ -15,7 +15,7 @@
 
     <egov-security:config id="securityConfig"
         loginUrl="/uat/uia/actionSecurityLogin.do"
-        logoutSuccessUrl="/uat/uia/actionMain.do"
+        logoutSuccessUrl="/uat/uia/egovLoginUsr.do"
         loginFailureUrl="/uat/uia/actionSecurityLogin.do?login_error=1"
         accessDeniedUrl="/sec/ram/accessDenied.do"
 

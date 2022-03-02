@@ -20,11 +20,17 @@
 <html>
 <head>
 <title>ID중복확인</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-<meta http-equiv="content-language" content="ko">
-<link rel="stylesheet" href="<c:url value='/css/common.css'/>" type="text/css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+
 <base target="_self">
-<script type="text/javascript" src="<c:url value='/js/showModalDialogCallee.js'/>" ></script>
 <script type="text/javaScript">
 <!--
 function fnCheckId(){
@@ -44,9 +50,7 @@ function fnReturnId(){
 	var retVal="";
     if (document.checkForm.usedCnt.value == 0){
 	    retVal = document.checkForm.resultId.value;
-	    setReturnValue(retVal);
-	    window.returnValue = retVal; 
-        window.close();
+	    parent.showModalDialogCallback(retVal);
     }else if (document.checkForm.usedCnt.value == 1){
         alert("이미사용중인 아이디입니다.");
         return;
@@ -57,8 +61,8 @@ function fnReturnId(){
 }
 function fnClose(){
     var retVal="";
-    window.returnValue = retVal; 
-    window.close();
+    parent.showModalDialogCallback(retVal);
+    parent.fn_egov_modal_remove();
 }
 function fnCheckNotKorean(koreanStr){                  
     for(var i=0;i<koreanStr.length;i++){
@@ -74,56 +78,52 @@ function fnCheckNotKorean(koreanStr){
 //-->
 </script>
 
-<style type="text/css">
-    body {
-        margin-left: 5px;
-        }
-</style>
-
 </head>
 <body>
-    <form name="checkForm" action ="<c:url value='/uss/umt/cmm/EgovIdDplctCnfirm.do'/>">
-    <input type="submit" id="invisible" class="invisible"/>
 
-    <table border="0" cellspacing="0" cellpadding="0" width="300">
-        <tr><td height="20" colspan="2"></td></tr>
-        <tr>
-            <td colspan="2" ><img alt="아이디중복확인" src="<c:url value='/images/tit_icon.gif'/>" width="16" height="16" hspace="3" align="middle">
-            &nbsp;아이디 중복확인</td>
-        </tr>
-        <tr><td height="20" colspan="2"></td></tr>
-        <tr>     
-            <td>사용할아이디&nbsp;&nbsp;</td>
-            <td>
-                <input type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
-	            <input type="hidden" name="usedCnt" value="<c:out value="${usedCnt}"/>" />
-	            <input type="text" name="checkId" title="선택여부" value="<c:out value="${checkId}"/>" maxlength="20"  />
-	        </td>
-	    </tr>
-	    <tr><td height="10" colspan="2"></td></tr>
-	    <tr>     
-            <td colspan="2">결과&nbsp;&nbsp;:&nbsp;
-                <c:choose>
-                <c:when test="${usedCnt eq -1}">
-                    &nbsp; 중복확인을 실행하십시오
-                </c:when>
-                <c:when test="${usedCnt eq 0}">
-                    ${checkId} 는 사용가능한 아이디입니다.
-                </c:when>
-                <c:otherwise>
-                    ${checkId} 는 사용할수 없는 아이디입니다.
-                </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-	    <tr><td height="15" colspan="2"></td></tr>
-    </table>
-    <!-- 버튼 시작(상세지정 style로 div에 지정) -->
-    <div class="buttons" style="padding-top:10px;padding-bottom:10px;">
-	    <a href="#LINK" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a>
-	    <a href="#LINK" onclick="javascript:fnReturnId(); return false;"><spring:message code="button.use" /></a>
-	    <a href="#LINK" onclick="javascript:fnClose(); return false;"><spring:message code="button.close" /></a>
+	<form name="checkForm" action ="<c:url value='/uss/umt/cmm/EgovIdDplctCnfirm.do'/>">
+
+    <!-- 아이디중복확인 팝업 -->
+    <div class="popup POP_DUPID_CONF">
+        <div class="pop_inner">
+            <div class="pop_header">
+                <h1>아이디 중복확인</h1>
+                <button type="button" class="close" onclick="fnClose(); return false;">닫기</button>
+            </div>
+
+            <div class="pop_container">
+                <div class="box_1">
+                    <label for="mid">사용할 아이디</label>
+                    <input type="hidden" name="resultId" value="<c:out value="${checkId}"/>" />
+                    <input type="hidden" name="usedCnt" value="<c:out value="${usedCnt}"/>" />
+                    <input id="mid" class="f_txt2 ml15" type="text" name="checkId" title="선택여부" value="<c:out value="${checkId}"/>" maxlength="20" />
+                </div>
+
+                <p class="result">
+                    <!-- 결과 : 중복확인을 실행하십시오. -->
+                    결과 : 
+                    <c:choose>
+                    	<c:when test="${usedCnt eq -1}">
+                    		&nbsp; 중복확인을 실행하십시오
+                    	</c:when>
+                    	<c:when test="${usedCnt eq 0}">
+                    		<span>${checkId}</span> 는 사용가능한 아이디입니다.
+                    	</c:when>
+                    	<c:otherwise>
+                    		<span>${checkId}</span> 는 사용할수 없는 아이디입니다.
+                    	</c:otherwise>
+                    </c:choose>
+                </p>
+
+                <div class="btn_area al_c pt20">
+                    <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnCheckId(); return false;"><spring:message code="button.inquire" /></a><!-- 조회하기 -->
+                    <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fnReturnId(); return false;"><spring:message code="button.use" /></a><!-- 사용하기 -->
+                </div>
+            </div>
+        </div>
     </div>
+    <!--// 아이디중복확인 팝업 -->
+    
     </form>
     
 </body>
