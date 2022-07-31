@@ -17,3 +17,4 @@ Windows 형식인 CRLF가 섞이지 않도록 편집기와 GIT 설정 등을 확
 ---
 참고.
 1. [캠퍼스 핵데이 Java 코딩 컨벤션]: https://naver.github.io/hackday-conventions-java/
+2. [editorconfig]: https://editorconfig.org/
