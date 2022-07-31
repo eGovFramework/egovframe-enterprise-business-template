@@ -35,10 +35,6 @@
             <h1>Error</h1>
             <div class="inner">
                 <p>세션이 만료되었습니다.</p>
-<!--                 <p>데이터 처리 중 오류가 발생하였습니다.</p>
-                <p>수행중 오류가 발생하였습니다.</p>
-                <p>알 수 없는 오류가 발생하였습니다.</p>
-                <p>오류발생알림화면<br>(허용되지 않는 요청을 하셨습니다.)</p> -->
                 <br>
                 <a href="javascript:fncGoAfterErrorPage();" class="btn btn_blue_46 w_130">이전페이지</a>
             </div>
