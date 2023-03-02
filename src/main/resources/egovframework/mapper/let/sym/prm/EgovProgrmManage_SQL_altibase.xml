@@ -9,7 +9,7 @@
 		<result property="progrmFileNm" column="progrmFileNm"/>
 		<result property="progrmStrePath" column="progrmStrePath"/>
 		<result property="progrmKoreanNm" column="progrmKoreanNm"/>
-		<result property="progrmDc" column="progrmDc" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
+		<result property="progrmDc" column="progrmDc" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
 		<result property="URL" column="URL"/>
 	</resultMap> 
  

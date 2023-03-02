@@ -153,7 +153,7 @@
                                         	
                                         	<c:forEach var="result" items="${resultList}" varStatus="status">
 	                                            <tr>
-	                                                <td><c:out value="${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}"/></td>
+	                                                <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
 	                                                <td>
 	                                                	<input type=hidden name="bbsId" value="<c:out value="${result.bbsId}"/>">
 	                                                	<input type=hidden name="trgetId" value="<c:out value="${result.trgetId}"/>">

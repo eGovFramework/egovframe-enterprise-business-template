@@ -155,7 +155,7 @@
                                         	
                                         	<c:forEach var="result" items="${resultList}" varStatus="status">
 	                                            <tr>
-	                                                <td><c:out value="${(searchVO.pageIndex-1) * searchVO.pageSize + status.count}"/></td>
+	                                               <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
 	                                                <td>
 	                                                	<a href="<c:url value='/cop/bbs/SelectBBSMasterInf.do'/>?bbsId=<c:out value='${result.bbsId}'/>" class="lnk">
 	                                                		<c:out value="${result.bbsNm}"/>

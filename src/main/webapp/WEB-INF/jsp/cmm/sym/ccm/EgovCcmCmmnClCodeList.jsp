@@ -162,7 +162,7 @@ function fnDelete(){
                                         	
                                         	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                                             <tr>
-                                                <td><c:out value="${(searchVO.pageIndex - 1) * searchVO.pageSize + status.count}"/></td>
+                                                <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
                                                 <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('${resultInfo.clCode}');">${resultInfo.clCode}</a></td>
                                                 <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('${resultInfo.clCode}');">${resultInfo.clCodeNm}</a></td>
                                                 <td>

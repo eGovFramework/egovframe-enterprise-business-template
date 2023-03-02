@@ -5,23 +5,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
-
-import egovframework.com.cmm.EgovWebUtil;
-import egovframework.com.cmm.SessionVO;
-import egovframework.com.cmm.service.EgovFileMngService;
-import egovframework.com.cmm.service.FileVO;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.egovframe.rte.fdl.cryptography.EgovCryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import egovframework.com.cmm.EgovWebUtil;
+import egovframework.com.cmm.SessionVO;
+import egovframework.com.cmm.service.EgovFileMngService;
+import egovframework.com.cmm.service.EgovProperties;
+import egovframework.com.cmm.service.FileVO;
 
 /**
  * @Class Name : EgovImageProcessController.java
@@ -42,11 +46,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SuppressWarnings("serial")
 @Controller
 public class EgovImageProcessController extends HttpServlet {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EgovImageProcessController.class);
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
+	
+	/** 암호화서비스 */
+	@Resource(name = "egovARIACryptoService")
+	EgovCryptoService cryptoService;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(EgovImageProcessController.class);
+	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
+	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
 
 	/**
 	 * 첨부된 이미지에 대한 미리보기 기능을 제공한다.
@@ -61,28 +72,32 @@ public class EgovImageProcessController extends HttpServlet {
 	@RequestMapping("/cmm/fms/getImage.do")
 	public void getImageInf(SessionVO sessionVO, ModelMap model, @RequestParam Map<String, Object> commandMap, HttpServletResponse response) throws Exception {
 
-		String atchFileId = (String) commandMap.get("atchFileId");
+		String param_atchFileId = (String) commandMap.get("atchFileId");
+		param_atchFileId = param_atchFileId.replaceAll(" ", "+");
+		byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
+		String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
+		String decodedFileId = StringUtils.substringAfter(decodedString, "|");
+
 		String fileSn = (String) commandMap.get("fileSn");
 
 		FileVO vo = new FileVO();
 
-		vo.setAtchFileId(atchFileId);
+		vo.setAtchFileId(decodedFileId);
 		vo.setFileSn(fileSn);
 
-		if (fileSn == null || fileSn.equals("")) {
-			int newMaxFileSN = fileService.getMaxFileSN(vo);
-			vo.setFileSn(Integer.toString(newMaxFileSN - 1));
-		}
 		FileVO fvo = fileService.selectFileInf(vo);
 
 		//String fileLoaction = fvo.getFileStreCours() + fvo.getStreFileNm();
+		String fileStreCours = EgovWebUtil.filePathBlackList(fvo.getFileStreCours());
+		String streFileNm = EgovWebUtil.filePathBlackList(fvo.getStreFileNm());
+		
 		File file = null;
 		FileInputStream fis = null;
 
 		BufferedInputStream in = null;
 		ByteArrayOutputStream bStream = null;
 		try {
-		    file = new File(fvo.getFileStreCours(), fvo.getStreFileNm());
+		    file = new File(fileStreCours, streFileNm);
 			fis = new FileInputStream(file);
 			in = new BufferedInputStream(fis);
 			bStream = new ByteArrayOutputStream();

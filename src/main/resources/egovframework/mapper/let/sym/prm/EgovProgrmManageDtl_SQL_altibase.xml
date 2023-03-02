@@ -9,8 +9,8 @@
 	  <result property="progrmFileNm" column="PROGRM_FILE_NM"/>
       <result property="rqesterNo" column="REQUST_NO"/>
       <result property="rqesterPersonId" column="RQESTER_ID"/>
-      <result property="changerqesterCn" column="CHANGE_REQUST_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
-      <result property="rqesterProcessCn" column="REQUST_PROCESS_CN" jdbcType="CLOB" typeHandler="egovframework.com.cmm.AltibaseClobStringTypeHandler"/>
+      <result property="changerqesterCn" column="CHANGE_REQUST_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+      <result property="rqesterProcessCn" column="REQUST_PROCESS_CN" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
       <result property="opetrId" column="OPETR_ID"/>
       <result property="processSttus" column="PROCESS_STTUS_CODE"/>
       <result property="processDe" column="PROCESS_DE"/>

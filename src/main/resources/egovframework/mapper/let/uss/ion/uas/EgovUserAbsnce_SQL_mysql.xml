@@ -29,7 +29,7 @@
                                  ELSE 'Y' 
                              END) AS REG_YN,  
                             LAST_UPDUSR_ID,
-                            LAST_UPDT_PNTTM
+                            DATE_FORMAT(LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM
                       FROM  LETTNEMPLYRINFO A LEFT OUTER JOIN LETTNUSERABSNCE B
                         ON  A.EMPLYR_ID = B.EMPLYR_ID
                    ) X
@@ -56,7 +56,7 @@
                                  ELSE 'Y' 
                              END) AS REG_YN,  
                             LAST_UPDUSR_ID,
-                            LAST_UPDT_PNTTM
+                            DATE_FORMAT(LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM
                       FROM  LETTNEMPLYRINFO A LEFT OUTER JOIN LETTNUSERABSNCE B
                         ON  A.EMPLYR_ID = B.EMPLYR_ID
                    ) X
@@ -80,7 +80,7 @@
                          ELSE 'Y' 
                      END) AS REG_YN,                     
                    LAST_UPDUSR_ID,
-                   LAST_UPDT_PNTTM
+                   DATE_FORMAT(LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM
               FROM LETTNEMPLYRINFO A LEFT OUTER JOIN LETTNUSERABSNCE B
                 ON A.EMPLYR_ID = B.EMPLYR_ID
               WHERE 1 = 1

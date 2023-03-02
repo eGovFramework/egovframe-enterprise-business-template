@@ -55,7 +55,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	@Resource(name = "excelZipService")
 	private EgovExcelService excelZipService;
 
-	@Resource(name = "multipartResolver")
+	@Resource(name = "filterMultipartResolver")
 	CommonsMultipartResolver mailmultipartResolver;
 
 	/**

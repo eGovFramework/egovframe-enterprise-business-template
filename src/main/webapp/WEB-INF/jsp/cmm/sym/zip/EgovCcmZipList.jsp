@@ -177,7 +177,7 @@ function fn_egov_detail_Zip(zip,sn){
                                         	
                                         	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                                             <tr>
-                                                <td><c:out value="${(searchVO.pageIndex - 1) * searchVO.pageSize + status.count}"/></td>
+                                                <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
                                                 <td><a href="#LINK" class="lnk" onclick="javascript:fn_egov_detail_Zip('${resultInfo.zip}','${resultInfo.sn}');"><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></a></td>
                                                 <td>${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
                                             </tr>

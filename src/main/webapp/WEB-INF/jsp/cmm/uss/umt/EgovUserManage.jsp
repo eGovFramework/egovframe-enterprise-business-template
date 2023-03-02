@@ -241,7 +241,7 @@ function fnViewCheck(){
                                         	
                                         	<c:forEach var="result" items="${resultList}" varStatus="status">
                                             <tr>
-                                                <td><c:out value="${status.count}"/></td>
+                                                <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
                                                 <td>
                                                     <span class="f_chk_only">
                                                         <input name="checkField" title="Check <c:out value="${status.count}"/>" type="checkbox"/>
