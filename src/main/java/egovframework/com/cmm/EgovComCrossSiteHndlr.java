@@ -8,8 +8,6 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.taglibs.standard.tag.common.core.Util;
-
 /**
  * Cross-Site Scripting 체크하여 값을 되돌려 받는 핸들러 JSP TLD, 자바에서 사용가능 
  * 
@@ -26,6 +24,16 @@ import org.apache.taglibs.standard.tag.common.core.Util;
  * </pre>
  */
 public class EgovComCrossSiteHndlr extends BodyTagSupport {
+	
+	public static final int HIGHEST_SPECIAL = '>';
+	public static char[][] specialCharactersRepresentation = new char[HIGHEST_SPECIAL + 1][];
+	static {
+	    specialCharactersRepresentation['&'] = "&amp;".toCharArray();
+	    specialCharactersRepresentation['<'] = "&lt;".toCharArray();
+	    specialCharactersRepresentation['>'] = "&gt;".toCharArray();
+	    specialCharactersRepresentation['"'] = "&#034;".toCharArray();
+	    specialCharactersRepresentation['\''] = "&#039;".toCharArray();
+	}
 
 	/*
 	 * (One almost wishes XML and JSP could support "anonymous tags," given the
@@ -212,8 +220,8 @@ public class EgovComCrossSiteHndlr extends BodyTagSupport {
 
 		for (int i = 0; i < length; i++) {
 			char c = buffer[i];
-			if (c <= Util.HIGHEST_SPECIAL) {
-				char[] escaped = Util.specialCharactersRepresentation[c];
+			if (c <= HIGHEST_SPECIAL) {
+				char[] escaped = specialCharactersRepresentation[c];
 				if (escaped != null) {
 					// add unescaped portion
 					if (start < i) {
@@ -268,8 +276,8 @@ public class EgovComCrossSiteHndlr extends BodyTagSupport {
 
 			if(booleanDiff) continue;
 
-			if (c <= Util.HIGHEST_SPECIAL) {
-				char[] escaped = Util.specialCharactersRepresentation[c];
+			if (c <= HIGHEST_SPECIAL) {
+				char[] escaped = specialCharactersRepresentation[c];
 				if (escaped != null) {
 					// add unescaped portion
 					//if (start < i) {
@@ -334,8 +342,8 @@ public class EgovComCrossSiteHndlr extends BodyTagSupport {
 
 			if(booleanDiff) continue;
 
-			if (c <= Util.HIGHEST_SPECIAL) {
-				char[] escaped = Util.specialCharactersRepresentation[c];
+			if (c <= HIGHEST_SPECIAL) {
+				char[] escaped = specialCharactersRepresentation[c];
 				if (escaped != null) {
 					// add unescaped portion
 					//if (start < i) {
