@@ -190,7 +190,7 @@ INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PRO
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovInfoNoticeAdmin','/cop/bbs/admin/','공지사항관리','공지사항관리','/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovInfoWork','/cop/bbs/','업무게시판','업무게시판','/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovInfoWorkAdmin','/cop/bbs/admin/','업무게시판관리','업무게시판관리','/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovJoinHistory','/','입퇴사정보 관리','입퇴사정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovJoinHistory','/','입퇴사정보 관리','입퇴사정보 관리','/EgovPageLink.do?linkIndex=0');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovLoginLogInqire','/sym/log/clg/','로그인로그상세조회','로그인로그상세조회','/sym/log/clg/SelectLoginLogList.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovLoginLogList','/sym/log/clg/','로그인로그조회','로그인로그조회','/sym/log/clg/SelectLoginLogList.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovLoginPolicyList','/uat/uap/','로그인정책관리','로그인정책관리','/uat/uap/selectLoginPolicyList.do');
@@ -198,8 +198,8 @@ INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PRO
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovLoginPolicyUpdt','/uat/uia/','로그인정책수정','로그인정책수정','/uat/uap/getLoginPolicy.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovLoginUsr','/uat/uia/','내부업무 로그인','내부업무 로그인','/uat/uia/egovLoginUsr.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMainHome','/uat/uia/','내부업무 메인','내부업무 메인','/uat/uia/actionMain.do');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMberPositionl','/','직위정보 관리','직위정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMberRank','/','직급정보 관리','직급정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMberPositionl','/','직위정보 관리','직위정보 관리','/EgovPageLink.do?linkIndex=0');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMberRank','/','직급정보 관리','직급정보 관리','/EgovPageLink.do?linkIndex=0');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMenuBndeRegist','/sym/mnu/mpm/','메뉴일괄등록','메뉴일괄등록','/sym/mnu/mpm/EgovMenuBndeRegist.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMenuCreat','/sym/mnu/mcm/','메뉴생성','메뉴생성','/sym/mnu/mcm/EgovMenuCreatSelect.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovMenuCreatManage','/sym/mnu/mcm/','메뉴생성관리','메뉴생성관리','/sym/mnu/mcm/EgovMenuCreatManageSelect.do');
@@ -228,10 +228,10 @@ INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PRO
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovUserManage','/uss/umt/user/','사용자관리(조회,삭제)','사용자관리(조회,삭제)','/uss/umt/user/EgovUserManage.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovUserPasswordUpdt','/uss/umt/user/','사용자암호수정','사용자암호수정','/uss/umt/user/EgovUserPasswordUpdtView.do');
 INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovUserSelectUpdt','/uss/umt/user/','사용자상세조회,수정','사용자상세조회,수정','/uss/umt/user/EgovUserSelectUpdtView.do');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkAttendance','/','출퇴근정보 관리','출퇴근정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkAward','/','상벌정보 관리','상벌정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkEstimation','/','업무평가점수 관리','업무평가점수 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
-INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkVacation','/','휴무정보 관리','휴무정보 관리','/EgovPageLink.do?link=main/sample_menu/Sample');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkAttendance','/','출퇴근정보 관리','출퇴근정보 관리','/EgovPageLink.do?linkIndex=0');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkAward','/','상벌정보 관리','상벌정보 관리','/EgovPageLink.do?linkIndex=0');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkEstimation','/','업무평가점수 관리','업무평가점수 관리','/EgovPageLink.do?linkIndex=0');
+INSERT INTO LETTNPROGRMLIST(PROGRM_FILE_NM,PROGRM_STRE_PATH,PROGRM_KOREAN_NM,PROGRM_DC,URL) VALUES ('EgovWorkVacation','/','휴무정보 관리','휴무정보 관리','/EgovPageLink.do?linkIndex=0');
 
 
 -- 메뉴목록

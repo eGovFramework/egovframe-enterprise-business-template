@@ -24,7 +24,7 @@
 function fn_egov_modal_create(){
 	
     var $dialog = $('<div id="modalPan"></div>')
-	.html('<iframe style="border: 0px; " src="' + "<c:url value='/EgovPageLink.do'/>?" + "link=main/sample_menu/Intro" +'" width="100%" height="100%"></iframe>')
+	.html('<iframe style="border: 0px; " src="' + "<c:url value='/EgovPageLink.do'/>?" + "linkIndex=" + 3 +'" width="100%" height="100%"></iframe>')
 	.dialog({
     	autoOpen: false,
         modal: true,
@@ -120,25 +120,25 @@ function fn_egov_modal_remove() {
             <div>
                 <h2>직급체계관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">입퇴사정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">직급정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">직위정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">입퇴사정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">직급정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">직위정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>진급관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">업무평가점수 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">상벌정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">업무평가점수 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">상벌정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>근태관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">출퇴근정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?link=main/sample_menu/Sample">휴무정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">출퇴근정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">휴무정보 관리</a></li>
                 </ul>
             </div>
 
