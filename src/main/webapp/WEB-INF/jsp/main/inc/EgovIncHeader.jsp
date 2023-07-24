@@ -64,7 +64,7 @@ function fn_egov_modal_remove() {
 		<% } else { %>
 			<c:set var="loginName" value="<%= loginVO.getName()%>"/>
 	        <div class="top_menu">
-	            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;">${loginName} 님</span>의 최종접속정보는 </span>
+	            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;"><c:out value="${loginName}" /> 님</span>의 최종접속정보는 </span>
 	            <span class="d">2021-06-30 12:45 입니다.</span>
 	            <a href="<c:url value='/uat/uia/actionLogout.do'/>" class="btn btn_blue_15 w_90">로그아웃</a>
 	        </div>
@@ -120,25 +120,25 @@ function fn_egov_modal_remove() {
             <div>
                 <h2>직급체계관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">입퇴사정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">직급정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">직위정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">입퇴사정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">직급정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">직위정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>진급관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">업무평가점수 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">상벌정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=300000">업무평가점수 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=300000">상벌정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>근태관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">출퇴근정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0">휴무정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=400000">출퇴근정보 관리</a></li>
+                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=400000">휴무정보 관리</a></li>
                 </ul>
             </div>
 
@@ -239,8 +239,8 @@ function actionLogout()
     <input type="hidden" id="baseMenuNo" name="baseMenuNo" value="<%=session.getAttribute("baseMenuNo")%>" />
     <input type="hidden" id="link" name="link" value="" />
     <div style="width:0px; height:0px;">
-    <c:forEach var="result" items="${list_menulist}" varStatus="status" > 
-        <input type="hidden" name="tmp_menuNm" value="${result.menuNo}|${result.upperMenuId}|${result.menuNm}|${result.relateImagePath}|${result.relateImageNm}|${result.chkURL}|" />
+    <c:forEach var="result" items="${list_menulist}" varStatus="status" >
+        <input type="hidden" name="tmp_menuNm" value="<c:out value='${result.menuNo}'/>|<c:out value='${result.upperMenuId}'/>|<c:out value='${result.menuNm}'/>|<c:out value='${result.relateImagePath}'/>|<c:out value='${result.relateImageNm}'/>|<c:out value='${result.chkURL}'/>|" />
     </c:forEach>
     </div>
 </form>

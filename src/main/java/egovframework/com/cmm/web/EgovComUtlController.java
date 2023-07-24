@@ -77,6 +77,7 @@ public class EgovComUtlController {
 		// 선택된 메뉴정보를 세션으로 등록한다.
 		if (baseMenuNo != null && !baseMenuNo.equals("")) {
 			session.setAttribute("menuNo", baseMenuNo);
+			session.setAttribute("baseMenuNo", baseMenuNo);
 		}
 		
 		// 안전한 경로 문자열로 조치
