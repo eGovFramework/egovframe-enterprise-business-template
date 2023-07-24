@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.01   이중호              최초 생성
+     2009.04.01   이중호      최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (분류코드 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이중호
     since    : 2009.04.01
@@ -126,7 +127,7 @@ function fnDelete(){
                                          </select>
                                     </label>
                                     <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" title="검색어" type="text" value="${searchVO.searchKeyword}" maxlength="35" id="searchKeyword" >
+                                        <input class="f_input w_500" name="searchKeyword" title="검색어" type="text" value="<c:out value='${searchVO.searchKeyword}'/>" maxlength="35" id="searchKeyword" >
                                         <button class="btn" type="submit" onclick="fnSearch(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
 
@@ -163,8 +164,8 @@ function fnDelete(){
                                         	<c:forEach items="${resultList}" var="resultInfo" varStatus="status">
                                             <tr>
                                                 <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
-                                                <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('${resultInfo.clCode}');">${resultInfo.clCode}</a></td>
-                                                <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('${resultInfo.clCode}');">${resultInfo.clCodeNm}</a></td>
+                                                <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('<c:out value="${resultInfo.clCode}"/>');"><c:out value="${resultInfo.clCode}"/></a></td>
+                                                <td><a href="#LINK" class="lnk" onclick="javascript:fnDetail('<c:out value="${resultInfo.clCode}"/>');"><c:out value="${resultInfo.clCodeNm}"/></a></td>
                                                 <td>
                                                 	<c:if test="${resultInfo.useAt == 'Y'}">사용</c:if>
                                                 	<c:if test="${resultInfo.useAt == 'N'}">미사용</c:if>

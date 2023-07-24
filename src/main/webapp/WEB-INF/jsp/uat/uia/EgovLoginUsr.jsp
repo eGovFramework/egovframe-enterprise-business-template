@@ -148,7 +148,7 @@ function fnInit() {
 		                                    </label>
                                         </div>
                                     </fieldset>
-                                    <input type="hidden" name="message" value="${message}" />
+                                    <input type="hidden" name="message" value="<c:out value='${message}'/>" />
 		                            <input type="hidden" name="userSe" value="USR"/>
 		                            <input name="j_username" type="hidden"/>
 		                            </form:form>

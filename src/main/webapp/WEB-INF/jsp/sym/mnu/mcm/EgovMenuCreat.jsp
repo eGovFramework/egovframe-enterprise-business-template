@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10    이용             최초 생성
+     2009.03.10   이용       최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (권한코드 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -115,7 +116,7 @@ function fn_egov_cancel_popup() {
                 <!-- 검색조건 -->
                 <div class="condition2">
                     <label for="authorCode" class="lb mr10">권한코드 : </label>
-                    <input id="authorCode" class="f_txt item" name="authorCode" type="text" maxlength="30" title="권한코드" value="${resultVO.authorCode}" readonly="readonly">
+                    <input id="authorCode" class="f_txt item" name="authorCode" type="text" maxlength="30" title="권한코드" value="<c:out value='${resultVO.authorCode}'/>" readonly="readonly">
                     <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="fInsertMenuCreat(); return false;">메뉴생성</a>
                 </div>
                 <!--// 검색조건 -->
@@ -124,7 +125,7 @@ function fn_egov_cancel_popup() {
                 <div class="tree_ui tree-ui">
                 
                 	<c:forEach var="result1" items="${list_menulist}" varStatus="status" >
-                		<input type="hidden" name="tmp_menuNmVal" value="${result1.menuNo}|${result1.upperMenuId}|${result1.menuNm}|${result1.progrmFileNm}|${result1.chkYeoBu}|">
+                		<input type="hidden" name="tmp_menuNmVal" value="<c:out value='${result1.menuNo}'/>|<c:out value='${result1.upperMenuId}'/>|<c:out value='${result1.menuNm}'/>|<c:out value='${result1.progrmFileNm}'/>|<c:out value='${result1.chkYeoBu}'/>|">
                 	</c:forEach>
                 	
                     <script language="javascript" type="text/javaScript">

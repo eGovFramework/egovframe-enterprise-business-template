@@ -180,7 +180,7 @@ function press() {
                                             </td>
                                             <td colspan="3">
                                                 <span class="f_search2 w_500">
-                                                    <input id="" type="text" name="progrmFileNm_view" size="60" disabled="disabled" value="${menuManageVO.progrmFileNm}" readonly="readonly">
+                                                    <input id="" type="text" name="progrmFileNm_view" size="60" disabled="disabled" value="<c:out value='${menuManageVO.progrmFileNm}'/>" readonly="readonly">
                                                     <form:input path="progrmFileNm" type="hidden" maxlength="60" title="프로그램파일명" />
                                                     <form:errors path="progrmFileNm" />
                                                     <button type="button" class="btn" onclick="searchFileNm();return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->

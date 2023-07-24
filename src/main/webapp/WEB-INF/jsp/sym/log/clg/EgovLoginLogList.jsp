@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.11  이삼섭              최초 생성
+     2009.03.11   이삼섭      최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (시작일자 및 종료일자 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀  이삼섭
     since    : 2009.03.11  
@@ -196,8 +197,8 @@
                                 <!-- 검색조건 -->
                                 <div class="condition2">
                                     <label for="occurDate" class="item mr10">발생일자</label>
-                                    <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="${searchVO.searchBgnDe}" title="시작일자입력" />&nbsp ~ &nbsp
-                                    <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="${searchVO.searchEndDe}" title="종료일자입력" >
+                                    <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchBgnDe}'/>" title="시작일자입력" />&nbsp ~ &nbsp
+                                    <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchEndDe}'/>" title="종료일자입력" >
 
                                     <a href="<c:url value='/sym/log/SelectLoginLogList.do'/>" class="item btn btn_blue_46 w_100 ml10" onclick="javascript:fn_egov_select_loginLog('1'); return false;"><spring:message code='button.inquire' /></a><!-- 조회 -->
                                     <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="document.frm.searchBgnDe.value=''; document.frm.searchEndDe.value=''; return false;">초기화</a><!-- 초기화 -->

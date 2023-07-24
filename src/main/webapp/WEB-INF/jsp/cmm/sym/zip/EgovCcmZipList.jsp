@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.01   이중호              최초 생성
+     2009.04.01   이중호      최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (우편코드 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이중호
     since    : 2009.04.01
@@ -135,7 +136,7 @@ function fn_egov_detail_Zip(zip,sn){
                                         </select>
                                     </label>
                                     <span class="item f_search">
-                                        <input class="f_input w_500" name="searchKeyword" type="text" value="${searchVO.searchKeyword}" maxlength="35" id="searchKeyword">
+                                        <input class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${searchVO.searchKeyword}'/>" maxlength="35" id="searchKeyword">
                                         <button class="btn" type="submit" onclick="fn_egov_search_Zip(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
@@ -179,7 +180,7 @@ function fn_egov_detail_Zip(zip,sn){
                                             <tr>
                                                 <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
                                                 <td><a href="#LINK" class="lnk" onclick="javascript:fn_egov_detail_Zip('${resultInfo.zip}','${resultInfo.sn}');"><c:out value='${fn:substring(resultInfo.zip, 0,3)}'/>-<c:out value='${fn:substring(resultInfo.zip, 3,6)}'/></a></td>
-                                                <td>${resultInfo.ctprvnNm} ${resultInfo.signguNm} ${resultInfo.emdNm} ${resultInfo.liBuldNm} ${resultInfo.lnbrDongHo}</td>
+                                                <td><c:out value="${resultInfo.ctprvnNm}"/> <c:out value="${resultInfo.signguNm}"/> <c:out value="${resultInfo.emdNm}"/> <c:out value="${resultInfo.liBuldNm}"/> <c:out value="${resultInfo.lnbrDongHo}"/></td>
                                             </tr>
                                             </c:forEach>
                                             

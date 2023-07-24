@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.01   이중호              최초 생성
+     2009.04.01   이중호      최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (공통코드 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이중호
     since    : 2009.04.01
@@ -122,7 +123,7 @@ function fnDelete(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.clCodeNm}
+                                            	<c:out value="${result.clCodeNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -131,7 +132,7 @@ function fnDelete(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.codeId}
+                                            	<c:out value="${result.codeId}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,7 +141,7 @@ function fnDelete(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.codeIdNm}
+                                            	<c:out value="${result.codeIdNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,7 +150,7 @@ function fnDelete(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <textarea class="f_txtar w_full h_80" cols="30" rows="10" disabled="disabled" id="codeIdDc" readonly="readonly">${result.codeIdDc}</textarea>
+                                                <textarea class="f_txtar w_full h_80" cols="30" rows="10" disabled="disabled" id="codeIdDc" readonly="readonly"><c:out value="${result.codeIdDc}"/></textarea>
                                             </td>
                                         </tr>
                                         <tr>

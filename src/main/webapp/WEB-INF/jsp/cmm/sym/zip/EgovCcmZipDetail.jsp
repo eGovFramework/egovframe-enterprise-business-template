@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.01   이중호              최초 생성
+     2009.04.01   이중호      최초 생성
      2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (우편코드 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀 이중호
     since    : 2009.04.01
@@ -131,7 +132,7 @@ function fn_egov_delete_Zip(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.ctprvnNm}
+                                            	<c:out value="${result.ctprvnNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,7 +141,7 @@ function fn_egov_delete_Zip(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.signguNm}
+                                            	<c:out value="${result.signguNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,7 +150,7 @@ function fn_egov_delete_Zip(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${result.emdNm}
+                                            	<c:out value="${result.emdNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -157,7 +158,7 @@ function fn_egov_delete_Zip(){
                                                 <span class="min">리건물명</span>
                                             </td>
                                             <td>
-                                            	${result.liBuldNm}
+                                            	<c:out value="${result.liBuldNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -165,7 +166,7 @@ function fn_egov_delete_Zip(){
                                                 <span class="min">번지동호</span>
                                             </td>
                                             <td>
-                                            	${result.lnbrDongHo}
+                                            	<c:out value="${result.lnbrDongHo}"/>
                                             </td>
                                         </tr>
                                     </table>
