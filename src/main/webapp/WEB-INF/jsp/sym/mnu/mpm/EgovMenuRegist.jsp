@@ -79,6 +79,7 @@ function fn_egov_returnValue(retVal){
 	
 	if(document.all.progrmFileNm_view){
 		document.all.progrmFileNm_view.value = retVal;
+		document.all.progrmFileNm.value = retVal;
     }
 	
 	fn_egov_modal_remove();
