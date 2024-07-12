@@ -152,7 +152,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" >
+								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false" >
                 				
 				                <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 				                <input type="hidden" name="bbsId" value="<c:out value='${bdMstr.bbsId}'/>" />
@@ -268,7 +268,7 @@
 
                                     <div class="right_col btn1">
                                     	<c:if test="${bdMstr.authFlag == 'Y'}">
-                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_regist_notice(); return fasle;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_regist_notice(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
                                         </c:if>
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_noticeList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>

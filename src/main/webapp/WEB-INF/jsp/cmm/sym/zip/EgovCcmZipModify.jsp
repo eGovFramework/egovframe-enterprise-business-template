@@ -94,7 +94,7 @@ function fn_egov_modify_Zip(form){
 								<form:form modelAttribute="zip" name="zip" method="post">
 				
 								<input name="cmd" type="hidden" value="Modify">
-								<input name="zip" type="hidden" value="${zip.zip}">
+								<input name="zip" type="hidden" value="<c:out value='${zip.zip}'/>">
 								<form:hidden path="sn"/>
 								<form:hidden path="ctprvnNm"/>
 								<form:hidden path="signguNm"/>
