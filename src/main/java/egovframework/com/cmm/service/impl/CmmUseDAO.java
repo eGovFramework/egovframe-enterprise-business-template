@@ -2,20 +2,23 @@ package egovframework.com.cmm.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.service.CmmnDetailCode;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * @Class Name : CmmUseDAO.java
  * @Description : 공통코드등 전체 업무에서 공용해서 사용해야 하는 서비스를 정의하기위한 데이터 접근 클래스
  * @Modification Information
- *
+ * 
+ *               <pre>
  *    수정일       수정자         수정내용
  *    -------        -------     -------------------
  *    2009. 3. 11.     이삼섭
- *
+ *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *               </pre>
+ * 
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009. 3. 11.
  * @version
@@ -32,9 +35,8 @@ public class CmmUseDAO extends EgovComAbstractDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<CmmnDetailCode> selectCmmCodeDetail(ComDefaultCodeVO vo) throws Exception {
-		return (List<CmmnDetailCode>) list("CmmUseDAO.selectCmmCodeDetail", vo);
+		return selectList("CmmUseDAO.selectCmmCodeDetail", vo);
 	}
 
 	/**
@@ -44,9 +46,8 @@ public class CmmUseDAO extends EgovComAbstractDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<CmmnDetailCode> selectOgrnztIdDetail(ComDefaultCodeVO vo) throws Exception {
-		return (List<CmmnDetailCode>) list("CmmUseDAO.selectOgrnztIdDetail", vo);
+		return selectList("CmmUseDAO.selectOgrnztIdDetail", vo);
 	}
 
 	/**
@@ -56,8 +57,7 @@ public class CmmUseDAO extends EgovComAbstractDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public List<CmmnDetailCode> selectGroupIdDetail(ComDefaultCodeVO vo) throws Exception {
-		return (List<CmmnDetailCode>) list("CmmUseDAO.selectGroupIdDetail", vo);
+		return selectList("CmmUseDAO.selectGroupIdDetail", vo);
 	}
 }
