@@ -74,7 +74,7 @@ function fn_egov_modal_remove() {
         <div class="gnb">
             <ul>
                 <c:forEach var="result" items="${list_headmenu}" varStatus="status">
-                	<li><a href="#LINK" onclick="javascript:goMenuPage('<c:out value="${result.menuNo}"/>')" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
+                	<li><a href="" onclick="goMenuPage('<c:out value="${result.menuNo}" />');" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
                 </c:forEach>
                 <c:if test="${fn:length(list_headmenu) == 0 }">
                 	<li>등록된 메뉴가 없습니다.</li>
@@ -217,11 +217,20 @@ function getLastLink(baseMenuNo){
     }
 }
 function goMenuPage(baseMenuNo){
+	event.preventDefault();
 	document.getElementById("baseMenuNo").value=baseMenuNo;
 	//document.getElementById("link").value=getLastLink(baseMenuNo);
     //document.menuListForm.chkURL.value=url;
-    document.menuListForm.action = "<c:url value='/'/>"+getLastLink(baseMenuNo).substring(1);
-    document.menuListForm.submit();
+//     document.menuListForm.action = "<c:url value='/'/>"+getLastLink(baseMenuNo).substring(1);
+//     document.menuListForm.submit();
+    var link = '<c:url value="/" />' + getLastLink(baseMenuNo).substring(1);
+    if (link.indexOf('?') === -1) {
+        link = link + '?';
+    } else {
+        link = link + '&';
+    }
+    link = link + 'baseMenuNo=' + baseMenuNo;
+    location.href = link;
 }
 function actionLogout()
 {
