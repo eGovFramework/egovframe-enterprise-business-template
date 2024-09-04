@@ -3,22 +3,13 @@ package egovframework.let.cop.bbs.web;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.let.cop.bbs.service.BoardMaster;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
-import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
-import egovframework.let.utl.fcc.service.EgovStringUtil;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,14 +20,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.let.cop.bbs.service.BoardMaster;
+import egovframework.let.cop.bbs.service.BoardMasterVO;
+import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
+
 /**
- * 게시판 속성관리를 위한 컨트롤러  클래스
+ * 게시판 속성관리를 위한 컨트롤러 클래스
+ * 
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.12
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자          수정내용
@@ -45,7 +45,7 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  *  2009.06.26	한성곤		2단계 기능 추가 (댓글관리, 만족도조사)
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- *  </pre>
+ *      </pre>
  */
 @Controller
 public class EgovBBSAttributeManageController {
@@ -87,7 +87,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/addBBSMaster.do")
-	public String addBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String addBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
+			throws Exception {
 		BoardMaster boardMaster = new BoardMaster();
 
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -123,8 +124,9 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/insertBBSMasterInf.do")
-	public String insertBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+	public String insertBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
@@ -169,11 +171,12 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/SelectBBSMasterInfs.do")
-	public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model, HttpServletRequest request) throws Exception {
-		
+	public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("baseMenuNo", "5000000");
-		
+
 		boardMasterVO.setPageUnit(propertyService.getInt("pageUnit"));
 		boardMasterVO.setPageSize(propertyService.getInt("pageSize"));
 
@@ -208,7 +211,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/SelectBBSMasterInf.do")
-	public String selectBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) throws Exception {
+	public String selectBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model)
+			throws Exception {
 		BoardMasterVO vo = bbsAttrbService.selectBBSMasterInf(searchVO);
 
 		model.addAttribute("result", vo);
@@ -231,8 +235,9 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/UpdateBBSMasterInf.do")
-	public String updateBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			ModelMap model) throws Exception {
+	public String updateBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, ModelMap model)
+			throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -265,8 +270,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/DeleteBBSMasterInf.do")
-	public String deleteBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status)
-			throws Exception {
+	public String deleteBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -287,7 +292,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/SelectBBSMasterInfsPop.do")
-	public String selectBBSMasterInfsPop(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String selectBBSMasterInfsPop(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
+			throws Exception {
 		boardMasterVO.setPageUnit(propertyService.getInt("pageUnit"));
 		boardMasterVO.setPageSize(propertyService.getInt("pageSize"));
 
@@ -327,8 +333,9 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/insertBdMstrByTrget.do")
-	public String insertBdMstrByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+	public String insertBdMstrByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, SessionStatus status,
+			ModelMap model) throws Exception {
 
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
@@ -383,7 +390,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/selectBdMstrListByTrget.do")
-	public String selectBdMstrListByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String selectBdMstrListByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
+			throws Exception {
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
 		boardMasterVO.setPageUnit(propertyService.getInt("pageUnit"));
@@ -420,7 +428,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/SelectBBSMasterInfByTrget.do")
-	public String selectBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+	public String selectBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
 
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
@@ -448,8 +457,9 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/UpdateBBSMasterInfByTrget.do")
-	public String updateBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
-			BindingResult bindingResult, ModelMap model) throws Exception {
+	public String updateBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, ModelMap model)
+			throws Exception {
 
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
@@ -487,7 +497,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/addBBSMasterByTrget.do")
-	public String addBBSMasterByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String addBBSMasterByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
+			throws Exception {
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -527,8 +538,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/DeleteBBSMasterInfByTrget.do")
-	public String deleteBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status)
-			throws Exception {
+	public String deleteBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status) throws Exception {
 
 		checkAuthority(boardMasterVO); // server-side 권한 확인
 
@@ -554,7 +565,8 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/selectAllBdMstrByTrget.do")
-	public String selectAllBdMstrByTrget(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+	public String selectAllBdMstrByTrget(@RequestParam Map<String, Object> commandMap, ModelMap model)
+			throws Exception {
 		String trgetId = (String) commandMap.get("param_trgetId");
 		BoardMasterVO vo = new BoardMasterVO();
 
