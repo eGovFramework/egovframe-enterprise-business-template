@@ -98,7 +98,7 @@
                                 <!-- 검색조건 -->
                                 <div class="condition">
                                 
-                                	<form name="frm" action="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" method="post">
+                                	<form name="frm" action="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" method="get">
                                 	
                                 	<input type="hidden" name="bbsId">
                                 	<input type="hidden" name="trgetId">
@@ -157,7 +157,7 @@
 	                                            <tr>
 	                                               <td><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageSize) - status.index}"/></td>
 	                                                <td>
-	                                                	<a href="<c:url value='/cop/bbs/SelectBBSMasterInf.do'/>?bbsId=<c:out value='${result.bbsId}'/>" class="lnk">
+	                                                	<a href="<c:url value='/cop/bbs/SelectBBSMasterInf.do'/>?bbsId=<c:out value='${result.bbsId}'/>&searchCnd=<c:out value="${searchVO.searchCnd}" />&searchWrd=<c:out value="${searchVO.searchWrd}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />" class="lnk">
 	                                                		<c:out value="${result.bbsNm}"/>
 	                                                	</a>
 	                                                </td>

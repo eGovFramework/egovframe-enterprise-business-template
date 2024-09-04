@@ -46,6 +46,7 @@
     }
     
     function fn_egov_update_brdMstr(){
+        event.preventDefault();
         if (!validateBoardMaster(document.boardMaster)){
             return;
         }
@@ -57,11 +58,14 @@
     }   
     
     function fn_egov_select_brdMstrList(){
+        event.preventDefault();
         document.boardMaster.action = "<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>";
+        document.boardMaster.method = 'get';
         document.boardMaster.submit();  
     }   
     
     function fn_egov_delete_brdMstr(){
+        event.preventDefault();
         if(confirm('<spring:message code="common.delete.msg" />')){
             document.boardMaster.action = "<c:url value='/cop/bbs/DeleteBBSMasterInf.do'/>";
             document.boardMaster.submit();  
@@ -69,6 +73,7 @@
     }
     
     function fn_egov_inqire_tmplatInqire(){
+        event.preventDefault();
         
         var $dialog = $('<div id="modalPan"></div>')
     	.html('<iframe style="border: 0px; " src="' + "<c:url value='/cop/com/selectTemplateInfsPop.do'/>" +'" width="100%" height="100%"></iframe>')
@@ -136,7 +141,9 @@
                                 <!--// Location -->
 
 								<form:form modelAttribute="boardMaster" name="boardMaster" action="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" method="post" >
-								
+
+								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input name="bbsId" type="hidden" value="<c:out value='${result.bbsId}'/>" />
 								<input name="bbsTyCode" type="hidden" value="<c:out value='${result.bbsTyCode}'/>" />
@@ -239,7 +246,7 @@
                                                 <span class="f_search2 w_350">
                                                     <input title="템플릿정보입력" id="tmplatNm" name="tmplatNm" type="text" value="<c:out value="${result.tmplatNm}"/>" maxlength="20" readonly="readonly" >
                                                     <input id="tmplatId" name="tmplatId" type="hidden" value='<c:out value="${result.tmplatId}"/>' >
-<%--                                                     <button type="button" class="btn" onclick="fn_egov_inqire_tmplatInqire(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 --> --%>
+<%--                                                     <button type="button" class="btn" onclick="fn_egov_inqire_tmplatInqire();"><spring:message code='button.inquire' /></button><!-- 조회 --> --%>
                                                     <br/><form:errors path="tmplatId" />
                                                 </span>
                                             </td>
@@ -269,12 +276,12 @@
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                    	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_brdMstr(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                    	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_brdMstr();"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_update_brdMstr(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_brdMstrList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_update_brdMstr();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value="/cop/bbs/SelectBBSMasterInfs.do" />?searchCnd=<c:out value="${searchVO.searchCnd}" />&searchWrd=<c:out value="${searchVO.searchWrd}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />" class="btn btn_blue_46 w_100" onclick="fn_egov_select_brdMstrList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->

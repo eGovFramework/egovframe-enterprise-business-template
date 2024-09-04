@@ -40,6 +40,7 @@
 <validator:javascript formName="boardMaster" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javascript">
     function fn_egov_regist_brdMstr(){
+        event.preventDefault();
         if (!validateBoardMaster(document.boardMaster)){
             return;
         }
@@ -52,12 +53,15 @@
     }
     
     function fn_egov_select_brdMstrList(){
+        event.preventDefault();
         form = document.boardMaster;
         form.action = "<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>";
+        form.method = 'get';
         form.submit();  
     }
     
     function fn_egov_inqire_tmplatInqire(){
+        event.preventDefault();
     	
         var $dialog = $('<div id="modalPan"></div>')
     	.html('<iframe style="border: 0px; " src="' + "<c:url value='/cop/com/selectTemplateInfsPop.do'/>" +'" width="100%" height="100%"></iframe>')
@@ -128,7 +132,9 @@
                                 <!--// Location -->
 
 								<form:form modelAttribute="boardMaster" name="boardMaster" method="post" action="cop/bbs/SelectBBSMasterInfs.do">
-								
+
+								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input type="hidden" name="pageIndex"  value="<c:out value='${searchVO.pageIndex}'/>"/>
 
                                 <h1 class="tit_1">내부서비스관리</h1>
@@ -238,7 +244,7 @@
                                                 <span class="f_search2 w_350">
                                                     <form:input path="tmplatNm" id="tmplatNm" name="" readonly="true" title="템플릿정보입력" value="게시판 기본템플릿" />
                                                     <form:hidden path="tmplatId" id="tmplatId" value="TMPLAT_BOARD_DEFAULT" />
-<!--                                                     <button type="button" class="btn" onclick="fn_egov_inqire_tmplatInqire(); return false;">조회</button> -->
+<!--                                                     <button type="button" class="btn" onclick="fn_egov_inqire_tmplatInqire();">조회</button> -->
                                                 </span>
                                                 <br/><form:errors path="tmplatId" />
                                             </td>
@@ -268,8 +274,8 @@
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_regist_brdMstr(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_brdMstrList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_regist_brdMstr();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_select_brdMstrList(); "><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->

@@ -12,9 +12,12 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
@@ -41,9 +44,10 @@ import egovframework.let.utl.fcc.service.EgovStringUtil;
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.03.12  이삼섭          최초 생성
- *  2009.06.26	한성곤		2단계 기능 추가 (댓글관리, 만족도조사)
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.03.12  이삼섭          최초 생성
+ *   2009.06.26  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.05  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -86,7 +90,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/addBBSMaster.do")
+	@GetMapping("/cop/bbs/addBBSMaster.do")
 	public String addBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
 			throws Exception {
 		BoardMaster boardMaster = new BoardMaster();
@@ -123,7 +127,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/insertBBSMasterInf.do")
+	@PostMapping("/cop/bbs/insertBBSMasterInf.do")
 	public String insertBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, SessionStatus status,
 			ModelMap model) throws Exception {
@@ -159,7 +163,11 @@ public class EgovBBSAttributeManageController {
 			bbsAttrbService.insertBBSMastetInf(boardMaster);
 		}
 
-		return "forward:/cop/bbs/SelectBBSMasterInfs.do";
+		model.addAttribute("searchCnd", boardMasterVO.getSearchCnd());
+		model.addAttribute("searchWrd", boardMasterVO.getSearchWrd());
+		model.addAttribute("pageIndex", boardMasterVO.getPageIndex());
+
+		return "redirect:/cop/bbs/SelectBBSMasterInfs.do";
 	}
 
 	/**
@@ -170,7 +178,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/SelectBBSMasterInfs.do")
+	@GetMapping("/cop/bbs/SelectBBSMasterInfs.do")
 	public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model,
 			HttpServletRequest request) throws Exception {
 
@@ -210,7 +218,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/SelectBBSMasterInf.do")
+	@GetMapping("/cop/bbs/SelectBBSMasterInf.do")
 	public String selectBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model)
 			throws Exception {
 		BoardMasterVO vo = bbsAttrbService.selectBBSMasterInf(searchVO);
@@ -234,7 +242,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/UpdateBBSMasterInf.do")
+	@PostMapping("/cop/bbs/UpdateBBSMasterInf.do")
 	public String updateBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 			@ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult, ModelMap model)
 			throws Exception {
@@ -257,7 +265,11 @@ public class EgovBBSAttributeManageController {
 			bbsAttrbService.updateBBSMasterInf(boardMaster);
 		}
 
-		return "forward:/cop/bbs/SelectBBSMasterInfs.do";
+		model.addAttribute("searchCnd", boardMasterVO.getSearchCnd());
+		model.addAttribute("searchWrd", boardMasterVO.getSearchWrd());
+		model.addAttribute("pageIndex", boardMasterVO.getPageIndex());
+
+		return "redirect:/cop/bbs/SelectBBSMasterInfs.do";
 	}
 
 	/**
@@ -269,9 +281,10 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/DeleteBBSMasterInf.do")
+	@PostMapping("/cop/bbs/DeleteBBSMasterInf.do")
 	public String deleteBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
-			@ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status) throws Exception {
+			@ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status, Model model)
+			throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -280,7 +293,12 @@ public class EgovBBSAttributeManageController {
 			boardMaster.setLastUpdusrId(user.getUniqId());
 			bbsAttrbService.deleteBBSMasterInf(boardMaster);
 		}
-		return "forward:/cop/bbs/SelectBBSMasterInfs.do";
+
+		model.addAttribute("searchCnd", boardMasterVO.getSearchCnd());
+		model.addAttribute("searchWrd", boardMasterVO.getSearchWrd());
+		model.addAttribute("pageIndex", boardMasterVO.getPageIndex());
+
+		return "redirect:/cop/bbs/SelectBBSMasterInfs.do";
 	}
 
 	/**
