@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.02   이삼섭              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.04.02  이삼섭          최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.06  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.04.02
@@ -35,6 +36,7 @@
 <validator:javascript formName="boardUseInf" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javascript">
     function fn_egov_updt_bbsUseInf(){
+        event.preventDefault();
         if (!validateBoardUseInf(document.boardUseInf)){
             return;
         }
@@ -43,7 +45,9 @@
         document.boardUseInf.submit();
     }
     function fn_egov_select_bbsUseInfs(){
+        event.preventDefault();
         document.boardUseInf.action = "<c:url value='/cop/com/selectBBSUseInfs.do'/>";
+        document.boardUseInf.method = 'get';
         document.boardUseInf.submit();      
     }
     
@@ -86,10 +90,14 @@
                                 <!--// Location -->
 
 								<form name="boardUseInf" method="post" action="<c:url value='/cop/com/updateBBSUseInf.do'/>">
-								
+
+								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />
 								<input type="hidden" name="bbsId" value="<c:out value='${bdUseVO.bbsId}'/>" />
 								<input type="hidden" name="trgetId" value="<c:out value='${bdUseVO.trgetId}'/>" />
+								<input type="hidden" name="bbsNm" value="<c:out value="${bdUseVO.bbsNm}" />">
+								<input type="hidden" name="trgetNm" value="<c:out value="${bdUseVO.trgetId}" />">
 
                                 <h1 class="tit_1">내부서비스관리</h1>
 
@@ -131,12 +139,12 @@
                                                 <span class="req">필수</span>
                                             </td>
                                             <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
-                                                <label for="rdo1" class="f_rdo mr30 on">
-                                                    <input type="radio" id="rdo1" name="aaa"  value="Y" <c:if test="${bdUseVO.useAt == 'Y'}"> checked="checked"</c:if>>
+                                                <label for="rdo1">
+                                                    <input type="radio" id="rdo1" name="useAt"  value="Y" <c:if test="${bdUseVO.useAt == 'Y'}"> checked="checked"</c:if>>
                                                     <spring:message code="button.use" /><!-- 사용 -->
                                                 </label>
-                                                <label for="rdo2" class="f_rdo">
-                                                    <input type="radio" id="rdo2" name="aa" value="N" <c:if test="${bdUseVO.useAt == 'N'}"> checked="checked"</c:if>>
+                                                <label for="rdo2">
+                                                    <input type="radio" id="rdo2" name="useAt" value="N" <c:if test="${bdUseVO.useAt == 'N'}"> checked="checked"</c:if>>
                                                     <spring:message code="button.notUsed" /><!-- 사용중지 -->
                                                 </label>
                                                 <br/><form:errors path="useAt" />
@@ -164,8 +172,8 @@
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="<c:url value='/cop/com/updateBBSUseInf2.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_bbsUseInf(); return false;"><spring:message code="button.save"/></a><!-- 저장 -->
-                                        <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_select_bbsUseInfs(); return false;"><spring:message code="button.list"/></a><!-- 목록 -->
+                                        <a href="<c:url value='/cop/com/updateBBSUseInf2.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_updt_bbsUseInf();"><spring:message code="button.save"/></a><!-- 저장 -->
+                                        <a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>" class="btn btn_blue_46 w_100" onclick="fn_egov_select_bbsUseInfs();"><spring:message code="button.list"/></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->

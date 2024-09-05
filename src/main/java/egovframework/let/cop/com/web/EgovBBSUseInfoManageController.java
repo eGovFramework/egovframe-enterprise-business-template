@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
@@ -42,7 +44,8 @@ import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.02  이삼섭          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.06  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -116,7 +119,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/deleteBBSUseInf.do")
+	@PostMapping("/cop/com/deleteBBSUseInf.do")
 	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO,
 			@ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model) throws Exception {
 
@@ -126,7 +129,11 @@ public class EgovBBSUseInfoManageController {
 			bbsUseService.deleteBBSUseInf(bdUseInf);
 		}
 
-		return "forward:/cop/com/selectBBSUseInfs.do";
+		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
+		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
+		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
+
+		return "redirect:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -138,7 +145,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/addBBSUseInf.do")
+	@GetMapping("/cop/com/addBBSUseInf.do")
 	public String addBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		return "cop/com/EgovBoardUseInfRegist";
 	}
@@ -154,7 +161,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/insertBBSUseInf.do")
+	@PostMapping("/cop/com/insertBBSUseInf.do")
 	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO,
 			@ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
 			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
@@ -188,7 +195,11 @@ public class EgovBBSUseInfoManageController {
 			bbsUseService.insertBBSUseInf(boardUseInf);
 		}
 
-		return "forward:/cop/com/selectBBSUseInfs.do";
+		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
+		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
+		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
+
+		return "redirect:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -200,7 +211,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/selectBBSUseInfs.do")
+	@GetMapping("/cop/com/selectBBSUseInfs.do")
 	public String selectBBSUseInfs(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 
 		bdUseVO.setPageUnit(propertyService.getInt("pageUnit"));
@@ -239,7 +250,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/updateBBSUseInf.do")
+	@PostMapping("/cop/com/updateBBSUseInf.do")
 	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO,
 			@ModelAttribute("boardUseInf") BoardUseInf boardUseInf, HttpServletRequest request, ModelMap model)
 			throws Exception {
@@ -247,7 +258,11 @@ public class EgovBBSUseInfoManageController {
 			bbsUseService.updateBBSUseInf(boardUseInf);
 		}
 
-		return "forward:/cop/com/selectBBSUseInfs.do";
+		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
+		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
+		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
+
+		return "redirect:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -259,7 +274,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/com/selectBBSUseInf.do")
+	@GetMapping("/cop/com/selectBBSUseInf.do")
 	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
 

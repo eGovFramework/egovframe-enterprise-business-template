@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.02   이삼섭              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.04.02  이삼섭          최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.06  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.04.02
@@ -44,6 +45,7 @@
         document.frm.submit();
     }
     function fn_egov_insert_addbbsUseInf(){
+        event.preventDefault();
         document.frm.action = "<c:url value='/cop/com/addBBSUseInf.do'/>";
         document.frm.submit();      
     }
@@ -97,7 +99,7 @@
                                 <!-- 검색조건 -->
                                 <div class="condition">
                                 	
-                                	<form name="frm" method="post" action = "<c:url value='/cop/com/selectBBSUseInf.do'/>">
+                                	<form name="frm" method="get" action = "<c:url value='/cop/com/selectBBSUseInf.do'/>">
                                 	
 									<input type="hidden" name="bbsId" >
 									<input type="hidden" name="trgetId" >
@@ -114,7 +116,7 @@
                                         <button class="btn" type="submit" onclick="fn_egov_select_bbsUseInfs('1'); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
 
-                                    <a href="<c:url value='/cop/com/addBBSUseInf.do'/>" class="item btn btn_blue_46 w_100" onclick="fn_egov_insert_addbbsUseInf(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+                                    <a href="<c:url value='/cop/com/addBBSUseInf.do'/>" class="item btn btn_blue_46 w_100" onclick="fn_egov_insert_addbbsUseInf();"><spring:message code="button.create" /></a><!-- 등록 -->
                                 	
                                 	</form>
                                 	
@@ -157,7 +159,7 @@
 	                                                <td>
 	                                                	<input type=hidden name="bbsId" value="<c:out value="${result.bbsId}"/>">
 	                                                	<input type=hidden name="trgetId" value="<c:out value="${result.trgetId}"/>">
-	                                                	<a href="<c:url value='/cop/com/selectBBSUseInf.do'/>?bbsId=<c:out value='${result.bbsId}'/>&amp;trgetId=<c:out value='${result.trgetId}'/>" class="lnk">
+	                                                	<a href="<c:url value='/cop/com/selectBBSUseInf.do'/>?bbsId=<c:out value='${result.bbsId}'/>&amp;trgetId=<c:out value='${result.trgetId}'/>&searchCnd=<c:out value="${searchVO.searchCnd}" />&searchWrd=<c:out value="${searchVO.searchWrd}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />" class="lnk">
 	                                                		<c:out value="${result.bbsNm}"/>
 	                                                	</a>
 	                                                </td>
