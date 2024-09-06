@@ -8,8 +8,8 @@ import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.let.sym.log.clg.service.EgovLoginLogService;
@@ -30,7 +30,8 @@ import egovframework.let.sym.log.clg.service.LoginLog;
  *  -------    --------    ---------------------------
  *   2009.03.11  이삼섭          최초 생성
  *   2011.07.01  이기하          패키지 분리(sym.log -> sym.log.clg)
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.06  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -50,7 +51,7 @@ public class EgovLoginLogController {
 	 * @return sym/log/clg/EgovLoginLogList
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/log/clg/SelectLoginLogList.do")
+	@GetMapping(value = "/sym/log/clg/SelectLoginLogList.do")
 	public String selectLoginLogInf(@ModelAttribute("searchVO") LoginLog loginLog, ModelMap model) throws Exception {
 		System.out.println("eeee:::" + loginLog);
 		loginLog.setPageUnit(propertyService.getInt("pageUnit"));
@@ -87,7 +88,7 @@ public class EgovLoginLogController {
 	 * @return sym/log/clg/EgovLoginLogInqire
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/log/clg/InqireLoginLog.do")
+	@GetMapping(value = "/sym/log/clg/InqireLoginLog.do")
 	public String selectLoginLog(@ModelAttribute("searchVO") LoginLog loginLog, @RequestParam("logId") String logId,
 			ModelMap model) throws Exception {
 
