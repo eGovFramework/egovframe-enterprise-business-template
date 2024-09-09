@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.24   이삼섭              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.24  이삼섭          최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.08.31  이백행          컨트리뷰션 관리자 게시판 요청 메서드 정리
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.03.24
@@ -48,6 +49,7 @@
     }
 
     function fn_egov_regist_notice() {
+        event.preventDefault();
         //document.board.onsubmit();
 
         if (!validateBoard(document.board)){
@@ -61,7 +63,9 @@
     }
     
     function fn_egov_select_noticeList() {
+        event.preventDefault();
         document.board.action = "<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>";
+        document.board.method = 'get';
         document.board.submit();    
     }
     
@@ -267,9 +271,9 @@
 
                                     <div class="right_col btn1">
                                     	<c:if test="${bdMstr.authFlag == 'Y'}">
-                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_regist_notice(); return fasle;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_regist_notice();"><spring:message code="button.save" /></a><!-- 저장 -->
                                         </c:if>
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_noticeList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_select_noticeList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->

@@ -5,10 +5,11 @@
  
       수정일      수정자              수정내용
      ----------  --------    ---------------------------
-     2009.03.23   이삼섭        최초 생성
-     2009.06.26   한성곤        2단계 기능 추가 (댓글관리, 만족도조사)
-     2011.08.31   JJY       	경량환경 버전 생성
-     2013.05.23   이기하       	상세보기 오류수정
+     2009.03.23  이삼섭          최초 생성
+     2009.06.26  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
+     2011.08.31  JJY           경량환경 버전 생성
+     2013.05.23  이기하          상세보기 오류수정
+     2024.08.31  이백행          컨트리뷰션 관리자 게시판 요청 메서드 정리
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.03.23
@@ -42,12 +43,14 @@
     }
     
     function fn_egov_select_noticeList(pageNo) {
-        document.frm.pageIndex.value = pageNo; 
+        event.preventDefault();
+//         document.frm.pageIndex.value = pageNo; 
         document.frm.action = "<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>";
         document.frm.submit();  
     }
     
     function fn_egov_delete_notice() {
+        event.preventDefault();
         if ("<c:out value='${anonymous}'/>" == "true" && document.frm.password.value == '') {
             alert('등록시 사용한 패스워드를 입력해 주세요.');
             document.frm.password.focus();
@@ -56,11 +59,13 @@
         
         if (confirm('<spring:message code="common.delete.msg" />')) {
             document.frm.action = "<c:url value='/cop/bbs${prefix}/admin/deleteBoardArticle.do'/>";
+            document.frm.method = 'post';
             document.frm.submit();
         }   
     }
     
     function fn_egov_moveUpdt_notice() {
+        event.preventDefault();
         if ("<c:out value='${anonymous}'/>" == "true" && document.frm.password.value == '') {
             alert('등록시 사용한 패스워드를 입력해 주세요.');
             document.frm.password.focus();
@@ -72,6 +77,7 @@
     }
     
     function fn_egov_addReply() {
+        event.preventDefault();
         document.frm.action = "<c:url value='/cop/bbs${prefix}/admin/addReplyBoardArticle.do'/>";
         document.frm.submit();
     }
@@ -131,8 +137,10 @@
                                 </div>
                                 <!--// Location -->
 
-								<form name="frm" method="post" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>">
-								
+								<form name="frm" method="get" action="<c:url value='/cop/bbs${prefix}/admin/selectBoardList.do'/>">
+
+								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 			                    <input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>">
 			                    <input type="hidden" name="bbsId" value="<c:out value='${result.bbsId}'/>" >
 			                    <input type="hidden" name="nttId" value="<c:out value='${result.nttId}'/>" >
@@ -219,16 +227,16 @@
                                     <div class="board_view_bot">
                                         <div class="left_col btn3">
                                         	<c:if test="${result.frstRegisterId == sessionUniqId}">
-	                                            <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fn_egov_moveUpdt_notice(); return false;">수정</a><!-- 수정 -->
-	                                            <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fn_egov_delete_notice(); return false;">삭제</a><!-- 삭제 -->
+	                                            <a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_moveUpdt_notice();">수정</a><!-- 수정 -->
+	                                            <a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_delete_notice();">삭제</a><!-- 삭제 -->
                                             </c:if>
                                             <c:if test="${result.replyPosblAt == 'Y'}">
-                                            	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fn_egov_addReply(); return false;">답글작성</a><!-- 답글작성 -->
+                                            	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fn_egov_addReply();">답글작성</a><!-- 답글작성 -->
                                             </c:if>
                                         </div>
 
                                         <div class="right_col btn1">
-                                            <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_select_noticeList('1'); return false;">목록</a><!-- 목록 -->
+                                            <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_select_noticeList('1');">목록</a><!-- 목록 -->
                                         </div>
                                     </div>
                                     <!-- // 목록/저장버튼 끝  -->
