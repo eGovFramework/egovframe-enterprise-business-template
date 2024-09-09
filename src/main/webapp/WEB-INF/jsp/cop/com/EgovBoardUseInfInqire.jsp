@@ -139,7 +139,7 @@
                                                 <span class="req">필수</span>
                                             </td>
                                             <td class="rdoSet"><!-- 2개이상 radio 있을때 필요 -->
-                                                <label for="rdo1">
+                                                <label for="rdo1" class="mr30">
                                                     <input type="radio" id="rdo1" name="useAt"  value="Y" <c:if test="${bdUseVO.useAt == 'Y'}"> checked="checked"</c:if>>
                                                     <spring:message code="button.use" /><!-- 사용 -->
                                                 </label>
