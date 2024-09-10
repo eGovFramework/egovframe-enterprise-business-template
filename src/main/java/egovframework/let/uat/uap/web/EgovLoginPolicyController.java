@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
@@ -36,8 +37,9 @@ import egovframework.let.uat.uap.service.LoginPolicyVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.08.03  lee.m.j       최초 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.11  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -58,7 +60,7 @@ public class EgovLoginPolicyController {
 	 * 
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/selectLoginPolicyListView.do")
+	@GetMapping("/uat/uap/selectLoginPolicyListView.do")
 	public String selectLoginPolicyListView() throws Exception {
 		return "/uat/uap/EgovLoginPolicyList";
 	}
@@ -69,7 +71,7 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicyVO - 로그인정책 VO
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/selectLoginPolicyList.do")
+	@GetMapping("/uat/uap/selectLoginPolicyList.do")
 	public String selectLoginPolicyList(@ModelAttribute("loginPolicyVO") LoginPolicyVO loginPolicyVO, ModelMap model)
 			throws Exception {
 
@@ -100,7 +102,7 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicyVO - 로그인정책 VO
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/getLoginPolicy.do")
+	@GetMapping("/uat/uap/getLoginPolicy.do")
 	public String selectLoginPolicy(@RequestParam("emplyrId") String emplyrId,
 			@ModelAttribute("loginPolicyVO") LoginPolicyVO loginPolicyVO, ModelMap model) throws Exception {
 
@@ -123,7 +125,7 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicy - 로그인정책 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/addLoginPolicyView.do")
+	@GetMapping("/uat/uap/addLoginPolicyView.do")
 	public String insertLoginPolicyView(@RequestParam("emplyrId") String emplyrId,
 			@ModelAttribute("loginPolicyVO") LoginPolicyVO loginPolicyVO, ModelMap model) throws Exception {
 
@@ -141,7 +143,7 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicy - 로그인정책 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/addLoginPolicy.do")
+	@PostMapping("/uat/uap/addLoginPolicy.do")
 	public String insertLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 
@@ -158,7 +160,9 @@ public class EgovLoginPolicyController {
 			egovLoginPolicyService.insertLoginPolicy(loginPolicy);
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
 
-			return "forward:/uat/uap/getLoginPolicy.do";
+			addAttributeSearch(loginPolicy, model);
+
+			return "redirect:/uat/uap/getLoginPolicy.do";
 		}
 	}
 
@@ -168,7 +172,7 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicy - 로그인정책 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/updtLoginPolicy.do")
+	@PostMapping("/uat/uap/updtLoginPolicy.do")
 	public String updateLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 
@@ -184,7 +188,9 @@ public class EgovLoginPolicyController {
 			egovLoginPolicyService.updateLoginPolicy(loginPolicy);
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
 
-			return "forward:/uat/uap/selectLoginPolicyList.do";
+			addAttributeSearch(loginPolicy, model);
+
+			return "redirect:/uat/uap/selectLoginPolicyList.do";
 		}
 	}
 
@@ -194,14 +200,25 @@ public class EgovLoginPolicyController {
 	 * @param loginPolicy - 로그인정책 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uat/uap/removeLoginPolicy.do")
+	@PostMapping("/uat/uap/removeLoginPolicy.do")
 	public String deleteLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, ModelMap model)
 			throws Exception {
 
 		egovLoginPolicyService.deleteLoginPolicy(loginPolicy);
 
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/uat/uap/selectLoginPolicyList.do";
+
+		addAttributeSearch(loginPolicy, model);
+
+		return "redirect:/uat/uap/selectLoginPolicyList.do";
+	}
+
+	private void addAttributeSearch(LoginPolicy loginPolicy, ModelMap model) {
+		model.addAttribute("searchCondition", loginPolicy.getSearchCondition());
+		model.addAttribute("searchKeyword", loginPolicy.getSearchKeyword());
+		model.addAttribute("pageIndex", loginPolicy.getPageIndex());
+
+		model.addAttribute("emplyrId", loginPolicy.getEmplyrId());
 	}
 
 }
