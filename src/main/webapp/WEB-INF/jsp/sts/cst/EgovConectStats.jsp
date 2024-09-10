@@ -61,6 +61,9 @@ function fnChangePerson(){
  * 조회 처리 
  *********************************************************/
 function fnSearch(){
+    event.preventDefault();
+    document.listForm.fromDate.value = document.listForm.searchBgnDe.value.replace(/-/g, '');
+    document.listForm.toDate.value = document.listForm.searchEndDe.value.replace(/-/g, '');
     var fromDate = document.listForm.fromDate.value;
     var toDate = document.listForm.toDate.value;
     var pdKind = document.listForm.pdKind.value;
@@ -219,7 +222,7 @@ function fn_egov_init_date(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="listForm" action="<c:url value='/sts/selectConectStats.do'/>" method="post">
+								<form name="listForm" action="<c:url value='/sts/selectConectStats.do'/>" method="get">
 								
 			                    <input type="hidden" name="pdKind" value='<c:out value="${statsInfo.pdKind}"/>'/>
 			                    <input type="hidden" name="statsKind" value='<c:out value="${statsInfo.statsKind}"/>'/>
@@ -252,7 +255,7 @@ function fn_egov_init_date(){
                                           </select>
                                     </label>
 
-                                    <a href="#LINK" class="item btn btn_blue_46 w_100 ml10" onclick="fnSearch(); return false;"><spring:message code='button.inquire' /></a><!-- 조회 -->
+                                    <a href="" class="item btn btn_blue_46 w_100 ml10" onclick="fnSearch();"><spring:message code='button.inquire' /></a><!-- 조회 -->
                                 </div>
                                 <!--// 검색조건 -->
 

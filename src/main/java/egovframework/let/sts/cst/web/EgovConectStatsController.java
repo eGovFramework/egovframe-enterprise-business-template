@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.let.sts.com.StatsVO;
 import egovframework.let.sts.cst.service.EgovConectStatsService;
@@ -45,7 +45,7 @@ public class EgovConectStatsController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sts/cst/selectConectStats.do")
+	@GetMapping(value = "/sts/cst/selectConectStats.do")
 	public String selectUserStats(@ModelAttribute("statsVO") StatsVO statsVO, ModelMap model) throws Exception {
 
 		if (statsVO.getFromDate() != null && !"".equals(statsVO.getFromDate())) {
