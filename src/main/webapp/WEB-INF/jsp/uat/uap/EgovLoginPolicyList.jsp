@@ -5,8 +5,9 @@
 
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01   lee.m.j            최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.02.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.11  이백행          컨트리뷰션 검색 조건 유지
 
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -112,6 +113,7 @@ function fncSelectLoginPolicyList(pageNo){
 }
 
 function fncSelectLoginPolicy(emplyrId) {
+    event.preventDefault();
     document.listForm.emplyrId.value = emplyrId;
     document.listForm.action = "<c:url value='/uat/uap/getLoginPolicy.do'/>";
     document.listForm.submit();
@@ -227,7 +229,7 @@ function press() {
                                 <!-- 검색조건 -->
                                 <div class="condition2">
                                 	
-                                	<form name="listForm" action="<c:url value='/uat/uap/selectLoginPolicyList.do'/>" method="post">
+                                	<form name="listForm" action="<c:url value='/uat/uap/selectLoginPolicyList.do'/>" method="get">
                                 	
                                 	<input type="hidden" name="emplyrId">
                                 	<input type="hidden" name="pageIndex" value="<c:if test="${empty loginPolicyVO.pageIndex }">1</c:if><c:if test="${!empty loginPolicyVO.pageIndex }"><c:out value='${loginPolicyVO.pageIndex}'/></c:if>">
@@ -237,7 +239,7 @@ function press() {
 
                                     <span class="item f_search">
                                         <input id="searchKeyword" class="f_input w_350" name="searchKeyword" type="text" value="<c:out value="${loginPolicyVO.searchKeyword}"/>" title="검색" onkeypress="press();" >
-                                        <button class="btn" type="submit" onclick="javascript:fncSelectLoginPolicyList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="fncSelectLoginPolicyList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                     
                                     </form>
@@ -268,12 +270,12 @@ function press() {
                                         	<c:forEach var="loginPolicy" items="${loginPolicyList}" varStatus="status">
 	                                            <tr>
 	                                                <td>
-	                                                	<form name="item" method="post" action="<c:url value='/uat/uap/getLoginPolicy.do'/>">
+	                                                	<form name="item" method="get" action="<c:url value='/uat/uap/getLoginPolicy.do'/>">
 	                                                		<input type="hidden" name="emplyrId" value="<c:out value="${loginPolicy.emplyrId}"/>">
 	                                                		<input type="hidden" name="pageIndex" value="<c:out value='${loginPolicyVO.pageIndex}'/>">
 	                                                		<input type="hidden" name="searchCondition" value="<c:out value='${loginPolicyVO.searchCondition}'/>">
 	                                                		<input type="hidden" name="searchKeyword" value="<c:out value="${loginPolicyVO.searchKeyword}"/>">
-			                                                <a href="#LINK" class="lnk" onclick="javascript:fncSelectLoginPolicy('<c:out value="${loginPolicy.emplyrId}"/>'); return false;">
+			                                                <a href="" class="lnk" onclick="fncSelectLoginPolicy('<c:out value="${loginPolicy.emplyrId}"/>');">
 			                                                	<c:out value="${loginPolicy.emplyrId}"/>
 			                                                </a>
 		                                                </form>
