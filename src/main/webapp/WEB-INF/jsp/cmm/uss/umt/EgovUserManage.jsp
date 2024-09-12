@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03   JJY              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.03  JJY           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -98,6 +99,7 @@ function fnSelectUser(id) {
       
 }
 function fnAddUserView() {
+    event.preventDefault();
     document.listForm.action = "<c:url value='/uss/umt/user/EgovUserInsertView.do'/>";
     document.listForm.submit();
 }
@@ -118,7 +120,7 @@ function fnViewCheck(){
         insert_msg.style.visibility = 'hidden';
     }
 }
-<c:if test="${!empty resultMsg}">alert("<spring:message code="${resultMsg}" />");</c:if>
+<c:if test="${!empty param.resultMsg}">alert("<spring:message code="${param.resultMsg}" />");</c:if>
 //-->
 </script>
 
@@ -155,7 +157,7 @@ function fnViewCheck(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="listForm" action="<c:url value='/uss/umt/user/EgovUserManage.do'/>" method="post">
+								<form name="listForm" action="<c:url value='/uss/umt/user/EgovUserManage.do'/>" method="get">
 								
 								<input name="selectedId" type="hidden" />
 								<input name="checkedIdForDel" type="hidden" />
@@ -188,7 +190,7 @@ function fnViewCheck(){
                                     </span>
 
                                     <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="javascript:fnDeleteUser(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
-                                    <a href="<c:url value='/uss/umt/user/EgovUserInsertView.do'/>" class="item btn btn_blue_46 w_100" onclick="fnAddUserView(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+                                    <a href="<c:url value='/uss/umt/user/EgovUserInsertView.do'/>" class="item btn btn_blue_46 w_100" onclick="fnAddUserView();"><spring:message code="button.create" /></a><!-- 등록 -->
                                 </div>
                                 <!--// 검색조건 -->
 								

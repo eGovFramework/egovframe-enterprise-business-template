@@ -11,10 +11,10 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
@@ -40,7 +40,8 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.10  조재영          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.12  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -75,8 +76,8 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovUserManage
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uss/umt/user/EgovUserManage.do")
-	public String selectUserList(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, ModelMap model,
+	@GetMapping(value = "/uss/umt/user/EgovUserManage.do")
+	public String selectUserList(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, Model model,
 			HttpServletRequest request) throws Exception {
 
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
@@ -126,7 +127,7 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovUserInsert
 	 * @throws Exception
 	 */
-	@RequestMapping("/uss/umt/user/EgovUserInsertView.do")
+	@GetMapping("/uss/umt/user/EgovUserInsertView.do")
 	public String insertUserView(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO, Model model) throws Exception {
 
@@ -176,7 +177,7 @@ public class EgovUserManageController {
 	 * @return forward:/uss/umt/user/EgovUserManage.do
 	 * @throws Exception
 	 */
-	@RequestMapping("/uss/umt/user/EgovUserInsert.do")
+	@PostMapping("/uss/umt/user/EgovUserInsert.do")
 	public String insertUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult,
 			Model model) throws Exception {
 
@@ -221,7 +222,10 @@ public class EgovUserManageController {
 			// Exception 없이 진행시 등록성공메시지
 			model.addAttribute("resultMsg", "success.common.insert");
 		}
-		return "forward:/uss/umt/user/EgovUserManage.do";
+
+		addAttributeSearch(userManageVO, model);
+
+		return "redirect:/uss/umt/user/EgovUserManage.do";
 	}
 
 	/**
@@ -233,7 +237,7 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovUserSelectUpdt
 	 * @throws Exception
 	 */
-	@RequestMapping("/uss/umt/user/EgovUserSelectUpdtView.do")
+	@GetMapping("/uss/umt/user/EgovUserSelectUpdtView.do")
 	public String updateUserView(@RequestParam("selectedId") String uniqId,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
@@ -287,7 +291,7 @@ public class EgovUserManageController {
 	 * @return forward:/uss/umt/user/EgovUserManage.do
 	 * @throws Exception
 	 */
-	@RequestMapping("/uss/umt/user/EgovUserSelectUpdt.do")
+	@PostMapping("/uss/umt/user/EgovUserSelectUpdt.do")
 	public String updateUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult,
 			Model model) throws Exception {
 
@@ -332,7 +336,10 @@ public class EgovUserManageController {
 			userManageService.updateUser(userManageVO);
 			// Exception 없이 진행시 수정성공메시지
 			model.addAttribute("resultMsg", "success.common.update");
-			return "forward:/uss/umt/user/EgovUserManage.do";
+
+			addAttributeSearch(userManageVO, model);
+
+			return "redirect:/uss/umt/user/EgovUserManage.do";
 		}
 	}
 
@@ -345,7 +352,7 @@ public class EgovUserManageController {
 	 * @return forward:/uss/umt/user/EgovUserManage.do
 	 * @throws Exception
 	 */
-	@RequestMapping("/uss/umt/user/EgovUserDelete.do")
+	@PostMapping("/uss/umt/user/EgovUserDelete.do")
 	public String deleteUser(@RequestParam("checkedIdForDel") String checkedIdForDel,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
@@ -359,7 +366,10 @@ public class EgovUserManageController {
 		userManageService.deleteUser(checkedIdForDel);
 		// Exception 없이 진행시 등록성공메시지
 		model.addAttribute("resultMsg", "success.common.delete");
-		return "forward:/uss/umt/user/EgovUserManage.do";
+
+		addAttributeSearch(userSearchVO, model);
+
+		return "redirect:/uss/umt/user/EgovUserManage.do";
 	}
 
 	/**
@@ -369,8 +379,8 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovIdDplctCnfirm
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirmView.do")
-	public String checkIdDplct(ModelMap model) throws Exception {
+	@GetMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirmView.do")
+	public String checkIdDplct(Model model) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -392,8 +402,8 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovIdDplctCnfirm
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirm.do")
-	public String checkIdDplct(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+	@GetMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirm.do")
+	public String checkIdDplct(@RequestParam Map<String, Object> commandMap, Model model) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -425,8 +435,8 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovUserPasswordUpdt
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uss/umt/user/EgovUserPasswordUpdt.do")
-	public String updatePassword(ModelMap model, @RequestParam Map<String, Object> commandMap,
+	@PostMapping(value = "/uss/umt/user/EgovUserPasswordUpdt.do")
+	public String updatePassword(Model model, @RequestParam Map<String, Object> commandMap,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO) throws Exception {
 
@@ -488,8 +498,8 @@ public class EgovUserManageController {
 	 * @return cmm/uss/umt/EgovUserPasswordUpdt
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uss/umt/user/EgovUserPasswordUpdtView.do")
-	public String updatePasswordView(ModelMap model, @RequestParam Map<String, Object> commandMap,
+	@GetMapping(value = "/uss/umt/user/EgovUserPasswordUpdtView.do")
+	public String updatePasswordView(Model model, @RequestParam Map<String, Object> commandMap,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO) throws Exception {
 
@@ -506,6 +516,12 @@ public class EgovUserManageController {
 		model.addAttribute("userManageVO", userManageVO);
 		model.addAttribute("userSearchVO", userSearchVO);
 		return "cmm/uss/umt/EgovUserPasswordUpdt";
+	}
+
+	private void addAttributeSearch(UserDefaultVO userDefaultVO, Model model) {
+		model.addAttribute("searchCondition", userDefaultVO.getSearchCondition());
+		model.addAttribute("searchKeyword", userDefaultVO.getSearchKeyword());
+		model.addAttribute("pageIndex", userDefaultVO.getPageIndex());
 	}
 
 }
