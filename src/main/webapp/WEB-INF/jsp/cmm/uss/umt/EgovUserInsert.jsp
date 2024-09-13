@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03   JJY              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.03  JJY           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -71,10 +72,16 @@ function showModalDialogCallback(retVal) {
     }
 }
 function fnListPage(){
+    event.preventDefault();
     document.userManageVO.action = "<c:url value='/uss/umt/user/EgovUserManage.do'/>"; 
+    document.userManageVO.method = 'get';
     document.userManageVO.submit();
 }
 function fnInsert(){
+    event.preventDefault();
+    if (!document.userManageVO.emplyrId.value) {
+    	alert('사용자아이디 중복체크를 실행하십시오');
+    }
     if(validateUserManageVO(document.userManageVO)){
         if(document.userManageVO.password.value != document.userManageVO.password2.value){
             alert("<spring:message code="fail.user.passwordUpdate2" />");
@@ -394,12 +401,12 @@ function fn_egov_modal_remove() {
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.userManageVO.reset();"><spring:message code="button.reset" /></a><!-- 초기화 -->
+                                        <a href="" class="btn btn_skyblue_h46 w_100" onclick="event.preventDefault(); document.userManageVO.reset();"><spring:message code="button.reset" /></a><!-- 초기화 -->
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fnInsert(); return fallse;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fnInsert();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
