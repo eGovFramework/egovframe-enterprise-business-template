@@ -6,10 +6,11 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
@@ -36,8 +37,9 @@ import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.08.03  lee.m.j       최초 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.13  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -59,7 +61,7 @@ public class EgovUserAbsnceController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/uss/ion/uas/selectUserAbsnceListView.do")
+	@GetMapping("/uss/ion/uas/selectUserAbsnceListView.do")
 	public String selectUserAbsnceListView() throws Exception {
 
 		return "/uss/ion/uas/EgovUserAbsnceList";
@@ -71,9 +73,9 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/selectUserAbsnceList.do")
+	@GetMapping("/uss/ion/uas/selectUserAbsnceList.do")
 	public String selectUserAbsnceList(@RequestParam("selAbsnceAt") String selAbsnceAt,
-			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, ModelMap model) throws Exception {
+			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
 
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -105,15 +107,15 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/getUserAbsnce.do")
+	@GetMapping("/uss/ion/uas/getUserAbsnce.do")
 	public String selectUserAbsnce(@RequestParam("userId") String userId,
-			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, ModelMap model) throws Exception {
+			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
 
 		userAbsnceVO.setUserId(userId);
 		model.addAttribute("userAbsnce", egovUserAbsnceService.selectUserAbsnce(userAbsnceVO));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 
-		UserAbsnceVO vo = (UserAbsnceVO) model.get("userAbsnce");
+		UserAbsnceVO vo = (UserAbsnceVO) model.getAttribute("userAbsnce");
 
 		if (vo.getRegYn().equals("N"))
 			return "/uss/ion/uas/EgovUserAbsnceRegist";
@@ -127,9 +129,9 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/addViewUserAbsnce.do")
+	@GetMapping("/uss/ion/uas/addViewUserAbsnce.do")
 	public String insertUserAbsnceView(@RequestParam("userId") String userId,
-			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, ModelMap model) throws Exception {
+			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
 		userAbsnceVO.setUserId(userId);
 		model.addAttribute("userAbsnce", egovUserAbsnceService.selectUserAbsnce(userAbsnceVO));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
@@ -143,9 +145,9 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/addUserAbsnce.do")
+	@PostMapping("/uss/ion/uas/addUserAbsnce.do")
 	public String insertUserAbsnce(@ModelAttribute("userAbsnce") UserAbsnce userAbsnce,
-			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, BindingResult bindingResult, ModelMap model)
+			@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, BindingResult bindingResult, Model model)
 			throws Exception {
 
 		beanValidator.validate(userAbsnce, bindingResult); // validation 수행
@@ -171,9 +173,9 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/updtUserAbsnce.do")
+	@PostMapping("/uss/ion/uas/updtUserAbsnce.do")
 	public String updateUserAbsnce(@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, BindingResult bindingResult,
-			ModelMap model) throws Exception {
+			Model model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("userAbsnceVO", userAbsnce);
@@ -195,13 +197,14 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/removeUserAbsnce.do")
-	public String deleteUserAbsnce(@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, ModelMap model)
-			throws Exception {
+	@PostMapping("/uss/ion/uas/removeUserAbsnce.do")
+	public String deleteUserAbsnce(UserAbsnceVO userAbsnceVO, @ModelAttribute("userAbsnce") UserAbsnce userAbsnce,
+			Model model) throws Exception {
 
 		egovUserAbsnceService.deleteUserAbsnce(userAbsnce);
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/uss/ion/uas/selectUserAbsnceList.do";
+		addAttributeSearch(userAbsnceVO, model);
+		return "redirect:/uss/ion/uas/selectUserAbsnceList.do";
 	}
 
 	/**
@@ -210,9 +213,9 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/removeUserAbsnceList.do")
+	@PostMapping("/uss/ion/uas/removeUserAbsnceList.do")
 	public String deleteUserAbsnceList(@RequestParam("userIds") String userIds,
-			@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, ModelMap model) throws Exception {
+			@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, Model model) throws Exception {
 
 		String[] strUserIds = userIds.split(";");
 
@@ -231,8 +234,8 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return String - 리턴 Url
 	 */
-	@RequestMapping("/uss/ion/uas/selectUserAbsnceMainList.do")
-	public String selectUserAbsnceMainList(@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, ModelMap model)
+	@GetMapping("/uss/ion/uas/selectUserAbsnceMainList.do")
+	public String selectUserAbsnceMainList(@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model)
 			throws Exception {
 
 		/** paging */
@@ -252,4 +255,13 @@ public class EgovUserAbsnceController {
 
 		return "/uss/ion/uas/EgovUserAbsnceMainList";
 	}
+
+	private void addAttributeSearch(UserAbsnceVO userAbsnceVO, Model model) {
+		model.addAttribute("searchCondition", userAbsnceVO.getSearchCondition());
+		model.addAttribute("searchKeyword", userAbsnceVO.getSearchKeyword());
+		model.addAttribute("pageIndex", userAbsnceVO.getPageIndex());
+
+		model.addAttribute("selAbsnceAt", userAbsnceVO.getSelAbsnceAt());
+	}
+
 }

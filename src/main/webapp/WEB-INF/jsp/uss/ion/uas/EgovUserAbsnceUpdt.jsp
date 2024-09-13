@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.07.01   lee.m.j            최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.07.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.13  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.07.01
@@ -39,8 +40,10 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectUserAbsnceList() {
+    event.preventDefault();
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
+    varFrom.method= 'get';
     varFrom.submit();       
 }
 
@@ -56,6 +59,7 @@ function fncUserAbsnceUpdate() {
 }
 
 function fncUserAbsnceDelete() {
+    event.preventDefault();
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){
@@ -155,14 +159,14 @@ function fncUserAbsnceDelete() {
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                    	<a href="<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>?userId=<c:out value='${userAbsnceVO.userId}'/>&amp;selAbsnceAt=<c:out value='${userAbsnceVO.selAbsnceAt}'/>" class="btn btn_skyblue_h46 w_100" onclick="fncUserAbsnceDelete(); return false;">
+                                    	<a href="<c:url value='/uss/ion/uas/removeUserAbsnce.do'/>?userId=<c:out value='${userAbsnceVO.userId}'/>&amp;selAbsnceAt=<c:out value='${userAbsnceVO.selAbsnceAt}'/>" class="btn btn_skyblue_h46 w_100" onclick="fncUserAbsnceDelete();">
                                     		<spring:message code="button.delete" />
                                     	</a><!-- 삭제 -->
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fncUserAbsnceInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList(); return false;">
+<%--                                         <a href="" class="btn btn_blue_46 w_100" onclick="fncUserAbsnceInsert();"><spring:message code="button.save" /></a><!-- 저장 --> --%>
+                                        <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList();">
                                         	<spring:message code="button.list" />
                                         </a><!-- 목록 -->
                                     </div>
