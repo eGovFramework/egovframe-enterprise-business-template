@@ -42,8 +42,10 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectAuthorList() {
+    event.preventDefault();
     var varFrom = document.getElementById("authorManage");
     varFrom.action = "<c:url value='/sec/ram/EgovAuthorList.do'/>";
+    varFrom.method = 'get';
     varFrom.submit();       
 }
 
@@ -183,17 +185,17 @@ function fncAuthorDelete() {
                                         <c:if test="${registerFlag == 'UPDATE'}">
                                         	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorUpdate()"><spring:message code='button.save' /></a><!-- 저장 -->
                                         </c:if>
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncSelectAuthorList()"><spring:message code='button.list' /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncSelectAuthorList()"><spring:message code='button.list' /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
                                 
                                 <!-- 검색조건 유지 -->
-                                <c:if test="${registerFlag == 'UPDATE'}">
+<%--                                 <c:if test="${registerFlag == 'UPDATE'}"> --%>
 	                                <input type="hidden" name="searchCondition" value="<c:out value='${authorManageVO.searchCondition}'/>"/>
 	                                <input type="hidden" name="searchKeyword" value="<c:out value='${authorManageVO.searchKeyword}'/>"/>
 	                                <input type="hidden" name="pageIndex" value="<c:out value='${authorManageVO.pageIndex}'/>"/>
-                                </c:if>
+<%--                                 </c:if> --%>
                                 
                                 </form:form>
                                 

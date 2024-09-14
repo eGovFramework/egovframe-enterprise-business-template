@@ -7,10 +7,10 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
@@ -61,7 +61,7 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/ram/EgovAuthorListView.do")
+	@GetMapping("/sec/ram/EgovAuthorListView.do")
 	public String selectAuthorListView() throws Exception {
 		return "/sec/ram/EgovAuthorManage";
 	}
@@ -73,8 +73,8 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorList.do")
-	public String selectAuthorList(@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model)
+	@GetMapping(value = "/sec/ram/EgovAuthorList.do")
+	public String selectAuthorList(@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, Model model)
 			throws Exception {
 
 		/** paging */
@@ -106,9 +106,9 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthor.do")
+	@GetMapping(value = "/sec/ram/EgovAuthor.do")
 	public String selectAuthor(@RequestParam("authorCode") String authorCode,
-			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) throws Exception {
+			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, Model model) throws Exception {
 
 		authorManageVO.setAuthorCode(authorCode);
 
@@ -123,8 +123,8 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/ram/EgovAuthorInsertView.do")
-	public String insertAuthorView() throws Exception {
+	@GetMapping("/sec/ram/EgovAuthorInsertView.do")
+	public String insertAuthorView(final AuthorManageVO authorManageVO, final Model model) throws Exception {
 		return "/sec/ram/EgovAuthorInsert";
 	}
 
@@ -136,9 +136,10 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorInsert.do")
-	public String insertAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+	@PostMapping(value = "/sec/ram/EgovAuthorInsert.do")
+	public String insertAuthor(final AuthorManageVO authorManageVO,
+			@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
+			SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(authorManage, bindingResult); // validation 수행
 
@@ -148,7 +149,8 @@ public class EgovAuthorManageController {
 			egovAuthorManageService.insertAuthor(authorManage);
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
-			return "forward:/sec/ram/EgovAuthor.do";
+			addAttributeSearch(authorManageVO, model);
+			return "redirect:/sec/ram/EgovAuthor.do";
 		}
 	}
 
@@ -160,8 +162,9 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorUpdate.do")
-	public String updateAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
+	@PostMapping(value = "/sec/ram/EgovAuthorUpdate.do")
+	public String updateAuthor(final AuthorManageVO authorManageVO,
+			@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
 			SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(authorManage, bindingResult); // validation 수행
@@ -172,7 +175,8 @@ public class EgovAuthorManageController {
 			egovAuthorManageService.updateAuthor(authorManage);
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
-			return "forward:/sec/ram/EgovAuthor.do";
+			addAttributeSearch(authorManageVO, model);
+			return "redirect:/sec/ram/EgovAuthor.do";
 		}
 	}
 
@@ -183,14 +187,16 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorDelete.do")
-	public String deleteAuthor(@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status,
-			Model model) throws Exception {
+	@PostMapping(value = "/sec/ram/EgovAuthorDelete.do")
+	public String deleteAuthor(final AuthorManageVO authorManageVO,
+			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model)
+			throws Exception {
 
 		egovAuthorManageService.deleteAuthor(authorManage);
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/ram/EgovAuthorList.do";
+		addAttributeSearch(authorManageVO, model);
+		return "redirect:/sec/ram/EgovAuthorList.do";
 	}
 
 	/**
@@ -201,8 +207,8 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorListDelete.do")
-	public String deleteAuthorList(@RequestParam("authorCodes") String authorCodes,
+	@PostMapping(value = "/sec/ram/EgovAuthorListDelete.do")
+	public String deleteAuthorList(@RequestParam("authorCodes") String authorCodes, final AuthorManageVO authorManageVO,
 			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model)
 			throws Exception {
 
@@ -213,7 +219,8 @@ public class EgovAuthorManageController {
 		}
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/ram/EgovAuthorList.do";
+		addAttributeSearch(authorManageVO, model);
+		return "redirect:/sec/ram/EgovAuthorList.do";
 	}
 
 	/**
@@ -222,8 +229,17 @@ public class EgovAuthorManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/ram/accessDenied.do")
+	@GetMapping("/sec/ram/accessDenied.do")
 	public String accessDenied() throws Exception {
 		return "sec/accessDenied";
 	}
+
+	private void addAttributeSearch(final AuthorManageVO authorManageVO, final Model model) {
+		model.addAttribute("searchCondition", authorManageVO.getSearchCondition());
+		model.addAttribute("searchKeyword", authorManageVO.getSearchKeyword());
+		model.addAttribute("pageIndex", authorManageVO.getPageIndex());
+
+		model.addAttribute("authorCode", authorManageVO.getAuthorCode());
+	}
+
 }

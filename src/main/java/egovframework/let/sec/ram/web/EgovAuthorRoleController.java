@@ -5,9 +5,10 @@ import javax.annotation.Resource;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -54,7 +55,7 @@ public class EgovAuthorRoleController {
 	 * @return "/sec/ram/EgovDeptAuthorList"
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/ram/EgovAuthorRoleListView.do")
+	@GetMapping("/sec/ram/EgovAuthorRoleListView.do")
 	public String selectAuthorRoleListView() throws Exception {
 
 		return "/sec/ram/EgovAuthorRoleManage";
@@ -67,9 +68,9 @@ public class EgovAuthorRoleController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorRoleList.do")
+	@GetMapping(value = "/sec/ram/EgovAuthorRoleList.do")
 	public String selectAuthorRoleList(@ModelAttribute("authorRoleManageVO") AuthorRoleManageVO authorRoleManageVO,
-			ModelMap model) throws Exception {
+			Model model) throws Exception {
 
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -103,10 +104,11 @@ public class EgovAuthorRoleController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/ram/EgovAuthorRoleInsert.do")
+	@PostMapping(value = "/sec/ram/EgovAuthorRoleInsert.do")
 	public String insertAuthorRole(@RequestParam("authorCode") String authorCode,
 			@RequestParam("roleCodes") String roleCodes, @RequestParam("regYns") String regYns,
-			@ModelAttribute("authorRoleManage") AuthorRoleManage authorRoleManage, SessionStatus status, ModelMap model)
+			final AuthorRoleManageVO authorRoleManageVO,
+			@ModelAttribute("authorRoleManage") AuthorRoleManage authorRoleManage, SessionStatus status, Model model)
 			throws Exception {
 
 		String[] strRoleCodes = roleCodes.split(";");
@@ -125,6 +127,14 @@ public class EgovAuthorRoleController {
 
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
-		return "forward:/sec/ram/EgovAuthorRoleList.do";
+		addAttributeSearch(authorRoleManageVO, model);
+		return "redirect:/sec/ram/EgovAuthorRoleList.do";
 	}
+
+	private void addAttributeSearch(final AuthorRoleManageVO authorRoleManageVO, final Model model) {
+		model.addAttribute("searchCondition", authorRoleManageVO.getSearchCondition());
+		model.addAttribute("searchKeyword", authorRoleManageVO.getSearchKeyword());
+		model.addAttribute("pageIndex", authorRoleManageVO.getPageIndex());
+	}
+
 }
