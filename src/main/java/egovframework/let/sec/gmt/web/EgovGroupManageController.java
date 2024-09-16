@@ -8,9 +8,10 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
@@ -78,8 +79,8 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupList.do")
-	public String selectGroupList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model)
+	@GetMapping(value = "/sec/gmt/EgovGroupList.do")
+	public String selectGroupList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, Model model)
 			throws Exception {
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -109,8 +110,8 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroup.do")
-	public String selectGroup(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model)
+	@GetMapping(value = "/sec/gmt/EgovGroup.do")
+	public String selectGroup(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, Model model)
 			throws Exception {
 
 		model.addAttribute("groupManage", egovGroupManageService.selectGroup(groupManageVO));
@@ -123,7 +124,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupInsertView.do")
+	@GetMapping(value = "/sec/gmt/EgovGroupInsertView.do")
 	public String insertGroupView() throws Exception {
 		return "/sec/gmt/EgovGroupInsert";
 	}
@@ -136,10 +137,10 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupInsert.do")
+	@PostMapping(value = "/sec/gmt/EgovGroupInsert.do")
 	public String insertGroup(@ModelAttribute("groupManage") GroupManage groupManage,
 			@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+			SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(groupManage, bindingResult); // validation 수행
 
@@ -152,7 +153,8 @@ public class EgovGroupManageController {
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
 			model.addAttribute("groupManage", egovGroupManageService.insertGroup(groupManage, groupManageVO));
-			return "/sec/gmt/EgovGroupUpdate";
+			addAttributeSearch(groupManageVO, model);
+			return "redirect:/sec/gmt/EgovGroupList.do";
 		}
 	}
 
@@ -163,9 +165,9 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupUpdate.do")
-	public String updateGroup(@ModelAttribute("groupManage") GroupManage groupManage, BindingResult bindingResult,
-			SessionStatus status, Model model) throws Exception {
+	@PostMapping(value = "/sec/gmt/EgovGroupUpdate.do")
+	public String updateGroup(final GroupManageVO groupManageVO, @ModelAttribute("groupManage") GroupManage groupManage,
+			BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(groupManage, bindingResult); // validation 수행
 
@@ -175,7 +177,8 @@ public class EgovGroupManageController {
 			egovGroupManageService.updateGroup(groupManage);
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
-			return "forward:/sec/gmt/EgovGroup.do";
+			addAttributeSearch(groupManageVO, model);
+			return "redirect:/sec/gmt/EgovGroup.do";
 		}
 	}
 
@@ -186,13 +189,14 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupDelete.do")
-	public String deleteGroup(@ModelAttribute("groupManage") GroupManage groupManage, SessionStatus status, Model model)
-			throws Exception {
+	@PostMapping(value = "/sec/gmt/EgovGroupDelete.do")
+	public String deleteGroup(final GroupManageVO groupManageVO, @ModelAttribute("groupManage") GroupManage groupManage,
+			SessionStatus status, Model model) throws Exception {
 		egovGroupManageService.deleteGroup(groupManage);
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/gmt/EgovGroupList.do";
+		addAttributeSearch(groupManageVO, model);
+		return "redirect:/sec/gmt/EgovGroupList.do";
 	}
 
 	/**
@@ -203,8 +207,8 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupListDelete.do")
-	public String deleteGroupList(@RequestParam("groupIds") String groupIds,
+	@PostMapping(value = "/sec/gmt/EgovGroupListDelete.do")
+	public String deleteGroupList(@RequestParam("groupIds") String groupIds, final GroupManageVO groupManageVO,
 			@ModelAttribute("groupManage") GroupManage groupManage, SessionStatus status, Model model)
 			throws Exception {
 		String[] strGroupIds = groupIds.split(";");
@@ -214,7 +218,8 @@ public class EgovGroupManageController {
 		}
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/gmt/EgovGroupList.do";
+		addAttributeSearch(groupManageVO, model);
+		return "redirect:/sec/gmt/EgovGroupList.do";
 	}
 
 	/**
@@ -223,7 +228,7 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/gmt/EgovGroupSearchView.do")
+	@GetMapping("/sec/gmt/EgovGroupSearchView.do")
 	public String selectGroupSearchView() throws Exception {
 		return "/sec/gmt/EgovGroupSearch";
 	}
@@ -235,8 +240,8 @@ public class EgovGroupManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/gmt/EgovGroupSearchList.do")
-	public String selectGroupSearchList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, ModelMap model)
+	@GetMapping(value = "/sec/gmt/EgovGroupSearchList.do")
+	public String selectGroupSearchList(@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, Model model)
 			throws Exception {
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -258,4 +263,13 @@ public class EgovGroupManageController {
 
 		return "/sec/gmt/EgovGroupSearch";
 	}
+
+	private void addAttributeSearch(final GroupManageVO groupManageVO, final Model model) {
+		model.addAttribute("searchCondition", groupManageVO.getSearchCondition());
+		model.addAttribute("searchKeyword", groupManageVO.getSearchKeyword());
+		model.addAttribute("pageIndex", groupManageVO.getPageIndex());
+
+		model.addAttribute("groupId", groupManageVO.getGroupId());
+	}
+
 }

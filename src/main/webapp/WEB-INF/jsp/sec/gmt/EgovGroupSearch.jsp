@@ -82,6 +82,7 @@ function fncManageChecked() {
 }
 
 function fncSelectGroupList(pageNo){
+    event.preventDefault();
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
  // document.listForm.action = "<c:url value='/sec/gmt/EgovGroupSearchList.do'/>";
@@ -89,6 +90,7 @@ function fncSelectGroupList(pageNo){
 }
 
 function fncSelectGroup(groupId) {
+    event.preventDefault();
  // window.returnValue = groupId;
     parent.document.listForm.searchKeyword.value = groupId;
     fn_egov_cancel_popup();
@@ -129,7 +131,7 @@ function fn_egov_cancel_popup() {
 
 <body>
 
-	<form name="listForm" action="<c:url value='/sec/gmt/EgovGroupSearchList.do'/>" method="post">
+	<form name="listForm" action="<c:url value='/sec/gmt/EgovGroupSearchList.do'/>" method="get">
 	
 	<!-- 그룹 조회 팝업 -->
     <div class="popup POP_GROUP_SEARCH">
@@ -145,7 +147,7 @@ function fn_egov_cancel_popup() {
                     <label for="searchKeyword" class="lb mr10">그룹 명 : </label>
                     <span class="item f_search">
                         <input id="searchKeyword" class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${groupManageVO.searchKeyword}'/>" title="검색" onkeypress="press();" />
-                        <button class="btn" type="submit" onclick="javascript:fncSelectGroupList('1'); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                        <button class="btn" type="submit" onclick="fncSelectGroupList('1'); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
                     </span>
                 </div>
                 <!--// 검색조건 -->
@@ -178,7 +180,7 @@ function fn_egov_cancel_popup() {
                             <tr>
                                 <td><c:out value="${group.groupId}"/></td>
                                 <td><c:out value="${group.groupNm}"/></td>
-                                <td><a href="#LINK" class="btn btn_blue_30 w_80" onclick="javascript:fncSelectGroup('<c:out value="${group.groupId}"/>')">선택</a></td>
+                                <td><a href="" class="btn btn_blue_30 w_80" onclick="fncSelectGroup('<c:out value="${group.groupId}"/>')">선택</a></td>
                             </tr>
                             </c:forEach>
                             

@@ -42,12 +42,15 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectGroupList() {
+    event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupList.do'/>";
+    varFrom.method = 'get';
     varFrom.submit();       
 }
 
 function fncGroupInsert() {
+    event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupInsert.do'/>";
 
@@ -61,6 +64,7 @@ function fncGroupInsert() {
 }
 
 function fncGroupUpdate() {
+    event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupUpdate.do'/>";
 
@@ -74,6 +78,7 @@ function fncGroupUpdate() {
 }
 
 function fncGroupDelete() {
+    event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupDelete.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){
@@ -169,18 +174,18 @@ function fncGroupDelete() {
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     	<c:if test="${registerFlag == 'UPDATE'}">
-                                    		<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                    		<a href="" class="btn btn_blue_46 w_100" onclick="fncGroupDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
                                     	</c:if>
                                     </div>
 
                                     <div class="right_col btn1">
                                     	<c:if test="${registerFlag == 'INSERT'}">
-                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupInsert()"><spring:message code='button.save' /></a><!-- 저장 -->
+                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fncGroupInsert()"><spring:message code='button.save' /></a><!-- 저장 -->
                                         </c:if>
                                         <c:if test="${registerFlag == 'UPDATE'}">
-                                    		<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupUpdate()"><spring:message code='button.save' /></a><!-- 삭제 -->
+                                    		<a href="" class="btn btn_blue_46 w_100" onclick="fncGroupUpdate()"><spring:message code='button.save' /></a><!-- 삭제 -->
                                     	</c:if>
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncSelectGroupList()"><spring:message code='button.list' /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncSelectGroupList()"><spring:message code='button.list' /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
