@@ -5,9 +5,10 @@ import javax.annotation.Resource;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -32,7 +33,8 @@ import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.17  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -59,7 +61,7 @@ public class EgovAuthorGroupController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/rgm/EgovAuthorGroupListView.do")
+	@GetMapping("/sec/rgm/EgovAuthorGroupListView.do")
 	public String selectAuthorGroupListView() throws Exception {
 
 		return "/sec/rgm/EgovAuthorGroupManage";
@@ -73,9 +75,9 @@ public class EgovAuthorGroupController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rgm/EgovAuthorGroupList.do")
+	@GetMapping(value = "/sec/rgm/EgovAuthorGroupList.do")
 	public String selectAuthorGroupList(@ModelAttribute("authorGroupVO") AuthorGroupVO authorGroupVO,
-			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) throws Exception {
+			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, Model model) throws Exception {
 
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -112,11 +114,12 @@ public class EgovAuthorGroupController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rgm/EgovAuthorGroupInsert.do")
+	@PostMapping(value = "/sec/rgm/EgovAuthorGroupInsert.do")
 	public String insertAuthorGroup(@RequestParam("userIds") String userIds,
 			@RequestParam("authorCodes") String authorCodes, @RequestParam("regYns") String regYns,
-			@RequestParam("mberTyCodes") String mberTyCode, @ModelAttribute("authorGroup") AuthorGroup authorGroup,
-			SessionStatus status, ModelMap model) throws Exception {
+			@RequestParam("mberTyCodes") String mberTyCode, final AuthorGroupVO authorGroupVO,
+			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model)
+			throws Exception {
 
 		String[] strUserIds = userIds.split(";");
 		String[] strAuthorCodes = authorCodes.split(";");
@@ -135,7 +138,8 @@ public class EgovAuthorGroupController {
 
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
-		return "forward:/sec/rgm/EgovAuthorGroupList.do";
+		addAttributeSearch(authorGroupVO, model);
+		return "redirect:/sec/rgm/EgovAuthorGroupList.do";
 	}
 
 	/**
@@ -146,9 +150,9 @@ public class EgovAuthorGroupController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rgm/EgovAuthorGroupDelete.do")
-	public String deleteAuthorGroup(@RequestParam("userIds") String userIds,
-			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, ModelMap model)
+	@PostMapping(value = "/sec/rgm/EgovAuthorGroupDelete.do")
+	public String deleteAuthorGroup(@RequestParam("userIds") String userIds, final AuthorGroupVO authorGroupVO,
+			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model)
 			throws Exception {
 
 		String[] strUserIds = userIds.split(";");
@@ -159,7 +163,14 @@ public class EgovAuthorGroupController {
 
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/rgm/EgovAuthorGroupList.do";
+		addAttributeSearch(authorGroupVO, model);
+		return "redirect:/sec/rgm/EgovAuthorGroupList.do";
+	}
+
+	private void addAttributeSearch(final AuthorGroupVO authorGroupVO, final Model model) {
+		model.addAttribute("searchCondition", authorGroupVO.getSearchCondition());
+		model.addAttribute("searchKeyword", authorGroupVO.getSearchKeyword());
+		model.addAttribute("pageIndex", authorGroupVO.getPageIndex());
 	}
 
 }
