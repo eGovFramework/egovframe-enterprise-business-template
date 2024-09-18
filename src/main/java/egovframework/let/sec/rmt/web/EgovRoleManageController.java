@@ -10,10 +10,10 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
@@ -41,7 +41,8 @@ import egovframework.let.sec.rmt.service.RoleManageVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.11  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.18  이백행          컨트리뷰션 검색 조건 유지
  *
  *      </pre>
  */
@@ -78,7 +79,7 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/rmt/EgovRoleListView.do")
+	@GetMapping("/sec/rmt/EgovRoleListView.do")
 	public String selectRoleListView() throws Exception {
 		return "/sec/rmt/EgovRoleManage";
 	}
@@ -90,8 +91,8 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRoleList.do")
-	public String selectRoleList(@ModelAttribute("roleManageVO") RoleManageVO roleManageVO, ModelMap model)
+	@GetMapping(value = "/sec/rmt/EgovRoleList.do")
+	public String selectRoleList(@ModelAttribute("roleManageVO") RoleManageVO roleManageVO, Model model)
 			throws Exception {
 
 		/** paging */
@@ -124,10 +125,10 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRole.do")
+	@GetMapping(value = "/sec/rmt/EgovRole.do")
 	public String selectRole(@RequestParam("roleCode") String roleCode,
 			@ModelAttribute("roleManageVO") RoleManageVO roleManageVO,
-			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model) throws Exception {
+			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, Model model) throws Exception {
 
 		roleManageVO.setRoleCode(roleCode);
 
@@ -147,9 +148,9 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping("/sec/rmt/EgovRoleInsertView.do")
-	public String insertRoleView(@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, ModelMap model)
-			throws Exception {
+	@GetMapping("/sec/rmt/EgovRoleInsertView.do")
+	public String insertRoleView(final RoleManageVO roleManageVO,
+			@ModelAttribute("authorManageVO") AuthorManageVO authorManageVO, Model model) throws Exception {
 
 		authorManageVO.setAuthorManageList(egovAuthorManageService.selectAuthorAllList(authorManageVO));
 		model.addAttribute("authorManageList", authorManageVO.getAuthorManageList());
@@ -179,10 +180,10 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRoleInsert.do")
+	@PostMapping(value = "/sec/rmt/EgovRoleInsert.do")
 	public String insertRole(@ModelAttribute("roleManage") RoleManage roleManage,
 			@ModelAttribute("roleManageVO") RoleManageVO roleManageVO, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+			SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(roleManage, bindingResult); // validation 수행
 
@@ -201,11 +202,12 @@ public class EgovRoleManageController {
 			roleManageVO.setRoleCode(roleManage.getRoleCode());
 
 			status.setComplete();
-			model.addAttribute("cmmCodeDetailList", getCmmCodeDetailList(new ComDefaultCodeVO(), "COM029"));
+//			model.addAttribute("cmmCodeDetailList", getCmmCodeDetailList(new ComDefaultCodeVO(), "COM029"));
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
 			model.addAttribute("roleManage", egovRoleManageService.insertRole(roleManage, roleManageVO));
 
-			return "/sec/rmt/EgovRoleUpdate";
+			addAttributeSearch(roleManageVO, model);
+			return "redirect:/sec/rmt/EgovRoleList.do";
 		}
 	}
 
@@ -217,9 +219,9 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRoleUpdate.do")
-	public String updateRole(@ModelAttribute("roleManage") RoleManage roleManage, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+	@PostMapping(value = "/sec/rmt/EgovRoleUpdate.do")
+	public String updateRole(final RoleManageVO roleManageVO, @ModelAttribute("roleManage") RoleManage roleManage,
+			BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
 
 		beanValidator.validate(roleManage, bindingResult); // validation 수행
 		if (bindingResult.hasErrors()) {
@@ -228,7 +230,8 @@ public class EgovRoleManageController {
 			egovRoleManageService.updateRole(roleManage);
 			status.setComplete();
 			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
-			return "forward:/sec/rmt/EgovRole.do";
+			addAttributeSearch(roleManageVO, model);
+			return "redirect:/sec/rmt/EgovRoleList.do";
 		}
 	}
 
@@ -239,14 +242,15 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRoleDelete.do")
-	public String deleteRole(@ModelAttribute("roleManage") RoleManage roleManage, SessionStatus status, ModelMap model)
-			throws Exception {
+	@PostMapping(value = "/sec/rmt/EgovRoleDelete.do")
+	public String deleteRole(final RoleManageVO roleManageVO, @ModelAttribute("roleManage") RoleManage roleManage,
+			SessionStatus status, Model model) throws Exception {
 
 		egovRoleManageService.deleteRole(roleManage);
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/rmt/EgovRoleList.do";
+		addAttributeSearch(roleManageVO, model);
+		return "redirect:/sec/rmt/EgovRoleList.do";
 
 	}
 
@@ -258,8 +262,8 @@ public class EgovRoleManageController {
 	 * @return String
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sec/rmt/EgovRoleListDelete.do")
-	public String deleteRoleList(@RequestParam("roleCodes") String roleCodes,
+	@PostMapping(value = "/sec/rmt/EgovRoleListDelete.do")
+	public String deleteRoleList(@RequestParam("roleCodes") String roleCodes, final RoleManageVO roleManageVO,
 			@ModelAttribute("roleManage") RoleManage roleManage, SessionStatus status, Model model) throws Exception {
 		String[] strRoleCodes = roleCodes.split(";");
 		for (int i = 0; i < strRoleCodes.length; i++) {
@@ -268,7 +272,14 @@ public class EgovRoleManageController {
 		}
 		status.setComplete();
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		return "forward:/sec/rmt/EgovRoleList.do";
+		addAttributeSearch(roleManageVO, model);
+		return "redirect:/sec/rmt/EgovRoleList.do";
+	}
+
+	private void addAttributeSearch(final RoleManageVO roleManageVO, final Model model) {
+		model.addAttribute("searchCondition", roleManageVO.getSearchCondition());
+		model.addAttribute("searchKeyword", roleManageVO.getSearchKeyword());
+		model.addAttribute("pageIndex", roleManageVO.getPageIndex());
 	}
 
 }
