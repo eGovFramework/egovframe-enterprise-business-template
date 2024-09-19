@@ -3,19 +3,11 @@ package egovframework.let.sym.prm.web;
 import java.util.List;
 import java.util.Map;
 
-import egovframework.com.cmm.ComDefaultVO;
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.com.cmm.LoginVO;
-import egovframework.let.sym.prm.service.EgovProgrmManageService;
-import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
-import egovframework.let.sym.prm.service.ProgrmManageVO;
+import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,17 +16,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import egovframework.com.cmm.ComDefaultVO;
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.com.cmm.LoginVO;
+import egovframework.let.sym.prm.service.EgovProgrmManageService;
+import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
+import egovframework.let.sym.prm.service.ProgrmManageVO;
 //import egovframework.let.ems.service.EgovSndngMailRegistService;
 //import egovframework.let.ems.service.SndngMailVO;
 
 /**
  * 프로그램목록 관리및 변경을 처리하는 비즈니스 구현 클래스
+ * 
  * @author 개발환경 개발팀 이용
  * @since 2009.06.01
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자           수정내용
@@ -42,7 +42,7 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  *   2009.03.20  이  용          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- * </pre>
+ *      </pre>
  */
 
 @Controller
@@ -65,17 +65,19 @@ public class EgovProgrmManageController {
 	EgovMessageSource egovMessageSource;
 
 	/** EgovSndngMailRegistService */
-	//@Resource(name = "sndngMailRegistService")
-	//private EgovSndngMailRegistService sndngMailRegistService;
+	// @Resource(name = "sndngMailRegistService")
+	// private EgovSndngMailRegistService sndngMailRegistService;
 
 	/**
 	 * 프로그램목록을 상세화면 호출 및 상세조회한다.
-	 * @param tmp_progrmNm  String
+	 * 
+	 * @param tmp_progrmNm String
 	 * @return 출력페이지정보 "sym/prm/EgovProgramListDetailSelectUpdt"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramListDetailSelect.do")
-	public String selectProgrm(@RequestParam("tmp_progrmNm") String tmp_progrmNm, @ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectProgrm(@RequestParam("tmp_progrmNm") String tmp_progrmNm,
+			@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -90,6 +92,7 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램목록 리스트조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramListManage"
 	 * @exception Exception
@@ -130,6 +133,7 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램목록 멀티 삭제한다.
+	 * 
 	 * @param checkedProgrmFileNmForDel String
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramListManageSelect.do"
 	 * @exception Exception
@@ -155,20 +159,22 @@ public class EgovProgrmManageController {
 			sLocationUrl = "forward:/sym/prm/EgovProgramListManageSelect.do";
 		}
 		model.addAttribute("resultMsg", resultMsg);
-		//status.setComplete();
+		// status.setComplete();
 		return sLocationUrl;
 	}
 
 	/**
 	 * 프로그램목록을 등록화면으로 이동 및 등록 한다.
+	 * 
 	 * @param progrmManageVO ProgrmManageVO
 	 * @param commandMap     Map
-	 * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramListRegist",
-	 *         출력페이지정보 등록처리시 "forward:/sym/prm/EgovProgramListManageSelect.do"
+	 * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramListRegist", 출력페이지정보 등록처리시
+	 *         "forward:/sym/prm/EgovProgramListManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramListRegist.do")
-	public String insertProgrmList(@RequestParam Map<String, Object> commandMap, @ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO, BindingResult bindingResult,
+	public String insertProgrmList(@RequestParam Map<String, Object> commandMap,
+			@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 		String resultMsg = "";
 		String sLocationUrl = null;
@@ -201,13 +207,15 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램목록을 수정 한다.
+	 * 
 	 * @param progrmManageVO ProgrmManageVO
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramListManageSelect.do"
 	 * @exception Exception
 	 */
-	/*프로그램목록수정*/
+	/* 프로그램목록수정 */
 	@RequestMapping(value = "/sym/prm/EgovProgramListDetailSelectUpdt.do")
-	public String updateProgrmList(@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO, BindingResult bindingResult, ModelMap model) throws Exception {
+	public String updateProgrmList(@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO,
+			BindingResult bindingResult, ModelMap model) throws Exception {
 		String resultMsg = "";
 		String sLocationUrl = null;
 		// 0. Spring Security 사용자권한 처리
@@ -234,12 +242,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램목록을 삭제 한다.
+	 * 
 	 * @param progrmManageVO ProgrmManageVO
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramListManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramListManageDelete.do")
-	public String deleteProgrmList(@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO, ModelMap model) throws Exception {
+	public String deleteProgrmList(@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO, ModelMap model)
+			throws Exception {
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -255,12 +265,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경요청목록 조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChangeRequst"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangeRequstSelect.do")
-	public String selectProgrmChangeRequstList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectProgrmChangeRequstList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
+			throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -293,12 +305,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경요청목록을 상세조회한다.
+	 * 
 	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChangRequstDetailSelectUpdt"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDetailSelect.do")
-	public String selectProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
+	public String selectProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+			ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -318,16 +332,18 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경요청 화면을 호출및 프로그램변경요청을 등록한다.
+	 * 
 	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @param commandMap        Map
-	 * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramChangRequstStre",
-	 *         출력페이지정보 등록처리시 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
+	 * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramChangRequstStre", 출력페이지정보 등록처리시
+	 *         "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
 	 * @exception Exception
 	 */
-	/*프로그램변경요청등록*/
+	/* 프로그램변경요청등록 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstStre.do")
-	public String insertProgrmChangeRequst(@RequestParam Map<String, Object> commandMap, @ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
-			BindingResult bindingResult, ModelMap model) throws Exception {
+	public String insertProgrmChangeRequst(@RequestParam Map<String, Object> commandMap,
+			@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult,
+			ModelMap model) throws Exception {
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -335,12 +351,12 @@ public class EgovProgrmManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		//로그인 객체 선언
+		// 로그인 객체 선언
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		String sLocationUrl = null;
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");
 		if (sCmd.equals("insert")) {
-			//beanValidator 처리
+			// beanValidator 처리
 			beanValidator.validate(progrmManageDtlVO, bindingResult);
 			if (bindingResult.hasErrors()) {
 				sLocationUrl = "sym/prm/EgovProgramChangRequstStre";
@@ -369,12 +385,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경 요청을 수정 한다.
-	 * @param progrmManageDtlVO  ProgrmManageDtlVO
+	 * 
+	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDetailSelectUpdt.do")
-	public String updateProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult, ModelMap model) throws Exception {
+	public String updateProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+			BindingResult bindingResult, ModelMap model) throws Exception {
 		String sLocationUrl = null;
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
@@ -383,9 +401,9 @@ public class EgovProgrmManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		//로그인 객체 선언
+		// 로그인 객체 선언
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		//beanValidator 처리
+		// beanValidator 처리
 		beanValidator.validate(progrmManageDtlVO, bindingResult);
 		if (bindingResult.hasErrors()) {
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangRequstDetailSelect.do";
@@ -414,12 +432,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경 요청을 삭제 한다.
-	 * @param progrmManageDtlVO  ProgrmManageDtlVO
+	 * 
+	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDelete.do")
-	public String deleteProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
+	public String deleteProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+			ModelMap model) throws Exception {
 		String sLocationUrl = null;
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -427,10 +447,10 @@ public class EgovProgrmManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		//로그인 객체 선언
+		// 로그인 객체 선언
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		if (progrmManageDtlVO.getRqesterPersonId().equals(loginVO.getId())) {
-			//progrmManageDtlVO.setRqesterPersonId(user.getId());
+			// progrmManageDtlVO.setRqesterPersonId(user.getId());
 			model.addAttribute("resultMsg", egovMessageSource.getMessage("success.common.delete"));
 			progrmManageService.deleteProgrmChangeRequst(progrmManageDtlVO);
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstSelect.do";
@@ -443,12 +463,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경 요청에 대한 처리 사항을 조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChangeRequstProcess"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangeRequstProcessListSelect.do")
-	public String selectProgrmChangeRequstProcessList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectProgrmChangeRequstProcessList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
+			throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -470,7 +492,8 @@ public class EgovProgrmManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		//List list_changerequst = progrmManageService.selectChangeRequstProcessList(searchVO);
+		// List list_changerequst =
+		// progrmManageService.selectChangeRequstProcessList(searchVO);
 		model.addAttribute("list_changerequst", progrmManageService.selectChangeRequstProcessList(searchVO));
 
 		int totCnt = progrmManageService.selectChangeRequstProcessListTotCnt(searchVO);
@@ -482,12 +505,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경 요청에 대한 처리 사항을 상세조회한다.
+	 * 
 	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDetailSelect.do")
-	public String selectProgrmChangRequstProcess(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
+	public String selectProgrmChangRequstProcess(
+			@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -511,13 +536,16 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경요청처리 내용을 수정 한다.
+	 * 
 	 * @param progrmManageDtlVO ProgrmManageDtlVO
-	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
+	 * @return 출력페이지정보
+	 *         "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt.do")
-	public String updateProgrmChangRequstProcess(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult, ModelMap model)
-			throws Exception {
+	public String updateProgrmChangRequstProcess(
+			@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult,
+			ModelMap model) throws Exception {
 		String sLocationUrl = null;
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -543,28 +571,28 @@ public class EgovProgrmManageController {
 			progrmManageService.updateProgrmChangeRequstProcess(progrmManageDtlVO);
 			model.addAttribute("resultMsg", egovMessageSource.getMessage("success.common.update"));
 
-			//ProgrmManageDtlVO vo = new ProgrmManageDtlVO();
-			//vo = progrmManageService.selectRqesterEmail(progrmManageDtlVO);
-			//String sTemp = null;
-			//if(progrmManageDtlVO.getProcessSttus().equals("A")){
-			//	sTemp = "신청중";
-			//}else if(progrmManageDtlVO.getProcessSttus().equals("P")){
-			//	sTemp = "진행중";
-			//}else if(progrmManageDtlVO.getProcessSttus().equals("R")){
-			//	sTemp = "반려";
-			//}else if(progrmManageDtlVO.getProcessSttus().equals("C")){
-			//	sTemp = "처리완료";
-			//}else{
-			//	sTemp = "";
-			//}
-			// 프로그램 변경요청 사항을 이메일로  발송한다.(메일연동솔루션 활용)
-			//SndngMailVO sndngMailVO = new SndngMailVO();
-			//sndngMailVO.setDsptchPerson(user.getId());
-			//sndngMailVO.setRecptnPerson(vo.getTmp_Email());
-			//sndngMailVO.setSj("프로그램변경요청  처리.");
-			//sndngMailVO.setEmailCn("프로그램 변경요청 사항이  "+sTemp+"(으)로 처리 되었습니다.");
-			//sndngMailVO.setAtchFileId(null);
-			//result = sndngMailRegistService.insertSndngMail(sndngMailVO);
+			// ProgrmManageDtlVO vo = new ProgrmManageDtlVO();
+			// vo = progrmManageService.selectRqesterEmail(progrmManageDtlVO);
+			// String sTemp = null;
+			// if(progrmManageDtlVO.getProcessSttus().equals("A")){
+			// sTemp = "신청중";
+			// }else if(progrmManageDtlVO.getProcessSttus().equals("P")){
+			// sTemp = "진행중";
+			// }else if(progrmManageDtlVO.getProcessSttus().equals("R")){
+			// sTemp = "반려";
+			// }else if(progrmManageDtlVO.getProcessSttus().equals("C")){
+			// sTemp = "처리완료";
+			// }else{
+			// sTemp = "";
+			// }
+			// 프로그램 변경요청 사항을 이메일로 발송한다.(메일연동솔루션 활용)
+			// SndngMailVO sndngMailVO = new SndngMailVO();
+			// sndngMailVO.setDsptchPerson(user.getId());
+			// sndngMailVO.setRecptnPerson(vo.getTmp_Email());
+			// sndngMailVO.setSj("프로그램변경요청 처리.");
+			// sndngMailVO.setEmailCn("프로그램 변경요청 사항이 "+sTemp+"(으)로 처리 되었습니다.");
+			// sndngMailVO.setAtchFileId(null);
+			// result = sndngMailRegistService.insertSndngMail(sndngMailVO);
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do";
 		} else {
 			model.addAttribute("resultMsg", "수정이 실패하였습니다. 변경요청처리 수정은 변경처리해당 담당자만 처리가능합니다.");
@@ -577,13 +605,16 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경요청처리를 삭제 한다.
-	 * @param progrmManageDtlVO  ProgrmManageDtlVO
-	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
+	 * 
+	 * @param progrmManageDtlVO ProgrmManageDtlVO
+	 * @return 출력페이지정보
+	 *         "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
 	 * @exception Exception
 	 */
-	/*프로그램변경요청처리 삭제*/
+	/* 프로그램변경요청처리 삭제 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDelete.do")
-	public String deleteProgrmChangRequstProcess(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
+	public String deleteProgrmChangRequstProcess(
+			@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -597,12 +628,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램변경이력리스트를 조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChgHst"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChgHstListSelect.do")
-	public String selectProgrmChgHstList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectProgrmChgHstList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
+			throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -633,15 +666,17 @@ public class EgovProgrmManageController {
 		return "sym/prm/EgovProgramChgHst";
 	}
 
-	/*프로그램변경이력상세조회*/
+	/* 프로그램변경이력상세조회 */
 	/**
 	 * 프로그램변경이력을 상세조회한다.
+	 * 
 	 * @param progrmManageDtlVO ProgrmManageDtlVO
 	 * @return 출력페이지정보 "sym/prm/EgovProgramChgHstDetail"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramChgHstListDetailSelect.do")
-	public String selectProgramChgHstListDetail(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
+	public String selectProgramChgHstListDetail(
+			@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -660,12 +695,14 @@ public class EgovProgrmManageController {
 
 	/**
 	 * 프로그램파일명을 조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/prm/EgovFileNmSearch"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/prm/EgovProgramListSearch.do")
-	public String selectProgrmListSearch(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectProgrmListSearch(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
+			throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
