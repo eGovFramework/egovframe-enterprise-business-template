@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10    이용             최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.10  이용           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.21  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -70,6 +71,7 @@ function fCheckAll() {
  * 멀티삭제 처리 함수
  ******************************************************** */
 function fDeleteProgrmManageList() {
+    event.preventDefault();
     var checkField = document.progrmManageForm.checkField;
     var ProgrmFileNm = document.progrmManageForm.checkProgrmFileNm;
     var checkProgrmFileNms = "";
@@ -91,6 +93,7 @@ function fDeleteProgrmManageList() {
 
     document.progrmManageForm.checkedProgrmFileNmForDel.value=checkProgrmFileNms;
     document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgrmManageListDelete.do'/>";
+    document.progrmManageForm.method = 'post';
     document.progrmManageForm.submit(); 
 }
 
@@ -116,6 +119,7 @@ function selectProgramListManage() {
  * 입력 화면 호출 함수
  ******************************************************** */
 function insertProgramListManage() {
+    event.preventDefault();
     document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListRegist.do'/>";
     document.progrmManageForm.submit(); 
 }
@@ -123,6 +127,7 @@ function insertProgramListManage() {
  * 상세조회처리 함수
  ******************************************************** */
 function selectUpdtProgramListDetail(progrmFileNm) {
+    event.preventDefault();
     document.progrmManageForm.tmp_progrmNm.value = progrmFileNm;
     document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>";
     document.progrmManageForm.submit(); 
@@ -172,7 +177,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                 </div>
                                 <!--// Location -->
 
-								<form name="progrmManageForm" action ="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>" method="post">
+								<form name="progrmManageForm" action ="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>" method="get">
 								
 								<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input name="checkedProgrmFileNmForDel" type="hidden" />
@@ -186,7 +191,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                     <span class="lb mr10">프로그램 한글명 : </span>
                                     <span class="item f_search">
                                         <input name="searchKeyword" class="f_input w_350" type="text" value="<c:out value='${searchVO.searchKeyword}'/>" maxlength="60" id="F1" title="검색조건">
-                                        <button class="btn" type="submit" onclick="javascript:selectProgramListManage(); return false;"><spring:message code="button.inquire" /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="selectProgramListManage();"><spring:message code="button.inquire" /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
@@ -196,8 +201,8 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="<c:url value='/sym/mpm/EgovProgramListRegist.do'/>" class="btn btn_blue_46 w_100" onclick="insertProgramListManage(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fDeleteProgrmManageList(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        <a href="<c:url value='/sym/mpm/EgovProgramListRegist.do'/>" class="btn btn_blue_46 w_100" onclick="insertProgramListManage();"><spring:message code="button.create" /></a><!-- 등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fDeleteProgrmManageList();"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     </div>
                                 </div>
 
@@ -216,7 +221,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                             <tr>
                                                 <th scope="col">
                                                     <span class="f_chk_only chkAll">
-                                                        <input type="checkbox" name="checkAll" onclick="javascript:fCheckAll();" title="전체선택">
+                                                        <input type="checkbox" name="checkAll" onclick="fCheckAll();" title="전체선택">
                                                     </span>
                                                 </th>
                                                 <th scope="col">프로그램파일명</th>
@@ -242,7 +247,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                                     </span>
                                                 </td>
                                                 <td>
-	                                                <a href="<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>?tmp_progrmNm=<c:out value="${result.progrmFileNm}"/>" class="lnk" onclick="selectUpdtProgramListDetail('<c:out value="${result.progrmFileNm}"/>'); return false;">
+	                                                <a href="<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>?tmp_progrmNm=<c:out value="${result.progrmFileNm}"/>" class="lnk" onclick="selectUpdtProgramListDetail('<c:out value="${result.progrmFileNm}"/>');">
 	                                                	<c:out value="${result.progrmFileNm}"/>
 	                                                </a>
                                                 </td>

@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10    이용             최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.10  이용           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.21  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -43,6 +44,7 @@
  * 입력 처리 함수
  ******************************************************** */
 function insertProgramListManage(form) {
+    event.preventDefault();
     if(confirm("<spring:message code="common.save.msg" />")){
         if(!validateProgrmManageVO(form)){          
             return;
@@ -56,7 +58,8 @@ function insertProgramListManage(form) {
  * 목록조회 함수
  ******************************************************** */
 function selectList(){
-    location.href = "<c:url value='/sym/prm/EgovProgramListManageSelect.do' />";
+    event.preventDefault();
+    location.href = "<c:url value='/sym/prm/EgovProgramListManageSelect.do' />?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${searchVO.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
 }
 
 /* ********************************************************
@@ -175,14 +178,17 @@ function selectList(){
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:insertProgramListManage(document.getElementById('progrmManageVO')); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="insertProgramListManage(document.getElementById('progrmManageVO'));"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
                                 
                                 <!-- 검색조건 유지 -->
                                 <input name="cmd" type="hidden" value="<c:out value='insert'/>"/>
+                                <input name="searchCondition" type="hidden" value="<c:out value="${param.searchCondition}" />">
+                                <input name="searchKeyword" type="hidden" value="<c:out value="${param.searchKeyword}" />">
+                                <input name="pageIndex" type="hidden" value="<c:out value="${param.pageIndex}" />">
                                 
                                 </form:form>
                                 
