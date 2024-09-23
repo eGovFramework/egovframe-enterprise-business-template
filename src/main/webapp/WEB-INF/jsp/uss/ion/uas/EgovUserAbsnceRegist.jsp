@@ -40,12 +40,15 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectUserAbsnceList() {
+    event.preventDefault();
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
+    varFrom.method = 'get';
     varFrom.submit();       
 }
 
 function fncUserAbsnceInsert() {
+    event.preventDefault();
 
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/addUserAbsnce.do'/>";
@@ -158,8 +161,8 @@ function fncUserAbsnceDelete() {
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fncUserAbsnceInsert(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList(); return false;">
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncUserAbsnceInsert();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>?pageIndex=<c:out value='${userAbsnceVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${userAbsnceVO.searchKeyword}"/>&amp;searchCondition=1&amp;selAbsnceAt=<c:out value="${userAbsnceVO.selAbsnceAt}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList();">
                                         	<spring:message code="button.list" />
                                         </a><!-- 목록 -->
                                     </div>
