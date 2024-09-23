@@ -25,7 +25,7 @@
     </formset>
 
     <formset>
-        <form name="roleManage">
+        <form name="roleManageVO">
             <field property="roleNm" depends="required">
                 <arg0 key="롤 명" resource="false"/>
             </field>
