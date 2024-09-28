@@ -2,14 +2,13 @@ package egovframework.let.sym.mnu.mcm.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.mnu.mcm.service.EgovMenuCreateManageService;
 import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 메뉴목록, 사이트맵 생성을 처리하는 비즈니스 구현 클래스를 정의한다.
@@ -24,17 +23,18 @@ import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.03.20  이  용          최초 생성
+ *   2009.03.20  이용           최초 생성
  *   2011.07.01  서준식          EgovMenuManageServiceImpl에서 메뉴 생성 관련 부분 분리
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("meunCreateManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovMenuCreateManageServiceImpl extends EgovAbstractServiceImpl implements EgovMenuCreateManageService {
 
-	@Resource(name = "menuCreateManageDAO")
-	private MenuCreateManageDAO menuCreateManageDAO;
+	private final MenuCreateManageDAO menuCreateManageDAO;
 
 	/**
 	 * ID 존재여부를 조회
