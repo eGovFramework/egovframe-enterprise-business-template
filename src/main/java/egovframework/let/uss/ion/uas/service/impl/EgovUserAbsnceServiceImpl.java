@@ -2,14 +2,13 @@ package egovframework.let.uss.ion.uas.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 사용자부재에 대한 ServiceImpl 클래스를 정의한다. 사용자부재에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
@@ -25,16 +24,17 @@ import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.08.03  lee.m.j       최초 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovUserAbsnceService")
+@Service
+@RequiredArgsConstructor
 public class EgovUserAbsnceServiceImpl extends EgovAbstractServiceImpl implements EgovUserAbsnceService {
 
-	@Resource(name = "userAbsnceDAO")
-	private UserAbsnceDAO userAbsnceDAO;
+	private final UserAbsnceDAO userAbsnceDAO;
 
 	/**
 	 * 사용자부재정보를 관리하기 위해 등록된 사용자부재 목록을 조회한다.
