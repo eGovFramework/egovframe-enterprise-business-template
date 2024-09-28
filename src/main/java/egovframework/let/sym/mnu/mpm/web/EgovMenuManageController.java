@@ -30,6 +30,7 @@ import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.sym.prm.service.EgovProgrmManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 메뉴목록 관리및 메뉴생성, 사이트맵 생성을 처리하는 비즈니스 구현 클래스
@@ -44,13 +45,15 @@ import egovframework.let.sym.prm.service.EgovProgrmManageService;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.03.20  이  용          최초 생성
- *	 2011.07.01	 서준식	   메뉴정보 삭제시 참조되고 있는 하위 메뉴가 있는지 체크하는 로직 추가
- *	 2011.07.27	 서준식	   deleteMenuManageList() 메서드에서 메뉴 멀티 삭제 버그 수정
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.03.20  이용           최초 생성
+ *   2011.07.01  서준식          메뉴정보 삭제시 참조되고 있는 하위 메뉴가 있는지 체크하는 로직 추가
+ *   2011.07.27  서준식          deleteMenuManageList() 메서드에서 메뉴 멀티 삭제 버그 수정
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입 *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovMenuManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovMenuManageController.class);
@@ -66,8 +69,7 @@ public class EgovMenuManageController {
 	private EgovMenuManageService menuManageService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "progrmManageService")
-	private EgovProgrmManageService progrmManageService;
+	private final EgovProgrmManageService progrmManageService;
 
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")

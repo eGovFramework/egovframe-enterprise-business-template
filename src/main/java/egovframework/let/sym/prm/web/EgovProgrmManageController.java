@@ -3,12 +3,9 @@ package egovframework.let.sym.prm.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +22,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.sym.prm.service.EgovProgrmManageService;
 import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
+import lombok.RequiredArgsConstructor;
 //import egovframework.let.ems.service.EgovSndngMailRegistService;
 //import egovframework.let.ems.service.SndngMailVO;
 
@@ -44,28 +42,26 @@ import egovframework.let.sym.prm.service.ProgrmManageVO;
  *   2009.03.20  이용           최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.21  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입 *
  *
  *      </pre>
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovProgrmManageController {
 
 	/** Validator */
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/** EgovProgrmManageService */
-	@Resource(name = "progrmManageService")
-	private EgovProgrmManageService progrmManageService;
+	private final EgovProgrmManageService progrmManageService;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
 	/** EgovSndngMailRegistService */
 	// @Resource(name = "sndngMailRegistService")
