@@ -3,14 +3,13 @@ package egovframework.let.sym.log.clg.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sym.log.clg.service.EgovLoginLogService;
 import egovframework.let.sym.log.clg.service.LoginLog;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 접속로그 관리를 위한 서비스 구현 클래스
@@ -27,19 +26,19 @@ import egovframework.let.sym.log.clg.service.LoginLog;
  *  -------    --------    ---------------------------
  *   2009.03.11  이삼섭          최초 생성
  *   2011.07.01  이기하          패키지 분리(stm.log -> sym.log.clg)
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("EgovLoginLogService")
+@Service
+@RequiredArgsConstructor
 public class EgovLoginLogServiceImpl extends EgovAbstractServiceImpl implements EgovLoginLogService {
 
-	@Resource(name = "loginLogDAO")
-	private LoginLogDAO loginLogDAO;
+	private final LoginLogDAO loginLogDAO;
 
 	/** ID Generation */
-	@Resource(name = "egovLoginLogIdGnrService")
-	private EgovIdGnrService egovLoginLogIdGnrService;
+	private final EgovIdGnrService egovLoginLogIdGnrService;
 
 	/**
 	 * 접속로그를 기록한다.

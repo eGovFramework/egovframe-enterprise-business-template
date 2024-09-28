@@ -1,10 +1,9 @@
 package egovframework.let.sym.log.clg.service;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 import egovframework.com.cmm.LoginVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 시스템 로그 생성을 위한 ASPECT 클래스
@@ -21,14 +20,15 @@ import egovframework.com.cmm.LoginVO;
  *  -------    --------    ---------------------------
  *   2009.03.11  이삼섭          최초 생성
  *   2011.07.01  이기하          패키지 분리(sym.log -> sym.log.clg)
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
+@RequiredArgsConstructor
 public class EgovLoginLogAspect {
 
-	@Resource(name = "EgovLoginLogService")
-	private EgovLoginLogService loginLogService;
+	private final EgovLoginLogService loginLogService;
 
 	/**
 	 * 로그인 로그정보를 생성한다. EgovLoginController.actionMain Method
