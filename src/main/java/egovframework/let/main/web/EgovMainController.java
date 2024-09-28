@@ -20,6 +20,7 @@ import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 템플릿 메인 페이지 컨트롤러 클래스(Sample 소스)
@@ -34,12 +35,14 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2011.08.31  JJY            최초 생성
+ *   2011.08.31  JJY           최초 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
 @SessionAttributes(types = ComDefaultVO.class)
+@RequiredArgsConstructor
 public class EgovMainController {
 
 	/**
@@ -49,8 +52,7 @@ public class EgovMainController {
 	private EgovBBSManageService bbsMngService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "meunManageService")
-	private EgovMenuManageService menuManageService;
+	private final EgovMenuManageService menuManageService;
 
 	/**
 	 * 메인 페이지에서 각 업무 화면으로 연계하는 기능을 제공한다.
