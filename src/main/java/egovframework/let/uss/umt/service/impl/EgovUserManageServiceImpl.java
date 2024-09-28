@@ -2,8 +2,6 @@ package egovframework.let.uss.umt.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import egovframework.let.uss.umt.service.EgovUserManageService;
 import egovframework.let.uss.umt.service.UserDefaultVO;
 import egovframework.let.uss.umt.service.UserManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 사용자관리에 관한 비지니스 클래스를 정의한다.
@@ -27,16 +26,18 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.10  조재영          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("userManageService")
+//@Service("userManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovUserManageServiceImpl extends EgovAbstractServiceImpl implements EgovUserManageService {
 
 	/** userManageDAO */
-	@Resource(name = "userManageDAO")
-	private UserManageDAO userManageDAO;
+	private final UserManageDAO userManageDAO;
 
 	/** mberManageDAO */
 	// EBT-CUSTOMIZING//@Resource(name="mberManageDAO")
@@ -47,8 +48,7 @@ public class EgovUserManageServiceImpl extends EgovAbstractServiceImpl implement
 	// EBT-CUSTOMIZING//private EntrprsManageDAO entrprsManageDAO;
 
 	/** egovUsrCnfrmIdGnrService */
-	@Resource(name = "egovUsrCnfrmIdGnrService")
-	private EgovIdGnrService idgenService;
+	private final EgovIdGnrService egovUsrCnfrmIdGnrService;
 
 	/**
 	 * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
@@ -94,7 +94,7 @@ public class EgovUserManageServiceImpl extends EgovAbstractServiceImpl implement
 	@Override
 	public void insertUser(UserManageVO userManageVO) throws Exception {
 		// 고유아이디 셋팅
-		String uniqId = idgenService.getNextStringId();
+		String uniqId = egovUsrCnfrmIdGnrService.getNextStringId();
 		userManageVO.setUniqId(uniqId);
 		// 패스워드 암호화
 		String pass = EgovFileScrty.encryptPassword(userManageVO.getPassword(), userManageVO.getEmplyrId());
