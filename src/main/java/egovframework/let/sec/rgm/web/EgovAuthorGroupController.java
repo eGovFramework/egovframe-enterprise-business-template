@@ -18,6 +18,7 @@ import egovframework.let.sec.ram.service.EgovAuthorManageService;
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.sec.rgm.service.AuthorGroupVO;
 import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 권한그룹에 관한 controller 클래스를 정의한다.
@@ -40,6 +41,7 @@ import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovAuthorGroupController {
 
 	@Resource(name = "egovMessageSource")
@@ -48,8 +50,7 @@ public class EgovAuthorGroupController {
 	@Resource(name = "egovAuthorGroupService")
 	private EgovAuthorGroupService egovAuthorGroupService;
 
-	@Resource(name = "egovAuthorManageService")
-	private EgovAuthorManageService egovAuthorManageService;
+	private final EgovAuthorManageService egovAuthorManageService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
