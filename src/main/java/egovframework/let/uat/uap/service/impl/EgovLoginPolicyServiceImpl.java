@@ -2,14 +2,13 @@ package egovframework.let.uat.uap.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 로그인정책에 대한 ServiceImpl 클래스를 정의한다. 로그인정책에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
@@ -25,16 +24,17 @@ import egovframework.let.uat.uap.service.LoginPolicyVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.08.03  lee.m.j       최초 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("egovLoginPolicyService")
+@Service
+@RequiredArgsConstructor
 public class EgovLoginPolicyServiceImpl extends EgovAbstractServiceImpl implements EgovLoginPolicyService {
 
-	@Resource(name = "loginPolicyDAO")
-	LoginPolicyDAO loginPolicyDAO;
+	private final LoginPolicyDAO loginPolicyDAO;
 
 	/**
 	 * 로그인정책 목록을 조회한다.

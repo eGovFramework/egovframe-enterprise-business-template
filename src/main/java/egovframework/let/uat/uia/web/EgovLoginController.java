@@ -25,6 +25,7 @@ import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
 import egovframework.let.uat.uia.service.EgovLoginService;
 import egovframework.let.utl.sim.service.EgovClntInfo;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 일반 로그인, 인증서 로그인을 처리하는 컨트롤러 클래스
@@ -39,12 +40,14 @@ import egovframework.let.utl.sim.service.EgovClntInfo;
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.03.06  박지욱          최초 생성
- *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.03.06  박지욱          최초 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovLoginController {
 
 	/** EgovLoginService */
@@ -56,8 +59,7 @@ public class EgovLoginController {
 	EgovMessageSource egovMessageSource;
 
 	/** EgovLoginPolicyService */
-	@Resource(name = "egovLoginPolicyService")
-	EgovLoginPolicyService egovLoginPolicyService;
+	private final EgovLoginPolicyService egovLoginPolicyService;
 
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
