@@ -2,11 +2,8 @@ package egovframework.let.sym.ccm.cca.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +18,7 @@ import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
 import egovframework.let.sym.ccm.cca.service.EgovCcmCmmnCodeManageService;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -38,25 +36,23 @@ import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovCcmCmmnCodeManageController {
 
-	@Resource(name = "CmmnCodeManageService")
-	private EgovCcmCmmnCodeManageService cmmnCodeManageService;
+	private final EgovCcmCmmnCodeManageService cmmnCodeManageService;
 
-	@Resource(name = "CmmnClCodeManageService")
-	private EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
+	private final EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 공통코드를 삭제한다.
