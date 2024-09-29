@@ -2,14 +2,13 @@ package egovframework.let.sym.ccm.ccc.service.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -26,16 +25,17 @@ import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("CmmnClCodeManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl
 		implements EgovCcmCmmnClCodeManageService {
 
-	@Resource(name = "CmmnClCodeManageDAO")
-	private CmmnClCodeManageDAO cmmnClCodeManageDAO;
+	private final CmmnClCodeManageDAO cmmnClCodeManageDAO;
 
 	/**
 	 * 공통분류코드를 삭제한다.
