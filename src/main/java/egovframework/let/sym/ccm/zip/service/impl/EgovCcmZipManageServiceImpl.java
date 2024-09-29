@@ -3,8 +3,6 @@ package egovframework.let.sym.ccm.zip.service.impl;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.excel.EgovExcelService;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
+import lombok.RequiredArgsConstructor;
 
 //import org.egovframe.rte.fdl.excel.EgovExcelService;
 
@@ -30,18 +29,18 @@ import egovframework.let.sym.ccm.zip.service.ZipVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
-@Service("ZipManageService")
+@Service
+@RequiredArgsConstructor
 public class EgovCcmZipManageServiceImpl extends EgovAbstractServiceImpl implements EgovCcmZipManageService {
 
-	@Resource(name = "ZipManageDAO")
-	private ZipManageDAO zipManageDAO;
+	private final ZipManageDAO zipManageDAO;
 
-	@Resource(name = "excelZipService")
-	private EgovExcelService excelZipService;
+	private final EgovExcelService excelZipService;
 
 	/**
 	 * 우편번호를 삭제한다.

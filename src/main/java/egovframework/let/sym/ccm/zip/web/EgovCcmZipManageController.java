@@ -6,14 +6,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,6 +27,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.sym.ccm.zip.service.EgovCcmZipManageService;
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -46,23 +45,22 @@ import egovframework.let.sym.ccm.zip.service.ZipVO;
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovCcmZipManageController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovCcmZipManageController.class);
 
-	@Resource(name = "ZipManageService")
-	private EgovCcmZipManageService zipManageService;
+	private final EgovCcmZipManageService zipManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 우편번호 찾기 팝업 메인창을 호출한다.
