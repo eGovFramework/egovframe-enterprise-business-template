@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,6 +31,7 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
@@ -51,32 +50,41 @@ import egovframework.let.cop.bbs.service.EgovBBSManageService;
  *   2009.06.29  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.24  이백행          요청 메서드 정리
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입 *
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSManageController {
 
-	@Resource(name = "EgovBBSManageService")
-	private EgovBBSManageService bbsMngService;
+//	@Resource(name = "EgovBBSManageService")
+//	private EgovBBSManageService bbsMngService;
+	private final EgovBBSManageService bbsMngService;
 
-	@Resource(name = "EgovBBSAttributeManageService")
-	private EgovBBSAttributeManageService bbsAttrbService;
+//	@Resource(name = "EgovBBSAttributeManageService")
+//	private EgovBBSAttributeManageService bbsAttrbService;
+	private final EgovBBSAttributeManageService bbsAttrbService;
 
-	@Resource(name = "EgovFileMngService")
-	private EgovFileMngService fileMngService;
+//	@Resource(name = "EgovFileMngService")
+//	private EgovFileMngService fileMngService;
+	private final EgovFileMngService fileMngService;
 
-	@Resource(name = "EgovFileMngUtil")
-	private EgovFileMngUtil fileUtil;
+//	@Resource(name = "EgovFileMngUtil")
+//	private EgovFileMngUtil fileUtil;
+	private final EgovFileMngUtil fileUtil;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+//	@Resource(name = "propertiesService")
+//	protected EgovPropertyService propertyService;
+	private final EgovPropertyService propertyService;
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+//	@Resource(name = "egovMessageSource")
+//	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+//	@Autowired
+//	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * XSS 방지 처리.
