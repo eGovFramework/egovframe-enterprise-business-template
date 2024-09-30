@@ -3,9 +3,11 @@ package egovframework.let.sym.ccm.cde.web;
 import java.util.List;
 import java.util.Map;
 
+
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -50,7 +52,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovCcmCmmnDetailCodeManageController {
 
+
 	private final EgovCcmCmmnDetailCodeManageService cmmnDetailCodeManageService;
+
 
 	private final EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
 

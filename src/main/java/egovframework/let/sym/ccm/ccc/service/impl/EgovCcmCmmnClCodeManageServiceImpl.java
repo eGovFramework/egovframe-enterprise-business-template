@@ -2,39 +2,40 @@ package egovframework.let.sym.ccm.ccc.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
  * 공통분류코드에 대한 서비스 구현클래스를 정의한다
+ * 
  * @author 공통서비스 개발팀 이중호
  * @since 2009.04.01
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
- * </pre>
+ *      </pre>
  */
-@Service("CmmnClCodeManageService")
-public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl implements EgovCcmCmmnClCodeManageService {
+@Service
+@RequiredArgsConstructor
+public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl
+		implements EgovCcmCmmnClCodeManageService {
 
-    @Resource(name="CmmnClCodeManageDAO")
-    private CmmnClCodeManageDAO cmmnClCodeManageDAO;
+	private final CmmnClCodeManageDAO cmmnClCodeManageDAO;
 
 	/**
 	 * 공통분류코드를 삭제한다.
@@ -49,7 +50,7 @@ public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl 
 	 */
 	@Override
 	public void insertCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-    	cmmnClCodeManageDAO.insertCmmnClCode(cmmnClCode);
+		cmmnClCodeManageDAO.insertCmmnClCode(cmmnClCode);
 	}
 
 	/**
@@ -57,8 +58,8 @@ public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl 
 	 */
 	@Override
 	public CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) throws Exception {
-    	CmmnClCode ret = cmmnClCodeManageDAO.selectCmmnClCodeDetail(cmmnClCode);
-    	return ret;
+		CmmnClCode ret = cmmnClCodeManageDAO.selectCmmnClCodeDetail(cmmnClCode);
+		return ret;
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl 
 	 */
 	@Override
 	public List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO) throws Exception {
-        return cmmnClCodeManageDAO.selectCmmnClCodeList(searchVO);
+		return cmmnClCodeManageDAO.selectCmmnClCodeList(searchVO);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class EgovCcmCmmnClCodeManageServiceImpl extends EgovAbstractServiceImpl 
 	 */
 	@Override
 	public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) throws Exception {
-        return cmmnClCodeManageDAO.selectCmmnClCodeListTotCnt(searchVO);
+		return cmmnClCodeManageDAO.selectCmmnClCodeListTotCnt(searchVO);
 	}
 
 	/**

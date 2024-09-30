@@ -1,10 +1,7 @@
 package egovframework.let.uat.uap.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -19,6 +16,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <pre>
@@ -40,20 +38,19 @@ import egovframework.let.uat.uap.service.LoginPolicyVO;
  *   2009.08.03  lee.m.j       최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.11  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovLoginPolicyController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovLoginPolicyService")
-	EgovLoginPolicyService egovLoginPolicyService;
+	private final EgovLoginPolicyService egovLoginPolicyService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 로그인정책 목록 조회화면으로 이동한다.
