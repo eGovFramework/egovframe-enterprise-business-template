@@ -6,19 +6,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import egovframework.com.cmm.ComDefaultVO;
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
-import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
-import egovframework.let.sym.prm.service.EgovProgrmManageService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +25,35 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.com.cmm.ComDefaultVO;
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
+import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
+import egovframework.let.sym.prm.service.EgovProgrmManageService;
+import lombok.RequiredArgsConstructor;
+
 /**
  * 메뉴목록 관리및 메뉴생성, 사이트맵 생성을 처리하는 비즈니스 구현 클래스
+ * 
  * @author 개발환경 개발팀 이용
  * @since 2009.06.01
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.03.20  이  용          최초 생성
- *	 2011.07.01	 서준식	   메뉴정보 삭제시 참조되고 있는 하위 메뉴가 있는지 체크하는 로직 추가
- *	 2011.07.27	 서준식	   deleteMenuManageList() 메서드에서 메뉴 멀티 삭제 버그 수정
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
- * </pre>
+ *   2009.03.20  이용           최초 생성
+ *   2011.07.01  서준식          메뉴정보 삭제시 참조되고 있는 하위 메뉴가 있는지 체크하는 로직 추가
+ *   2011.07.27  서준식          deleteMenuManageList() 메서드에서 메뉴 멀티 삭제 버그 수정
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입 *
+ *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovMenuManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovMenuManageController.class);
@@ -66,8 +69,7 @@ public class EgovMenuManageController {
 	private EgovMenuManageService menuManageService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "progrmManageService")
-	private EgovProgrmManageService progrmManageService;
+	private final EgovProgrmManageService progrmManageService;
 
 	/** EgovMessageSource */
 	@Resource(name = "egovMessageSource")
@@ -75,12 +77,14 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴정보목록을 상세화면 호출 및 상세조회한다.
-	 * @param req_menuNo  String
+	 * 
+	 * @param req_menuNo String
 	 * @return 출력페이지정보 "sym/mnu/mpm/EgovMenuDetailSelectUpdt"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageListDetailSelect.do")
-	public String selectMenuManage(@RequestParam("req_menuNo") String req_menuNo, @ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectMenuManage(@RequestParam("req_menuNo") String req_menuNo,
+			@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (isAuthenticated == null || !isAuthenticated) {
@@ -97,12 +101,14 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴목록 리스트조회한다.
+	 * 
 	 * @param searchVO ComDefaultVO
 	 * @return 출력페이지정보 "sym/mnu/mpm/EgovMenuManage"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageSelect.do")
-	public String selectMenuManageList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model) throws Exception {
+	public String selectMenuManageList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
+			throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (isAuthenticated == null || !isAuthenticated) {
@@ -135,13 +141,14 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴목록 멀티 삭제한다.
-	 * @param checkedMenuNoForDel  String
+	 * 
+	 * @param checkedMenuNoForDel String
 	 * @return 출력페이지정보 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping("/sym/mnu/mpm/EgovMenuManageListDelete.do")
-	public String deleteMenuManageList(@RequestParam("checkedMenuNoForDel") String checkedMenuNoForDel, @ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model)
-			throws Exception {
+	public String deleteMenuManageList(@RequestParam("checkedMenuNoForDel") String checkedMenuNoForDel,
+			@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (isAuthenticated == null || !isAuthenticated) {
@@ -171,15 +178,17 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴정보를 등록화면으로 이동 및 등록 한다.
-	 * @param menuManageVO    MenuManageVO
-	 * @param commandMap      Map
-	 * @return 출력페이지정보 등록화면 호출시 "sym/mnu/mpm/EgovMenuRegist",
-	 *         출력페이지정보 등록처리시 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
+	 * 
+	 * @param menuManageVO MenuManageVO
+	 * @param commandMap   Map
+	 * @return 출력페이지정보 등록화면 호출시 "sym/mnu/mpm/EgovMenuRegist", 출력페이지정보 등록처리시
+	 *         "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuRegistInsert.do")
-	public String insertMenuManage(@RequestParam Map<String, Object> commandMap, @ModelAttribute("menuManageVO") MenuManageVO menuManageVO, BindingResult bindingResult,
-			ModelMap model) throws Exception {
+	public String insertMenuManage(@RequestParam Map<String, Object> commandMap,
+			@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, BindingResult bindingResult, ModelMap model)
+			throws Exception {
 		String sLocationUrl = null;
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
@@ -220,12 +229,14 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴정보를 수정 한다.
-	 * @param menuManageVO  MenuManageVO
+	 * 
+	 * @param menuManageVO MenuManageVO
 	 * @return 출력페이지정보 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuDetailSelectUpdt.do")
-	public String updateMenuManage(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, BindingResult bindingResult, ModelMap model) throws Exception {
+	public String updateMenuManage(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
+			BindingResult bindingResult, ModelMap model) throws Exception {
 		String sLocationUrl = null;
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
@@ -256,12 +267,14 @@ public class EgovMenuManageController {
 
 	/**
 	 * 메뉴정보를 삭제 한다.
+	 * 
 	 * @param menuManageVO MenuManageVO
 	 * @return 출력페이지정보 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageDelete.do")
-	public String deleteMenuManage(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model) throws Exception {
+	public String deleteMenuManage(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model)
+			throws Exception {
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -284,16 +297,18 @@ public class EgovMenuManageController {
 		return "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
 	}
 
-	/*### 일괄처리 프로세스 ###*/
+	/* ### 일괄처리 프로세스 ### */
 
 	/**
 	 * 메뉴생성 일괄삭제프로세스
+	 * 
 	 * @param menuManageVO MenuManageVO
 	 * @return 출력페이지정보 "sym/mnu/mpm/EgovMenuBndeRegist"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuBndeAllDelete.do")
-	public String menuBndeAllDelete(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model) throws Exception {
+	public String menuBndeAllDelete(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model)
+			throws Exception {
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -309,16 +324,17 @@ public class EgovMenuManageController {
 	}
 
 	/**
-	 * 메뉴일괄등록화면 호출 및  메뉴일괄등록처리 프로세스
-	 * @param commandMap    Map
-	 * @param menuManageVO  MenuManageVO
-	 * @param request       HttpServletRequest
+	 * 메뉴일괄등록화면 호출 및 메뉴일괄등록처리 프로세스
+	 * 
+	 * @param commandMap   Map
+	 * @param menuManageVO MenuManageVO
+	 * @param request      HttpServletRequest
 	 * @return 출력페이지정보 "sym/mnu/mpm/EgovMenuBndeRegist"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuBndeRegist.do")
-	public String menuBndeRegist(@RequestParam Map<String, Object> commandMap, final HttpServletRequest request, @ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
-			ModelMap model) throws Exception {
+	public String menuBndeRegist(@RequestParam Map<String, Object> commandMap, final HttpServletRequest request,
+			@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model) throws Exception {
 		String sLocationUrl = null;
 		String resultMsg = "";
 		String sMessage = "";
@@ -342,7 +358,8 @@ public class EgovMenuManageController {
 					fis = file.getInputStream();
 					if (!"".equals(file.getOriginalFilename())) {
 						// 2011.10.07 업로드 파일에 대한 확장자를 체크
-						if (file.getOriginalFilename().toLowerCase().endsWith(".xls") || file.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
+						if (file.getOriginalFilename().toLowerCase().endsWith(".xls")
+								|| file.getOriginalFilename().toLowerCase().endsWith(".xlsx")) {
 							if (menuManageService.menuBndeAllDelete()) {
 								sMessage = menuManageService.menuBndeRegist(menuManageVO, fis);
 								resultMsg = sMessage;
@@ -352,7 +369,7 @@ public class EgovMenuManageController {
 								model.addAttribute("resultVO", menuManageVO);
 							}
 						} else {
-							//log.info("xls, xlsx 파일 타입만 등록이 가능합니다.");
+							// log.info("xls, xlsx 파일 타입만 등록이 가능합니다.");
 							resultMsg = egovMessageSource.getMessage("fail.common.msg");
 							model.addAttribute("resultMsg", resultMsg);
 							return "egovframework/com/sym/mnu/mpm/EgovMenuBndeRegist";
