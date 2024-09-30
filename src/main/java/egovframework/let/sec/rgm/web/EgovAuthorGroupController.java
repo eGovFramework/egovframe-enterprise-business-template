@@ -1,8 +1,5 @@
 package egovframework.let.sec.rgm.web;
 
-import javax.annotation.Resource;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +15,7 @@ import egovframework.let.sec.ram.service.EgovAuthorManageService;
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.sec.rgm.service.AuthorGroupVO;
 import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 권한그룹에 관한 controller 클래스를 정의한다.
@@ -35,25 +33,20 @@ import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
  *   2009.03.11  이문준          최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.17  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovAuthorGroupController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovAuthorGroupService")
-	private EgovAuthorGroupService egovAuthorGroupService;
+	private final EgovAuthorGroupService egovAuthorGroupService;
 
-	@Resource(name = "egovAuthorManageService")
-	private EgovAuthorManageService egovAuthorManageService;
-
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovAuthorManageService egovAuthorManageService;
 
 	/**
 	 * 권한 목록화면 이동
