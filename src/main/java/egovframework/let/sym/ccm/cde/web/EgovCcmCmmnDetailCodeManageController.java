@@ -3,12 +3,11 @@ package egovframework.let.sym.ccm.cde.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -53,19 +52,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovCcmCmmnDetailCodeManageController {
 
-	@Resource(name = "CmmnDetailCodeManageService")
-	private EgovCcmCmmnDetailCodeManageService cmmnDetailCodeManageService;
+
+	private final EgovCcmCmmnDetailCodeManageService cmmnDetailCodeManageService;
+
 
 	private final EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
 
 	private final EgovCcmCmmnCodeManageService cmmnCodeManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 공통상세코드를 삭제한다.
