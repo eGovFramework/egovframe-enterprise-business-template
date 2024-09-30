@@ -48,8 +48,6 @@ public class EgovMainController {
 	/**
 	 * EgovBBSManageService
 	 */
-//	@Resource(name = "EgovBBSManageService")
-//	private EgovBBSManageService bbsMngService;
 	private final EgovBBSManageService bbsMngService;
 
 	/** EgovMenuManageService */

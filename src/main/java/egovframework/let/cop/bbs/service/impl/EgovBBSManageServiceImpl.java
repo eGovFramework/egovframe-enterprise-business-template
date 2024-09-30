@@ -36,26 +36,13 @@ import lombok.RequiredArgsConstructor;
  *
  *      </pre>
  */
-//@Service("EgovBBSManageService")
 @Service
 @RequiredArgsConstructor
 public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements EgovBBSManageService {
 
-//	@Resource(name = "BBSManageDAO")
-//	private BBSManageDAO bbsMngDAO;
 	private final BBSManageDAO bbsMngDAO;
 
-//	@Resource(name = "EgovFileMngService")
-//	private EgovFileMngService fileService;
 	private final EgovFileMngService fileService;
-
-//	@Resource(name = "propertiesService")
-//	protected EgovPropertyService propertyService;
-//	private final EgovPropertyService propertyService;
-
-//	@Resource(name = "leaveaTrace")
-//	LeaveaTrace leaveaTrace;
-//	private final LeaveaTrace leaveaTrace;
 
 	/**
 	 * 게시물 한 건을 삭제 한다.

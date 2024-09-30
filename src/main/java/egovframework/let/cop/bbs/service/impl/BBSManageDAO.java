@@ -29,7 +29,6 @@ import egovframework.let.cop.bbs.service.BoardVO;
  *
  *      </pre>
  */
-//@Repository("BBSManageDAO")
 @Repository
 public class BBSManageDAO extends EgovAbstractMapper {
 
