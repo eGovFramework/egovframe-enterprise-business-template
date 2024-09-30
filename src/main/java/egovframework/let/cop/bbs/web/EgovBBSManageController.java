@@ -60,8 +60,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovBBSManageController {
 
-	@Resource(name = "EgovBBSManageService")
-	private EgovBBSManageService bbsMngService;
+	private final EgovBBSManageService bbsMngService;
 
 	private final EgovBBSAttributeManageService bbsAttrbService;
 

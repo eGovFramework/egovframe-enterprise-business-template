@@ -3,13 +3,11 @@ package egovframework.let.cop.bbs.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
@@ -60,25 +57,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovBBSAdminManageController {
 
-	@Resource(name = "EgovBBSManageService")
-	private EgovBBSManageService bbsMngService;
+	private final EgovBBSManageService bbsMngService;
 
 	private final EgovBBSAttributeManageService bbsAttrbService;
 
-	@Resource(name = "EgovFileMngService")
-	private EgovFileMngService fileMngService;
+	private final EgovFileMngService fileMngService;
 
-	@Resource(name = "EgovFileMngUtil")
-	private EgovFileMngUtil fileUtil;
+	private final EgovFileMngUtil fileUtil;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+	private final EgovPropertyService propertyService;
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * XSS 방지 처리.
