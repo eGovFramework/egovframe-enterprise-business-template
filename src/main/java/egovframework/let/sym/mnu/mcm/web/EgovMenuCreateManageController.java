@@ -1,7 +1,5 @@
 package egovframework.let.sym.mnu.mcm.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -16,6 +14,7 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sym.mnu.mcm.service.EgovMenuCreateManageService;
 import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 메뉴목록 관리및 메뉴생성, 사이트맵 생성을 처리하는 비즈니스 구현 클래스
@@ -34,24 +33,23 @@ import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
  *   2011.07.29  서준식          사이트맵 저장경로 수정
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.24  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 
 @Controller
+@RequiredArgsConstructor
 public class EgovMenuCreateManageController {
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "meunCreateManageService")
-	private EgovMenuCreateManageService menuCreateManageService;
+	private final EgovMenuCreateManageService menuCreateManageService;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
 	/*********** 메뉴 생성 관리 ***************/
 
