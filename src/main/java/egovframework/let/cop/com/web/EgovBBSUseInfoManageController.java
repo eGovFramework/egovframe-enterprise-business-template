@@ -2,13 +2,11 @@ package egovframework.let.cop.com.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,6 +27,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.cop.com.service.BoardUseInf;
 import egovframework.let.cop.com.service.BoardUseInfVO;
 import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판의 이용정보를 관리하기 위한 컨트롤러 클래스
@@ -46,17 +45,17 @@ import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
  *   2009.04.02  이삼섭          최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.06  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSUseInfoManageController {
 
-	@Resource(name = "EgovBBSUseInfoManageService")
-	private EgovBBSUseInfoManageService bbsUseService;
+	private final EgovBBSUseInfoManageService bbsUseService;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+	private final EgovPropertyService propertyService;
 
 	// SHT-CUSTOMIZING//@Resource(name = "EgovCommunityManageService")
 	// SHT-CUSTOMIZING//private EgovCommunityManageService cmmntyService; // 커뮤니티
@@ -65,8 +64,7 @@ public class EgovBBSUseInfoManageController {
 	// SHT-CUSTOMIZING//@Resource(name = "EgovClubManageService")
 	// SHT-CUSTOMIZING//private EgovClubManageService clubService; // 동호회 운영자 권한 확인
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 커뮤니티 관리자 및 동호회 운영자 권한을 확인한다.

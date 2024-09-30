@@ -2,8 +2,6 @@ package egovframework.let.sym.log.clg.web;
 
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.let.sym.log.clg.service.EgovLoginLogService;
 import egovframework.let.sym.log.clg.service.LoginLog;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 접속로그정보를 관리하기 위한 컨트롤러 클래스
@@ -32,17 +31,17 @@ import egovframework.let.sym.log.clg.service.LoginLog;
  *   2011.07.01  이기하          패키지 분리(sym.log -> sym.log.clg)
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.06  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovLoginLogController {
 
-	@Resource(name = "EgovLoginLogService")
-	private EgovLoginLogService loginLogService;
+	private final EgovLoginLogService loginLogService;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+	private final EgovPropertyService propertyService;
 
 	/**
 	 * 로그인 로그 목록 조회

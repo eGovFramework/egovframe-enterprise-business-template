@@ -2,13 +2,11 @@ package egovframework.let.uss.umt.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +23,7 @@ import egovframework.let.uss.umt.service.EgovUserManageService;
 import egovframework.let.uss.umt.service.UserDefaultVO;
 import egovframework.let.uss.umt.service.UserManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 업무사용자관련 요청을 비지니스 클래스로 전달하고 처리된결과를 해당 웹 화면으로 전달하는 Controller를 정의한다
@@ -42,31 +41,28 @@ import egovframework.let.utl.sim.service.EgovFileScrty;
  *   2009.04.10  조재영          최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.12  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovUserManageController {
 
 	/** userManageService */
-	@Resource(name = "userManageService")
-	private EgovUserManageService userManageService;
+	private final EgovUserManageService userManageService;
 
 	/** cmmUseService */
-	@Resource(name = "EgovCmmUseService")
-	private EgovCmmUseService cmmUseService;
+	private final EgovCmmUseService cmmUseService;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/** DefaultBeanValidator beanValidator */
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 사용자목록을 조회한다. (pageing)
