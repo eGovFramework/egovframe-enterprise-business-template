@@ -1,8 +1,5 @@
 package egovframework.let.sec.rgm.web;
 
-import javax.annotation.Resource;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +33,7 @@ import lombok.RequiredArgsConstructor;
  *   2009.03.11  이문준          최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.17  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
@@ -44,17 +42,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovAuthorGroupController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovAuthorGroupService")
-	private EgovAuthorGroupService egovAuthorGroupService;
+	private final EgovAuthorGroupService egovAuthorGroupService;
 
 	private final EgovAuthorManageService egovAuthorManageService;
-
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
 
 	/**
 	 * 권한 목록화면 이동
