@@ -21,16 +21,16 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
  *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
- *   2009.03.20  이  용          최초 생성
- *   2011.07.01  서준식			자기 메뉴 정보를 상위메뉴 정보로 참조하는 메뉴정보가 있는지 조회하는
- *   							selectUpperMenuNoByPk() 메서드 추가
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2009.03.20  이용           최초 생성
+ *   2011.07.01  서준식          자기 메뉴 정보를 상위메뉴 정보로 참조하는 메뉴정보가 있는지 조회하는 selectUpperMenuNoByPk() 메서드 추가
+ *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.08.10  이백행          이클립스 문제(Problems) 제거
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 
-@Repository("menuManageDAO")
+@Repository
 public class MenuManageDAO extends EgovAbstractMapper {
 
 	/**

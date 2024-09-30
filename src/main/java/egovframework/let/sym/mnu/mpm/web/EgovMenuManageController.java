@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -14,7 +13,6 @@ import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -57,23 +55,21 @@ import lombok.RequiredArgsConstructor;
 public class EgovMenuManageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovMenuManageController.class);
+
 	/* Validator */
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
+
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "meunManageService")
-	private EgovMenuManageService menuManageService;
+	private final EgovMenuManageService menuManageService;
 
 	/** EgovMenuManageService */
 	private final EgovProgrmManageService progrmManageService;
 
 	/** EgovMessageSource */
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
 	/**
 	 * 메뉴정보목록을 상세화면 호출 및 상세조회한다.

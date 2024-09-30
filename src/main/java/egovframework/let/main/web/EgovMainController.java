@@ -51,8 +51,7 @@ public class EgovMainController {
 	private final EgovBBSManageService bbsMngService;
 
 	/** EgovMenuManageService */
-	@Resource(name = "meunManageService")
-	private EgovMenuManageService menuManageService;
+	private final EgovMenuManageService menuManageService;
 
 	/**
 	 * 메인 페이지에서 각 업무 화면으로 연계하는 기능을 제공한다.
