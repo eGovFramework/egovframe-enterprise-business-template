@@ -3,14 +3,12 @@ package egovframework.let.cop.bbs.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -30,6 +28,7 @@ import egovframework.let.cop.bbs.service.BoardMaster;
 import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.utl.fcc.service.EgovStringUtil;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 게시판 속성관리를 위한 컨트롤러 클래스
@@ -48,23 +47,21 @@ import egovframework.let.utl.fcc.service.EgovStringUtil;
  *   2009.06.26  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.05  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovBBSAttributeManageController {
 
-	@Resource(name = "EgovBBSAttributeManageService")
-	private EgovBBSAttributeManageService bbsAttrbService;
+	private final EgovBBSAttributeManageService bbsAttrbService;
 
-	@Resource(name = "EgovCmmUseService")
-	private EgovCmmUseService cmmUseService;
+	private final EgovCmmUseService cmmUseService;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertyService;
+	private final EgovPropertyService propertyService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 커뮤니티 관리자 및 동호회 운영자 권한을 확인한다.

@@ -56,8 +56,7 @@ public class EgovCcmCmmnDetailCodeManageController {
 	@Resource(name = "CmmnDetailCodeManageService")
 	private EgovCcmCmmnDetailCodeManageService cmmnDetailCodeManageService;
 
-	@Resource(name = "CmmnClCodeManageService")
-	private EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
+	private final EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
 
 	private final EgovCcmCmmnCodeManageService cmmnCodeManageService;
 
