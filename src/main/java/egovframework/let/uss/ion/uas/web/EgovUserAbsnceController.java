@@ -1,10 +1,7 @@
 package egovframework.let.uss.ion.uas.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +16,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
+import lombok.RequiredArgsConstructor;
 
 /**
  * <pre>
@@ -40,20 +38,19 @@ import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
  *   2009.08.03  lee.m.j       최초 생성
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.13  이백행          컨트리뷰션 검색 조건 유지
+ *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
  *
  *      </pre>
  */
 @Controller
+@RequiredArgsConstructor
 public class EgovUserAbsnceController {
 
-	@Resource(name = "egovMessageSource")
-	EgovMessageSource egovMessageSource;
+	private final EgovMessageSource egovMessageSource;
 
-	@Resource(name = "egovUserAbsnceService")
-	private EgovUserAbsnceService egovUserAbsnceService;
+	private final EgovUserAbsnceService egovUserAbsnceService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 사용자부재 목록화면 이동
