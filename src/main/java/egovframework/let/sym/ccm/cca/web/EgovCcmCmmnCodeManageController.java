@@ -2,11 +2,10 @@ package egovframework.let.sym.ccm.cca.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -48,17 +47,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EgovCcmCmmnCodeManageController {
 
-	@Resource(name = "CmmnCodeManageService")
-	private EgovCcmCmmnCodeManageService cmmnCodeManageService;
+	private final EgovCcmCmmnCodeManageService cmmnCodeManageService;
 
 	private final EgovCcmCmmnClCodeManageService cmmnClCodeManageService;
 
 	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
+	private final EgovPropertyService propertiesService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
+	private final DefaultBeanValidator beanValidator;
 
 	/**
 	 * 공통코드를 삭제한다.
