@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.let.uss.umt.service.EgovUserManageService;
 import egovframework.let.uss.umt.service.UserDefaultVO;
@@ -42,6 +40,7 @@ import lombok.RequiredArgsConstructor;
  *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
  *   2024.09.12  이백행          컨트리뷰션 검색 조건 유지
  *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
+ *   2024.10.01  이백행          컨트리뷰션 미인증 사용자에 대한 보안처리 제거
  *
  *      </pre>
  */
@@ -54,9 +53,6 @@ public class EgovUserManageController {
 
 	/** cmmUseService */
 	private final EgovCmmUseService cmmUseService;
-
-	/** EgovMessageSource */
-	private final EgovMessageSource egovMessageSource;
 
 	/** EgovPropertyService */
 	private final EgovPropertyService propertiesService;
@@ -78,13 +74,6 @@ public class EgovUserManageController {
 
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("baseMenuNo", "6000000");
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		/** EgovPropertyService */
 		userSearchVO.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -126,13 +115,6 @@ public class EgovUserManageController {
 	@GetMapping("/uss/umt/user/EgovUserInsertView.do")
 	public String insertUserView(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO, Model model) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 
@@ -176,13 +158,6 @@ public class EgovUserManageController {
 	@PostMapping("/uss/umt/user/EgovUserInsert.do")
 	public String insertUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult,
 			Model model) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		beanValidator.validate(userManageVO, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -237,13 +212,6 @@ public class EgovUserManageController {
 	public String updateUserView(@RequestParam("selectedId") String uniqId,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 
 		// 패스워드힌트목록을 코드정보로부터 조회
@@ -290,13 +258,6 @@ public class EgovUserManageController {
 	@PostMapping("/uss/umt/user/EgovUserSelectUpdt.do")
 	public String updateUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult,
 			Model model) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		beanValidator.validate(userManageVO, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -352,13 +313,6 @@ public class EgovUserManageController {
 	public String deleteUser(@RequestParam("checkedIdForDel") String checkedIdForDel,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
 
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
 		userManageService.deleteUser(checkedIdForDel);
 		// Exception 없이 진행시 등록성공메시지
 		model.addAttribute("resultMsg", "success.common.delete");
@@ -378,13 +332,6 @@ public class EgovUserManageController {
 	@GetMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirmView.do")
 	public String checkIdDplct(Model model) throws Exception {
 
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
 		model.addAttribute("checkId", "");
 		model.addAttribute("usedCnt", "-1");
 		return "cmm/uss/umt/EgovIdDplctCnfirm";
@@ -400,13 +347,6 @@ public class EgovUserManageController {
 	 */
 	@GetMapping(value = "/uss/umt/cmm/EgovIdDplctCnfirm.do")
 	public String checkIdDplct(@RequestParam Map<String, Object> commandMap, Model model) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		String checkId = (String) commandMap.get("checkId");
 		checkId = new String(checkId.getBytes("ISO-8859-1"), "UTF-8");
@@ -435,13 +375,6 @@ public class EgovUserManageController {
 	public String updatePassword(Model model, @RequestParam Map<String, Object> commandMap,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		String oldPassword = (String) commandMap.get("oldPassword");
 		String newPassword = (String) commandMap.get("newPassword");
@@ -498,13 +431,6 @@ public class EgovUserManageController {
 	public String updatePasswordView(Model model, @RequestParam Map<String, Object> commandMap,
 			@ModelAttribute("searchVO") UserDefaultVO userSearchVO,
 			@ModelAttribute("userManageVO") UserManageVO userManageVO) throws Exception {
-
-		// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
 
 		String userTyForPassword = (String) commandMap.get("userTyForPassword");
 		userManageVO.setUserTy(userTyForPassword);
