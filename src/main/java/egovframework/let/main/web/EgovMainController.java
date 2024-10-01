@@ -2,7 +2,6 @@ package egovframework.let.main.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
