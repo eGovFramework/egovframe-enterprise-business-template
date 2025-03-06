@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01   lee.m.j            최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.02.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.11  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -41,12 +42,15 @@
 <!--
 
 function fncSelectLoginPolicyList() {
+    event.preventDefault();
     var varFrom = document.getElementById("loginPolicy");
     varFrom.action = "<c:url value='/uat/uap/selectLoginPolicyList.do'/>";
+    varFrom.method = 'get';
     varFrom.submit();       
 }
 
 function fncLoginPolicyUpdate() {
+    event.preventDefault();
     var varFrom = document.getElementById("loginPolicy");
     varFrom.action = "<c:url value='/uat/uap/updtLoginPolicy.do'/>";
 
@@ -63,6 +67,7 @@ function fncLoginPolicyUpdate() {
 }
 
 function fncLoginPolicyDelete() {
+    event.preventDefault();
     var varFrom = document.getElementById("loginPolicy");
     varFrom.action = "<c:url value='/uat/uap/removeLoginPolicy.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){
@@ -221,14 +226,14 @@ function ipValidate() {
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                    	<a href=<c:url value='/uat/uap/removeLoginPolicy.do'/>?emplyrId=<c:out value='${loginPolicyVO.emplyrId}'/>"" class="btn btn_skyblue_h46 w_100" onclick="fncLoginPolicyDelete(); return false;">
+                                    	<a href="<c:url value='/uat/uap/removeLoginPolicy.do'/>?emplyrId=<c:out value='${loginPolicyVO.emplyrId}'/>" class="btn btn_skyblue_h46 w_100" onclick="fncLoginPolicyDelete();">
                                     		<spring:message code='button.delete' />
                                     	</a><!-- 삭제 -->
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncLoginPolicyUpdate(); return false;"><spring:message code='button.save' /></a><!-- 저장 -->
-                                        <a href="<c:url value='/uat/uap/selectLoginPolicyList.do'/>?pageIndex=<c:out value='${loginPolicyVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${loginPolicyVO.searchKeyword}"/>&amp;searchCondition=1" class="btn btn_blue_46 w_100" onclick="fncSelectLoginPolicyList(); return false;">
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncLoginPolicyUpdate();"><spring:message code='button.save' /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uat/uap/selectLoginPolicyList.do'/>?pageIndex=<c:out value='${loginPolicyVO.pageIndex}'/>&amp;searchKeyword=<c:out value="${loginPolicyVO.searchKeyword}"/>&amp;searchCondition=<c:out value="${loginPolicyVO.searchCondition}"/>" class="btn btn_blue_46 w_100" onclick="fncSelectLoginPolicyList();">
                                         	<spring:message code='button.list' />
                                         </a><!-- 목록 -->
                                     </div>

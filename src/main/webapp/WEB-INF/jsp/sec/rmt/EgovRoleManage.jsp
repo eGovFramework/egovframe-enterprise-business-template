@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01    lee.m.j              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.02.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.18  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -112,19 +113,23 @@ function fncSelectRoleList(pageNo){
 }
 
 function fncSelectRole(roleCode) {
+    event.preventDefault();
     document.listForm.roleCode.value = roleCode;
     document.listForm.action = "<c:url value='/sec/rmt/EgovRole.do'/>";
     document.listForm.submit();     
 }
 
 function fncAddRoleInsert() {
-    location.replace("<c:url value='/sec/rmt/EgovRoleInsertView.do'/>"); 
+    event.preventDefault();
+    location.replace("<c:url value='/sec/rmt/EgovRoleInsertView.do'/>?searchCondition=<c:out value="${roleManageVO.searchCondition}" />&searchKeyword=<c:out value="${roleManageVO.searchKeyword}" />&pageIndex=<c:out value="${roleManageVO.pageIndex}" />"); 
 }
 
 function fncRoleListDelete() {
+    event.preventDefault();
     if(fncManageChecked()) {
         if(confirm('<spring:message code="common.delete.msg" />')) {
             document.listForm.action = "<c:url value='/sec/rmt/EgovRoleListDelete.do'/>";
+            document.listForm.method = 'post';
             document.listForm.submit();
         }
     }
@@ -185,7 +190,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form id="listForm" name="listForm" action="<c:url value='/sec/rmt/EgovRoleList.do'/>" method="post">
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/rmt/EgovRoleList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -196,7 +201,7 @@ function press() {
                                     <span class="lb mr10">롤 명 : </span>
                                     <span class="item f_search">
                                         <input id="searchKeyword" class="f_input w_350" name="searchKeyword" type="text" value="<c:out value='${roleManageVO.searchKeyword}'/>" title="검색" onkeypress="press();" />
-                                        <button class="btn" type="submit" onclick="javascript:fncSelectRoleList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="fncSelectRoleList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
@@ -206,8 +211,8 @@ function press() {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddRoleInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncRoleListDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAddRoleInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncRoleListDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
                                     </div>
                                 </div>
 
@@ -228,7 +233,7 @@ function press() {
                                             <tr>
                                                 <th scope="col">
                                                     <span class="f_chk_only chkAll">
-                                                        <input type="checkbox" name="checkAll" onclick="javascript:fncCheckAll()" title="전체선택">
+                                                        <input type="checkbox" name="checkAll" onclick="fncCheckAll()" title="전체선택">
                                                     </span>
                                                 </th>
                                                 <th scope="col">롤ID</th>
@@ -255,7 +260,7 @@ function press() {
                                                         <input type="hidden" name="checkId" value="<c:out value="${role.roleCode}"/>" />
                                                     </span>
                                                 </td>
-                                                <td><a href="#LINK" class="lnk" onclick="javascript:fncSelectRole('<c:out value="${role.roleCode}"/>')"><c:out value="${role.roleCode}"/></a></td>
+                                                <td><a href="" class="lnk" onclick="fncSelectRole('<c:out value="${role.roleCode}"/>')"><c:out value="${role.roleCode}"/></a></td>
                                                 <td><c:out value="${role.roleNm}"/></td>
                                                 <td><c:out value="${role.roleTyp}"/></td>
                                                 <td><c:out value="${role.roleSort}"/></td>

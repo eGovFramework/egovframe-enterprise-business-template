@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10    이용             최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.10  이용           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.24  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -71,6 +72,7 @@ function selectMenuCreatManageList() {
  * 메뉴생성 화면 호출
  ******************************************************** */
 function selectMenuCreat(vAuthorCode) {
+    event.preventDefault();
     document.menuCreatManageForm.authorCode.value = vAuthorCode;
     
     var $dialog = $('<div id="modalPan"></div>')
@@ -130,7 +132,7 @@ function fn_egov_modal_remove() {
                                 </div>
                                 <!--// Location -->
 
-								<form name="menuCreatManageForm" action ="<c:url value='/sym/mpm/EgovMenuCreatManageSelect.do'/>" method="post">
+								<form name="menuCreatManageForm" action ="<c:url value='/sym/mpm/EgovMenuCreatManageSelect.do'/>" method="get">
 								
 								<input name="checkedMenuNoForDel" type="hidden" />
 								<input name="authorCode" type="hidden" />
@@ -145,7 +147,7 @@ function fn_egov_modal_remove() {
                                     <span class="lb mr10">보안설정대상 ID : </span>
                                     <span class="item f_search">
                                         <input id="searchKeyword" class="f_input w_350" name="searchKeyword" type="text" value="" maxlength="60" title="검색조건"/>
-                                        <button class="btn" type="submit" onclick="javascript:selectMenuCreatManageList(); return false;"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="selectMenuCreatManageList();"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
@@ -188,7 +190,7 @@ function fn_egov_modal_remove() {
                                                 	<c:if test="${result.chkYeoBu == 0}">N</c:if>
                                                 </td>
                                                 <td>
-                                                	<a href="#LINK'" class="lnk" onclick="selectMenuCreat('<c:out value="${result.authorCode}"/>'); return false;" >메뉴생성</a>
+                                                	<a href="" class="lnk" onclick="selectMenuCreat('<c:out value="${result.authorCode}"/>');" >메뉴생성</a>
                                                 </td>
                                             </tr>
                                             </c:forEach>

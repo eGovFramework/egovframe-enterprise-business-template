@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03   JJY              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.03  JJY           최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -37,10 +38,13 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
 function fnListPage(){
+    event.preventDefault();
     document.passwordChgVO.action = "<c:url value='/uss/umt/user/EgovUserManage.do'/>";
+    document.passwordChgVO.method = 'get';
     document.passwordChgVO.submit();
 }
 function fnUpdate(){
+    event.preventDefault();
     if(validatePasswordChgVO(document.passwordChgVO)){
         if(document.passwordChgVO.newPassword.value != document.passwordChgVO.newPassword2.value){
             alert("<spring:message code="fail.user.passwordUpdate2" />");
@@ -86,7 +90,7 @@ function fnUpdate(){
                                 <!--// Location -->
 
 								<form name="passwordChgVO" method="post" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserPasswordUpdt.do" >
-								<!-- onsubmit="javascript:return FormValidation(document.passwordChgVO);" >  -->
+								<!-- onsubmit="return FormValidation(document.passwordChgVO);" >  -->
 								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
 								<input name="checkedIdForDel" type="hidden" />
 								<!-- 검색조건 유지 -->
@@ -147,12 +151,12 @@ function fnUpdate(){
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:document.passwordChgVO.reset();"><spring:message code="button.reset" /></a><!-- 초기화 -->
+                                        <a href="" class="btn btn_skyblue_h46 w_100" onclick="event.preventDefault(); document.passwordChgVO.reset();"><spring:message code="button.reset" /></a><!-- 초기화 -->
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="JavaScript:fnUpdate(); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fnUpdate();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->

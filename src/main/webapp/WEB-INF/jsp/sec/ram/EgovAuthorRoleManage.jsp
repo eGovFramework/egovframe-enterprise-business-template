@@ -125,6 +125,7 @@ function fncSelectAuthorRoleList() {
 }
 
 function fncSelectAuthorList(){
+    event.preventDefault();
     document.listForm.searchKeyword.value = "";
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthorList.do'/>";
     document.listForm.submit();
@@ -137,9 +138,11 @@ function fncSelectAuthorRole(roleCode) {
 }
 
 function fncAddAuthorRoleInsert() {
+    event.preventDefault();
     if(fncManageChecked()) {
         if(confirm('<spring:message code="common.regist.msg" />')) {
             document.listForm.action = "<c:url value='/sec/ram/EgovAuthorRoleInsert.do'/>";
+            document.listForm.method = 'post';
             document.listForm.submit();
         }
     } else return;
@@ -196,7 +199,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form name="listForm" action="<c:url value='/sec/ram/EgovAuthorRoleList.do'/>" method="post">
+								<form:form name="listForm" action="<c:url value='/sec/ram/EgovAuthorRoleList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -217,8 +220,8 @@ function press() {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncSelectAuthorList()"><spring:message code='button.list' /></a><!-- 권한목록 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddAuthorRoleInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncSelectAuthorList()"><spring:message code='button.list' /></a><!-- 권한목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAddAuthorRoleInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
                                     </div>
                                 </div>
 

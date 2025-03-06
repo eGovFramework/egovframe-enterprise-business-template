@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.07.01   lee.m.j            최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.07.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.13  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.07.01
@@ -140,6 +141,7 @@ function fncInsertCheckId() {
 }
 
 function fncSelectUserAbsnceList(pageNo) {
+    event.preventDefault();
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
     document.listForm.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
@@ -147,6 +149,7 @@ function fncSelectUserAbsnceList(pageNo) {
 }
 
 function fncSelectUserAbsnce(userId, regYn) {
+    event.preventDefault();
     if(regYn == 'N') {
         if(confirm("등록된 사용자부재 정보가 없습니다. 등록페이지로 이동하시겠습니까?")) {
             location.replace("<c:url value='/uss/ion/uas/addViewUserAbsnce.do'/>?userId="+userId);
@@ -231,7 +234,7 @@ function press() {
                                 <!-- 검색조건 -->
                                 <div class="condition2">
                                 	
-                                	<form name="listForm" action="<c:url value='/uss/umt/user/EgovUserManage.do'/>" method="post">
+                                	<form name="listForm" action="<c:url value='/uss/umt/user/EgovUserManage.do'/>" method="get">
                                 	
 									<input type="hidden" name="userId">
 									<input type="hidden" name="pageIndex" value="<c:if test="${empty userAbsnceVO.pageIndex }">1</c:if><c:if test="${!empty userAbsnceVO.pageIndex }"><c:out value='${userAbsnceVO.pageIndex}'/></c:if>">
@@ -249,7 +252,7 @@ function press() {
     	                                </select>
                                     </label>
 
-                                    <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>" class="item btn btn_blue_46 w_100" onclick="javascript:fncSelectUserAbsnceList('1'); return false;">조회</a><!-- 조회 -->
+                                    <a href="<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>" class="item btn btn_blue_46 w_100" onclick="fncSelectUserAbsnceList('1');">조회</a><!-- 조회 -->
                                 	
                                 	</form>
                                 	
@@ -287,14 +290,14 @@ function press() {
                                         	<c:forEach var="userAbsnce" items="${userAbsnceList}" varStatus="status">
                                             <tr>
                                                 <td>
-                                                	<form name="item" method="post" action="<c:url value='/uss/ion/uas/getUserAbsnce.do'/>">
+                                                	<form name="item" method="get" action="<c:url value='/uss/ion/uas/getUserAbsnce.do'/>">
                                                 		<input type="hidden" name="userId" value="<c:out value="${userAbsnce.userId}"/>">
                                                 		<input type="hidden" name="selAbsnceAt" value="<c:out value="${userAbsnceVO.selAbsnceAt}"/>">
                                                 		<input type="hidden" name="pageIndex" value="<c:out value='${userAbsnceVO.pageIndex}'/>">
                                                 		<input type="hidden" name="searchCondition" value="<c:out value='${userAbsnceVO.searchCondition}'/>">
                                                 		<input type="hidden" name="searchKeyword" value="<c:out value="${userAbsnceVO.searchKeyword}"/>">
                                                 		<c:out value="${userAbsnce.userId}"/>
-                                                		<a href="" class="btn btn_blue_30 w_70" onclick="fncSelectUserAbsnce('<c:out value="${userAbsnce.userId}"/>', '<c:out value="${userAbsnce.regYn}"/>'); return false;">등록</a>
+                                                		<a href="" class="btn btn_blue_30 w_70" onclick="fncSelectUserAbsnce('<c:out value="${userAbsnce.userId}"/>', '<c:out value="${userAbsnce.regYn}"/>');">등록</a>
                                                     </form>
                                                 </td>
                                                 <td><c:out value="${userAbsnce.userNm}"/></td>

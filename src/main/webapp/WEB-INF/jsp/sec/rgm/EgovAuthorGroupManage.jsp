@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.23    lee.m.j              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.03.23  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.17  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.03.23
@@ -142,21 +143,25 @@ function fncSelectAuthorGroupList(pageNo){
 }
 
 function fncAddAuthorGroupInsert() {
+    event.preventDefault();
 
     if(!fncManageChecked()) return;
     
     if(confirm('<spring:message code="common.regist.msg" />')) {
         document.listForm.action = "<c:url value='/sec/rgm/EgovAuthorGroupInsert.do'/>";
+        document.listForm.method = 'post';
         document.listForm.submit();
     }
 }
 
 function fncAuthorGroupDeleteList() {
+    event.preventDefault();
  
     if(!fncManageChecked()) return;
 
     if(confirm('<spring:message code="common.delete.msg" />')) {
         document.listForm.action = "<c:url value='/sec/rgm/EgovAuthorGroupDelete.do'/>";
+        document.listForm.method = 'post'; 
         document.listForm.submit(); 
     }
 }
@@ -169,6 +174,7 @@ function linkPage(pageNo){
 }
 
 function fncSelectAuthorGroupPop() {
+    event.preventDefault();
 
     if(document.listForm.searchCondition.value == '3') {
         
@@ -247,7 +253,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form id="listForm" name="listForm" action="<c:url value='/sec/rgm/EgovAuthorGroupList.do'/>" method="post">
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/rgm/EgovAuthorGroupList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -265,19 +271,19 @@ function press() {
                                     </label>
                                     <span class="item f_search">
                                         <input class="f_input w_350" name="searchKeyword" type="text" value="<c:out value='${authorGroupVO.searchKeyword}'/>" title="검색" onkeypress="press();"/>
-                                        <button class="btn" type="submit" onclick="javascript:fncSelectAuthorGroupList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="fncSelectAuthorGroupList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
 
                                 <div class="board_list_top">
                                     <div class="left_col">
-                                    	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fncSelectAuthorGroupPop()">팝업조회</a><!-- 팝업조회 -->
+                                    	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fncSelectAuthorGroupPop()">팝업조회</a><!-- 팝업조회 -->
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddAuthorGroupInsert()">권한등록</a><!-- 권한등록 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorGroupDeleteList()">등록취소</a><!-- 등록취소 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAddAuthorGroupInsert()">권한등록</a><!-- 권한등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAuthorGroupDeleteList()">등록취소</a><!-- 등록취소 -->
                                     </div>
                                 </div>
 
@@ -296,7 +302,7 @@ function press() {
                                             <tr>
                                                 <th scope="col">
                                                     <span class="f_chk_only chkAll">
-                                                        <input type="checkbox" name="checkAll" title="선택여부" onclick="javascript:fncCheckAll()">
+                                                        <input type="checkbox" name="checkAll" title="선택여부" onclick="fncCheckAll()">
                                                     </span>
                                                 </th>
                                                 <th scope="col">사용자ID</th>

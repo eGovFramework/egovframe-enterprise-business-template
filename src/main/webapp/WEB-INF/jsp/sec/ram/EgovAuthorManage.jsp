@@ -114,20 +114,24 @@ function fncSelectAuthorList(pageNo){
 }
 
 function fncSelectAuthor(author) {
+    event.preventDefault();
     document.listForm.authorCode.value = author;
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthor.do'/>";
     document.listForm.submit();     
 }
 
 function fncAddAuthorInsert() {
-    location.replace("<c:url value='/sec/ram/EgovAuthorInsertView.do'/>"); 
+    event.preventDefault();
+    location.replace("<c:url value='/sec/ram/EgovAuthorInsertView.do'/>?searchCondition=<c:out value="${authorManageVO.searchCondition}" />&searchKeyword=<c:out value="${authorManageVO.searchKeyword}" />&pageIndex=<c:out value="${authorManageVO.pageIndex}" />"); 
 }
 
 function fncAuthorDeleteList() {
+    event.preventDefault();
 
     if(fncManageChecked()) {    
         if(confirm('<spring:message code="common.delete.msg" />')) {
             document.listForm.action = "<c:url value='/sec/ram/EgovAuthorListDelete.do'/>";
+            document.listForm.method = 'post';
             document.listForm.submit();
         } 
     }
@@ -139,6 +143,7 @@ function fncAddAuthorView() {
 }
 
 function fncSelectAuthorRole(author) {
+    event.preventDefault();
     document.listForm.searchKeyword.value = author;
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthorRoleList.do'/>";
     document.listForm.submit();     
@@ -195,7 +200,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form id="listForm" name="listForm" action="<c:url value='/sec/ram/EgovAuthorList.do'/>" method="post">
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/ram/EgovAuthorList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -206,7 +211,7 @@ function press() {
                                     <span class="lb mr10">권한 명 : </span>
                                     <span class="item f_search">
                                         <input id="searchKeyword" class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${authorManageVO.searchKeyword}'/>" title="검색" onkeypress="press();" />
-                                        <button class="btn" type="submit" onclick="javascript:fncSelectAuthorList('1')" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="fncSelectAuthorList('1')" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
@@ -216,8 +221,8 @@ function press() {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAuthorDeleteList()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.delete' /></a><!-- 삭제 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.create' /></a><!-- 등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAuthorDeleteList()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAddAuthorInsert()" style="selector-dummy:expression(this.hideFocus=false);"><spring:message code='button.create' /></a><!-- 등록 -->
                                     </div>
                                 </div>
 
@@ -264,7 +269,7 @@ function press() {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="#LINK" class="lnk" onclick="javascript:fncSelectAuthor('<c:out value="${author.authorCode}"/>')">
+                                                    <a href="" class="lnk" onclick="fncSelectAuthor('<c:out value="${author.authorCode}"/>')">
                                                     	<c:out value="${author.authorCode}"/>
                                                     </a>
                                                 </td>
@@ -272,7 +277,7 @@ function press() {
                                                 <td><c:out value="${author.authorDc}"/></td>
                                                 <td><c:out value="${author.authorCreatDe}"/></td>
                                                 <td>
-                                                    <a href="#LINK" class="btn btn_blue_30 w_70" onclick="javascript:fncSelectAuthorRole('<c:out value="${author.authorCode}"/>')">
+                                                    <a href="" class="btn btn_blue_30 w_70" onclick="fncSelectAuthorRole('<c:out value="${author.authorCode}"/>')">
                                                     	이동
                                                     </a>
                                                 </td>

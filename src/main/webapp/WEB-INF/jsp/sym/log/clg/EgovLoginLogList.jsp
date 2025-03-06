@@ -5,9 +5,10 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.11   이삼섭      최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
-     2023.06.09   우시재 		NSR 보안조치 (시작일자 및 종료일자 크로스사이트 스크립트 방지)
+     2009.03.11  이삼섭          최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2023.06.09  우시재          NSR 보안조치 (시작일자 및 종료일자 크로스사이트 스크립트 방지)
+     2024.09.06  이백행          컨트리뷰션 검색 조건 유지     
  
     author   : 공통서비스 개발팀  이삼섭
     since    : 2009.03.11  
@@ -52,6 +53,7 @@
 	}
 
 	function fn_egov_select_loginLog(pageNo){
+		event.preventDefault();
 	    var fromDate = document.frm.searchBgnDe.value;
 	    var toDate = document.frm.searchEndDe.value;
 	    
@@ -68,15 +70,15 @@
 	    }
 	}
    
-    function fn_egov_inqire_loginLog(logId){
-        var url = "<c:url value ='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId;
+//     function fn_egov_inqire_loginLog(logId){
+//         var url = "<c:url value ='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId;
         
-        var openParam = "scrollbars=yes,toolbar=0,location=no,resizable=0,status=0,menubar=0,width=640,height=320,left=0,top=0"; 
-        window.open(url,"p_loginLogInqire", openParam);
-    }
+//         var openParam = "scrollbars=yes,toolbar=0,location=no,resizable=0,status=0,menubar=0,width=640,height=320,left=0,top=0"; 
+//         window.open(url,"p_loginLogInqire", openParam);
+//     }
     
     function fn_egov_inqire_loginLog(logId) {
-        
+        event.preventDefault();
         var $dialog = $('<div id="modalPan"></div>')
     	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId +'" width="100%" height="100%"></iframe>')
     	.dialog({
@@ -186,7 +188,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form name="frm" id="frm" action ="<c:url value='/sym/log/SelectLoginLogList.do'/>" method="post">
+								<form name="frm" id="frm" action ="<c:url value='/sym/log/SelectLoginLogList.do'/>" method="get">
 								
 								<input type="hidden" name="cal_url" value="<c:url value='/sym/cmm/EgovNormalCalPopup.do'/>" />
 
@@ -200,8 +202,8 @@
                                     <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchBgnDe}'/>" title="시작일자입력" />&nbsp ~ &nbsp
                                     <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchEndDe}'/>" title="종료일자입력" >
 
-                                    <a href="<c:url value='/sym/log/SelectLoginLogList.do'/>" class="item btn btn_blue_46 w_100 ml10" onclick="javascript:fn_egov_select_loginLog('1'); return false;"><spring:message code='button.inquire' /></a><!-- 조회 -->
-                                    <a href="#LINK" class="item btn btn_blue_46 w_100" onclick="document.frm.searchBgnDe.value=''; document.frm.searchEndDe.value=''; return false;">초기화</a><!-- 초기화 -->
+                                    <a href="<c:url value='/sym/log/SelectLoginLogList.do'/>" class="item btn btn_blue_46 w_100 ml10" onclick="fn_egov_select_loginLog('1');"><spring:message code='button.inquire' /></a><!-- 조회 -->
+                                    <a href="" class="item btn btn_blue_46 w_100" onclick="event.preventDefault(); document.frm.searchBgnDe.value=''; document.frm.searchEndDe.value='';">초기화</a><!-- 초기화 -->
                                 </div>
                                 <!--// 검색조건 -->
 
@@ -234,7 +236,7 @@
 	                                                <td><c:out value="${result.creatDt}"/></td>
 	                                                <td><c:out value="${result.loginMthd}"/></td>
 	                                                <td>
-	                                                    <a href="#LINK" class="btn btn_blue_30 w_80" onclick="javascript:fn_egov_inqire_loginLog('<c:out value="${result.logId}"/>'); return false;">
+	                                                    <a href="" class="btn btn_blue_30 w_80" onclick="fn_egov_inqire_loginLog('<c:out value="${result.logId}"/>');">
 	                                                    	상세보기
 	                                                    </a>
 	                                                </td>

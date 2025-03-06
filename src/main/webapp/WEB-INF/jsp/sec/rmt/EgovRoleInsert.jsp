@@ -5,8 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01    lee.m.j              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.02.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.18  이백행          컨트리뷰션 검색 조건 유지
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -38,22 +39,25 @@
 
 <title>내부업무 사이트 > 내부시스템관리 > 롤관리</title>
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="roleManage" staticJavascript="false" xhtml="true" cdata="false"/>
+<validator:javascript formName="roleManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javaScript" language="javascript">
 
 function fncSelectRoleList() {
-    var varFrom = document.getElementById("roleManage");
+    event.preventDefault();
+    var varFrom = document.getElementById("roleManageVO");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleList.do'/>";
+    varFrom.method = 'get';
     varFrom.submit();       
 }
 
 function fncRoleInsert() {
+    event.preventDefault();
 
-    var varFrom = document.getElementById("roleManage");
+    var varFrom = document.getElementById("roleManageVO");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleInsert.do'/>";
 
     
-    if(!validateRoleManage(varFrom)){           
+    if(!validateRoleManageVO(varFrom)){           
         return;
     }else{
      	if(confirm('<spring:message code="common.regist.msg" />')){
@@ -64,10 +68,11 @@ function fncRoleInsert() {
 }
 
 function fncRoleUpdate() {
-    var varFrom = document.getElementById("roleManage");
+    event.preventDefault();
+    var varFrom = document.getElementById("roleManageVO");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleUpdate.do'/>";
 
-    if(!validateRoleManage(varFrom)){           
+    if(!validateRoleManageVO(varFrom)){           
         return;
     }else{
         if(confirm('<spring:message code="common.update.msg" />')){
@@ -77,7 +82,8 @@ function fncRoleUpdate() {
 }
 
 function fncRoleDelete() {
-    var varFrom = document.getElementById("roleManage");
+    event.preventDefault();
+    var varFrom = document.getElementById("roleManageVO");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleDelete.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){
         varFrom.submit();
@@ -119,7 +125,7 @@ function fncRoleDelete() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="roleManage" method="post" >
+								<form:form modelAttribute="roleManageVO" method="post" >
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -137,7 +143,7 @@ function fncRoleDelete() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="roleCode" id="roleCode" class="f_txt" type="text" value="<c:out value='${roleManage.roleCode}'/>" title="롤 코드"/>
+                                                <input name="roleCode" id="roleCode" class="f_txt" type="text" value="<c:out value='${roleManageVO.roleCode}'/>" title="롤 코드"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,7 +152,7 @@ function fncRoleDelete() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="roleNm" id="roleNm" class="f_txt" type="text" value="<c:out value='${roleManage.roleNm}'/>" maxLength="50" title="롤명"/>
+                                                <input name="roleNm" id="roleNm" class="f_txt" type="text" value="<c:out value='${roleManageVO.roleNm}'/>" maxLength="50" title="롤명"/>
                                                 &nbsp;<form:errors path="roleNm" />
                                             </td>
                                         </tr>
@@ -156,7 +162,7 @@ function fncRoleDelete() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="rolePtn" id="rolePtn" class="f_txt" type="text" value="<c:out value='${roleManage.rolePtn}'/>" maxLength="50" title="롤패턴"/>
+                                                <input name="rolePtn" id="rolePtn" class="f_txt" type="text" value="<c:out value='${roleManageVO.rolePtn}'/>" maxLength="50" title="롤패턴"/>
                                                 &nbsp;<form:errors path="rolePtn" />
                                             </td>
                                         </tr>
@@ -165,7 +171,7 @@ function fncRoleDelete() {
                                                 <label for="roleDc">설명</label>
                                             </td>
                                             <td>
-                                                <input name="roleDc" id="roleDc" class="f_txt w_full" type="text" value="<c:out value='${roleManage.roleDc}'/>" maxLength="50" title="설명"/>
+                                                <input name="roleDc" id="roleDc" class="f_txt w_full" type="text" value="<c:out value='${roleManageVO.roleDc}'/>" maxLength="50" title="설명"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -177,7 +183,7 @@ function fncRoleDelete() {
                                                 <label class="f_select" for="sel1">
                                                     <select id="sel1" name="roleTyp" title="롤타입">
                                                     	<c:forEach var="cmmCodeDetail" items="${cmmCodeDetailList}" varStatus="status">
-                                                        	<option value="<c:out value='${cmmCodeDetail.code}'/>" <c:if test="${cmmCodeDetail.code == roleManage.roleTyp}">selected</c:if> ><c:out value="${cmmCodeDetail.codeNm}"/></option>
+                                                        	<option value="<c:out value='${cmmCodeDetail.code}'/>" <c:if test="${cmmCodeDetail.code == roleManageVO.roleTyp}">selected</c:if> ><c:out value="${cmmCodeDetail.codeNm}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                 </label>
@@ -189,7 +195,7 @@ function fncRoleDelete() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="roleSort" id="roleSort" class="f_txt" type="text" value="<c:out value='${roleManage.roleSort}'/>" maxLength="50" title="롤sort"/>
+                                                <input name="roleSort" id="roleSort" class="f_txt" type="text" value="<c:out value='${roleManageVO.roleSort}'/>" maxLength="50" title="롤sort"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -197,7 +203,7 @@ function fncRoleDelete() {
                                                 <label for="roleCreatDe">등록일자</label>
                                             </td>
                                             <td>
-                                                <input name="roleCreatDe" id="roleCreatDe" class="f_txt" type="text" value="<c:out value='${roleManage.roleCreatDe}'/>" maxLength="50" readonly="readonly" title="등록일자"/>
+                                                <input name="roleCreatDe" id="roleCreatDe" class="f_txt" type="text" value="<c:out value='${roleManageVO.roleCreatDe}'/>" maxLength="50" readonly="readonly" title="등록일자"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -207,28 +213,28 @@ function fncRoleDelete() {
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     	<c:if test="${registerFlag == 'UPDATE'}">
-                                        	<a href="#LINK" class="btn btn_skyblue_h46 w_100" onclick="javascript:fncRoleDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        	<a href="" class="btn btn_skyblue_h46 w_100" onclick="fncRoleDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
                                         </c:if>
                                     </div>
 
                                     <div class="right_col btn1">
                                     	<c:if test="${registerFlag == 'INSERT'}">
-                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncRoleInsert()"><spring:message code='button.save' /></a><!-- 저장 -->
+                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fncRoleInsert()"><spring:message code='button.save' /></a><!-- 저장 -->
                                         </c:if>
                                         <c:if test="${registerFlag == 'UPDATE'}">
-                                        	<a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncRoleUpdate()"><spring:message code='button.save' /></a><!-- 저장 -->
+                                        	<a href="" class="btn btn_blue_46 w_100" onclick="fncRoleUpdate()"><spring:message code='button.save' /></a><!-- 저장 -->
                                         </c:if>
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncSelectRoleList()"><spring:message code='button.list' /></a><!-- 목록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncSelectRoleList()"><spring:message code='button.list' /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
                                 
                                 <!-- 검색조건 유지 -->
-								<c:if test="${registerFlag == 'UPDATE'}">
+<%-- 								<c:if test="${registerFlag == 'UPDATE'}"> --%>
 									<input type="hidden" name="searchCondition" value="<c:out value='${roleManageVO.searchCondition}'/>"/>
 									<input type="hidden" name="searchKeyword" value="<c:out value='${roleManageVO.searchKeyword}'/>"/>
 									<input type="hidden" name="pageIndex" value="<c:out value='${roleManageVO.pageIndex}'/>"/>
-								</c:if>
+<%-- 								</c:if> --%>
 								
 								</form:form>
                                 

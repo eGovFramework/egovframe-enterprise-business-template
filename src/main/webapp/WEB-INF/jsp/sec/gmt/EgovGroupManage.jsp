@@ -5,8 +5,9 @@
 
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01    lee.m.j              최초 생성
-     2011.08.31   JJY       경량환경 버전 생성
+     2009.02.01  lee.m.j       최초 생성
+     2011.08.31  JJY           경량환경 버전 생성
+     2024.09.16  이백행          컨트리뷰션 검색 조건 유지
 
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -115,19 +116,23 @@ function fncSelectGroupList(pageNo){
 }
 
 function fncSelectGroup(groupId) {
+    event.preventDefault();
     document.listForm.groupId.value = groupId;
     document.listForm.action = "<c:url value='/sec/gmt/EgovGroup.do'/>";
     document.listForm.submit();
 }
 
 function fncAddGroupInsert() {
-    location.replace("<c:url value='/sec/gmt/EgovGroupInsertView.do'/>");
+    event.preventDefault();
+    location.replace("<c:url value='/sec/gmt/EgovGroupInsertView.do'/>?searchCondition=<c:out value="${groupManageVO.searchCondition}" />&searchKeyword=<c:out value="${groupManageVO.searchKeyword}" />&pageIndex=<c:out value="${groupManageVO.pageIndex}" />");
 }
 
 function fncGroupListDelete() {
+    event.preventDefault();
     if(fncManageChecked()) {
         if(confirm('<spring:message code="common.delete.msg" />')) {
             document.listForm.action = "<c:url value='/sec/gmt/EgovGroupListDelete.do'/>";
+            document.listForm.method = 'post';
             document.listForm.submit();
         }
     }
@@ -184,7 +189,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form id="listForm" name="listForm" action="<c:url value='/sec/gmt/EgovAuthorList.do'/>" method="post">
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/gmt/EgovAuthorList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -195,7 +200,7 @@ function press() {
                                     <span class="lb mr10">그룹 명 : </span>
                                     <span class="item f_search">
                                         <input id="searchKeyword" class="f_input w_500" name="searchKeyword" type="text" value="<c:out value='${groupManageVO.searchKeyword}'/>" title="검색" onkeypress="press();" />
-                                        <button class="btn" type="submit" onclick="javascript:fncSelectGroupList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
+                                        <button class="btn" type="submit" onclick="fncSelectGroupList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
                                 <!--// 검색조건 -->
@@ -205,8 +210,8 @@ function press() {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncGroupListDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fncAddGroupInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncGroupListDelete()"><spring:message code='button.delete' /></a><!-- 삭제 -->
+                                        <a href="" class="btn btn_blue_46 w_100" onclick="fncAddGroupInsert()"><spring:message code='button.create' /></a><!-- 등록 -->
                                     </div>
                                 </div>
 
@@ -225,7 +230,7 @@ function press() {
                                             <tr>
                                                 <th scope="col">
                                                     <span class="f_chk_only chkAll">
-                                                        <input type="checkbox" name="checkAll" onclick="javascript:fncCheckAll()" title="전체선택">
+                                                        <input type="checkbox" name="checkAll" onclick="fncCheckAll()" title="전체선택">
                                                     </span>
                                                 </th>
                                                 <th scope="col">그룹ID</th>
@@ -251,7 +256,7 @@ function press() {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="#LINK" class="lnk" onclick="javascript:fncSelectGroup('<c:out value="${group.groupId}"/>')"><c:out value="${group.groupId}"/></a>
+                                                    <a href="" class="lnk" onclick="fncSelectGroup('<c:out value="${group.groupId}"/>')"><c:out value="${group.groupId}"/></a>
                                                 </td>
                                                 <td><c:out value="${group.groupNm}"/></td>
                                                 <td><c:out value="${group.groupDc}"/></td>
