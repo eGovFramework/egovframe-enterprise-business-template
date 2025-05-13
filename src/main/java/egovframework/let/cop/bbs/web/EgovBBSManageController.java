@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,46 +33,48 @@ import egovframework.let.cop.bbs.service.BoardMasterVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
-import lombok.RequiredArgsConstructor;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
- * 
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.19
  * @version 1.0
  * @see
  *
- *      <pre>
+ * <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *   2009.03.19  이삼섭          최초 생성
- *   2009.06.29  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
- *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- *   2024.08.24  이백행          요청 메서드 정리
- *   2024.09.29  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입 *
+ *  2009.03.19  이삼섭          최초 생성
+ *  2009.06.29  한성곤	       2단계 기능 추가 (댓글관리, 만족도조사)
+ *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- *      </pre>
+ *  </pre>
  */
 @Controller
-@RequiredArgsConstructor
 public class EgovBBSManageController {
 
-	private final EgovBBSManageService bbsMngService;
+	@Resource(name = "EgovBBSManageService")
+	private EgovBBSManageService bbsMngService;
 
-	private final EgovBBSAttributeManageService bbsAttrbService;
+	@Resource(name = "EgovBBSAttributeManageService")
+	private EgovBBSAttributeManageService bbsAttrbService;
 
-	private final EgovFileMngService fileMngService;
+	@Resource(name = "EgovFileMngService")
+	private EgovFileMngService fileMngService;
 
-	private final EgovFileMngUtil fileUtil;
+	@Resource(name = "EgovFileMngUtil")
+	private EgovFileMngUtil fileUtil;
 
-	private final EgovPropertyService propertyService;
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertyService;
 
-	private final EgovMessageSource egovMessageSource;
+	@Resource(name = "egovMessageSource")
+	EgovMessageSource egovMessageSource;
 
-	private final DefaultBeanValidator beanValidator;
+	@Autowired
+	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * XSS 방지 처리.
@@ -120,13 +124,13 @@ public class EgovBBSManageController {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "uat/uia/EgovLoginUsr";
-		}
-
+    	if(!isAuthenticated) {
+    		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+        	return "uat/uia/EgovLoginUsr";
+    	}
+		
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-
+		
 		boardVO.setBbsId(boardVO.getBbsId());
 		boardVO.setBbsNm(boardVO.getBbsNm());
 
@@ -137,13 +141,13 @@ public class EgovBBSManageController {
 
 		BoardMasterVO master = bbsAttrbService.selectBBSMasterInf(vo);
 
-		// -------------------------------
+		//-------------------------------
 		// 방명록이면 방명록 URL로 forward
-		// -------------------------------
+		//-------------------------------
 		if (master.getBbsTyCode().equals("BBST04")) {
 			return "forward:/cop/bbs/selectGuestList.do";
 		}
-		//// -----------------------------
+		////-----------------------------
 
 		boardVO.setPageUnit(propertyService.getInt("pageUnit"));
 		boardVO.setPageSize(propertyService.getInt("pageSize"));
@@ -163,13 +167,13 @@ public class EgovBBSManageController {
 
 		paginationInfo.setTotalRecordCount(totCnt);
 
-		// -------------------------------
+		//-------------------------------
 		// 기본 BBS template 지정
-		// -------------------------------
+		//-------------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
-		//// -----------------------------
+		////-----------------------------
 
 		model.addAttribute("resultList", map.get("resultList"));
 		model.addAttribute("resultCnt", map.get("resultCnt"));
@@ -192,14 +196,14 @@ public class EgovBBSManageController {
 	@GetMapping("/cop/bbs/selectBoardArticle.do")
 	public String selectBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-
+		
 		// 조회수 증가 여부 지정
 		boardVO.setPlusCount(true);
 
 		if (!boardVO.getSubPageIndex().equals("")) {
 			boardVO.setPlusCount(false);
 		}
-		//// -------------------------------
+		////-------------------------------
 
 		boardVO.setLastUpdusrId(user.getUniqId());
 		BoardVO vo = bbsMngService.selectBoardArticle(boardVO);
@@ -207,9 +211,9 @@ public class EgovBBSManageController {
 		model.addAttribute("result", vo);
 		model.addAttribute("sessionUniqId", user.getUniqId());
 
-		// ----------------------------
-		// template 처리 (기본 BBS template 지정 포함)
-		// ----------------------------
+		//----------------------------
+		// template 처리 (기본 BBS template 지정  포함)
+		//----------------------------
 		BoardMasterVO master = new BoardMasterVO();
 
 		master.setBbsId(boardVO.getBbsId());
@@ -252,15 +256,15 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", bdMstr);
 		}
 
-		// ----------------------------
+		//----------------------------
 		// 기본 BBS template 지정
-		// ----------------------------
+		//----------------------------
 		if (bdMstr.getTmplatCours() == null || bdMstr.getTmplatCours().equals("")) {
 			bdMstr.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
 
 		model.addAttribute("brdMstrVO", bdMstr);
-		//// -----------------------------
+		////-----------------------------
 
 		return "cop/bbs/EgovNoticeRegist";
 	}
@@ -297,15 +301,15 @@ public class EgovBBSManageController {
 
 			model.addAttribute("bdMstr", master);
 
-			// ----------------------------
+			//----------------------------
 			// 기본 BBS template 지정
-			// ----------------------------
+			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
 
 			model.addAttribute("brdMstrVO", master);
-			//// -----------------------------
+			////-----------------------------
 
 			return "cop/bbs/EgovNoticeRegist";
 		}
@@ -365,15 +369,15 @@ public class EgovBBSManageController {
 		model.addAttribute("bdMstr", master);
 		model.addAttribute("result", boardVO);
 
-		// ----------------------------
+		//----------------------------
 		// 기본 BBS template 지정
-		// ----------------------------
+		//----------------------------
 		if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 			master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
 
 		model.addAttribute("brdMstrVO", master);
-		//// -----------------------------
+		////-----------------------------
 
 		return "cop/bbs/EgovNoticeReply";
 	}
@@ -410,15 +414,15 @@ public class EgovBBSManageController {
 			model.addAttribute("bdMstr", master);
 			model.addAttribute("result", boardVO);
 
-			// ----------------------------
+			//----------------------------
 			// 기본 BBS template 지정
-			// ----------------------------
+			//----------------------------
 			if (master.getTmplatCours() == null || master.getTmplatCours().equals("")) {
 				master.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 			}
 
 			model.addAttribute("brdMstrVO", master);
-			//// -----------------------------
+			////-----------------------------
 
 			return "cop/bbs/EgovNoticeReply";
 		}
@@ -467,8 +471,7 @@ public class EgovBBSManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/forUpdateBoardArticle.do")
-	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -492,15 +495,15 @@ public class EgovBBSManageController {
 		model.addAttribute("result", bdvo);
 		model.addAttribute("bdMstr", bmvo);
 
-		// ----------------------------
+		//----------------------------
 		// 기본 BBS template 지정
-		// ----------------------------
+		//----------------------------
 		if (bmvo.getTmplatCours() == null || bmvo.getTmplatCours().equals("")) {
 			bmvo.setTmplatCours("/css/egovframework/cop/bbs/egovBaseTemplate.css");
 		}
 
 		model.addAttribute("brdMstrVO", bmvo);
-		//// -----------------------------
+		////-----------------------------
 
 		return "cop/bbs/EgovNoticeUpdt";
 	}

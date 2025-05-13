@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10  이용           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.21  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.10    이용             최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -44,7 +43,7 @@
  * 입력 처리 함수
  ******************************************************** */
 function insertProgramListManage(form) {
-    event.preventDefault();
+	event.preventDefault();
     if(confirm("<spring:message code="common.save.msg" />")){
         if(!validateProgrmManageVO(form)){          
             return;
@@ -57,9 +56,9 @@ function insertProgramListManage(form) {
 /* ********************************************************
  * 목록조회 함수
  ******************************************************** */
-function selectList(){
-    event.preventDefault();
-    location.href = "<c:url value='/sym/prm/EgovProgramListManageSelect.do' />?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${searchVO.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
+ function selectList(){
+	    event.preventDefault();
+	    location.href = "<c:url value='/sym/prm/EgovProgramListManageSelect.do' />?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${searchVO.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
 }
 
 /* ********************************************************

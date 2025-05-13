@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03  JJY           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.03   JJY              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -72,13 +71,13 @@ function showModalDialogCallback(retVal) {
     }
 }
 function fnListPage(){
-    event.preventDefault();
+	event.preventDefault();
     document.userManageVO.action = "<c:url value='/uss/umt/user/EgovUserManage.do'/>"; 
     document.userManageVO.method = 'get';
     document.userManageVO.submit();
 }
 function fnInsert(){
-    event.preventDefault();
+	event.preventDefault();
     if (!document.userManageVO.emplyrId.value) {
     	alert('사용자아이디 중복체크를 실행하십시오');
     }

@@ -42,14 +42,14 @@
     }
     
     function fn_egov_select_noticeList(pageNo) {
-        event.preventDefault();
-//         document.frm.pageIndex.value = pageNo; 
+    	event.preventDefault();
+        document.frm.pageIndex.value = pageNo; 
         document.frm.action = "<c:url value='/cop/bbs${prefix}/selectBoardList.do'/>";
         document.frm.submit();  
     }
     
     function fn_egov_delete_notice() {
-        event.preventDefault();
+    	event.preventDefault();
         if ("<c:out value='${anonymous}'/>" == "true" && document.frm.password.value == '') {
             alert('등록시 사용한 패스워드를 입력해 주세요.');
             document.frm.password.focus();
@@ -64,7 +64,7 @@
     }
     
     function fn_egov_moveUpdt_notice() {
-        event.preventDefault();
+    	event.preventDefault();
         if ("<c:out value='${anonymous}'/>" == "true" && document.frm.password.value == '') {
             alert('등록시 사용한 패스워드를 입력해 주세요.');
             document.frm.password.focus();
@@ -76,7 +76,7 @@
     }
     
     function fn_egov_addReply() {
-        event.preventDefault();
+    	event.preventDefault();
         document.frm.action = "<c:url value='/cop/bbs${prefix}/addReplyBoardArticle.do'/>";
         document.frm.submit();
     }
@@ -136,7 +136,7 @@
                                 <!--// Location -->
 
 								<form name="frm" method="get" action="<c:url value='/cop/bbs${prefix}/selectBoardList.do'/>">
-
+								
 								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 			                    <input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>">

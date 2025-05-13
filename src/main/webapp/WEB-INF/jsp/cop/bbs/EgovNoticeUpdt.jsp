@@ -50,7 +50,7 @@
     }
 
     function fn_egov_regist_notice(){
-        event.preventDefault();
+    	event.preventDefault();
         //document.board.onsubmit();
 
         if (!validateBoard(document.board)){
@@ -64,10 +64,10 @@
     }   
     
     function fn_egov_select_noticeList() {
-        event.preventDefault();
+    	event.preventDefault();
         document.board.action = "<c:url value='/cop/bbs${prefix}/selectBoardList.do'/>";
         document.board.method = 'get';
-        document.board.submit();    
+        document.board.submit();     
     }
     
     function fn_egov_check_file(flag) {
@@ -163,7 +163,7 @@
                                 <!--// Location -->
 
 								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false">
-
+								
 								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>

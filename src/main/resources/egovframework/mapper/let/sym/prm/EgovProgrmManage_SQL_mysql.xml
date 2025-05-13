@@ -22,7 +22,7 @@
 				, PROGRM_DC        AS "progrmDc" 
 				, URL              AS "URL"
 			FROM LETTNPROGRMLIST
-			WHERE binary(PROGRM_KOREAN_NM) like  CONCAT('%', #{searchKeyword}, '%')
+			WHERE CAST(PROGRM_KOREAN_NM AS BINARY) like  CONCAT('%', #{searchKeyword}, '%')
 			LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
 		 
 	</select> 
@@ -32,7 +32,7 @@
 		
 		SELECT COUNT(*) AS totcnt
 		  FROM LETTNPROGRMLIST
-		 WHERE binary(PROGRM_KOREAN_NM) like CONCAT('%', #{searchKeyword}, '%')
+		 WHERE CAST(PROGRM_KOREAN_NM AS BINARY) like CONCAT('%', #{searchKeyword}, '%')
 		
 	</select>
 

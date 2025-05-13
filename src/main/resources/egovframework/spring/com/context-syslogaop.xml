@@ -10,7 +10,7 @@
 	<aop:config>
 		<aop:aspect id="logManageAspect" ref="logManage">
 		  <!--  로그인 Method -->
-	      <aop:before pointcut="execution(public * egovframework.let.uat.uia.service.EgovLoginService.actionLogin(..))" method="logLogin" />
+	      <aop:after-returning pointcut="execution(public * egovframework.let.uat.uia.service.EgovLoginService.actionLogin(..))" method="logLogin" returning="loginVO"/>
 	      <!--  로그아웃 Method
 	      <aop:before pointcut="execution(public * egovframework.let.uat.uia.web.EgovLoginController.actionLogout(..))" method="logLogout" />
 	       -->

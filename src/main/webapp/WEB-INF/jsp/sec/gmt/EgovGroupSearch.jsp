@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.23  lee.m.j       최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.16  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.23    lee.m.j              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.03.23
@@ -83,7 +82,7 @@ function fncManageChecked() {
 }
 
 function fncSelectGroupList(pageNo){
-    event.preventDefault();
+	event.preventDefault();
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
  // document.listForm.action = "<c:url value='/sec/gmt/EgovGroupSearchList.do'/>";
@@ -91,7 +90,7 @@ function fncSelectGroupList(pageNo){
 }
 
 function fncSelectGroup(groupId) {
-    event.preventDefault();
+	event.preventDefault();
  // window.returnValue = groupId;
     parent.document.listForm.searchKeyword.value = groupId;
     fn_egov_cancel_popup();

@@ -5,9 +5,8 @@
 
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01  lee.m.j       최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.16  이백행          컨트리뷰션 검색 조건 유지
+     2009.02.01    lee.m.j              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
 
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -109,6 +108,7 @@ function fncManageChecked() {
 }
 
 function fncSelectGroupList(pageNo){
+	event.preventDefault();
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
     document.listForm.action = "<c:url value='/sec/gmt/EgovGroupList.do'/>";
@@ -116,7 +116,6 @@ function fncSelectGroupList(pageNo){
 }
 
 function fncSelectGroup(groupId) {
-    event.preventDefault();
     document.listForm.groupId.value = groupId;
     document.listForm.action = "<c:url value='/sec/gmt/EgovGroup.do'/>";
     document.listForm.submit();
@@ -128,7 +127,7 @@ function fncAddGroupInsert() {
 }
 
 function fncGroupListDelete() {
-    event.preventDefault();
+	event.preventDefault();
     if(fncManageChecked()) {
         if(confirm('<spring:message code="common.delete.msg" />')) {
             document.listForm.action = "<c:url value='/sec/gmt/EgovGroupListDelete.do'/>";

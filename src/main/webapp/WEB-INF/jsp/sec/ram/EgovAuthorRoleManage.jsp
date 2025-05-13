@@ -125,7 +125,7 @@ function fncSelectAuthorRoleList() {
 }
 
 function fncSelectAuthorList(){
-    event.preventDefault();
+	event.preventDefault();
     document.listForm.searchKeyword.value = "";
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthorList.do'/>";
     document.listForm.submit();
@@ -138,7 +138,7 @@ function fncSelectAuthorRole(roleCode) {
 }
 
 function fncAddAuthorRoleInsert() {
-    event.preventDefault();
+	event.preventDefault();
     if(fncManageChecked()) {
         if(confirm('<spring:message code="common.regist.msg" />')) {
             document.listForm.action = "<c:url value='/sec/ram/EgovAuthorRoleInsert.do'/>";

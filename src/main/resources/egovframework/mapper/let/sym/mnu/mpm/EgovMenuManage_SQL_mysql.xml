@@ -16,7 +16,7 @@
 				, RELATE_IMAGE_NM AS relateImageNm
 				, PROGRM_FILE_NM AS progrmFileNm
 			FROM LETTNMENUINFO 
-			WHERE binary(MENU_NM) like CONCAT('%', #{searchKeyword}, '%')
+			WHERE CAST(MENU_NM as BINARY) like CONCAT('%', #{searchKeyword}, '%')
 			LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
 		 
 	</select> 
@@ -26,7 +26,7 @@
 		
 		SELECT COUNT(MENU_NO) AS totcnt
 		  FROM LETTNMENUINFO
-		 WHERE binary(MENU_NM) like CONCAT('%', #{searchKeyword}, '%')
+		 WHERE CAST(MENU_NM as BINARY) like CONCAT('%', #{searchKeyword}, '%')
 		
 	</select>
 

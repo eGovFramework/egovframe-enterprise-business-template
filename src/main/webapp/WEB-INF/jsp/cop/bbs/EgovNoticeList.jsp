@@ -226,7 +226,7 @@
 									                        <input type="hidden" name="bbsTyCode" value="<c:out value='${brdMstrVO.bbsTyCode}'/>" />
 									                        <input type="hidden" name="bbsAttrbCode" value="<c:out value='${brdMstrVO.bbsAttrbCode}'/>" />
 									                        <input type="hidden" name="authFlag" value="<c:out value='${brdMstrVO.authFlag}'/>" />
-															<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
+									                        <input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 															<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 									                        <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 									                        

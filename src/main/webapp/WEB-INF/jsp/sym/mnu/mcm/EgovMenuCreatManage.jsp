@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10  이용           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.24  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.10    이용             최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -72,7 +71,7 @@ function selectMenuCreatManageList() {
  * 메뉴생성 화면 호출
  ******************************************************** */
 function selectMenuCreat(vAuthorCode) {
-    event.preventDefault();
+	event.preventDefault();
     document.menuCreatManageForm.authorCode.value = vAuthorCode;
     
     var $dialog = $('<div id="modalPan"></div>')

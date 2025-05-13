@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10  이용           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.21  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.10    이용             최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -71,7 +70,7 @@ function fCheckAll() {
  * 멀티삭제 처리 함수
  ******************************************************** */
 function fDeleteProgrmManageList() {
-    event.preventDefault();
+	event.preventDefault();
     var checkField = document.progrmManageForm.checkField;
     var ProgrmFileNm = document.progrmManageForm.checkProgrmFileNm;
     var checkProgrmFileNms = "";
@@ -119,7 +118,7 @@ function selectProgramListManage() {
  * 입력 화면 호출 함수
  ******************************************************** */
 function insertProgramListManage() {
-    event.preventDefault();
+	event.preventDefault();
     document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListRegist.do'/>";
     document.progrmManageForm.submit(); 
 }
@@ -127,7 +126,7 @@ function insertProgramListManage() {
  * 상세조회처리 함수
  ******************************************************** */
 function selectUpdtProgramListDetail(progrmFileNm) {
-    event.preventDefault();
+	event.preventDefault();
     document.progrmManageForm.tmp_progrmNm.value = progrmFileNm;
     document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>";
     document.progrmManageForm.submit(); 

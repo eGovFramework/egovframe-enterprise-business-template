@@ -120,25 +120,25 @@ function fn_egov_modal_remove() {
             <div>
                 <h2>직급체계관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">입퇴사정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">직급정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=200000">직위정보 관리</a></li>
+                    <li><a href="#LINK" onclick="javascript:goMenuPage('2000000')">입퇴사정보 관리</a></li>
+                    <li><a href="#LINK" onclick="javascript:goMenuPage('2000000')">직급정보 관리</a></li>
+                    <li><a href="#LINK" onclick="javascript:goMenuPage('2000000')">직위정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>진급관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=300000">업무평가점수 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=300000">상벌정보 관리</a></li>
+                	<li><a href="#LINK" onclick="javascript:goMenuPage('3000000')">업무평가점수 관리</a></li>
+                    <li><a href="#LINK" onclick="javascript:goMenuPage('3000000')">상벌정보 관리</a></li>
                 </ul>
             </div>
 
             <div>
                 <h2>근태관리</h2>
                 <ul>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=400000">출퇴근정보 관리</a></li>
-                    <li><a href="/ebt_webapp/EgovPageLink.do?linkIndex=0&baseMenuNo=400000">휴무정보 관리</a></li>
+                	<li><a href="#LINK" onclick="javascript:goMenuPage('4000000')">출퇴근정보 관리</a></li>
+                    <li><a href="#LINK" onclick="javascript:goMenuPage('4000000')">휴무정보 관리</a></li>
                 </ul>
             </div>
 
