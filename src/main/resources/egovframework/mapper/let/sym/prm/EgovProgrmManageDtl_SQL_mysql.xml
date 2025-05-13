@@ -37,7 +37,7 @@
 				, REQUST_DE AS rqesterDe 
 				, REQUST_SJ AS rqesterSj
 			FROM LETTHPROGRMCHANGEDTLS
-			WHERE binary(PROGRM_FILE_NM) like CONCAT('%', #{searchKeyword}, '%')
+			WHERE CAST(PROGRM_KOREAN_NM AS BINARY) like CONCAT('%', #{searchKeyword}, '%')
 			LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
 		 
 	</select>
@@ -47,7 +47,7 @@
 		
 		SELECT COUNT(*) AS totcnt
 		  FROM LETTHPROGRMCHANGEDTLS
-		 WHERE binary(PROGRM_FILE_NM) like CONCAT('%', #{searchKeyword}, '%')
+		 WHERE CAST(PROGRM_KOREAN_NM AS BINARY) like CONCAT('%', #{searchKeyword}, '%')
 		
 	</select>
 
@@ -146,22 +146,21 @@
 			WHERE 1=1
 		 
         <if test='searchCondition == "1"'>AND
-            binary(PROCESS_STTUS_CODE) like #{searchKeyword}  
+            CAST(PROCESS_STTUS_CODE AS BINARY) like #{searchKeyword}  
         </if>        
         <if test='searchCondition == "2"'>AND
-            binary(PROCESS_STTUS_CODE) = #{searchKeyword}   
+            CAST(PROCESS_STTUS_CODE AS BINARY) = #{searchKeyword}   
         </if>
         <if test='searchCondition == "3"'>AND
           REQUST_DE between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
         <if test='searchCondition == "4"'>AND
-            binary(RQESTER_ID) like  CONCAT('%', #{searchKeyword}, '%')   
+            CAST(RQESTER_ID AS BINARY) like  CONCAT('%', #{searchKeyword}, '%')   
         </if>
            ORDER BY REQUST_NO ASC
         LIMIT #{recordCountPerPage} OFFSET #{firstIndex}   
 	</select>
-
-	<!-- 총건수 조회   binary(PROCESS_DE) >= #{searchKeywordFrom}  and  binary(PROCESS_DE) =<  #{searchKeywordTo}  -->
+	
 	<select id="selectChangeRequstProcessListTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
 		SELECT COUNT(*) AS totcnt
@@ -169,16 +168,16 @@
 			WHERE 1=1
 		 
         <if test='searchCondition == "1"'>AND
-            binary(PROCESS_STTUS_CODE) like #{searchKeyword}  
+            CAST(PROCESS_STTUS_CODE AS BINARY) like #{searchKeyword}  
         </if>        
         <if test='searchCondition == "2"'>AND
-            binary(PROCESS_STTUS_CODE) = #{searchKeyword}   
+            CAST(PROCESS_STTUS_CODE AS BINARY) = #{searchKeyword}   
         </if>
         <if test='searchCondition == "3"'>AND
           REQUST_DE between #{searchKeywordFrom} and #{searchKeywordTo} 
         </if>
         <if test='searchCondition == "4"'>AND
-            binary(RQESTER_ID) like  CONCAT('%', #{searchKeyword}, '%')   
+            CAST(RQESTER_ID AS BINARY) like  CONCAT('%', #{searchKeyword}, '%')   
         </if>
 	</select>
 

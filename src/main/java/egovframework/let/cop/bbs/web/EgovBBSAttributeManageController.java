@@ -3,12 +3,23 @@ package egovframework.let.cop.bbs.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import egovframework.com.cmm.ComDefaultCodeVO;
+import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovCmmUseService;
+import egovframework.let.cop.bbs.service.BoardMaster;
+import egovframework.let.cop.bbs.service.BoardMasterVO;
+import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
 
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,47 +32,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import egovframework.com.cmm.ComDefaultCodeVO;
-import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovCmmUseService;
-import egovframework.let.cop.bbs.service.BoardMaster;
-import egovframework.let.cop.bbs.service.BoardMasterVO;
-import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
-import egovframework.let.utl.fcc.service.EgovStringUtil;
-import lombok.RequiredArgsConstructor;
-
 /**
- * 게시판 속성관리를 위한 컨트롤러 클래스
- * 
+ * 게시판 속성관리를 위한 컨트롤러  클래스
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009.03.12
  * @version 1.0
  * @see
  *
- *      <pre>
+ * <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *   2009.03.12  이삼섭          최초 생성
- *   2009.06.26  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
- *   2011.08.31  JJY           경량환경 템플릿 커스터마이징버전 생성
- *   2024.09.05  이백행          컨트리뷰션 검색 조건 유지
- *   2024.09.28  이백행          컨트리뷰션 롬복 생성자 기반 종속성 주입
+ *  2009.03.12  이삼섭          최초 생성
+ *  2009.06.26	한성곤		2단계 기능 추가 (댓글관리, 만족도조사)
+ *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- *      </pre>
+ *  </pre>
  */
 @Controller
-@RequiredArgsConstructor
 public class EgovBBSAttributeManageController {
 
-	private final EgovBBSAttributeManageService bbsAttrbService;
+	@Resource(name = "EgovBBSAttributeManageService")
+	private EgovBBSAttributeManageService bbsAttrbService;
 
-	private final EgovCmmUseService cmmUseService;
+	@Resource(name = "EgovCmmUseService")
+	private EgovCmmUseService cmmUseService;
 
-	private final EgovPropertyService propertyService;
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertyService;
 
-	private final DefaultBeanValidator beanValidator;
+	@Autowired
+	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 커뮤니티 관리자 및 동호회 운영자 권한을 확인한다.
@@ -88,8 +90,7 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/addBBSMaster.do")
-	public String addBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model)
-			throws Exception {
+	public String addBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
 		BoardMaster boardMaster = new BoardMaster();
 
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -176,12 +177,11 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/SelectBBSMasterInfs.do")
-	public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
-
+	public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model, HttpServletRequest request) throws Exception {
+		
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("baseMenuNo", "5000000");
-
+		
 		boardMasterVO.setPageUnit(propertyService.getInt("pageUnit"));
 		boardMasterVO.setPageSize(propertyService.getInt("pageSize"));
 
@@ -216,8 +216,7 @@ public class EgovBBSAttributeManageController {
 	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/SelectBBSMasterInf.do")
-	public String selectBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model)
-			throws Exception {
+	public String selectBBSMasterInf(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) throws Exception {
 		BoardMasterVO vo = bbsAttrbService.selectBBSMasterInf(searchVO);
 
 		model.addAttribute("result", vo);
@@ -290,7 +289,7 @@ public class EgovBBSAttributeManageController {
 			boardMaster.setLastUpdusrId(user.getUniqId());
 			bbsAttrbService.deleteBBSMasterInf(boardMaster);
 		}
-
+		
 		model.addAttribute("searchCnd", boardMasterVO.getSearchCnd());
 		model.addAttribute("searchWrd", boardMasterVO.getSearchWrd());
 		model.addAttribute("pageIndex", boardMasterVO.getPageIndex());

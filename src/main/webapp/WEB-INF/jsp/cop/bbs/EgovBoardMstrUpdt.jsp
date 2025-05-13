@@ -5,10 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.12  이삼섭          최초 생성
-     2009.06.26  한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.05  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.12   이삼섭              최초 생성
+     2009.06.26   한성곤          2단계 기능 추가 (댓글관리, 만족도조사)
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.03.12
@@ -47,7 +46,7 @@
     }
     
     function fn_egov_update_brdMstr(){
-        event.preventDefault();
+    	event.preventDefault();
         if (!validateBoardMaster(document.boardMaster)){
             return;
         }
@@ -59,14 +58,14 @@
     }   
     
     function fn_egov_select_brdMstrList(){
-        event.preventDefault();
+    	event.preventDefault();
         document.boardMaster.action = "<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>";
         document.boardMaster.method = 'get';
         document.boardMaster.submit();  
     }   
     
     function fn_egov_delete_brdMstr(){
-        event.preventDefault();
+    	event.preventDefault();
         if(confirm('<spring:message code="common.delete.msg" />')){
             document.boardMaster.action = "<c:url value='/cop/bbs/DeleteBBSMasterInf.do'/>";
             document.boardMaster.submit();  
@@ -74,7 +73,6 @@
     }
     
     function fn_egov_inqire_tmplatInqire(){
-        event.preventDefault();
         
         var $dialog = $('<div id="modalPan"></div>')
     	.html('<iframe style="border: 0px; " src="' + "<c:url value='/cop/com/selectTemplateInfsPop.do'/>" +'" width="100%" height="100%"></iframe>')
@@ -142,7 +140,7 @@
                                 <!--// Location -->
 
 								<form:form modelAttribute="boardMaster" name="boardMaster" action="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>" method="post" >
-
+								
 								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>

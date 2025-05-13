@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03  JJY           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.03   JJY              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -38,13 +37,13 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
 function fnListPage(){
-    event.preventDefault();
+	event.preventDefault();
     document.userManageVO.action = "<c:url value='/uss/umt/user/EgovUserManage.do'/>";
     document.userManageVO.method = 'get';
     document.userManageVO.submit();
 }
 function fnDeleteUser(checkedIds) {
-    event.preventDefault();
+	event.preventDefault();
     if(confirm("<spring:message code="common.delete.msg" />")){
         document.userManageVO.checkedIdForDel.value=checkedIds;
         document.userManageVO.action = "<c:url value='/uss/umt/user/EgovUserDelete.do'/>";
@@ -52,13 +51,13 @@ function fnDeleteUser(checkedIds) {
     }
 }
 function fnPasswordMove(){
-    event.preventDefault();
+	event.preventDefault();
     document.userManageVO.action = "<c:url value='/uss/umt/user/EgovUserPasswordUpdtView.do'/>";
     document.userManageVO.method = 'get';
     document.userManageVO.submit();
 }
 function fnUpdate(){
-    event.preventDefault();
+	event.preventDefault();
     if(validateUserManageVO(document.userManageVO)){
         document.userManageVO.submit();
     }
@@ -362,7 +361,7 @@ function fn_egov_modal_remove() {
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="" class="btn btn_blue_46 w_100" onclick="fnUpdate();"><spring:message code="button.save" /></a><!-- 저장 -->
+                                         <a href="" class="btn btn_blue_46 w_100" onclick="fnUpdate();"><spring:message code="button.save" /></a><!-- 저장 -->
                                         <a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>" class="btn btn_blue_46 w_100" onclick="fnListPage();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>

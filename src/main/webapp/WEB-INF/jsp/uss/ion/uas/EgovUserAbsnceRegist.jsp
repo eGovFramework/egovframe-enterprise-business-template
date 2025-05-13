@@ -40,16 +40,16 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectUserAbsnceList() {
-    event.preventDefault();
-    var varFrom = document.getElementById("userAbsnce");
-    varFrom.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
-    varFrom.method = 'get';
-    varFrom.submit();       
+	 event.preventDefault();
+	 var varFrom = document.getElementById("userAbsnce");
+	 varFrom.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
+	 varFrom.method = 'get';
+	 varFrom.submit();       
 }
 
 function fncUserAbsnceInsert() {
-    event.preventDefault();
-
+	event.preventDefault();
+	
     var varFrom = document.getElementById("userAbsnce");
     varFrom.action = "<c:url value='/uss/ion/uas/addUserAbsnce.do'/>";
 

@@ -114,7 +114,7 @@ function fncSelectAuthorList(pageNo){
 }
 
 function fncSelectAuthor(author) {
-    event.preventDefault();
+	event.preventDefault();
     document.listForm.authorCode.value = author;
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthor.do'/>";
     document.listForm.submit();     
@@ -126,11 +126,11 @@ function fncAddAuthorInsert() {
 }
 
 function fncAuthorDeleteList() {
-    event.preventDefault();
-
+	event.preventDefault();
+	
     if(fncManageChecked()) {    
         if(confirm('<spring:message code="common.delete.msg" />')) {
-            document.listForm.action = "<c:url value='/sec/ram/EgovAuthorListDelete.do'/>";
+        	document.listForm.action = "<c:url value='/sec/ram/EgovAuthorListDelete.do'/>";
             document.listForm.method = 'post';
             document.listForm.submit();
         } 
@@ -143,7 +143,7 @@ function fncAddAuthorView() {
 }
 
 function fncSelectAuthorRole(author) {
-    event.preventDefault();
+	event.preventDefault();
     document.listForm.searchKeyword.value = author;
     document.listForm.action = "<c:url value='/sec/ram/EgovAuthorRoleList.do'/>";
     document.listForm.submit();     

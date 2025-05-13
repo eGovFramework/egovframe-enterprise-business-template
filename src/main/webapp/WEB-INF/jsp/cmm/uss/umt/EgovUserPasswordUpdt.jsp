@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.03  JJY           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.12  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.03   JJY              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 JJY
     since    : 2009.03.03
@@ -38,13 +37,13 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 <!--
 function fnListPage(){
-    event.preventDefault();
+	event.preventDefault();
     document.passwordChgVO.action = "<c:url value='/uss/umt/user/EgovUserManage.do'/>";
     document.passwordChgVO.method = 'get';
     document.passwordChgVO.submit();
 }
 function fnUpdate(){
-    event.preventDefault();
+	event.preventDefault();
     if(validatePasswordChgVO(document.passwordChgVO)){
         if(document.passwordChgVO.newPassword.value != document.passwordChgVO.newPassword2.value){
             alert("<spring:message code="fail.user.passwordUpdate2" />");
@@ -90,7 +89,7 @@ function fnUpdate(){
                                 <!--// Location -->
 
 								<form name="passwordChgVO" method="post" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserPasswordUpdt.do" >
-								<!-- onsubmit="return FormValidation(document.passwordChgVO);" >  -->
+								<!-- onsubmit="return FormValidation(document.passwordChgVO);" > -->
 								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
 								<input name="checkedIdForDel" type="hidden" />
 								<!-- 검색조건 유지 -->

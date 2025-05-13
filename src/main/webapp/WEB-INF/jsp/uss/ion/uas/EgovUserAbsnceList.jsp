@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.07.01  lee.m.j       최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.13  이백행          컨트리뷰션 검색 조건 유지
+     2009.07.01   lee.m.j            최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.07.01
@@ -140,8 +139,8 @@ function fncInsertCheckId() {
     }
 }
 
-function fncSelectUserAbsnceList(pageNo) {
-    event.preventDefault();
+function fncSelectUserAbsnceList(pageNo) {c
+	event.preventDefault();
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
     document.listForm.action = "<c:url value='/uss/ion/uas/selectUserAbsnceList.do'/>";
@@ -149,7 +148,7 @@ function fncSelectUserAbsnceList(pageNo) {
 }
 
 function fncSelectUserAbsnce(userId, regYn) {
-    event.preventDefault();
+	event.preventDefault();
     if(regYn == 'N') {
         if(confirm("등록된 사용자부재 정보가 없습니다. 등록페이지로 이동하시겠습니까?")) {
             location.replace("<c:url value='/uss/ion/uas/addViewUserAbsnce.do'/>?userId="+userId);

@@ -43,11 +43,11 @@
 <script type="text/javaScript" language="javascript">
 <!--
 function fncSelectAuthorList() {
-    event.preventDefault();
+	event.preventDefault();
     var varFrom = document.getElementById("authorManage");
     varFrom.action = "<c:url value='/sec/ram/EgovAuthorList.do'/>";
     varFrom.method = 'get';
-    varFrom.submit();       
+    varFrom.submit();   
 }
 
 function fncAuthorInsert() {

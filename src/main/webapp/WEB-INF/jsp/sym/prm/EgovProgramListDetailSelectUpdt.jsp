@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.10  이용           최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.21  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.10    이용             최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이용
     since    : 2009.03.10
@@ -44,7 +43,7 @@
  * 수정처리 함수
  ******************************************************** */
 function updateProgramListManage(form) {
-    event.preventDefault();
+	event.preventDefault();
     if(confirm("<spring:message code="common.save.msg" />")){
         if(!validateProgrmManageVO(form)){          
             return;
@@ -59,7 +58,7 @@ function updateProgramListManage(form) {
  * 삭제처리함수
  ******************************************************** */
 function deleteProgramListManage(form) {
-    event.preventDefault();
+	event.preventDefault();
     if(confirm("<spring:message code="common.delete.msg" />")){
         form.action="<c:url value='/'/>sym/prm/EgovProgramListManageDelete.do";
         form.submit();
@@ -69,10 +68,10 @@ function deleteProgramListManage(form) {
 /* ********************************************************
  * 목록조회 함수
  ******************************************************** */
-function selectList(){
-    event.preventDefault();
-    location.href = "<c:url value='/'/>sym/prm/EgovProgramListManageSelect.do?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${param.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
-}
+ function selectList(){
+	    event.preventDefault();
+	    location.href = "<c:url value='/'/>sym/prm/EgovProgramListManageSelect.do?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${param.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
+	}
 <c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
 -->
 </script>
@@ -178,7 +177,7 @@ function selectList(){
 								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
-                                        <a href="<c:url value='/sym/prm/EgovProgramListManageDelete.do'/>?progrmFileNm=<c:out value="${progrmManageVO.progrmFileNm  }"/>" class="btn btn_skyblue_h46 w_100" onclick="deleteProgramListManage(document.getElementById('progrmManageVO'));"><spring:message code="button.delete" /></a><!-- 삭제 -->
+                                        <a href="<c:url value='/sym/prm/EgovProgramListManageDelete.do'/>?progrmFileNm=<c:out value="${progrmManageVO.progrmFileNm }"/>" class="btn btn_skyblue_h46 w_100" onclick="deleteProgramListManage(document.getElementById('progrmManageVO'));"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     </div>
 
                                     <div class="right_col btn1">

@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.23  lee.m.j       최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.17  이백행          컨트리뷰션 검색 조건 유지
+     2009.03.23    lee.m.j              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.03.23
@@ -143,8 +142,7 @@ function fncSelectAuthorGroupList(pageNo){
 }
 
 function fncAddAuthorGroupInsert() {
-    event.preventDefault();
-
+	event.preventDefault();
     if(!fncManageChecked()) return;
     
     if(confirm('<spring:message code="common.regist.msg" />')) {
@@ -155,13 +153,13 @@ function fncAddAuthorGroupInsert() {
 }
 
 function fncAuthorGroupDeleteList() {
-    event.preventDefault();
- 
+	event.preventDefault();
+	
     if(!fncManageChecked()) return;
 
     if(confirm('<spring:message code="common.delete.msg" />')) {
         document.listForm.action = "<c:url value='/sec/rgm/EgovAuthorGroupDelete.do'/>";
-        document.listForm.method = 'post'; 
+        document.listForm.method = 'post';
         document.listForm.submit(); 
     }
 }
@@ -174,8 +172,8 @@ function linkPage(pageNo){
 }
 
 function fncSelectAuthorGroupPop() {
-    event.preventDefault();
-
+	event.preventDefault();
+	
     if(document.listForm.searchCondition.value == '3') {
         
         var $dialog = $('<div id="modalPan"></div>')

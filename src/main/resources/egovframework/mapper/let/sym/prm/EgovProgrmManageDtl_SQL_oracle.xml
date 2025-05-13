@@ -163,8 +163,7 @@
              ) TB )  WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
         
 	</select>
-
-	<!-- 총건수 조회   binary(PROCESS_DE) >= #{searchKeywordFrom}  and  binary(PROCESS_DE) =<  #{searchKeywordTo}  -->
+	
 	<select id="selectChangeRequstProcessListTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
 		SELECT COUNT(REQUST_NO) AS "totcnt"

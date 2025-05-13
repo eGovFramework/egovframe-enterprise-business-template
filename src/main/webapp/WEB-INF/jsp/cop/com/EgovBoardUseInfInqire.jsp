@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.04.02  이삼섭          최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.06  이백행          컨트리뷰션 검색 조건 유지
+     2009.04.02   이삼섭              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 이삼섭
     since    : 2009.04.02
@@ -36,7 +35,7 @@
 <validator:javascript formName="boardUseInf" staticJavascript="false" xhtml="true" cdata="false"/>
 <script type="text/javascript">
     function fn_egov_updt_bbsUseInf(){
-        event.preventDefault();
+    	event.preventDefault();
         if (!validateBoardUseInf(document.boardUseInf)){
             return;
         }
@@ -45,10 +44,10 @@
         document.boardUseInf.submit();
     }
     function fn_egov_select_bbsUseInfs(){
-        event.preventDefault();
+    	event.preventDefault();
         document.boardUseInf.action = "<c:url value='/cop/com/selectBBSUseInfs.do'/>";
         document.boardUseInf.method = 'get';
-        document.boardUseInf.submit();      
+        document.boardUseInf.submit();  
     }
     
 </script>
@@ -90,7 +89,7 @@
                                 <!--// Location -->
 
 								<form name="boardUseInf" method="post" action="<c:url value='/cop/com/updateBBSUseInf.do'/>">
-
+								
 								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>" />

@@ -5,9 +5,8 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.02.01  lee.m.j       최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2024.09.16  이백행          컨트리뷰션 검색 조건 유지
+     2009.02.01    lee.m.j              최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
  
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
@@ -43,15 +42,15 @@
 <script type="text/javaScript" language="javascript">
 
 function fncSelectGroupList() {
-    event.preventDefault();
+	event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupList.do'/>";
     varFrom.method = 'get';
-    varFrom.submit();       
+    varFrom.submit();  
 }
 
 function fncGroupInsert() {
-    event.preventDefault();
+	event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupInsert.do'/>";
 
@@ -65,7 +64,7 @@ function fncGroupInsert() {
 }
 
 function fncGroupUpdate() {
-    event.preventDefault();
+	event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupUpdate.do'/>";
 
@@ -79,7 +78,7 @@ function fncGroupUpdate() {
 }
 
 function fncGroupDelete() {
-    event.preventDefault();
+	event.preventDefault();
     var varFrom = document.getElementById("groupManage");
     varFrom.action = "<c:url value='/sec/gmt/EgovGroupDelete.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){

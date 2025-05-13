@@ -61,7 +61,7 @@ function fnChangePerson(){
  * 조회 처리 
  *********************************************************/
 function fnSearch(){
-    event.preventDefault();
+	event.preventDefault();
     document.listForm.fromDate.value = document.listForm.searchBgnDe.value.replace(/-/g, '');
     document.listForm.toDate.value = document.listForm.searchEndDe.value.replace(/-/g, '');
     var fromDate = document.listForm.fromDate.value;

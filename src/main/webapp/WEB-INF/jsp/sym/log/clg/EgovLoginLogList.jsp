@@ -5,10 +5,9 @@
  
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
-     2009.03.11  이삼섭          최초 생성
-     2011.08.31  JJY           경량환경 버전 생성
-     2023.06.09  우시재          NSR 보안조치 (시작일자 및 종료일자 크로스사이트 스크립트 방지)
-     2024.09.06  이백행          컨트리뷰션 검색 조건 유지     
+     2009.03.11   이삼섭      최초 생성
+     2011.08.31   JJY       경량환경 버전 생성
+     2023.06.09   우시재 		NSR 보안조치 (시작일자 및 종료일자 크로스사이트 스크립트 방지)
  
     author   : 공통서비스 개발팀  이삼섭
     since    : 2009.03.11  
@@ -70,15 +69,15 @@
 	    }
 	}
    
-//     function fn_egov_inqire_loginLog(logId){
-//         var url = "<c:url value ='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId;
+//    function fn_egov_inqire_loginLog(logId){
+//        var url = "<c:url value ='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId;
         
-//         var openParam = "scrollbars=yes,toolbar=0,location=no,resizable=0,status=0,menubar=0,width=640,height=320,left=0,top=0"; 
-//         window.open(url,"p_loginLogInqire", openParam);
-//     }
+//        var openParam = "scrollbars=yes,toolbar=0,location=no,resizable=0,status=0,menubar=0,width=640,height=320,left=0,top=0"; 
+//        window.open(url,"p_loginLogInqire", openParam);
+//    }
     
     function fn_egov_inqire_loginLog(logId) {
-        event.preventDefault();
+    	event.preventDefault();
         var $dialog = $('<div id="modalPan"></div>')
     	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/log/clg/InqireLoginLog.do?logId='/>" + logId +'" width="100%" height="100%"></iframe>')
     	.dialog({
