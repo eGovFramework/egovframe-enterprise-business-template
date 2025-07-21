@@ -11,6 +11,11 @@
                 <!-- value>file:/product/jeus/egovProps/globals.properties</value-->
             </list>
         </property>
+        <!-- SYSTEM_PROPERTIES_MODE_OVERRIDE -->
+        <property name="systemPropertiesMode" value="2"/>
+        <!-- 환경변수 검색 활성화 -->
+        <property name="searchSystemEnvironment" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
     </bean>
     
     <!-- datasource 설정(propertyConfigurer 활용) -->
