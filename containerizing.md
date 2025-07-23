@@ -20,24 +20,18 @@ docker run -p 8080:8080 egov-ebt:4.3.0
 ## docker-compose에서 서비스 실행
 ```shell
 # Database(mysql)만 먼저 실행 (DB 초기화 준비)
-docker-compose up -d mysql-db
+docker compose up -d mysql-db
 
 # App 실행 (depends_on으로 DB healthy 상태 대기)
-docker-compose up -d app
+docker compose up -d app
 
 # 모든 서비스를 한 번에 실행 (백그라운드 추천)
-docker-compose up -d
+docker compose up -d
 ```
 
 ## [주의] 최초 실행 시 DB 초기화 세팅
-- docker-compose.yml에 SQL 파일 volumes가 없으므로 자동 초기화되지 않습니다. DB 컨테이너를 먼저 실행한 후 DDL/DML을 수동으로 실행하세요.
-- 추천 방법: 호스트에 `execute_sql.sh` 스크립트를 준비하고, 아래 명령어로 컨테이너 내부에서 실행.
-  ```shell
-  docker exec -it mysql-db bash -c "mysql -u root -padmin ebt < /path/to/all_ebt_ddl_mysql.sql"
-  docker exec -it mysql-db bash -c "mysql -u root -padmin ebt < /path/to/all_ebt_data_mysql.sql"
-  ```
-  - `/path/to/`는 호스트 경로를 volumes로 마운트한 경우 컨테이너 내부 경로로 대체하세요.
-- healthcheck가 'SELECT 1'을 확인하므로, 초기화 후 테이블 존재를 검증하세요.
+- docker-compose.yml에 SQL 파일 volumes가 없으므로 자동 초기화되지 않습니다.
+- DB 컨테이너를 먼저 실행한 후 DB Tool을 사용해서 DDL/DML을 수동으로 실행하세요.
 
 ## 볼륨 제거 (초기화)
 ```shell
