@@ -1,4 +1,5 @@
 #아래순서로 테이블생성 및 기초데이터 입력 
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 # ID Generation
 INSERT INTO IDS(TABLE_NAME,NEXT_ID) VALUES ('BBS_ID',1);

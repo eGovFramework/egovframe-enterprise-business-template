@@ -1,0 +1,44 @@
+services:
+  app:
+    build: .
+    image: egov-ebt:4.3.0
+    container_name: egov-ebt
+    ports:
+      - "8080:8080"
+    environment:
+      - Globals.Url=jdbc:log4jdbc:mysql://mysql-db:3306/ebt?useSSL=false
+      - Globals.UserName=root
+      - Globals.Password=admin
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --init-connect='SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+      --default-time-zone=Asia/Seoul
+      --bind-address=0.0.0.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: ebt
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD-SHELL", "mysql --protocol=TCP -h 127.0.0.1 -u root --password=admin -e 'SELECT 1' || exit 1" ]
+      interval: 1s
+      timeout: 3s
+      retries: 60
+      start_period: 3s
+    restart: unless-stopped
+
+volumes:
+  mysql-data: {}
