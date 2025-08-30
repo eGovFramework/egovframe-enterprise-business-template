@@ -62,7 +62,7 @@
                    ) X
              WHERE 1 = 1
             <if test='searchCondition == "1"'>
-                AND X.USER_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
+                AND X.USER_NM LIKE '%' || #{searchKeyword} || '%'
             </if>
             <if test='selAbsnceAt != "A"'>
                 AND X.USER_ABSNCE_AT = #{selAbsnceAt}
@@ -98,16 +98,16 @@
                 VALUES (#{userId},
                         #{userAbsnceAt},
                         #{lastUpdusrId},
-                        CURRENT_TIMESTAMP,
+                        NOW()::timestamp(0),
                         #{lastUpdusrId},
-                        CURRENT_TIMESTAMP)
+                        NOW()::timestamp(0))
     </insert>    
     
     <update id="updateUserAbsnce" parameterType="egovframework.let.uss.ion.uas.service.UserAbsnce">
             UPDATE LETTNUSERABSNCE
                SET USER_ABSNCE_AT = #{userAbsnceAt},
                    LAST_UPDUSR_ID = #{lastUpdusrId},
-                   LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+                   LAST_UPDT_PNTTM = NOW()::timestamp(0)
              WHERE EMPLYR_ID = #{userId}
     </update>    
     

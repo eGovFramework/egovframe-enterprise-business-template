@@ -5,65 +5,63 @@
 
 
     <select id="selectUserList_S" parameterType="egovframework.let.uss.umt.service.UserDefaultVO" resultType="egovMap">
-SELECT 
-    uniqId, userTy, userId , userNm, emailAdres, areaNo, middleTelno, endTelno, moblphonNo, groupId, sttus, sbscrbDe
-FROM(
+SELECT * FROM(
     SELECT
-        ESNTL_ID               uniqId,
-        'USR03'               userTy,
-        EMPLYR_ID             userId,
-        USER_NM             userNm,
-        EMAIL_ADRES           emailAdres,
-        AREA_NO               areaNo,
-        HOUSE_MIDDLE_TELNO      middleTelno,
-        HOUSE_END_TELNO         endTelno,
-        MBTLNUM           moblphonNo,
-        GROUP_ID              groupId,
-        EMPLYR_STTUS_CODE     sttus,
-        to_char(SBSCRB_DE, 'YYYY MM DD') as sbscrbDe
+        ESNTL_ID              as "uniqId",
+        'USR03'               as "userTy",
+        EMPLYR_ID             as "userId",
+        USER_NM             as "userNm",
+        EMAIL_ADRES           as "emailAdres",
+        AREA_NO               as "areaNo",
+        HOUSE_MIDDLE_TELNO      as "middleTelno",
+        HOUSE_END_TELNO         as "endTelno",
+        MBTLNUM           as "moblphonNo",
+        GROUP_ID              as "groupId",
+        EMPLYR_STTUS_CODE     as "sttus",
+        to_char(SBSCRB_DE, 'YYYY MM DD') as "sbscrbDe"
     FROM    LETTNEMPLYRINFO
     ) A
         WHERE 1=1
         <if test='sbscrbSttus != "0"'>
-            AND sttus LIKE  #{sbscrbSttus}
+            AND "sttus" LIKE  #{sbscrbSttus}
         </if>
         <if test='searchCondition == "0"'>
-            AND userId LIKE #{searchKeyword}
+            AND "userId" LIKE #{searchKeyword}
         </if>
         <if test='searchCondition == "1"'>
-            AND userNm LIKE '%' #{searchKeyword} '%'
+            AND "userNm" LIKE '%' || #{searchKeyword} || '%'
         </if>
-        ORDER BY sbscrbDe DESC
+        ORDER BY "sbscrbDe" DESC
         LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
     </select>
     
     <select id="selectUserListTotCnt_S" parameterType="egovframework.let.uss.umt.service.UserDefaultVO" resultType="int">
-            SELECT COUNT(1) totcnt
+            SELECT COUNT(1) AS "totcnt"
             FROM(
             SELECT
-                ESNTL_ID               uniqId,
-                'USR03'               userTy,
-                EMPLYR_ID             userId,
-                USER_NM             userNm,
-                EMAIL_ADRES           emailAdres,
-                AREA_NO               areaNo,
-                HOUSE_MIDDLE_TELNO      middleTelno,
-                HOUSE_END_TELNO         endTelno,
-                MBTLNUM           moblphonNo,
-                GROUP_ID              groupId,
-                EMPLYR_STTUS_CODE     sttus,
-                to_char(SBSCRB_DE, 'YYYY MM DD') as sbscrbDe
+                ESNTL_ID               as "uniqId",
+                'USR03'               as "userTy",
+                EMPLYR_ID             as "userId",
+                USER_NM             as "userNm",
+                EMAIL_ADRES           as "emailAdres",
+                AREA_NO               as "areaNo",
+                HOUSE_MIDDLE_TELNO      as "middleTelno",
+                HOUSE_END_TELNO         as "endTelno",
+                MBTLNUM           as "moblphonNo",
+                GROUP_ID              as "groupId",
+                EMPLYR_STTUS_CODE     as "sttus",
+                to_char(SBSCRB_DE, 'YYYY MM DD') as "sbscrbDe"
             FROM    LETTNEMPLYRINFO
             ) A
         WHERE 1=1
             <if test='sbscrbSttus != "0"'>
-                AND sttus LIKE  #{sbscrbSttus}
+                AND "sttus" LIKE  #{sbscrbSttus}
             </if>
             <if test='searchCondition == "0"'>
-                AND userId LIKE #{searchKeyword}
+                AND "userId" LIKE #{searchKeyword}
             </if>
             <if test='searchCondition == "1"'>
-                AND userNm LIKE '%' #{searchKeyword} '%'
+                AND "userNm" LIKE '%' || #{searchKeyword} || '%'
             </if>
     </select>
     
@@ -123,7 +121,7 @@ FROM(
                     #{orgnztId}          ,
                     #{insttCode}         ,
                     #{emplyrSttusCode}   ,
-                    CURRENT_TIMESTAMP           ,
+                    NOW()::timestamp(0)           ,
                     #{subDn}             )
         
     </insert>
@@ -138,34 +136,34 @@ FROM(
     <select id="selectUser_S" resultType="egovframework.let.uss.umt.service.UserManageVO">
         
             SELECT
-                ESNTL_ID           uniqId            ,
-                'USR03'           userTy,
-            EMPLYR_ID         emplyrId          ,
-            USER_NM         emplyrNm          ,
-            PASSWORD          password          ,
-            PASSWORD_HINT     passwordHint      ,
-            PASSWORD_CNSR     passwordCnsr      ,
-            EMPL_NO           emplNo            ,
-            IHIDNUM           ihidnum           ,
-            SEXDSTN_CODE      sexdstnCode       ,
-            BRTHDY              brth              ,
-            AREA_NO           areaNo            ,
-            HOUSE_MIDDLE_TELNO  homemiddleTelno   ,
-            HOUSE_END_TELNO     homeendTelno      ,
-            FXNUM             fxnum             ,
-            HOUSE_ADRES         homeadres         ,
-            DETAIL_ADRES      detailAdres       ,
-            ZIP               zip               ,
-            OFFM_TELNO        offmTelno         ,
-            MBTLNUM       moblphonNo        ,
-            EMAIL_ADRES       emailAdres        ,
-            OFCPS_NM          ofcpsNm           ,
-            GROUP_ID          groupId           ,
-            ORGNZT_ID         orgnztId          ,
-            PSTINST_CODE        insttCode         ,
-            EMPLYR_STTUS_CODE emplyrSttusCode   , 
-            to_char(SBSCRB_DE, 'YYYY MM DD') as sbscrbDe,
-            CRTFC_DN_VALUE            subDn
+                ESNTL_ID           as "uniqId",
+                'USR03'           as "userTy",
+            EMPLYR_ID         as "emplyrId",
+            USER_NM         as "emplyrNm",
+            PASSWORD          as "password",
+            PASSWORD_HINT     as "passwordHint",
+            PASSWORD_CNSR     as "passwordCnsr",
+            EMPL_NO           as "emplNo",
+            IHIDNUM           as "ihidnum",
+            SEXDSTN_CODE      as "sexdstnCode",
+            BRTHDY              as "brth",
+            AREA_NO           as "areaNo",
+            HOUSE_MIDDLE_TELNO  as "homemiddleTelno",
+            HOUSE_END_TELNO     as "homeendTelno",
+            FXNUM             as "fxnum",
+            HOUSE_ADRES         as "homeadres",
+            DETAIL_ADRES      as "detailAdres",
+            ZIP               as "zip",
+            OFFM_TELNO        as "offmTelno",
+            MBTLNUM       as "moblphonNo",
+            EMAIL_ADRES       as "emailAdres",
+            OFCPS_NM          as "ofcpsNm",
+            GROUP_ID          as "groupId",
+            ORGNZT_ID         as "orgnztId",
+            PSTINST_CODE        as "insttCode",
+            EMPLYR_STTUS_CODE as "emplyrSttusCode", 
+            to_char(SBSCRB_DE, 'YYYY MM DD') as "sbscrbDe",
+            CRTFC_DN_VALUE            as "subDn"
         FROM LETTNEMPLYRINFO
             WHERE ESNTL_ID=#{uniqId}
         
@@ -245,7 +243,7 @@ FROM(
                     PSTINST_CODE          ,
                     EMPLYR_STTUS_CODE   ,
                     ESNTL_ID             ,
-                    CURRENT_TIMESTAMP
+                    NOW()::timestamp(0)
             FROM LETTNEMPLYRINFO
             WHERE ESNTL_ID = #{uniqId}
         
@@ -253,21 +251,21 @@ FROM(
     
     <select id="checkIdDplct_S" resultType="int">
         
-            SELECT COUNT(1) usedCnt
+            SELECT COUNT(1) as "usedCnt"
                 FROM(
                 SELECT
-                    EMPLYR_ID             userId
+                    EMPLYR_ID             as "userId"
                 FROM    LETTNEMPLYRINFO
                 UNION ALL
                 SELECT
-                    ENTRPRS_MBER_ID        userId
+                    ENTRPRS_MBER_ID        as "userId"
                 FROM    LETTNENTRPRSMBER
                 UNION ALL
                 SELECT
-                    MBER_ID               userId
+                    MBER_ID               as "userId"
                 FROM    LETTNGNRLMBER
                 ) A
-            WHERE userId = #{checkId}
+            WHERE "userId" = #{checkId}
         
     </select>
     
@@ -283,7 +281,7 @@ FROM(
     <select id="selectPassword_S" resultType="egovframework.let.uss.umt.service.UserManageVO">
         
             SELECT
-                    PASSWORD          password 
+                    PASSWORD          as "password" 
             FROM    LETTNEMPLYRINFO
             WHERE   ESNTL_ID=#{uniqId}
         

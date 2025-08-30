@@ -41,7 +41,7 @@
 		   VALUES ( #{groupId}
 			      , #{groupNm}
 				  , #{groupDc}
-				  , CURRENT_TIMESTAMP)
+				  , NOW()::timestamp(0))
 		
 	</insert>
 	
@@ -50,7 +50,7 @@
 			UPDATE LETTNAUTHORGROUPINFO 
 			   SET GROUP_NM=#{groupNm}
 				 , GROUP_DC=#{groupDc}
-				 , GROUP_CREAT_DE=CURRENT_TIMESTAMP
+				 , GROUP_CREAT_DE=NOW()::timestamp(0)
 		  	 WHERE GROUP_ID=#{groupId}
 		
 	</update>

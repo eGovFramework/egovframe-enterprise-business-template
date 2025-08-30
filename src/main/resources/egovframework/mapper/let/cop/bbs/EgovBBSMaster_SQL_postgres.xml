@@ -55,7 +55,7 @@
 			VALUES
 			( #{bbsId}, #{bbsTyCode}, #{bbsAttrbCode}, #{bbsNm}, #{bbsIntrcn}, 
 			  #{replyPosblAt}, #{fileAtchPosblAt}, #{posblAtchFileNumber}::integer, 
-			  #{posblAtchFileSize}::integer, #{tmplatId}, #{useAt}, #{frstRegisterId}, CURRENT_TIMESTAMP  
+			  #{posblAtchFileSize}::integer, #{tmplatId}, #{useAt}, #{frstRegisterId}, NOW()::timestamp(0)  
 			 )			
 		
 	</insert>
@@ -159,7 +159,7 @@
 				ATCH_POSBL_FILE_SIZE = #{posblAtchFileSize}::integer,
 				TMPLAT_ID = #{tmplatId},		
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE BBS_ID = #{bbsId}
  		
  	</update>
@@ -169,7 +169,7 @@
 			UPDATE LETTNBBSMASTER SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE BBS_ID = #{bbsId}
  		
  	</update>

@@ -83,9 +83,9 @@
 		         ,  #{codeNm}
 		         ,  #{codeDc}
 		         ,  #{useAt}
-		         ,  CURRENT_TIMESTAMP
+		         ,  NOW()::timestamp(0)
 		         ,  #{frstRegisterId}
-		         ,  CURRENT_TIMESTAMP
+		         ,  NOW()::timestamp(0)
 		         ,  #{frstRegisterId}
 		         ) 
 		
@@ -97,7 +97,7 @@
                SET  CODE_NM           = #{codeNm}
                  ,  CODE_DC           = #{codeDc}
                  ,  USE_AT            = #{useAt}
-                 ,  LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+                 ,  LAST_UPDT_PNTTM = NOW()::timestamp(0)
                  ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
              WHERE  CODE_ID   = #{codeId} 
                AND  CODE      = #{code}

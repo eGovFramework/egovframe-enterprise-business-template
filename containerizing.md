@@ -153,6 +153,16 @@ docker compose down -v
 docker compose up --build -d
 ```
 
+### Postgres 데이터베이스 초기 설정
+
+컨테이너 실행 시 자동으로 DDL/DML이 실행되어 데이터베이스가 초기화됩니다.
+
+만약 PostgreSQL을 별도로 실행하는 경우(컨테이너 또는 로컬), 아래 SQL 파일을 순서대로 실행하여 수동으로 데이터베이스를 초기화하시면 됩니다.
+
+`/DATABASE/postgres/all_ebt_ddl_postgres.sql`
+`/DATABASE/postgres/all_ebt_data_postgres.sql`
+
+
 ## 🌐 접속 정보
 
 ### 웹 애플리케이션

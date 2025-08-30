@@ -52,7 +52,7 @@
                   , CREAT_DT)
            VALUES ( #{authorCode}
                   , #{roleCode}
-                  , CURRENT_TIMESTAMP)
+                  , NOW()::timestamp(0))
         
     </insert>
 

@@ -37,7 +37,7 @@
     </select>
 
     <select id="selectLoginPolicyListTotCnt" parameterType="egovframework.let.uat.uap.service.LoginPolicyVO" resultType="int">
-            SELECT COUNT(*) AS totcnt                  
+            SELECT COUNT(*) AS "totcnt"                  
               FROM COMVNUSERMASTER A LEFT OUTER JOIN LETTNLOGINPOLICY B
                 ON A.USER_ID = B.EMPLYR_ID   
              WHERE 1 = 1
@@ -80,9 +80,9 @@
                    ,#{dplctPermAt}
                    ,#{lmttAt}
                    ,#{userId}
-                   ,CURRENT_TIMESTAMP
+                   ,NOW()::timestamp(0)
                    ,#{userId}
-                   ,CURRENT_TIMESTAMP)
+                   ,NOW()::timestamp(0))
         
     </insert>
 
@@ -93,7 +93,7 @@
                   ,DPLCT_PERM_AT = #{dplctPermAt}
                   ,LMTT_AT = #{lmttAt}
                   ,LAST_UPDUSR_ID = #{userId}
-                  ,LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+                  ,LAST_UPDT_PNTTM = NOW()::timestamp(0)
              WHERE EMPLYR_ID = #{emplyrId}
         
     </update>

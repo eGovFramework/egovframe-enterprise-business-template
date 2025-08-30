@@ -96,7 +96,7 @@
 			  #{ntcrId}, #{ntcrNm}, #{password}, #{inqireCo}::integer, 
 			  #{ntceBgnde}, #{ntceEndde}, #{replyAt}, 
 			  #{parnts}::integer, 1, #{replyLc}::integer, #{atchFileId},
-			  #{frstRegisterId}, CURRENT_TIMESTAMP, 'Y'
+			  #{frstRegisterId}, NOW()::timestamp(0), 'Y'
 			 )			
 
 	</insert>
@@ -119,7 +119,7 @@
 			  #{ntcrId}, #{ntcrNm}, #{password}, #{inqireCo}::integer, 
 			  #{ntceBgnde}, #{ntceEndde}, #{replyAt}, 
 			  #{parnts}::integer, 1, #{replyLc}::integer, #{atchFileId},
-			  #{frstRegisterId}, CURRENT_TIMESTAMP, 'Y'
+			  #{frstRegisterId}, NOW()::timestamp(0), 'Y'
 			 )			
 		
 	</insert>	
@@ -236,7 +236,7 @@
 				NTCE_ENDDE = #{ntceEndde},
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				ATCH_FILE_ID = #{atchFileId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}::integer
  		
@@ -248,7 +248,7 @@
 				NTT_SJ = #{nttSj},
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}::integer
  		
@@ -282,7 +282,7 @@
 			UPDATE LETTNBBS SET 
 				RDCNT = #{inqireCo}::integer,
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}::integer
  		

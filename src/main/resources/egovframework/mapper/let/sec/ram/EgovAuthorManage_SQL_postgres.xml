@@ -33,7 +33,7 @@
            VALUES ( #{authorCode}
                   , #{authorNm}
                   , #{authorDc}
-                  , CURRENT_TIMESTAMP)
+                  , NOW()::timestamp(0))
          
     </insert>
 

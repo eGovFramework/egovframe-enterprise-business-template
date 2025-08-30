@@ -38,7 +38,7 @@
 			 USE_AT, FRST_REGISTER_ID, FRST_REGIST_PNTTM )
 			VALUES
 			( #{tmplatId}, #{tmplatNm}, #{tmplatSeCode}, #{tmplatCours}, 
-			  #{useAt}, #{frstRegisterId}, CURRENT_TIMESTAMP  
+			  #{useAt}, #{frstRegisterId}, NOW()::timestamp(0)  
 			 )			
 		
 	</insert>
@@ -127,7 +127,7 @@
 				TMPLAT_COURS = #{tmplatCours}, 
 				USE_AT = #{useAt},
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE TMPLAT_ID = #{tmplatId}
  		
  	</update>
@@ -137,7 +137,7 @@
 			UPDATE LETTNBBSMASTER SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
-				LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+				LAST_UPDT_PNTTM = NOW()::timestamp(0)
 			WHERE TMPLAT_ID = #{tmplatId}
  		
  	</update>

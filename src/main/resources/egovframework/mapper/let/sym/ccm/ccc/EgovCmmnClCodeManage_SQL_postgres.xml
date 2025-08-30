@@ -67,9 +67,9 @@
 		         ,  #{clCodeNm}
 		         ,  #{clCodeDc}
 		         ,  #{useAt}
-		         ,  CURRENT_TIMESTAMP
+		         ,  NOW()::timestamp(0)
 		         ,  #{frstRegisterId}
-		         ,  CURRENT_TIMESTAMP
+		         ,  NOW()::timestamp(0)
 		         ,  #{frstRegisterId}
 		         ) 
 		
@@ -81,7 +81,7 @@
                SET  CL_CODE_NM        = #{clCodeNm}
                  ,  CL_CODE_DC        = #{clCodeDc}
                  ,  USE_AT            = #{useAt}
-                 ,  LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+                 ,  LAST_UPDT_PNTTM = NOW()::timestamp(0)
                  ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
              WHERE  CL_CODE           = #{clCode} 
 		

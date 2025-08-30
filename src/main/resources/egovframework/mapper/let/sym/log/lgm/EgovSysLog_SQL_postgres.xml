@@ -38,7 +38,7 @@
 				  , #{processTime}
 				  , #{rqesterId}
 				  , #{rqesterIp}
-				  , to_char(CURRENT_TIMESTAMP, 'YYYYMMDD'))
+				  , to_char(NOW(), 'YYYYMMDD'))
 		
 	</insert>
 
@@ -138,9 +138,9 @@
 	              FROM LETTNLOGINLOG b
                  WHERE NOT EXISTS (SELECT c.OCCRRNC_DE 
                                      FROM LETTSSYSLOGSUMMARY c
-                                    WHERE c.OCCRRNC_DE = to_char(CURRENT_TIMESTAMP - INTERVAL '1 day', 'YYYYMMDD')
+                                    WHERE c.OCCRRNC_DE = to_char(NOW() - INTERVAL '1 day', 'YYYYMMDD')
                                   )
-                   AND to_char(b.CREAT_DT, 'YYYYMMDD') = to_char(CURRENT_TIMESTAMP - INTERVAL '1 day', 'YYYYMMDD')
+                   AND to_char(b.CREAT_DT, 'YYYYMMDD') = to_char(NOW() - INTERVAL '1 day', 'YYYYMMDD')
                  GROUP BY OCCRRNC_DE
                         , b.CONECT_MTHD
 		
@@ -150,7 +150,7 @@
 	<delete id="logDeleteSysLogSummary">
 		
 			DELETE FROM LETTNLOGINLOG
-             WHERE to_char(CREAT_DT, 'YYYYMMDD') &lt; to_char(CURRENT_TIMESTAMP - INTERVAL '210 days', 'YYYYMMDD')
+             WHERE to_char(CREAT_DT, 'YYYYMMDD') &lt; to_char(NOW() - INTERVAL '210 days', 'YYYYMMDD')
 		
 	</delete>
 

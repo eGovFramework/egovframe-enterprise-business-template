@@ -65,7 +65,7 @@
                   , #{roleDc}
                   , #{roleTyp}
                   , #{roleSort}
-				  , CURRENT_TIMESTAMP)
+				  , NOW()::timestamp(0))
 		
 	</insert>
 
@@ -77,7 +77,7 @@
                  , ROLE_DC=#{roleDc}
                  , ROLE_TY=#{roleTyp}
                  , ROLE_SORT=#{roleSort}
-				 , ROLE_CREAT_DE=CURRENT_TIMESTAMP
+				 , ROLE_CREAT_DE=NOW()::timestamp(0)
 		  	 WHERE ROLE_CODE=#{roleCode}
 		
 	</update>

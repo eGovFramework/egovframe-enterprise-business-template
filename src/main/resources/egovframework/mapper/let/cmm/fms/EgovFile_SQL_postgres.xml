@@ -50,7 +50,7 @@
 			INSERT INTO LETTNFILE
 			(ATCH_FILE_ID, CREAT_DT, USE_AT)
 			VALUES
-			( #{atchFileId}, CURRENT_TIMESTAMP, 'Y')			
+			( #{atchFileId}, NOW()::timestamp(0), 'Y')			
 		
 	</insert>
 	

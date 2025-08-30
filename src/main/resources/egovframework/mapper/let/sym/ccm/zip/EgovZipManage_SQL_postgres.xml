@@ -101,9 +101,9 @@
 			     ,  #{emdNm}     
 			     ,  #{liBuldNm} 
 			     ,  #{lnbrDongHo}
-			     ,  CURRENT_TIMESTAMP
+			     ,  NOW()::timestamp(0)
 			     ,  #{frstRegisterId}
-			     ,  CURRENT_TIMESTAMP
+			     ,  NOW()::timestamp(0)
 			     ,  #{frstRegisterId}
 			     ) 
 		
@@ -133,9 +133,9 @@
 			     ,  #{emdNm}     
 			     ,  #{liBuldNm} 
 			     ,  #{lnbrDongHo}
-			     ,  CURRENT_TIMESTAMP
+			     ,  NOW()::timestamp(0)
 			     ,  #{frstRegisterId}
-			     ,  CURRENT_TIMESTAMP
+			     ,  NOW()::timestamp(0)
 			     ,  #{frstRegisterId}
 			     ) 
 		
@@ -149,7 +149,7 @@
                  ,  EMD_NM            = #{emdNm}     
                  ,  LI_BULD_NM        = #{liBuldNm} 
                  ,  LNBR_DONG_HO      = #{lnbrDongHo}
-                 ,  LAST_UPDT_PNTTM = CURRENT_TIMESTAMP
+                 ,  LAST_UPDT_PNTTM = NOW()::timestamp(0)
                  ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
              WHERE  ZIP               = #{zip}
                AND  SN                = #{sn}::integer

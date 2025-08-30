@@ -32,7 +32,7 @@
 				  , #{loginIp}
 				  , #{errOccrrAt}
 				  , #{errorCode}
-				  , CURRENT_TIMESTAMP)
+				  , NOW()::timestamp(0))
 		
 	</insert>
 

@@ -30,7 +30,7 @@
 	<!-- 총건수 조회 -->
 	<select id="selectProgrmListTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
-		SELECT COUNT(*) AS totcnt
+		SELECT COUNT(*) AS "totcnt"
 		  FROM LETTNPROGRMLIST
 		 WHERE PROGRM_KOREAN_NM LIKE '%' || #{searchKeyword} || '%'
 		
@@ -39,7 +39,7 @@
 	<!-- 파일명존재여부 조회 -->
 	<select id="selectProgrmNMTotCnt" parameterType="comDefaultVO" resultType="int">
 		
-		SELECT COUNT(*) AS totcnt
+		SELECT COUNT(*) AS "totcnt"
 		  FROM LETTNPROGRMLIST
 		 WHERE PROGRM_FILE_NM = #{searchKeyword}
 		
@@ -48,11 +48,11 @@
 	<select id="selectProgrm_D" parameterType="comDefaultVO" resultType="egovframework.let.sym.prm.service.ProgrmManageVO">
 		
 			SELECT
-				  PROGRM_FILE_NM AS progrmFileNm 
-				, PROGRM_STRE_PATH AS progrmStrePath 
-				, PROGRM_KOREAN_NM AS progrmKoreanNm 
-				, PROGRM_DC AS progrmDc 
-				, URL AS URL
+				  PROGRM_FILE_NM AS "progrmFileNm" 
+				, PROGRM_STRE_PATH AS "progrmStrePath" 
+				, PROGRM_KOREAN_NM AS "progrmKoreanNm" 
+				, PROGRM_DC AS "progrmDc" 
+				, URL AS "URL"
 			FROM LETTNPROGRMLIST
 			WHERE PROGRM_FILE_NM = #{searchKeyword}
 		
@@ -101,7 +101,7 @@
 	<!-- 메뉴정보 총건수 조회 -->
 	<select id="selectProgrmListTotCnt" parameterType="egovframework.let.sym.prm.service.ProgrmManageVO" resultType="int">
 		
-		SELECT COUNT(*) AS totcnt FROM LETTNPROGRMLIST
+		SELECT COUNT(*) AS "totcnt" FROM LETTNPROGRMLIST
 		
 	</select>
 </mapper>
