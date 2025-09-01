@@ -46,14 +46,27 @@ PostgreSQL 환경으로 전환하기 위해 다음 설정을 변경해야 합니
 
 #### 1. globals.properties 파일 수정
 
+기존 mysql 설정을 postgres 환경에 맞게 변경합니다.
+
 `src/main/resources/egovframework/egovProps/globals.properties` 파일에서:
 
 ```properties
 # 기존
 Globals.DbType = mysql
+Globals.UserName = root
+Globals.Password = admin
+#mysql 드라이버 정의 주석처리
+#Globals.DriverClassName = net.sf.log4jdbc.DriverSpy
+#Globals.Url = jdbc:log4jdbc:mysql://127.0.0.1:3306/ebt
 
 # 변경
 Globals.DbType = postgres
+Globals.UserName = postgres
+Globals.Password = admin
+#postgres 드라이버 정의 주석해제
+Globals.DriverClassName=org.postgresql.Driver
+Globals.Url=jdbc:postgresql://127.0.0.1:5432/postgres?currentSchema=ebt
+
 ```
 
 #### 2. pom.xml 파일 수정
@@ -84,7 +97,6 @@ services:
       - Globals.Url=jdbc:postgresql://postgres-db:5432/postgres?currentSchema=ebt
       - Globals.DriverClassName=org.postgresql.Driver
       - Globals.DbType=postgres
-      - Globals.MapperDbType=postgres
       - Globals.UserName=postgres
       - Globals.Password=admin
     depends_on:
