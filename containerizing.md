@@ -39,7 +39,152 @@ docker-compose down -v
 ```
 - 이 명령으로 mysql-data 볼륨을 삭제하여 DB를 초기화합니다. 재시작 전에 사용하세요.
 
-### [참고] JVM 메모리 및 성능 옵션 설명
+
+## 🐘 PostgreSQL 환경 실행
+
+PostgreSQL 환경으로 전환하기 위해 다음 설정을 변경해야 합니다.
+
+#### 1. globals.properties 파일 수정
+
+기존 mysql 설정을 postgres 환경에 맞게 변경합니다.
+
+`src/main/resources/egovframework/egovProps/globals.properties` 파일에서:
+
+```properties
+# 기존
+Globals.DbType = mysql
+Globals.UserName = root
+Globals.Password = admin
+#mysql 드라이버 정의 주석처리
+#Globals.DriverClassName = net.sf.log4jdbc.DriverSpy
+#Globals.Url = jdbc:log4jdbc:mysql://127.0.0.1:3306/ebt
+
+# 변경
+Globals.DbType = postgres
+Globals.UserName = postgres
+Globals.Password = admin
+#postgres 드라이버 정의 주석해제
+Globals.DriverClassName=org.postgresql.Driver
+Globals.Url=jdbc:postgresql://127.0.0.1:5432/postgres?currentSchema=ebt
+
+```
+
+#### 2. pom.xml 파일 수정
+
+`/pom.xml` 파일에서 postgresql 드라이버 dependency 주석을 해제합니다:
+```xml
+		<!-- postgres driver -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.1</version>
+		</dependency>
+```
+
+#### 3. docker-compose.yml 파일 교체
+
+기존 `docker-compose.yml` 파일을 다음 내용으로 변경:
+
+```yaml
+services:
+  app:
+    build: .
+    image: egov-ebt:4.3.0
+    container_name: egov-ebt
+    ports:
+      - "8080:8080"
+    environment:
+      - Globals.Url=jdbc:postgresql://postgres-db:5432/postgres?currentSchema=ebt
+      - Globals.DriverClassName=org.postgresql.Driver
+      - Globals.DbType=postgres
+      - Globals.UserName=postgres
+      - Globals.Password=admin
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres-db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+      TZ: Asia/Seoul
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./DATABASE/postgres/all_ebt_ddl_postgres.sql:/docker-entrypoint-initdb.d/01_ddl.sql:ro
+      - ./DATABASE/postgres/all_ebt_data_postgres.sql:/docker-entrypoint-initdb.d/02_data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 1s
+      timeout: 3s
+      retries: 60
+      start_period: 3s
+    restart: unless-stopped
+
+volumes:
+  postgres-data: {}
+```
+
+### 🚀 PostgreSQL 환경 실행
+
+#### 1. Docker 컨테이너 빌드 및 실행
+
+```bash
+# PostgreSQL 환경으로 실행(최초)
+docker compose up --build -d
+
+# 이후 컨테이너만 실행
+docker compose up -d
+```
+
+#### 2. 실행 상태 확인
+
+```bash
+# 컨테이너 상태 확인
+docker compose ps
+
+# 로그 확인
+docker compose logs -f
+```
+
+#### 3. 컨테이너 중지
+
+```bash
+# 컨테이너 중지
+docker compose down
+
+# 환경 중지 및 볼륨 완전 삭제
+docker compose down -v
+
+# 이미지 재빌드 실행
+docker compose up --build -d
+```
+
+### Postgres 데이터베이스 초기 설정
+
+컨테이너 실행 시 자동으로 DDL/DML이 실행되어 데이터베이스가 초기화됩니다.
+
+만약 PostgreSQL을 별도로 실행하는 경우(컨테이너 또는 로컬), 아래 SQL 파일을 순서대로 실행하여 수동으로 데이터베이스를 초기화하시면 됩니다.
+
+`/DATABASE/postgres/all_ebt_ddl_postgres.sql`
+`/DATABASE/postgres/all_ebt_data_postgres.sql`
+
+
+## 🌐 접속 정보
+
+### 웹 애플리케이션
+- **URL**: http://localhost:8080
+- **관리자 계정**:
+  - 아이디: `admin`
+  - 비밀번호: `1`
+
+
+## JVM 메모리 및 성능 옵션 설명
 
 이 문서는 Dockerfile의 `ENV JAVA_TOOL_OPTIONS`를 기반으로 Docker 컨테이너 환경에서 유용한 JVM 옵션을 요약합니다. 각 옵션은 메모리 관리, GC 최적화, 디버깅을 위해 설계되었습니다.
 
