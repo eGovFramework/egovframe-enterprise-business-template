@@ -22,6 +22,11 @@
     <alias name="dataSource-${Globals.DbType}" alias="dataSource" />
     <alias name="dataSource-${Globals.DbType}" alias="egov.dataSource" />
     
+    <!-- datasource 설정(propertyConfigurer 활용)
+    <alias name="dataSource-${Globals.DbType2}" alias="dataSource2" />
+    <alias name="dataSource-${Globals.DbType2}" alias="egov.dataSource2" />
+     -->
+    
     <!-- mysql -->
     <bean id="dataSource-mysql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${Globals.DriverClassName}"/>
@@ -71,5 +76,15 @@
         <property name="username" value="${Globals.UserName}"/>
         <property name="password" value="${Globals.Password}"/>
     </bean>
+    
+    
+    <!-- postgres2
+    <bean id="dataSource-postgres" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.DriverClassName2}"/>
+        <property name="url" value="${Globals.Url2}" />
+        <property name="username" value="${Globals.UserName2}"/>
+        <property name="password" value="${Globals.Password2}"/>
+    </bean>
+     -->
     
 </beans>

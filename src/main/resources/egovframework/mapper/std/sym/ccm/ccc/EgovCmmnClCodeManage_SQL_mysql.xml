@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CmmnClCodeManageDAO">
+
+
+	<select id="selectCmmnClCodeList" parameterType="egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO" resultType="egovMap">
+		
+			SELECT  CL_CODE
+			     ,  CL_CODE_NM
+			     ,  USE_AT
+			  FROM  LETTCCMMNCLCODE
+			 WHERE  1 = 1
+		
+			<if test='searchCondition == "1"'>AND
+				CL_CODE = #{searchKeyword}
+			</if>
+			<if test='searchCondition == "2"'>AND
+				CL_CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchCondition == &quot;CodeList&quot;">AND
+				USE_AT        = 'Y'
+			</if>
+			 LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+	<select id="selectCmmnClCodeListTotCnt" parameterType="egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO" resultType="int">
+		
+			SELECT  COUNT(*) totcnt 
+			  FROM  LETTCCMMNCLCODE
+			 WHERE  1 = 1
+		
+			<if test='searchCondition == "1"'>AND
+				CL_CODE = #{searchKeyword}
+			</if>
+			<if test='searchCondition == "3"'>AND
+				CL_CODE_NM LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+	</select>
+
+	<select id="selectCmmnClCodeDetail" parameterType="egovframework.let.sym.ccm.ccc.service.CmmnClCode" resultType="egovframework.let.sym.ccm.ccc.service.CmmnClCode">
+		
+            SELECT  CL_CODE    clCode
+			     ,  CL_CODE_NM clCodeNm
+                 ,  CL_CODE_DC clCodeDc
+                 ,  USE_AT     useAt
+              FROM  LETTCCMMNCLCODE
+             WHERE  CL_CODE    = #{clCode}
+		
+	</select>
+
+	<insert id="insertCmmnClCode">
+		
+		    INSERT 
+		      INTO  LETTCCMMNCLCODE
+		         (  CL_CODE
+		         ,  CL_CODE_NM
+		         ,  CL_CODE_DC
+		         ,  USE_AT
+		         ,  FRST_REGIST_PNTTM
+		         ,  FRST_REGISTER_ID
+		         ,  LAST_UPDT_PNTTM
+		         ,  LAST_UPDUSR_ID
+		         ) 
+		    VALUES  
+		         (  #{clCode}
+		         ,  #{clCodeNm}
+		         ,  #{clCodeDc}
+		         ,  #{useAt}
+		         ,  sysdate()
+		         ,  #{frstRegisterId}
+		         ,  sysdate()
+		         ,  #{frstRegisterId}
+		         ) 
+		
+	</insert>
+
+	<update id="updateCmmnClCode">
+		
+            UPDATE  LETTCCMMNCLCODE 
+               SET  CL_CODE_NM        = #{clCodeNm}
+                 ,  CL_CODE_DC        = #{clCodeDc}
+                 ,  USE_AT            = #{useAt}
+                 ,  LAST_UPDT_PNTTM = sysdate()
+                 ,  LAST_UPDUSR_ID    = #{lastUpdusrId}
+             WHERE  CL_CODE           = #{clCode} 
+		
+	</update>
+
+	<delete id="deleteCmmnClCode">
+		
+            UPDATE  LETTCCMMNCLCODE 
+               SET  USE_AT  = 'N'
+             WHERE  CL_CODE = #{clCode} 
+		
+	</delete>
+
+
+</mapper>

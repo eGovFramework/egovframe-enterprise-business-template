@@ -13,6 +13,8 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:/egovframework/mapper/let/**/*_${Globals.DbType}.xml</value>
+				<!-- DB 데이터 표준을 위한 폴더 -->
+				<!-- <value>classpath:/egovframework/mapper/std/**/*_${Globals.DbType}.xml</value>  -->
 			</list>
 		</property>
 	</bean>
@@ -23,5 +25,26 @@
 	</bean>
 	
 	<alias name="sqlSession" alias="egov.sqlSession" />
+	
+	<!-- Mybatis setup for Mybatis Database Layer (다중 접속 설정)
+	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource-${Globals.DbType2}" />
+	    <property name="configLocation" value="classpath:/egovframework/mapper/config/mapper-config.xml" />
+	    
+	    <property name="mapperLocations">
+	        <list>
+	            <value>classpath:/egovframework/mapper/std/**/*_${Globals.DbType2}.xml</value>
+	        </list>
+	    </property>
+	</bean>
+	 -->
+	
+	<!-- Mybatis Session Template2 (다중 접속 설정) 
+	<bean id="egov.sqlSessionTemplate2" class="org.mybatis.spring.SqlSessionTemplate">
+	    <constructor-arg ref="sqlSessionFactory2" />
+	</bean>
+	-->
+	
+	<!-- <alias name="sqlSession2" alias="egov.sqlSession2" />  -->
 	
 </beans>
