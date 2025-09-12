@@ -106,3 +106,22 @@
 3. [템플릿 구성 및 환경설정](https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4:configration) 문서를 참고하여 템플릿 환경설정을 수행한다.
 
 4. 실행할 프로젝트를 마우스 우클릭하고 **Run As > Run on Server** 를 선택한다.
+
+## 운영 가시성(Observability) 베이스라인
+
+이 템플릿은 **Micrometer(JMX/내부용)** 기반의 **최소 모니터링**을 제공합니다.
+
+- 기본 제공 메트릭: JVM 메모리/스레드/클래스로더/CPU
+- **보안 기본값**: 외부 노출 엔드포인트 없음(JMX로 내부 확인)
+- 로컬 확인: VisualVM 등으로 JVM 프로세스 JMX 접속 후 Micrometer 메트릭 확인
+
+### 로드맵/연계
+- 이 PR은 개발환경/테스트 표준화 작업과 연계된 **3단계 개선** 중 ③ 단계입니다.
+  - ① DevContainer + 원클릭(5분 셋업): #58  ← DX 표준 확립
+  - ② Testcontainers + GitHub Actions CI: #59  ← 품질/재현성 표준 확립  
+  - ③ Observability(본 PR): 운영/모니터링 표준의 최소선 제공
+
+### 보안/운영 권장
+- 기본은 **JMX만 사용**(외부 노출 없음)
+- 프로덕션에서는 게이트웨이/방화벽 레벨로 내부망 접근만 허용
+- 추후 Spring Boot 전환 시 Actuator로 자연스럽게 마이그레이션(별도 PR)
