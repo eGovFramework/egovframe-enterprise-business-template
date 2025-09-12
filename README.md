@@ -106,3 +106,41 @@
 3. [템플릿 구성 및 환경설정](https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4:configration) 문서를 참고하여 템플릿 환경설정을 수행한다.
 
 4. 실행할 프로젝트를 마우스 우클릭하고 **Run As > Run on Server** 를 선택한다.
+
+## 🧪 테스트 및 CI
+
+### 로컬에서 테스트 실행
+
+**전체 테스트 (Testcontainers 포함):**
+```bash
+mvn clean verify
+```
+
+**단위 테스트만:**
+```bash
+mvn clean test
+```
+
+**코드 커버리지 리포트 생성:**
+```bash
+mvn clean verify
+# 결과: target/site/jacoco/index.html
+```
+
+### Testcontainers 테스트
+
+프로젝트에는 MySQL Testcontainers를 사용한 통합 테스트가 포함되어 있습니다:
+
+- **MysqlSmokeIT**: MySQL 컨테이너 기본 연결 테스트
+- Docker가 설치되어 있으면 자동으로 MySQL 8.0 컨테이너를 시작하여 테스트 실행
+- 애플리케이션 코드에 비침투적인 테스트 환경 제공
+
+### GitHub Actions CI
+
+- **트리거**: PR 생성/업데이트, main 브랜치 푸시
+- **매트릭스**: Java 17 (확장 가능)
+- **실행 내용**: 
+  - 빌드 및 전체 테스트 실행
+  - JaCoCo 코드 커버리지 측정
+  - 테스트 리포트 및 커버리지 리포트 아티팩트 업로드
+- **결과**: Actions 탭에서 테스트 결과 및 커버리지 확인 가능

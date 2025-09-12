@@ -19,6 +19,10 @@
 	<properties>
 		<spring.maven.artifact.version>5.3.37</spring.maven.artifact.version>
 		<org.egovframe.rte.version>4.3.0</org.egovframe.rte.version>
+		<maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+		<maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
+		<jacoco.version>0.8.11</jacoco.version>
+		<testcontainers.version>1.20.2</testcontainers.version>
 	</properties>
 
 	<repositories>
@@ -256,6 +260,20 @@
 			<version>${spring.maven.artifact.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Testcontainers -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>
@@ -296,23 +314,45 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-		<version>3.3.0</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-					<includes>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <includes>
                         <include>**/*Test.java</include>
                     </includes>
                     <parallel>methods</parallel>
-        			<threadCount>2</threadCount>
+                    <threadCount>2</threadCount>
                     <systemPropertyVariables>
-            			<propertyName>propertyValue</propertyName>
-        			</systemPropertyVariables> 
+                        <propertyName>propertyValue</propertyName>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <!-- JavaDoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-		<version>3.7.0</version>
+                <version>3.7.0</version>
+            </plugin>
+
+            <!-- JaCoCo -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
