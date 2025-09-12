@@ -1,0 +1,16 @@
+{
+  "name": "egovframe-enterprise-dev",
+  "build": { "dockerfile": "Dockerfile" },
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.java",
+        "eamodio.gitlens",
+        "editorconfig.editorconfig"
+      ]
+    }
+  },
+  "postCreateCommand": "bash scripts/dev-setup.sh"
+}

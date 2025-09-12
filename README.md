@@ -94,6 +94,39 @@
 | java | 1.8 이상 |
 | maven | 3.8.4 |
 
+## 🚀 5분 셋업 (개발환경)
+
+### VS Code DevContainer 사용 (권장)
+
+1. VS Code에서 프로젝트 열기
+2. DevContainer 확장 설치 (Docker 필요)
+3. `Ctrl+Shift+P` → "Dev Containers: Reopen in Container" 선택
+4. 자동으로 개발환경 구성 완료
+5. 터미널에서 `mvn -B spring-boot:run` 실행
+
+### 로컬 Docker 환경
+
+Docker만 설치되어 있다면:
+
+**Unix/Linux/macOS:**
+```bash
+./scripts/dev-up.sh
+# 또는 docker compose up -d
+```
+
+**Windows (PowerShell):**
+```powershell
+.\scripts\dev-up.ps1
+# 또는 docker compose up -d
+```
+
+실행 후 컨테이너에 접속하여 `mvn -B spring-boot:run`으로 애플리케이션 시작
+
+### 접속 정보
+- 애플리케이션: http://localhost:8080
+- MySQL: localhost:3306 (root/admin)
+- 기본 로그인: admin/1 (관리자), user1/1 (사용자)
+
 ## 프로젝트 실행
 
 1. eclipse 하단의 Servers 탭을 클릭하고, 마우스 우클릭하여 **New > Server** 를 선택하여 서버를 설치한다.
