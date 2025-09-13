@@ -106,3 +106,85 @@
 3. [템플릿 구성 및 환경설정](https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4:configration) 문서를 참고하여 템플릿 환경설정을 수행한다.
 
 4. 실행할 프로젝트를 마우스 우클릭하고 **Run As > Run on Server** 를 선택한다.
+
+## 테스트 및 품질 관리
+
+### 단위 테스트 실행
+이 프로젝트는 **JUnit 5**와 **JaCoCo**를 사용하여 포괄적인 테스트 커버리지를 제공합니다.
+
+#### 테스트 실행 방법
+```bash
+# 모든 테스트 실행
+mvn test
+
+# 테스트와 함께 커버리지 리포트 생성
+mvn clean test
+
+# 커버리지 리포트만 생성
+mvn jacoco:report
+```
+
+#### 커버리지 리포트 확인
+테스트 실행 후 다음 위치에서 커버리지 리포트를 확인할 수 있습니다:
+- **HTML 리포트**: `target/site/jacoco/index.html`
+- **XML 리포트**: `target/site/jacoco/jacoco.xml`
+- **CSV 리포트**: `target/site/jacoco/jacoco.csv`
+
+### 테스트 구성
+
+#### 주요 테스트 대상
+- **유틸리티 클래스**: `EgovStringUtil`, `EgovDateUtil`, `EgovNumberUtil`
+- **Parameterized Tests**: 다양한 입력값과 경계값 테스트
+- **Edge Case Testing**: null, 빈 값, 극한값 처리 검증
+- **성능 테스트**: 대량 데이터 처리 성능 검증
+
+#### 테스트 작성 가이드라인
+```java
+@DisplayName("메서드명: 예상결과_when_조건")
+void should_expectedResult_when_condition() {
+    // Given (준비)
+    // When (실행)  
+    // Then (검증)
+}
+```
+
+#### 테스트 종류
+- **단위 테스트**: 개별 메서드의 기능 검증
+- **경계값 테스트**: 최솟값, 최댓값, 0, null 등 경계 조건 검증
+- **매개변수 테스트**: `@ParameterizedTest`로 다양한 입력값 일괄 검증
+- **성능 테스트**: 대량 데이터 처리 시간 검증
+
+### 품질 기준
+
+#### 커버리지 목표
+- **라인 커버리지**: 80% 이상
+- **브랜치 커버리지**: 70% 이상
+- **메서드 커버리지**: 90% 이상
+
+#### CI/CD 통합
+GitHub Actions를 통해 자동화된 테스트가 실행됩니다:
+- Pull Request 시 자동 테스트 실행
+- 커버리지 리포트 생성 및 코멘트
+- 테스트 실패 시 머지 차단
+
+### 테스트 확장 가이드
+
+새로운 유틸리티 클래스나 기능 추가 시 다음 사항을 포함하여 테스트를 작성해주세요:
+
+1. **정상 케이스**: 일반적인 입력값에 대한 정상 동작 검증
+2. **경계값 테스트**: null, 빈 값, 최댓값/최솟값 처리
+3. **예외 상황**: 잘못된 입력에 대한 예외 처리 검증
+4. **성능 테스트**: 대용량 데이터 처리 성능 (필요시)
+
+```java
+@ParameterizedTest
+@CsvSource({
+    "'정상입력', '예상결과'",
+    "'경계값', '예상결과'",
+    "'특수케이스', '예상결과'"
+})
+@DisplayName("다양한 입력값 테스트")
+void should_handleVariousInputs(String input, String expected) {
+    // 테스트 구현
+}
+```
