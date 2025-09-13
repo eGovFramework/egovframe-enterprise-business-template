@@ -106,3 +106,41 @@
 3. [템플릿 구성 및 환경설정](https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4:configration) 문서를 참고하여 템플릿 환경설정을 수행한다.
 
 4. 실행할 프로젝트를 마우스 우클릭하고 **Run As > Run on Server** 를 선택한다.
+
+## 보안 설정
+
+### 기본 보안 헤더
+이 템플릿은 **기본적인 웹 보안 헤더**를 자동으로 적용합니다.
+
+#### 적용된 보안 헤더
+- **X-Content-Type-Options**: `nosniff` - MIME 스니핑 방지
+- **X-Frame-Options**: `DENY` - 클릭재킹 방지 (iframe 삽입 차단)  
+- **X-XSS-Protection**: `1; mode=block` - XSS 공격 차단 (레거시 브라우저 지원)
+- **Referrer-Policy**: `strict-origin-when-cross-origin` - 리퍼러 정보 제한
+
+#### 구현 위치
+- **필터**: `egovframework.com.cmm.filter.SecurityHeadersFilter`
+- **설정**: `web.xml`에서 모든 요청(`/*`)에 대해 적용
+
+### 고급 보안 설정 (선택사항)
+
+운영 환경에서 **보안 강화**가 필요한 경우 다음 헤더들을 추가로 설정할 수 있습니다:
+
+#### HTTPS 환경에서 권장
+```
+# Strict-Transport-Security (HSTS)
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Content-Security-Policy (CSP) - 기본 예시
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'
+```
+
+#### 적용 방법
+1. **web.xml 수정**: SecurityHeadersFilter에서 추가 헤더 설정
+2. **리버스 프록시**: Nginx, Apache 등에서 헤더 추가
+3. **로드밸런서**: AWS ALB, Azure Application Gateway 등에서 설정
+
+#### 주의사항
+- **CSP**: 기존 인라인 스크립트/스타일과 충돌 가능성
+- **HSTS**: HTTPS 전용, 설정 전 충분한 테스트 필요
+- **운영팀과 협의**: 보안 정책에 따른 단계적 적용 권장
