@@ -15,7 +15,7 @@
 				, RELATE_IMAGE_PATH AS "relateImagePath"
 				, RELATE_IMAGE_NM AS "relateImageNm"
 				, PROGRM_FILE_NM AS "progrmFileNm"
-			FROM LETTNMENUINFO 
+			FROM LET_TN_MENU_INFO 
 			WHERE MENU_NM LIKE '%' || #{searchKeyword} || '%'
 			LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
 		 
@@ -25,7 +25,7 @@
 	<select id="selectMenuManageListTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
 		SELECT COUNT(MENU_NO) AS "totcnt"
-		  FROM LETTNMENUINFO
+		  FROM LET_TN_MENU_INFO
 		 WHERE MENU_NM LIKE '%' || #{searchKeyword} || '%'
 		
 	</select>
@@ -42,14 +42,14 @@
 				, RELATE_IMAGE_PATH AS "relateImagePath"
 				, RELATE_IMAGE_NM AS "relateImageNm"
 				, PROGRM_FILE_NM AS "progrmFileNm"
-			FROM LETTNMENUINFO
+			FROM LET_TN_MENU_INFO
 			WHERE MENU_NO = #{searchKeyword}
 		
 	</select>
 	
 	<insert id="insertMenuManage_S">
 		
-			INSERT INTO LETTNMENUINFO 
+			INSERT INTO LET_TN_MENU_INFO 
 				( MENU_NO
             , MENU_ORDR
             , MENU_NM
@@ -71,7 +71,7 @@
 
 	<update id="updateMenuManage_S">
 		
-			UPDATE LETTNMENUINFO 
+			UPDATE LET_TN_MENU_INFO 
 			SET  MENU_ORDR         = #{menuOrdr}::integer       
             , MENU_NM           = #{menuNm}         
             , UPPER_MENU_NO     = #{upperMenuId}::integer    
@@ -85,7 +85,7 @@
 
 	<delete id="deleteMenuManage_S">
 		                          
-			DELETE FROM LETTNMENUINFO              
+			DELETE FROM LET_TN_MENU_INFO              
 			WHERE MENU_NO=#{menuNo}::integer                 
 		                                
 	</delete> 
@@ -94,7 +94,7 @@
 	<select id="selectMenuNoByPk" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
 		
 		SELECT COUNT(MENU_NO) AS "totcnt"
-		  FROM LETTNMENUINFO
+		  FROM LET_TN_MENU_INFO
 		 WHERE MENU_NO = #{menuNo}::integer
 		
 	</select>
@@ -103,7 +103,7 @@
 	<select id="selectUpperMenuNoByPk" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
 		
 		SELECT COUNT(MENU_NO) AS "totcnt"
-		  FROM LETTNMENUINFO
+		  FROM LET_TN_MENU_INFO
 		 WHERE UPPER_MENU_NO = #{menuNo}::integer
 		
 	</select>
@@ -119,7 +119,7 @@
 				, RELATE_IMAGE_PATH AS "relateImagePath"
 				, RELATE_IMAGE_NM AS "relateImageNm"
 				, PROGRM_FILE_NM AS "progrmFileNm"
-			FROM LETTNMENUINFO 
+			FROM LET_TN_MENU_INFO 
 			WHERE Menu_NO &gt; 0 
 			ORDER BY MENU_ORDR
 		 
@@ -127,7 +127,7 @@
 
 	<delete id="deleteAllMenuList">
 		                          
-			DELETE FROM LETTNMENUINFO WHERE MENU_NO &lt;&gt; UPPER_MENU_NO
+			DELETE FROM LET_TN_MENU_INFO WHERE MENU_NO &lt;&gt; UPPER_MENU_NO
 		                                
 	</delete> 
 
@@ -135,7 +135,7 @@
 	<select id="selectMenuListTotCnt" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
 		
 		SELECT COUNT(MENU_NO) AS "totcnt"
-		  FROM LETTNMENUINFO
+		  FROM LET_TN_MENU_INFO
 		
 	</select>
 

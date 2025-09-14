@@ -14,7 +14,7 @@
 			SELECT  CL_CODE
 			     ,  CL_CODE_NM
 			     ,  USE_AT
-			  FROM  LETTCCMMNCLCODE
+			  FROM  LET_TC_CMMN_CL_CODE
 			 WHERE  1 = 1
 		
 			<if test='searchCondition == "1"'>AND
@@ -38,7 +38,7 @@
 	<select id="selectCmmnClCodeListTotCnt" parameterType="egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO" resultType="int">
 		
 			SELECT  COUNT(*) totcnt 
-			  FROM  LETTCCMMNCLCODE
+			  FROM  LET_TC_CMMN_CL_CODE
 			 WHERE  1 = 1
 		
 			<if test='searchCondition == "1"'>AND
@@ -55,7 +55,7 @@
 			     ,  CL_CODE_NM clCodeNm
                  ,  CL_CODE_DC clCodeDc
                  ,  USE_AT     useAt
-              FROM  LETTCCMMNCLCODE
+              FROM  LET_TC_CMMN_CL_CODE
              WHERE  CL_CODE    = #{clCode}
 		
 	</select>
@@ -63,7 +63,7 @@
 	<insert id="insertCmmnClCode">
 		
 		    INSERT 
-		      INTO  LETTCCMMNCLCODE
+		      INTO  LET_TC_CMMN_CL_CODE
 		         (  CL_CODE
 		         ,  CL_CODE_NM
 		         ,  CL_CODE_DC
@@ -88,7 +88,7 @@
 
 	<update id="updateCmmnClCode">
 		
-            UPDATE  LETTCCMMNCLCODE 
+            UPDATE  LET_TC_CMMN_CL_CODE 
                SET  CL_CODE_NM        = #{clCodeNm}
                  ,  CL_CODE_DC        = #{clCodeDc}
                  ,  USE_AT            = #{useAt}
@@ -100,7 +100,7 @@
 
 	<delete id="deleteCmmnClCode">
 		
-            UPDATE  LETTCCMMNCLCODE 
+            UPDATE  LET_TC_CMMN_CL_CODE 
                SET  USE_AT  = 'N'
              WHERE  CL_CODE = #{clCode} 
 		

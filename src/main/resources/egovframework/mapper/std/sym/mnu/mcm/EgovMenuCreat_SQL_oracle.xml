@@ -15,9 +15,9 @@
 								AUTHOR_DC     AS "authorDc",
 								AUTHOR_CREAT_DE AS "authorCreatDe",
 							   (SELECT COUNT(B.AUTHOR_CODE)
-								FROM   LETTNMENUCREATDTLS B
+								FROM   LET_TN_MENU_CREAT_DTLS B
 								WHERE  B.AUTHOR_CODE = A.AUTHOR_CODE ) AS "chkYeoBu"
-						FROM    LETTNAUTHORINFO A
+						FROM    LET_TN_AUTHOR_INFO A
 						WHERE   A.AUTHOR_CODE like '%'||#{searchKeyword}||'%') TB
 
                     ) 
@@ -28,7 +28,7 @@
 	<select id="selectMenuCreatManageTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
 			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
-			  FROM LETTNAUTHORINFO
+			  FROM LET_TN_AUTHOR_INFO
 			 WHERE AUTHOR_CODE like '%'||#{searchKeyword}||'%'
 		
 	</select>
@@ -41,10 +41,10 @@
 				, A.MENU_NM AS "menuNm"
 				, A.UPPER_MENU_NO AS "upperMenuId"
 			    , (SELECT count(B.MENU_NO) 
-			         FROM LETTNMENUCREATDTLS B   
+			         FROM LET_TN_MENU_CREAT_DTLS B   
 			        WHERE B.MENU_NO  = A.MENU_NO 
 			          AND B.AUTHOR_CODE = #{authorCode}) AS "chkYeoBu"
-			FROM LETTNMENUINFO A
+			FROM LET_TN_MENU_INFO A
 			WHERE A.MENU_NO &gt; 0
 			ORDER BY A.MENU_ORDR
 		 
@@ -52,7 +52,7 @@
 
 	<insert id="insertMenuCreat_S">
 		
-			INSERT INTO LETTNMENUCREATDTLS ( AUTHOR_CODE ,MENU_NO )
+			INSERT INTO LET_TN_MENU_CREAT_DTLS ( AUTHOR_CODE ,MENU_NO )
 			VALUES (  #{authorCode}, #{menuNo} )
 		
 	</insert>
@@ -60,14 +60,14 @@
 	<select id="selectMenuCreatCnt_S" parameterType="egovframework.let.sym.mnu.mcm.service.MenuCreatVO" resultType="int">
 		
 			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
-			  FROM LETTNAUTHORINFO
+			  FROM LET_TN_AUTHOR_INFO
 			 WHERE AUTHOR_CODE = #{authorCode}
 		
 	</select>
 
 	<delete id="updateMenuCreat_S">
 		 
-		    UPDATE LETTNMENUCREATDTLS  
+		    UPDATE LET_TN_MENU_CREAT_DTLS  
 		       SET MAPNG_CREAT_ID=#{mapCreatId} 
 		     WHERE AUTHOR_CODE=#{authorCode}
 		                                
@@ -75,25 +75,25 @@
 
 	<delete id="deleteMenuCreat_S">
 		                          
-			DELETE FROM LETTNMENUCREATDTLS              
+			DELETE FROM LET_TN_MENU_CREAT_DTLS              
 			 WHERE AUTHOR_CODE=#{authorCode}                
 		                                
 	</delete> 
 
 	<select id="selectAuthorByUsr" parameterType="comDefaultVO" resultType="egovframework.let.sym.mnu.mcm.service.MenuCreatVO">
 		
-		select AUTHOR_CODE AS "authorCode" from LETTNEMPLYRSCRTYESTBS
+		select AUTHOR_CODE AS "authorCode" from LET_TN_EMPLYR_SCRTY_ESTBS
 		where SCRTY_DTRMN_TRGET_ID =
-			(select ESNTL_ID from COMVNUSERMASTER
+			(select ESNTL_ID from COM_VN_USER_MASTER
 			where user_id = #{searchKeyword} )
 		
 	</select>
 
 	<select id="selectUsrByPk" parameterType="comDefaultVO" resultType="int">
 		
-		select count(AUTHOR_CODE) from LETTNEMPLYRSCRTYESTBS
+		select count(AUTHOR_CODE) from LET_TN_EMPLYR_SCRTY_ESTBS
 		where SCRTY_DTRMN_TRGET_ID =
-			(select ESNTL_ID from COMVNUSERMASTER
+			(select ESNTL_ID from COM_VN_USER_MASTER
 			where user_id = #{searchKeyword} )
 		
 	</select>

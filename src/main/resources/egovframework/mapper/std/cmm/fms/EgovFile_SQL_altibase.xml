@@ -34,7 +34,7 @@
 				a.ATCH_FILE_ID, b.FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
 				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_SIZE, a.CREAT_DT
 			FROM
-				LETTNFILE a, LETTNFILEDETAIL b
+				LET_TN_FILE a, LET_TN_FILE_DETAIL b
 			WHERE
 				a.ATCH_FILE_ID = #{atchFileId}
 			AND 
@@ -47,7 +47,7 @@
  	
 	<insert id="insertFileMaster" parameterType="FileVO">
 		
-			INSERT INTO LETTNFILE
+			INSERT INTO LET_TN_FILE
 			(ATCH_FILE_ID, CREAT_DT, USE_AT)
 			VALUES
 			( #{atchFileId}, SYSDATE, 'Y')			
@@ -56,7 +56,7 @@
 	
 	<insert id="insertFileDetail" parameterType="FileVO">
 		
-			INSERT INTO LETTNFILEDETAIL
+			INSERT INTO LET_TN_FILE_DETAIL
 			( ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM, 
 			  ORIGNL_FILE_NM, FILE_EXTSN, FILE_SIZE, FILE_CN )
 			VALUES
@@ -67,7 +67,7 @@
 	
 	<delete id="deleteFileDetail" parameterType="FileVO">
 		
-			DELETE FROM LETTNFILEDETAIL
+			DELETE FROM LET_TN_FILE_DETAIL
 			WHERE
 				ATCH_FILE_ID = #{atchFileId}
 			AND	
@@ -78,7 +78,7 @@
 	<select id="getMaxFileSN" parameterType="FileVO" resultType="java.lang.Integer">
 		
 			SELECT NVL(MAX(FILE_SN),0)+1 AS FILE_SN
-			FROM LETTNFILEDETAIL
+			FROM LET_TN_FILE_DETAIL
 			WHERE ATCH_FILE_ID =  #{atchFileId}		
 		
 	</select>
@@ -89,7 +89,7 @@
 				ATCH_FILE_ID, FILE_CN, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM,
 				FILE_EXTSN, ORIGNL_FILE_NM, FILE_SIZE
 			FROM
-				LETTNFILEDETAIL
+				LET_TN_FILE_DETAIL
 			WHERE
 				ATCH_FILE_ID = #{atchFileId}
 			AND 
@@ -99,7 +99,7 @@
 
 	<update id="deleteCOMTNFILE" parameterType="FileVO">
 		
-			UPDATE LETTNFILE
+			UPDATE LET_TN_FILE
 			SET USE_AT = 'N'
 			WHERE ATCH_FILE_ID = #{atchFileId}
 		
@@ -112,7 +112,7 @@
 				a.ATCH_FILE_ID, b.FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
 				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_SIZE, a.CREAT_DT
 			FROM
-				LETTNFILE a, LETTNFILEDETAIL b
+				LET_TN_FILE a, LET_TN_FILE_DETAIL b
 			WHERE
 				a.ATCH_FILE_ID = b.ATCH_FILE_ID
 			AND 
@@ -135,7 +135,7 @@
 			SELECT 
 				COUNT(a.ATCH_FILE_ID) as cnt
 			FROM
-				LETTNFILE a, LETTNFILEDETAIL b
+				LET_TN_FILE a, LET_TN_FILE_DETAIL b
 			WHERE
 				a.ATCH_FILE_ID = b.ATCH_FILE_ID
 			AND 
@@ -155,7 +155,7 @@
 				a.ATCH_FILE_ID, b.FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
 				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_SIZE, a.CREAT_DT
 			FROM
-				LETTNFILE a, LETTNFILEDETAIL b
+				LET_TN_FILE a, LET_TN_FILE_DETAIL b
 			WHERE
 				a.ATCH_FILE_ID = #{atchFileId}
 			AND 

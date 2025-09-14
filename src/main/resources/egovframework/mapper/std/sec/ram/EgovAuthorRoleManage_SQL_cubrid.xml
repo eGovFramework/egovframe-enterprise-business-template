@@ -35,8 +35,8 @@
                    (CASE WHEN B.ROLE_CODE IS NULL THEN 'N'
                          ELSE 'Y' 
                      END) AS REG_YN
-              FROM LETTNROLEINFO A 
-                   LEFT OUTER JOIN (SELECT AUTHOR_CODE , ROLE_CODE, CREAT_DT FROM LETTNAUTHORROLERELATE WHERE AUTHOR_CODE = #{searchKeyword}) B
+              FROM LET_TN_ROLE_INFO A 
+                   LEFT OUTER JOIN (SELECT AUTHOR_CODE , ROLE_CODE, CREAT_DT FROM LET_TN_AUTHOR_ROLE_RELATE WHERE AUTHOR_CODE = #{searchKeyword}) B
                 ON A.ROLE_CODE = B.ROLE_CODE        
 
                     ) ALL_LIST
@@ -50,14 +50,14 @@
     <select id="authorRoleManageDAO.selectAuthorRoleListTotCnt" parameterType="egovframework.let.sec.ram.service.AuthorRoleManageVO" resultType="int">
 
             SELECT COUNT(*) totcnt
-              FROM LETTNROLEINFO A 
-                   LEFT OUTER JOIN (SELECT AUTHOR_CODE , ROLE_CODE, CREAT_DT FROM LETTNAUTHORROLERELATE WHERE AUTHOR_CODE = #{searchKeyword}) B
+              FROM LET_TN_ROLE_INFO A 
+                   LEFT OUTER JOIN (SELECT AUTHOR_CODE , ROLE_CODE, CREAT_DT FROM LET_TN_AUTHOR_ROLE_RELATE WHERE AUTHOR_CODE = #{searchKeyword}) B
                 ON A.ROLE_CODE = B.ROLE_CODE
     </select>
 
     <insert id="authorRoleManageDAO.insertAuthorRole" parameterType="egovframework.let.sec.ram.service.AuthorRoleManage">
         
-            INSERT INTO LETTNAUTHORROLERELATE 
+            INSERT INTO LET_TN_AUTHOR_ROLE_RELATE 
                   ( AUTHOR_CODE
                   , ROLE_CODE
                   , CREAT_DT)
@@ -69,7 +69,7 @@
 
     <delete id="authorRoleManageDAO.deleteAuthorRole">
         
-            DELETE FROM LETTNAUTHORROLERELATE 
+            DELETE FROM LET_TN_AUTHOR_ROLE_RELATE 
              WHERE AUTHOR_CODE=#{authorCode}
                AND ROLE_CODE=#{roleCode}
         

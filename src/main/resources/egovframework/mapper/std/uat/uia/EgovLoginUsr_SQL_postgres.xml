@@ -38,7 +38,7 @@
                  , 'USR' AS "userSe"
                  , ORGNZT_ID AS "orgnztId"
                  , ESNTL_ID AS "uniqId"
-              FROM LETTNEMPLYRINFO
+              FROM LET_TN_EMPLYR_INFO
              WHERE EMPLYR_ID = #{id}
                AND PASSWORD = #{password}
                AND EMPLYR_STTUS_CODE = 'P'
@@ -57,7 +57,7 @@
 		     , 'USR' AS "userSe"
 		     , orgnzt_id AS "orgnztId"
 		     , ESNTL_ID AS "uniqId"
-		  FROM LETTNEMPLYRINFO
+		  FROM LET_TN_EMPLYR_INFO
 		 WHERE sub_dn = #{dn}
 		]]>
 	</select>
@@ -67,7 +67,7 @@
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
 			SELECT mber_id AS "id"
-			  FROM LETTNGNRLMBER
+			  FROM LET_TN_GNRL_MBER
 			 WHERE mber_nm = #{name}
 			   AND mber_email_adres = #{email}
 			   AND mber_sttus = 'P'
@@ -76,7 +76,7 @@
 		<isEqual property="userSe" compareValue="ENT">
 			<![CDATA[
 			SELECT entrprsmber_id AS "id"
-			  FROM LETTNENTRPRSMBER
+			  FROM LET_TN_ENTRPRS_MBER
 			 WHERE cmpny_nm = #{name}
 			   AND applcnt_email_adres = #{email}
 			   AND entrprs_mber_sttus = 'P'
@@ -85,7 +85,7 @@
 		<isEqual property="userSe" compareValue="USR">
 			<![CDATA[
 			SELECT emplyr_id AS "id"
-			  FROM LETTNEMPLYRINFO
+			  FROM LET_TN_EMPLYR_INFO
 			 WHERE USER_NM = #{name}
 			   AND email_adres = #{email}
 			   AND emplyr_sttus_code = 'P'
@@ -98,7 +98,7 @@
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
 			SELECT password AS "password"
-			  FROM LETTNGNRLMBER
+			  FROM LET_TN_GNRL_MBER
 			 WHERE mber_id = #{id}
 			   AND mber_nm = #{name}
 			   AND mber_email_adres = #{email}
@@ -110,7 +110,7 @@
 		<isEqual property="userSe" compareValue="ENT">
 			<![CDATA[
 			SELECT entrprs_mber_password AS "password"
-			  FROM LETTNENTRPRSMBER
+			  FROM LET_TN_ENTRPRS_MBER
 			 WHERE entrprsmber_id = #{id}
 			   AND cmpny_nm = #{name}
 			   AND applcnt_email_adres = #{email}
@@ -122,7 +122,7 @@
 		<isEqual property="userSe" compareValue="USR">
 			<![CDATA[
 			SELECT password AS "password"
-			  FROM LETTNEMPLYRINFO
+			  FROM LET_TN_EMPLYR_INFO
 			 WHERE emplyr_id = #{id}
 			   AND USER_NM = #{name}
 			   AND email_adres = #{email}
@@ -137,21 +137,21 @@
 	<update id="loginDAO.updatePassword">
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
-			UPDATE LETTNGNRLMBER
+			UPDATE LET_TN_GNRL_MBER
 			   SET password = #{password}
 			 WHERE mber_id = #{id}
 			]]>
 		</isEqual>
 		<isEqual property="userSe" compareValue="ENT">
 			<![CDATA[
-			UPDATE LETTNENTRPRSMBER
+			UPDATE LET_TN_ENTRPRS_MBER
 			   SET entrprs_mber_password = #{password}
 			 WHERE entrprsmber_id = #{id}
 			]]>
 		</isEqual>
 		<isEqual property="userSe" compareValue="USR">
 			<![CDATA[
-			UPDATE LETTNEMPLYRINFO
+			UPDATE LET_TN_EMPLYR_INFO
 			   SET password = #{password}
 			 WHERE emplyr_id = #{id}
 			]]>

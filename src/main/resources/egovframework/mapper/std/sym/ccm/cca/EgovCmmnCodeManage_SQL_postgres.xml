@@ -10,8 +10,8 @@
 			     ,  A.CODE_ID
 			     ,  A.CODE_ID_NM
 			     ,  A.USE_AT
-			  FROM  LETTCCMMNCODE   A
-			     ,  LETTCCMMNCLCODE B
+			  FROM  LET_TC_CMMN_CODE   A
+			     ,  LET_TC_CMMN_CL_CODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
 		
 			<if test='searchCondition == "1"'>AND
@@ -32,8 +32,8 @@
 	<select id="selectCmmnCodeListTotCnt" parameterType="egovframework.let.sym.ccm.cca.service.CmmnCodeVO" resultType="int">
 		
 			SELECT  COUNT(*) totcnt 
-			  FROM  LETTCCMMNCODE   A
-			     ,  LETTCCMMNCLCODE B
+			  FROM  LET_TC_CMMN_CODE   A
+			     ,  LET_TC_CMMN_CL_CODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
 		
 			<if test='searchCondition == "1"'>AND
@@ -52,8 +52,8 @@
 			     ,  A.CODE_ID_NM codeIdNm
                  ,  A.CODE_ID_DC codeIdDc
                  ,  A.USE_AT     useAt
-			  FROM  LETTCCMMNCODE   A
-			     ,  LETTCCMMNCLCODE B
+			  FROM  LET_TC_CMMN_CODE   A
+			     ,  LET_TC_CMMN_CL_CODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
                AND  A.CODE_ID = #{codeId}
 		
@@ -62,7 +62,7 @@
 	<insert id="insertCmmnCode">
 		
 		    INSERT 
-		      INTO  LETTCCMMNCODE
+		      INTO  LET_TC_CMMN_CODE
 		         (  CODE_ID
 		         ,  CODE_ID_NM
 		         ,  CODE_ID_DC
@@ -89,7 +89,7 @@
 
 	<update id="updateCmmnCode">
 		
-            UPDATE  LETTCCMMNCODE 
+            UPDATE  LET_TC_CMMN_CODE 
                SET  CODE_ID_NM        = #{codeIdNm}
                  ,  CODE_ID_DC        = #{codeIdDc}
                  ,  USE_AT            = #{useAt}
@@ -101,7 +101,7 @@
 
 	<delete id="deleteCmmnCode">
 		
-            UPDATE  LETTCCMMNCODE 
+            UPDATE  LET_TC_CMMN_CODE 
                SET  USE_AT  = 'N'
              WHERE  CODE_ID = #{codeId} 
 		

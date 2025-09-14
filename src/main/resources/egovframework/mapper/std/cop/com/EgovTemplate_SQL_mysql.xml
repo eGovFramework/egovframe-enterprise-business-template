@@ -33,7 +33,7 @@
 
 	<insert id="insertTemplateInf" parameterType="egovframework.let.cop.com.service.TemplateInf">
 		
-			INSERT INTO LETTNTMPLATINFO
+			INSERT INTO LET_TN_TMPLAT_INFO
 			(TMPLAT_ID, TMPLAT_NM, TMPLAT_SE_CODE, TMPLAT_COURS, 
 			 USE_AT, FRST_REGISTER_ID, FRST_REGIST_PNTTM )
 			VALUES
@@ -50,10 +50,10 @@
                 a.FRST_REGISTER_ID, DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
                 b.USER_NM AS FRST_REGISTER_NM, c.CODE_NM AS TMPLAT_SE_CODE_NM
             FROM
-                LETTNTMPLATINFO a
-            LEFT OUTER JOIN COMVNUSERMASTER b
+                LET_TN_TMPLAT_INFO a
+            LEFT OUTER JOIN COM_VN_USER_MASTER b
                 ON a.FRST_REGISTER_ID = b.ESNTL_ID
-            LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+            LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
                 ON a.TMPLAT_SE_CODE = c.CODE
             WHERE 
                 c.CODE_ID = 'COM005'
@@ -78,10 +78,10 @@
 			SELECT 
 				COUNT(a.TMPLAT_ID)
 			FROM
-				LETTNTMPLATINFO a
-			LEFT OUTER JOIN COMVNUSERMASTER b
+				LET_TN_TMPLAT_INFO a
+			LEFT OUTER JOIN COM_VN_USER_MASTER b
 				ON a.FRST_REGISTER_ID = b.ESNTL_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON a.TMPLAT_SE_CODE = c.CODE
 			WHERE 
 				c.CODE_ID = 'COM005'
@@ -106,12 +106,12 @@
                 a.LAST_UPDUSR_ID,
                 d.USER_NM AS LAST_UPDUSR_NM, DATE_FORMAT(a.LAST_UPDT_PNTTM, '%Y-%m-%d') as LAST_UPDT_PNTTM
             FROM
-                LETTNTMPLATINFO a
-            LEFT OUTER JOIN COMVNUSERMASTER b
+                LET_TN_TMPLAT_INFO a
+            LEFT OUTER JOIN COM_VN_USER_MASTER b
                 ON a.FRST_REGISTER_ID = b.ESNTL_ID
-            LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+            LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
                 ON a.TMPLAT_SE_CODE = c.CODE
-            LEFT OUTER JOIN LETTNEMPLYRINFO d
+            LEFT OUTER JOIN LET_TN_EMPLYR_INFO d
                 ON a.LAST_UPDUSR_ID = d.EMPLYR_ID
             WHERE 
                 c.CODE_ID = 'COM005'
@@ -122,7 +122,7 @@
  
  	<update id="updateTemplateInf" parameterType="egovframework.let.cop.com.service.TemplateInf">
  		
-			UPDATE LETTNTMPLATINFO SET 
+			UPDATE LET_TN_TMPLAT_INFO SET 
 				TMPLAT_SE_CODE = #{tmplatSeCode},
 				TMPLAT_COURS = #{tmplatCours}, 
 				USE_AT = #{useAt},
@@ -134,7 +134,7 @@
 			 
  	<update id="deleteTemplateInf" parameterType="egovframework.let.cop.com.service.TemplateInf">
  		
-			UPDATE LETTNBBSMASTER SET 
+			UPDATE LET_TN_BBS_MASTER SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -149,10 +149,10 @@
 				a.FRST_REGISTER_ID, DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM,
 				b.USER_NM AS FRST_REGISTER_NM, c.CODE_NM AS TMPLAT_SE_CODE_NM
 			FROM
-				LETTNTMPLATINFO a
-			LEFT OUTER JOIN COMVNUSERMASTER b
+				LET_TN_TMPLAT_INFO a
+			LEFT OUTER JOIN COM_VN_USER_MASTER b
 				ON a.FRST_REGISTER_ID = b.ESNTL_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON a.TMPLAT_SE_CODE = c.CODE
 			WHERE 
 				c.CODE_ID = 'COM005'

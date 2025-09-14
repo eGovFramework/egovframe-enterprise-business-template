@@ -189,7 +189,7 @@
 
 	<select id="selectRqesterEmail" parameterType="egovframework.let.sym.prm.service.ProgrmManageDtlVO" resultType="egovframework.let.sym.prm.service.ProgrmManageDtlVO">
 		
-			select user_email AS "tmp_Email" from COMVNUSERMASTER
+			select user_email AS "tmp_Email" from COM_VN_USER_MASTER
 			where user_id = #{rqesterPersonId}
 		 
 	</select>

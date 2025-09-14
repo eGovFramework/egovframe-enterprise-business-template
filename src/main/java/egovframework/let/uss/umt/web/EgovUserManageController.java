@@ -155,10 +155,12 @@ public class EgovUserManageController {
 
 		//조직정보를 조회 - ORGNZT_ID정보
 		vo.setTableNm("LETTNORGNZTINFO");
+		//vo.setTableNm("LET_TN_ORGNZT_INFO");
 		model.addAttribute("orgnztId_result", cmmUseService.selectOgrnztIdDetail(vo));
 
 		//그룹정보를 조회 - GROUP_ID정보
 		vo.setTableNm("LETTNORGNZTINFO");
+		//vo.setTableNm("LET_TN_ORGNZT_INFO");
 		model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
 
 		return "cmm/uss/umt/EgovUserInsert";
@@ -204,10 +206,12 @@ public class EgovUserManageController {
 
 			//조직정보를 조회 - ORGNZT_ID정보
 			vo.setTableNm("LETTNORGNZTINFO");
+			//vo.setTableNm("LET_TN_ORGNZT_INFO");
 			model.addAttribute("orgnztId_result", cmmUseService.selectOgrnztIdDetail(vo));
 
 			//그룹정보를 조회 - GROUP_ID정보
 			vo.setTableNm("LETTNORGNZTINFO");
+			//vo.setTableNm("LET_TN_ORGNZT_INFO");
 			model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
 			//return "forward:/uss/umt/user/EgovUserInsertView.do";
 			return "cmm/uss/umt/EgovUserInsert";
@@ -259,10 +263,12 @@ public class EgovUserManageController {
 
 		//조직정보를 조회 - ORGNZT_ID정보
 		vo.setTableNm("LETTNORGNZTINFO");
+		//vo.setTableNm("LET_TN_ORGNZT_INFO");
 		model.addAttribute("orgnztId_result", cmmUseService.selectOgrnztIdDetail(vo));
 
 		//그룹정보를 조회 - GROUP_ID정보
 		vo.setTableNm("LETTNORGNZTINFO");
+		//vo.setTableNm("LET_TN_ORGNZT_INFO");
 		model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
 
 		UserManageVO userManageVO = new UserManageVO();
@@ -313,10 +319,12 @@ public class EgovUserManageController {
 
 			//조직정보를 조회 - ORGNZT_ID정보
 			vo.setTableNm("LETTNORGNZTINFO");
+			//vo.setTableNm("LET_TN_ORGNZT_INFO");
 			model.addAttribute("orgnztId_result", cmmUseService.selectOgrnztIdDetail(vo));
 
 			//그룹정보를 조회 - GROUP_ID정보
 			vo.setTableNm("LETTNORGNZTINFO");
+			//vo.setTableNm("LET_TN_ORGNZT_INFO");
 			model.addAttribute("groupId_result", cmmUseService.selectGroupIdDetail(vo));
 			return "cmm/uss/umt/EgovUserSelectUpdt";
 		} else {

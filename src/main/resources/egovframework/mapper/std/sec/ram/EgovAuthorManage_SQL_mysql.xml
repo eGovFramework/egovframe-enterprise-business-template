@@ -14,7 +14,7 @@
     <select id="authorManageDAO.selectAuthorList" parameterType="egovframework.let.sec.ram.service.AuthorManageVO" resultMap="author">
             SELECT
                    AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
-              FROM LETTNAUTHORINFO
+              FROM LET_TN_AUTHOR_INFO
              WHERE 1=1
             <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
@@ -25,7 +25,7 @@
 
     <insert id="authorManageDAO.insertAuthor" parameterType="egovframework.let.sec.ram.service.AuthorManage">
         
-            INSERT INTO LETTNAUTHORINFO 
+            INSERT INTO LET_TN_AUTHOR_INFO 
                   ( AUTHOR_CODE
                   , AUTHOR_NM
                   , AUTHOR_DC
@@ -39,7 +39,7 @@
 
     <update id="authorManageDAO.updateAuthor" parameterType="egovframework.let.sec.ram.service.AuthorManage">
         
-            UPDATE LETTNAUTHORINFO 
+            UPDATE LET_TN_AUTHOR_INFO 
                SET AUTHOR_NM=#{authorNm}
                  , AUTHOR_DC=#{authorDc}
              WHERE AUTHOR_CODE=#{authorCode}
@@ -48,7 +48,7 @@
     
     <delete id="authorManageDAO.deleteAuthor">
         
-            DELETE FROM LETTNAUTHORINFO 
+            DELETE FROM LET_TN_AUTHOR_INFO 
              WHERE AUTHOR_CODE=#{authorCode}
         
     </delete>
@@ -56,14 +56,14 @@
     <select id="authorManageDAO.selectAuthor" resultMap="author">
         
             SELECT AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
-              FROM LETTNAUTHORINFO 
+              FROM LET_TN_AUTHOR_INFO 
              WHERE AUTHOR_CODE=#{authorCode}
         
     </select>
     
     <select id="authorManageDAO.selectAuthorListTotCnt" parameterType="egovframework.let.sec.ram.service.AuthorManageVO" resultType="int">
             SELECT COUNT(*) totcnt
-            FROM LETTNAUTHORINFO
+            FROM LET_TN_AUTHOR_INFO
             WHERE 1=1
             <if test='searchCondition == "1"'>AND
                 AUTHOR_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
@@ -73,6 +73,6 @@
     <select id="authorManageDAO.selectAuthorAllList" parameterType="egovframework.let.sec.ram.service.AuthorManageVO" resultMap="author">
             SELECT
                    AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
-              FROM LETTNAUTHORINFO
+              FROM LET_TN_AUTHOR_INFO
     </select>
 </mapper>

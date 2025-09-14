@@ -39,7 +39,7 @@
 			     , 'GNR' AS userSe
 			     , '-' AS orgnztId
 			     , esntl_id AS uniqId
-			  FROM LETTNGNRLMBER
+			  FROM LET_TN_GNRL_MBER
 			 WHERE mber_id = #{id}
 			   AND password = #{password}
 			   AND mber_sttus = 'P'
@@ -56,7 +56,7 @@
 			     , 'ENT' AS userSe
 			     , '-' AS orgnztId
 			     , esntl_id AS uniqId
-			  FROM LETTNENTRPRSMBER
+			  FROM LET_TN_ENTRPRS_MBER
 			 WHERE entrprsmber_id = #{id}
 			   AND entrprs_mber_password = #{password}
 			   AND entrprs_mber_sttus = 'P'
@@ -73,7 +73,7 @@
 			     , 'USR' AS userSe
 			     , orgnzt_id AS orgnztId
 			     , esntl_id AS uniqId
-			  FROM LETTNEMPLYRINFO
+			  FROM LET_TN_EMPLYR_INFO
 			 WHERE emplyr_id = #{id}
 			   AND password = #{password}
 			   AND emplyr_sttus_code = 'P'
@@ -92,7 +92,7 @@
 		     , 'USR' AS userSe
 		     , orgnzt_id AS orgnztId
 		     , esntl_id AS uniqId
-		  FROM LETTNEMPLYRINFO
+		  FROM LET_TN_EMPLYR_INFO
 		 WHERE sub_dn = #{dn}
 		
 	</select>
@@ -103,7 +103,7 @@
 		<if test="userSe == &quot;GNR&quot;">
 			
 			SELECT mber_id AS id
-			  FROM LETTNGNRLMBER
+			  FROM LET_TN_GNRL_MBER
 			 WHERE mber_nm = #{name}
 			   AND mber_email_adres = #{email}
 			   AND mber_sttus = 'P'
@@ -113,7 +113,7 @@
 		<if test="userSe == &quot;ENT&quot;">
 			
 			SELECT entrprsmber_id AS id
-			  FROM LETTNENTRPRSMBER
+			  FROM LET_TN_ENTRPRS_MBER
 			 WHERE cmpny_nm = #{name}
 			   AND applcnt_email_adres = #{email}
 			   AND entrprs_mber_sttus = 'P'
@@ -123,7 +123,7 @@
 		<if test="userSe == &quot;USR&quot;">
 			
 			SELECT emplyr_id AS id
-			  FROM LETTNEMPLYRINFO
+			  FROM LET_TN_EMPLYR_INFO
 			 WHERE user_nm = #{name}
 			   AND email_adres = #{email}
 			   AND emplyr_sttus_code = 'P'
@@ -137,7 +137,7 @@
 		<if test="userSe == &quot;GNR&quot;">
 			
 			SELECT password AS password
-			  FROM LETTNGNRLMBER
+			  FROM LET_TN_GNRL_MBER
 			 WHERE mber_id = #{id}
 			   AND mber_nm = #{name}
 			   AND mber_email_adres = #{email}
@@ -150,7 +150,7 @@
 		<if test="userSe == &quot;ENT&quot;">
 			
 			SELECT entrprs_mber_password AS password
-			  FROM LETTNENTRPRSMBER
+			  FROM LET_TN_ENTRPRS_MBER
 			 WHERE entrprsmber_id = #{id}
 			   AND cmpny_nm = #{name}
 			   AND applcnt_email_adres = #{email}
@@ -163,7 +163,7 @@
 		<if test="userSe == &quot;USR&quot;">
 			
 			SELECT password AS password
-			  FROM LETTNEMPLYRINFO
+			  FROM LET_TN_EMPLYR_INFO
 			 WHERE emplyr_id = #{id}
 			   AND user_nm = #{name}
 			   AND email_adres = #{email}
@@ -179,7 +179,7 @@
 		<!-- 일반회원 -->
 		<if test="userSe == &quot;GNR&quot;">
 			
-			UPDATE LETTNGNRLMBER
+			UPDATE LET_TN_GNRL_MBER
 			   SET password = #{password}
 			 WHERE mber_id = #{id}
 			
@@ -187,7 +187,7 @@
 		<!-- 기업회원 -->
 		<if test="userSe == &quot;ENT&quot;">
 			
-			UPDATE LETTNENTRPRSMBER
+			UPDATE LET_TN_ENTRPRS_MBER
 			   SET entrprs_mber_password = #{password}
 			 WHERE entrprsmber_id = #{id}
 			
@@ -195,7 +195,7 @@
 		<!-- 업무사용자 -->
 		<if test="userSe == &quot;USR&quot;">
 			
-			UPDATE LETTNEMPLYRINFO
+			UPDATE LET_TN_EMPLYR_INFO
 			   SET password = #{password}
 			 WHERE emplyr_id = #{id}
 			

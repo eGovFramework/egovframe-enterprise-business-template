@@ -18,7 +18,7 @@
 	<!-- 로그인 로그 등록 -->
 	<insert id="logInsertLoginLog" parameterType="egovframework.let.sym.log.clg.service.LoginLog">
 		
-			INSERT INTO LETTNLOGINLOG 
+			INSERT INTO LET_TN_LOGIN_LOG 
 				( LOG_ID
 				  , CONECT_MTHD
 				  , CONECT_ID
@@ -47,8 +47,8 @@
 				, a.CONECT_ID
 				, b.USER_NM AS LOGIN_NM
 			FROM
-				LETTNLOGINLOG a
-			LEFT OUTER JOIN COMVNUSERMASTER b
+				LET_TN_LOGIN_LOG a
+			LEFT OUTER JOIN COM_VN_USER_MASTER b
 				ON a.CONECT_ID = b.ESNTL_ID
 			WHERE 
 				a.LOG_ID = #{logId}
@@ -66,8 +66,8 @@
 				, a.CONECT_ID
 				, b.USER_NM AS LOGIN_NM
 			FROM
-				LETTNLOGINLOG a
-			LEFT OUTER JOIN COMVNUSERMASTER b
+				LET_TN_LOGIN_LOG a
+			LEFT OUTER JOIN COM_VN_USER_MASTER b
 				ON a.CONECT_ID = b.ESNTL_ID
 			WHERE 
 				1 = 1
@@ -87,8 +87,8 @@
 		 
 			SELECT COUNT(a.LOG_ID) as cnt
 			FROM
-				LETTNLOGINLOG a
-			LEFT OUTER JOIN COMVNUSERMASTER b
+				LET_TN_LOGIN_LOG a
+			LEFT OUTER JOIN COM_VN_USER_MASTER b
 				ON a.CONECT_ID = b.ESNTL_ID
 			WHERE 
 				1 = 1

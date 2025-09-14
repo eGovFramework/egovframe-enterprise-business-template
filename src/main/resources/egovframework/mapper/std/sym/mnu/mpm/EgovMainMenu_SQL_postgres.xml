@@ -15,12 +15,12 @@
 				, B.RELATE_IMAGE_PATH AS "relateImagePath"
 				, B.RELATE_IMAGE_NM AS "relateImageNm"
 				, B.PROGRM_FILE_NM AS "progrmFileNm"
-				, (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
-			FROM LETTNMENUCREATDTLS A, LETTNMENUINFO B 
+				, (SELECT C.URL FROM LET_TN_PROGRM_LIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
+			FROM LET_TN_MENU_CREAT_DTLS A, LET_TN_MENU_INFO B 
 			WHERE  B.Menu_NO &gt; 0 
 			AND    B.UPPER_MENU_NO = 0  
 			AND    A.MENU_NO  = B.MENU_NO 
-			AND    A.AUTHOR_CODE = (SELECT C.AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS C
+			AND    A.AUTHOR_CODE = (SELECT C.AUTHOR_CODE from LET_TN_EMPLYR_SCRTY_ESTBS C
 	                                WHERE  C.SCRTY_DTRMN_TRGET_ID = #{tmp_UniqId})
 			ORDER BY MENU_ORDR
 		 
@@ -35,10 +35,10 @@
 				 , B.UPPER_MENU_NO AS "upperMenuId"
 				 , B.RELATE_IMAGE_PATH AS "relateImagePath"
 				 , B.RELATE_IMAGE_NM AS "relateImageNm"
-				 , (SELECT C.URL FROM LETTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"	
-			FROM   LETTNMENUCREATDTLS A, LETTNMENUINFO B
+				 , (SELECT C.URL FROM LET_TN_PROGRM_LIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"	
+			FROM   LET_TN_MENU_CREAT_DTLS A, LET_TN_MENU_INFO B
 			WHERE  A.MENU_NO  = B.MENU_NO 
-			AND    A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+			AND    A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LET_TN_EMPLYR_SCRTY_ESTBS
 	                                WHERE  SCRTY_DTRMN_TRGET_ID = #{tmp_UniqId})
 			ORDER BY B.MENU_ORDR
 		 
@@ -47,9 +47,9 @@
 	<select id="selectLastMenuURL" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="String">
 		 
 			SELECT URL 
-			FROM   LETTNPROGRMLIST
+			FROM   LET_TN_PROGRM_LIST
 			WHERE  PROGRM_FILE_NM =
-			       (SELECT PROGRM_FILE_NM FROM LETTNMENUINFO
+			       (SELECT PROGRM_FILE_NM FROM LET_TN_MENU_INFO
 				    WHERE MENU_NO = #{menuNo})
 		 
 	</select>
@@ -57,13 +57,13 @@
 	<select id="selectLastMenuNo" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
 		 
 			select MIN(MENU_NO) 
-			from   LETTNMENUINFO
+			from   LET_TN_MENU_INFO
 			where  UPPER_MENU_NO = #{menuNo}::integer
 			and    MENU_ORDR =
 			      (select MIN(MENU_ORDR) 
-			       from LETTNMENUCREATDTLS A, LETTNMENUINFO B
+			       from LET_TN_MENU_CREAT_DTLS A, LET_TN_MENU_INFO B
 			       where A.MENU_NO = B.MENU_NO
-			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LET_TN_EMPLYR_SCRTY_ESTBS
 	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
 			       AND   B.UPPER_MENU_NO = #{menuNo}::integer)
 		 
@@ -72,13 +72,13 @@
 	<select id="selectLastMenuNoCnt" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
 		 
 			select count(MENU_NO) 
-			from   LETTNMENUINFO
+			from   LET_TN_MENU_INFO
 			where  UPPER_MENU_NO = #{menuNo}::integer
 			and    MENU_ORDR =
 			      (select MIN(MENU_ORDR) 
-			       from LETTNMENUCREATDTLS A, LETTNMENUINFO B
+			       from LET_TN_MENU_CREAT_DTLS A, LET_TN_MENU_INFO B
 			       where A.MENU_NO = B.MENU_NO
-			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LETTNEMPLYRSCRTYESTBS
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from LET_TN_EMPLYR_SCRTY_ESTBS
 	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
 			       AND   B.UPPER_MENU_NO = #{menuNo}::integer)
 		 

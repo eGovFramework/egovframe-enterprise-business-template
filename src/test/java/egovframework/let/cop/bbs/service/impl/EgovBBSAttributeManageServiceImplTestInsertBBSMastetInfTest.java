@@ -75,9 +75,11 @@ class EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest extends EgovTe
 
 		// 게시판유형코드
 		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM004';
+		// SELECT A.* FROM LET_TC_CMMN_DETAIL_CODE AS A WHERE A.CODE_ID = 'COM004';
 		boardMaster.setBbsTyCode("BBST01");
 
 		// SELECT A.* FROM LETTCCMMNDETAILCODE AS A WHERE A.CODE_ID = 'COM009';
+		// SELECT A.* FROM LET_TC_CMMN_DETAIL_CODE AS A WHERE A.CODE_ID = 'COM009';
 		boardMaster.setBbsAttrbCode("BBSA03");
 
 		// 게시판명

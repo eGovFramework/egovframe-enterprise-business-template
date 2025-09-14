@@ -14,7 +14,7 @@
     <select id="selectGroup" parameterType="egovframework.let.sec.gmt.service.GroupManageVO" resultMap="group">
         
             SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE
-              FROM LETTNAUTHORGROUPINFO 
+              FROM LET_TN_AUTHOR_GROUP_INFO 
              WHERE GROUP_ID=#{groupId}
         
     </select>
@@ -22,7 +22,7 @@
     <select id="selectGroupList" parameterType="egovframework.let.sec.gmt.service.GroupManageVO" resultMap="group">
 
             SELECT GROUP_ID, GROUP_NM, GROUP_DC, GROUP_CREAT_DE
-              FROM LETTNAUTHORGROUPINFO
+              FROM LET_TN_AUTHOR_GROUP_INFO
              WHERE 1=1
             <if test='searchCondition == "1"'>AND
                 GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')
@@ -33,7 +33,7 @@
 
 	<insert id="insertGroup">
 		
-			INSERT INTO LETTNAUTHORGROUPINFO 
+			INSERT INTO LET_TN_AUTHOR_GROUP_INFO 
 				  ( GROUP_ID
 				  , GROUP_NM
 				  , GROUP_DC
@@ -47,7 +47,7 @@
 	
 	<update id="updateGroup" parameterType="egovframework.let.sec.gmt.service.GroupManage">
 		
-			UPDATE LETTNAUTHORGROUPINFO 
+			UPDATE LET_TN_AUTHOR_GROUP_INFO 
 			   SET GROUP_NM=#{groupNm}
 				 , GROUP_DC=#{groupDc}
 				 , GROUP_CREAT_DE=now()
@@ -57,7 +57,7 @@
 	
 	<delete id="deleteGroup">
 		
-			DELETE FROM LETTNAUTHORGROUPINFO 
+			DELETE FROM LET_TN_AUTHOR_GROUP_INFO 
 			 WHERE GROUP_ID=#{groupId}
 		
 	</delete>
@@ -65,7 +65,7 @@
 	<select id="selectGroupListTotCnt" parameterType="egovframework.let.sec.gmt.service.GroupManageVO" resultType="int">
 
 			SELECT COUNT(*) totcnt
-			FROM LETTNAUTHORGROUPINFO
+			FROM LET_TN_AUTHOR_GROUP_INFO
 			WHERE 1=1
 			<if test='searchCondition == "1"'>AND
 				GROUP_NM LIKE CONCAT('%' , #{searchKeyword}, '%')

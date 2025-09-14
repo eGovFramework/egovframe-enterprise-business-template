@@ -21,7 +21,7 @@ FROM(
         GROUP_ID              groupId,
         EMPLYR_STTUS_CODE     sttus,
         DATE_FORMAT(SBSCRB_DE, '%Y %m %d') as sbscrbDe
-    FROM    LETTNEMPLYRINFO
+    FROM    LET_TN_EMPLYR_INFO
     ) A
         WHERE 1=1
         <if test='sbscrbSttus != "0"'>
@@ -53,7 +53,7 @@ FROM(
                 GROUP_ID              groupId,
                 EMPLYR_STTUS_CODE     sttus,
                 DATE_FORMAT(SBSCRB_DE, '%Y %m %d') as sbscrbDe
-            FROM    LETTNEMPLYRINFO
+            FROM    LET_TN_EMPLYR_INFO
             ) A
         WHERE 1=1
             <if test='sbscrbSttus != "0"'>
@@ -69,7 +69,7 @@ FROM(
     
     <insert id="insertUser_S">
         
-            INSERT INTO LETTNEMPLYRINFO 
+            INSERT INTO LET_TN_EMPLYR_INFO 
                 (   ESNTL_ID             ,
                     EMPLYR_ID           ,
                     USER_NM           ,
@@ -130,7 +130,7 @@ FROM(
     
     <delete id="deleteUser_S">
         
-            DELETE FROM LETTNEMPLYRINFO 
+            DELETE FROM LET_TN_EMPLYR_INFO 
             WHERE ESNTL_ID=#{delId}
         
     </delete>
@@ -166,14 +166,14 @@ FROM(
             EMPLYR_STTUS_CODE emplyrSttusCode   , 
             DATE_FORMAT(SBSCRB_DE, '%Y %m %d') as sbscrbDe,
             CRTFC_DN_VALUE            subDn
-        FROM LETTNEMPLYRINFO
+        FROM LET_TN_EMPLYR_INFO
             WHERE ESNTL_ID=#{uniqId}
         
     </select>
     
     <update id="updateUser_S">
         
-            UPDATE LETTNEMPLYRINFO 
+            UPDATE LET_TN_EMPLYR_INFO 
             SET EMPLYR_ID           = #{emplyrId}        , 
                 USER_NM           = #{emplyrNm}        ,
                 PASSWORD_HINT       = #{passwordHint}    ,
@@ -204,7 +204,7 @@ FROM(
     
     <insert id="insertUserHistory_S">
         
-            INSERT INTO LETTHEMPLYRINFOCHANGEDTLS 
+            INSERT INTO LET_TH_EMPLYR_INFO_CHANGE_DTLS 
                 (   EMPLYR_ID           ,
                     EMPL_NO             ,
                     SEXDSTN_CODE        ,
@@ -246,7 +246,7 @@ FROM(
                     EMPLYR_STTUS_CODE   ,
                     ESNTL_ID             ,
                     now()
-            FROM LETTNEMPLYRINFO
+            FROM LET_TN_EMPLYR_INFO
             WHERE ESNTL_ID = #{uniqId}
         
     </insert>
@@ -257,15 +257,15 @@ FROM(
                 FROM(
                 SELECT
                     EMPLYR_ID             userId
-                FROM    LETTNEMPLYRINFO
+                FROM    LET_TN_EMPLYR_INFO
                 UNION ALL
                 SELECT
                     ENTRPRS_MBER_ID        userId
-                FROM    LETTNENTRPRSMBER
+                FROM    LET_TN_ENTRPRS_MBER
                 UNION ALL
                 SELECT
                     MBER_ID               userId
-                FROM    LETTNGNRLMBER
+                FROM    LET_TN_GNRL_MBER
                 ) A
             WHERE userId = #{checkId}
         
@@ -273,7 +273,7 @@ FROM(
     
     <update id="updatePassword_S">
         
-            UPDATE LETTNEMPLYRINFO 
+            UPDATE LET_TN_EMPLYR_INFO 
             SET 
                    PASSWORD   =  #{password}
             WHERE  ESNTL_ID  = #{uniqId}
@@ -284,7 +284,7 @@ FROM(
         
             SELECT
                     PASSWORD          password 
-            FROM    LETTNEMPLYRINFO
+            FROM    LET_TN_EMPLYR_INFO
             WHERE   ESNTL_ID=#{uniqId}
         
     </select>

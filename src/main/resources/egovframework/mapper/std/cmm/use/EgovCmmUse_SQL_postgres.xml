@@ -16,7 +16,7 @@
 			SELECT 
 			CODE_ID, CODE, CODE_NM, CODE_DC
 			FROM 
-			LETTCCMMNDETAILCODE
+			LET_TC_CMMN_DETAIL_CODE
 			WHERE
 			USE_AT = 'Y'
 			AND CODE_ID = #{codeId}
@@ -31,7 +31,7 @@
                 ORGNZT_NM     CODE_NM, 
                 ORGNZT_DC     CODE_DC
             FROM 
-                LETTNORGNZTINFO
+                LET_TN_ORGNZT_INFO
             WHERE 1=1
             
             <if test="haveDetailCondition == &quot;Y&quot;">AND
@@ -47,7 +47,7 @@
                 GROUP_NM     CODE_NM, 
                 GROUP_DC     CODE_DC
             FROM 
-                LETTNAUTHORGROUPINFO
+                LET_TN_AUTHOR_GROUP_INFO
             WHERE 1=1
             
             <if test="haveDetailCondition == &quot;Y&quot;">AND

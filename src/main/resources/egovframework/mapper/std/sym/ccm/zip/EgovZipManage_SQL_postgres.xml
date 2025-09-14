@@ -13,7 +13,7 @@
 			     ,  EMD_NM
 			     ,  LI_BULD_NM
 			     ,  LNBR_DONG_HO
-			  FROM  LETTCZIP
+			  FROM  LET_TC_ZIP
 			 WHERE	1 = 1
 		
 			<if test='searchCondition == "1"'>AND
@@ -37,7 +37,7 @@
 	<select id="selectZipListTotCnt" parameterType="egovframework.let.sym.ccm.zip.service.ZipVO" resultType="int">
 		
 			SELECT  COUNT(*) totcnt 
-			  FROM  LETTCZIP
+			  FROM  LET_TC_ZIP
 			 WHERE	1 = 1
 		
 			<if test='searchCondition == "1"'>AND
@@ -66,7 +66,7 @@
 			     ,  EMD_NM        emdNm     
 			     ,  LI_BULD_NM    liBuldNm 
 			     ,  LNBR_DONG_HO  lnbrDongHo
-			  FROM  LETTCZIP			     
+			  FROM  LET_TC_ZIP			     
              WHERE  ZIP = #{zip}
                AND  SN  = #{sn}
 		
@@ -75,12 +75,12 @@
 	<insert id="insertZip">
 		<selectKey keyProperty="sn" resultType="int">
 			SELECT  COALESCE(MAX(SN)+1, 1) AS	sn
-			  FROM  LETTCZIP
+			  FROM  LET_TC_ZIP
 	    </selectKey>
 
 		
 			INSERT 
-			  INTO  LETTCZIP
+			  INTO  LET_TC_ZIP
 			     (  ZIP         
 			     ,  SN          
 			     ,  CTPRVN_NM   
@@ -112,7 +112,7 @@
 	<insert id="insertExcelZip">
 		
 			INSERT 
-			  INTO  LETTCZIP
+			  INTO  LET_TC_ZIP
 			     (  ZIP         
 			     ,  SN          
 			     ,  CTPRVN_NM   
@@ -143,7 +143,7 @@
 
 	<update id="updateZip">
 		
-            UPDATE  LETTCZIP 
+            UPDATE  LET_TC_ZIP 
                SET  CTPRVN_NM         = #{ctprvnNm}  
                  ,  SIGNGU_NM         = #{signguNm}  
                  ,  EMD_NM            = #{emdNm}     
@@ -159,7 +159,7 @@
 	<delete id="deleteZip">
 		
             DELETE  
-              FROM  LETTCZIP     
+              FROM  LET_TC_ZIP     
              WHERE  ZIP = #{zip} 
 		
 	</delete>
@@ -167,7 +167,7 @@
 	<delete id="deleteAllZip">
 		
             DELETE  
-              FROM  LETTCZIP     
+              FROM  LET_TC_ZIP     
 		
 	</delete>
 

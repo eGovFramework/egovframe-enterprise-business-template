@@ -74,17 +74,17 @@
 
  	<select id="selectMaxNttId" resultType="java.lang.Long">
  		
-			SELECT NVL(MAX(NTT_ID),0)+1 AS NTT_ID  FROM LETTNBBS
+			SELECT NVL(MAX(NTT_ID),0)+1 AS NTT_ID  FROM LET_TN_BBS
  		
  	</select>
  	
 	<insert id="insertBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
 		<selectKey keyProperty="nttNo" resultType="java.lang.Long" order="BEFORE">
-			SELECT NVL(MAX(SORT_ORDR),0)+1 AS NTT_NO  FROM LETTNBBS
+			SELECT NVL(MAX(SORT_ORDR),0)+1 AS NTT_NO  FROM LET_TN_BBS
 			WHERE BBS_ID = #{bbsId}
 		</selectKey>
 		
-			INSERT INTO LETTNBBS
+			INSERT INTO LET_TN_BBS
 			(NTT_ID, BBS_ID, NTT_SJ, NTT_CN, SORT_ORDR, 
 			 NTCR_ID, NTCR_NM, PASSWORD, RDCNT, 
 			 NTCE_BGNDE, NTCE_ENDDE, ANSWER_AT,  			   
@@ -103,11 +103,11 @@
 	
 	<insert id="replyBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
 		<selectKey keyProperty="nttNo" resultType="java.lang.Long" order="BEFORE">
-			SELECT NVL(MAX(NTT_NO),0)+1 AS NTT_NO  FROM LETTNBBS
+			SELECT NVL(MAX(NTT_NO),0)+1 AS NTT_NO  FROM LET_TN_BBS
 			WHERE BBS_ID = #{bbsId} AND SORT_ORDR = #{sortOrdr}
 		</selectKey>			
 		
-			INSERT INTO LETTNBBS
+			INSERT INTO LET_TN_BBS
 			(NTT_ID, BBS_ID, NTT_SJ, NTT_CN, SORT_ORDR, 
 			 NTCR_ID, NTCR_NM, PASSWORD, RDCNT, 
 			 NTCE_BGNDE, NTCE_ENDDE, ANSWER_AT,  			   
@@ -129,7 +129,7 @@
 			SELECT
 				a.BBS_ID, a.NTT_ID, a.SORT_ORDR, a.PARNTSCTT_NO, a.NTT_NO, a.ANSWER_LC
 			FROM
-				LETTNBBS a	
+				LET_TN_BBS a	
 			WHERE
 				a.BBS_ID = #{bbsId}
 			AND
@@ -148,9 +148,9 @@
 				a.RDCNT, a.PARNTSCTT_NO, a.ANSWER_AT, a.ANSWER_LC, a.USE_AT, a.ATCH_FILE_ID,
 				a.BBS_ID, a.NTCE_BGNDE, a.NTCE_ENDDE
 			FROM
-				LETTNBBS a
+				LET_TN_BBS a
 			LEFT OUTER JOIN 
-				COMVNUSERMASTER b
+				COM_VN_USER_MASTER b
 			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
 			WHERE
 				a.BBS_ID = #{bbsId}
@@ -178,9 +178,9 @@
 			SELECT
 				COUNT(a.NTT_ID)
 			FROM
-				LETTNBBS a
+				LET_TN_BBS a
 			LEFT OUTER JOIN 
-				COMVNUSERMASTER b
+				COM_VN_USER_MASTER b
 			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
 			WHERE
 				a.BBS_ID = #{bbsId}
@@ -211,12 +211,12 @@
 				c.BBS_TY_CODE, c.BBS_ATTRB_CODE, c.REPLY_POSBL_AT, 
 				c.FILE_ATCH_POSBL_AT, c.ATCH_POSBL_FILE_NUMBER, c.BBS_NM
 			FROM
-				LETTNBBS a
+				LET_TN_BBS a
 			LEFT OUTER JOIN 
-				COMVNUSERMASTER b
+				COM_VN_USER_MASTER b
 			ON a.FRST_REGISTER_ID = b.ESNTL_ID 
 			LEFT OUTER JOIN 
-				LETTNBBSMASTER c
+				LET_TN_BBS_MASTER c
 			ON a.BBS_ID = c.BBS_ID			
 			WHERE
 				a.BBS_ID = #{bbsId}	
@@ -227,7 +227,7 @@
  
  	<update id="updateBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				NTT_SJ = #{nttSj},
 				NTT_CN = #{nttCn}, 
 				NTCR_ID = #{ntcrId},
@@ -245,7 +245,7 @@
 
  	<update id="deleteBoardArticle" parameterType="egovframework.let.cop.bbs.service.Board">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				NTT_SJ = #{nttSj},
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
@@ -257,7 +257,7 @@
 
  	<select id="selectMaxInqireCo" parameterType="egovframework.let.cop.bbs.service.BoardVO" resultType="java.lang.Integer">
  		
-			SELECT NVL(MAX(RDCNT),0)+1 AS RDCNT FROM LETTNBBS
+			SELECT NVL(MAX(RDCNT),0)+1 AS RDCNT FROM LET_TN_BBS
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}
  		
@@ -268,7 +268,7 @@
 			SELECT
 				NVL(MAX(NTT_NO),0)+1 AS NTT_NO
 			FROM
-				LETTNBBS	
+				LET_TN_BBS	
 			WHERE
 				BBS_ID = #{bbsId}
 			AND
@@ -280,7 +280,7 @@
 
  	<update id="updateInqireCo" parameterType="egovframework.let.cop.bbs.service.BoardVO">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				RDCNT = #{inqireCo},
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATETIME
@@ -291,7 +291,7 @@
 
 	<update id="updateSortOrder" parameterType="egovframework.let.cop.bbs.service.BoardVO">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				NTT_NO = #{nttNo}
 			WHERE NTT_ID = #{nttId}
  			
@@ -306,7 +306,7 @@
 				as FRST_REGIST_PNTTM,
 				a.NTT_CN, a.USE_AT, a.BBS_ID, b.USER_NM as FRST_REGISTER_NM, a.FRST_REGISTER_ID
 			FROM
-				LETTNBBS a, COMVNUSERMASTER b
+				LET_TN_BBS a, COM_VN_USER_MASTER b
 			WHERE
 				a.BBS_ID = #{bbsId}
 			AND 
@@ -323,7 +323,7 @@
 			SELECT
 				COUNT(NTT_ID)
 			FROM
-				LETTNBBS 
+				LET_TN_BBS 
 			WHERE
 				BBS_ID = #{bbsId}	
 			AND
@@ -333,7 +333,7 @@
 
 	<update id="deleteGuestList" parameterType="egovframework.let.cop.bbs.service.BoardVO">
 		
-			UPDATE LETTNBBS
+			UPDATE LET_TN_BBS
 			SET USE_AT = 'N'
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}
@@ -345,7 +345,7 @@
 			SELECT
 				PASSWORD
 			FROM
-				LETTNBBS	
+				LET_TN_BBS	
 			WHERE BBS_ID = #{bbsId}
 			AND NTT_ID = #{nttId}				
 		
@@ -353,14 +353,14 @@
 
 	<select id="getParentNttNo" parameterType="egovframework.let.cop.bbs.service.Board" resultType="java.lang.Long">
 		
-			SELECT NTT_NO FROM LETTNBBS
+			SELECT NTT_NO FROM LET_TN_BBS
 			WHERE BBS_ID = #{bbsId} AND NTT_ID = #{parnts}			
 		
 	</select>
 	
  	<update id="updateOtherNttNo" parameterType="egovframework.let.cop.bbs.service.Board">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				NTT_NO = NTT_NO + 1
 			WHERE BBS_ID = #{bbsId} AND SORT_ORDR = #{sortOrdr}
 			AND NTT_NO &gt; #{nttNo}
@@ -369,7 +369,7 @@
  	
  	 	<update id="updateNttNo" parameterType="egovframework.let.cop.bbs.service.Board">
  		
-			UPDATE LETTNBBS SET 
+			UPDATE LET_TN_BBS SET 
 				NTT_NO = #{nttNo}
 			WHERE BBS_ID = #{bbsId} 
 			AND NTT_ID = #{nttId}

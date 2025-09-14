@@ -26,7 +26,7 @@
                    A.GROUP_ID,
                    A.MBER_TY_CODE,
                    (SELECT CODE_NM
-                      FROM LETTCCMMNDETAILCODE 
+                      FROM LET_TC_CMMN_DETAIL_CODE 
                      WHERE CODE_ID = 'COM012'
                        AND CODE = A.MBER_TY_CODE
                        AND USE_AT = 'Y') AS MBER_TY_NM,
@@ -36,13 +36,13 @@
                      END) AS REG_YN,
                     ESNTL_ID
               FROM (SELECT MBER_ID USER_ID, MBER_NM USER_NM, GROUP_ID, 'USR01' MBER_TY_CODE, ESNTL_ID
-                      FROM LETTNGNRLMBER
+                      FROM LET_TN_GNRL_MBER
                      UNION ALL
                     SELECT ENTRPRS_MBER_ID USER_ID, CMPNY_NM USER_NM, GROUP_ID, 'USR02' MBER_TY_CODE, ESNTL_ID 
-                      FROM LETTNENTRPRSMBER
+                      FROM LET_TN_ENTRPRS_MBER
                      UNION ALL
                     SELECT EMPLYR_ID USER_ID, USER_NM USER_NM, GROUP_ID, 'USR03' MBER_TY_CODE, ESNTL_ID 
-                      FROM LETTNEMPLYRINFO ) A LEFT OUTER JOIN LETTNEMPLYRSCRTYESTBS B
+                      FROM LET_TN_EMPLYR_INFO ) A LEFT OUTER JOIN LET_TN_EMPLYR_SCRTY_ESTBS B
                 ON A.ESNTL_ID = B.SCRTY_DTRMN_TRGET_ID
              WHERE 1 = 1    
                
@@ -67,7 +67,7 @@
 
     <insert id="insertAuthorGroup" parameterType="egovframework.let.sec.rgm.service.AuthorGroup">
         
-            INSERT INTO LETTNEMPLYRSCRTYESTBS 
+            INSERT INTO LET_TN_EMPLYR_SCRTY_ESTBS 
                   ( SCRTY_DTRMN_TRGET_ID
                   , MBER_TY_CODE
                   , AUTHOR_CODE)
@@ -79,7 +79,7 @@
 
     <update id="updateAuthorGroup" parameterType="egovframework.let.sec.rgm.service.AuthorGroup">
         
-            UPDATE LETTNEMPLYRSCRTYESTBS 
+            UPDATE LET_TN_EMPLYR_SCRTY_ESTBS 
                SET MBER_TY_CODE=#{mberTyCode}
                  , AUTHOR_CODE=#{authorCode}
              WHERE SCRTY_DTRMN_TRGET_ID=#{uniqId}
@@ -88,7 +88,7 @@
 
     <delete id="deleteAuthorGroup">
         
-            DELETE FROM LETTNEMPLYRSCRTYESTBS 
+            DELETE FROM LET_TN_EMPLYR_SCRTY_ESTBS 
              WHERE SCRTY_DTRMN_TRGET_ID=#{uniqId}
         
     </delete>
@@ -97,13 +97,13 @@
 
             SELECT COUNT(*) AS totcnt
               FROM (SELECT MBER_ID USER_ID, MBER_NM USER_NM, GROUP_ID, 'USR01' MBER_TY_CODE 
-                      FROM LETTNGNRLMBER
+                      FROM LET_TN_GNRL_MBER
                      UNION ALL
                     SELECT ENTRPRS_MBER_ID USER_ID, CMPNY_NM USER_NM, GROUP_ID, 'USR02' MBER_TY_CODE 
-                      FROM LETTNENTRPRSMBER
+                      FROM LET_TN_ENTRPRS_MBER
                      UNION ALL
                     SELECT EMPLYR_ID USER_ID, USER_NM USER_NM, GROUP_ID, 'USR03' MBER_TY_CODE 
-                      FROM LETTNEMPLYRINFO ) A LEFT OUTER JOIN LETTNEMPLYRSCRTYESTBS B
+                      FROM LET_TN_EMPLYR_INFO ) A LEFT OUTER JOIN LET_TN_EMPLYR_SCRTY_ESTBS B
                 ON A.USER_ID = B.SCRTY_DTRMN_TRGET_ID
              WHERE 1 = 1   
             <if test="searchKeyword != null and searchKeyword != ''">

@@ -28,7 +28,7 @@
 			     , SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2) AS statsDate
 			     </if>
 			     , 0 AS statsCo
-			  FROM LETTSSYSLOGSUMMARY
+			  FROM LET_TS_SYS_LOG_SUMMARY
 		 	 WHERE OCCRRNC_DE BETWEEN #{fromDate} AND #{toDate}  
 		 	   <if test="detailStatsKind != null and detailStatsKind != ''">
 		 	   AND SRVC_NM LIKE '%' || #{detailStatsKind} '%'
@@ -69,7 +69,7 @@
 			     , 0 AS deleteCo
 			     , 0 AS outptCo
 			     , 0 AS errorCo
-			  FROM LETTNLOGINLOG
+			  FROM LET_TN_LOGIN_LOG
 		 	 WHERE 1=1
                
                AND CONECT_ID = #{detailStatsKind}

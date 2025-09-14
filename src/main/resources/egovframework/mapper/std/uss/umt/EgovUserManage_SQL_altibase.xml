@@ -19,7 +19,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         GROUP_ID              as "groupId",
         EMPLYR_STTUS_CODE     as "sttus",
         SBSCRB_DE             as "sbscrbDe"
-    FROM    LETTNEMPLYRINFO
+    FROM    LET_TN_EMPLYR_INFO
         WHERE 1=1
         <if test='sbscrbSttus != "0"'>
             AND EMPLYR_STTUS_CODE LIKE  #{sbscrbSttus}
@@ -36,7 +36,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     <select id="selectUserListTotCnt_S" parameterType="egovframework.let.uss.umt.service.UserDefaultVO" resultType="int">
             SELECT COUNT(1) totcnt
-            FROM    LETTNEMPLYRINFO
+            FROM LET_TN_EMPLYR_INFO
             WHERE 1=1
             <if test='sbscrbSttus != "0"'>
                 AND EMPLYR_STTUS_CODE LIKE  #{sbscrbSttus}
@@ -51,7 +51,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     <insert id="insertUser_S">
         
-            INSERT INTO LETTNEMPLYRINFO 
+            INSERT INTO LET_TN_EMPLYR_INFO 
                 (   ESNTL_ID             ,
                     EMPLYR_ID           ,
                     USER_NM           ,
@@ -112,7 +112,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     <delete id="deleteUser_S">
         
-            DELETE FROM LETTNEMPLYRINFO 
+            DELETE FROM LET_TN_EMPLYR_INFO 
             WHERE ESNTL_ID=#{delId}
         
     </delete>
@@ -148,14 +148,14 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
             EMPLYR_STTUS_CODE emplyrSttusCode   , 
             SBSCRB_DE         sbscrbDe          ,
             CRTFC_DN_VALUE            subDn
-        FROM LETTNEMPLYRINFO
+        FROM LET_TN_EMPLYR_INFO
             WHERE ESNTL_ID=#{uniqId}
         
     </select>
     
     <update id="updateUser_S">
         
-            UPDATE LETTNEMPLYRINFO 
+            UPDATE LET_TN_EMPLYR_INFO 
             SET EMPLYR_ID           = #{emplyrId}        , 
                 USER_NM           = #{emplyrNm}        ,
                 PASSWORD_HINT       = #{passwordHint}    ,
@@ -186,7 +186,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     <insert id="insertUserHistory_S">
         
-            INSERT INTO LETTHEMPLYRINFOCHANGEDTLS 
+            INSERT INTO LET_TH_EMPLYR_INFO_CHANGE_DTLS 
                 (   EMPLYR_ID           ,
                     EMPL_NO             ,
                     SEXDSTN_CODE        ,
@@ -228,7 +228,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                     EMPLYR_STTUS_CODE   ,
                     ESNTL_ID             ,
                     SYSDATE
-            FROM LETTNEMPLYRINFO
+            FROM LET_TN_EMPLYR_INFO
             WHERE ESNTL_ID = #{uniqId}
         
     </insert>
@@ -239,15 +239,15 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
                 FROM(
                 SELECT
                     EMPLYR_ID             userId
-                FROM    LETTNEMPLYRINFO
+                FROM    LET_TN_EMPLYR_INFO
                 UNION ALL
                 SELECT
                     ENTRPRS_MBER_ID        userId
-                FROM    LETTNENTRPRSMBER
+                FROM    LET_TN_ENTRPRS_MBER
                 UNION ALL
                 SELECT
                     MBER_ID               userId
-                FROM    LETTNGNRLMBER
+                FROM    LET_TN_GNRL_MBER
                 ) A
             WHERE userId = #{checkId}
         
@@ -255,7 +255,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
     
     <update id="updatePassword_S">
         
-            UPDATE LETTNEMPLYRINFO 
+            UPDATE LET_TN_EMPLYR_INFO 
             SET 
                    PASSWORD   =  #{password}
             WHERE  ESNTL_ID  = #{uniqId}
@@ -266,7 +266,7 @@ SELECT * FROM ( SELECT rownum rn, TB.* FROM (
         
             SELECT
                     PASSWORD          password 
-            FROM    LETTNEMPLYRINFO
+            FROM    LET_TN_EMPLYR_INFO
             WHERE   ESNTL_ID=#{uniqId}
         
     </select>

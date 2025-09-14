@@ -21,7 +21,7 @@
 				, PROGRM_KOREAN_NM  AS "progrmKoreanNm" 
 				, PROGRM_DC        AS "progrmDc" 
 				, URL              AS "URL"
-			FROM LETTNPROGRMLIST
+			FROM LET_TN_PROGRM_LIST
 			WHERE PROGRM_KOREAN_NM LIKE '%' || #{searchKeyword} || '%'
 			LIMIT  #{recordCountPerPage} OFFSET #{firstIndex}
 		 
@@ -31,7 +31,7 @@
 	<select id="selectProgrmListTotCnt_S" parameterType="comDefaultVO" resultType="int">
 		
 		SELECT COUNT(*) AS "totcnt"
-		  FROM LETTNPROGRMLIST
+		  FROM LET_TN_PROGRM_LIST
 		 WHERE PROGRM_KOREAN_NM LIKE '%' || #{searchKeyword} || '%'
 		
 	</select>
@@ -40,7 +40,7 @@
 	<select id="selectProgrmNMTotCnt" parameterType="comDefaultVO" resultType="int">
 		
 		SELECT COUNT(*) AS "totcnt"
-		  FROM LETTNPROGRMLIST
+		  FROM LET_TN_PROGRM_LIST
 		 WHERE PROGRM_FILE_NM = #{searchKeyword}
 		
 	</select>
@@ -53,14 +53,14 @@
 				, PROGRM_KOREAN_NM AS "progrmKoreanNm" 
 				, PROGRM_DC AS "progrmDc" 
 				, URL AS "URL"
-			FROM LETTNPROGRMLIST
+			FROM LET_TN_PROGRM_LIST
 			WHERE PROGRM_FILE_NM = #{searchKeyword}
 		
 	</select>
 	
 	<insert id="insertProgrm_S">
 		
-			INSERT INTO LETTNPROGRMLIST 
+			INSERT INTO LET_TN_PROGRM_LIST 
 				( PROGRM_FILE_NM
 				  , PROGRM_STRE_PATH
 				  , PROGRM_KOREAN_NM
@@ -76,7 +76,7 @@
 
 	<update id="updateProgrm_S">
 		
-			UPDATE LETTNPROGRMLIST 
+			UPDATE LET_TN_PROGRM_LIST 
 			SET PROGRM_STRE_PATH=#{progrmStrePath}
 				, PROGRM_KOREAN_NM=#{progrmKoreanNm}
 				, PROGRM_DC      =#{progrmDc}
@@ -87,21 +87,21 @@
 
 	<delete id="deleteProgrm_S">
 		                          
-			DELETE FROM LETTNPROGRMLIST              
+			DELETE FROM LET_TN_PROGRM_LIST              
 			WHERE PROGRM_FILE_NM=#{progrmFileNm}                 
 		                                
 	</delete> 
 
 	<delete id="deleteAllProgrm">
 		                          
-			DELETE FROM LETTNPROGRMLIST  WHERE PROGRM_FILE_NM &lt;&gt; 'dir'
+			DELETE FROM LET_TN_PROGRM_LIST  WHERE PROGRM_FILE_NM &lt;&gt; 'dir'
 		                                
 	</delete> 
 
 	<!-- 메뉴정보 총건수 조회 -->
 	<select id="selectProgrmListTotCnt" parameterType="egovframework.let.sym.prm.service.ProgrmManageVO" resultType="int">
 		
-		SELECT COUNT(*) AS "totcnt" FROM LETTNPROGRMLIST
+		SELECT COUNT(*) AS "totcnt" FROM LET_TN_PROGRM_LIST
 		
 	</select>
 </mapper>

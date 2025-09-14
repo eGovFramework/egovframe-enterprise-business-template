@@ -38,7 +38,7 @@
 
 	<update id="deleteBBSUseInf" parameterType="egovframework.let.cop.com.service.BoardUseInf">
 		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -49,30 +49,30 @@
 
 	<select id="selectBBSUseInfByCmmnty" parameterType="egovframework.let.cop.com.service.BoardUseInfVO" resultMap="selectBBSUse">
 		
-			SELECT BBS_ID FROM LETTNBBSUSE
+			SELECT BBS_ID FROM LET_TN_BBS_USE
 					WHERE TRGET_ID = #{cmmntyId} 
 		
 	</select>
 
 	<select id="selectBBSUseInfByClub" parameterType="egovframework.let.cop.com.service.BoardUseInfVO" resultMap="selectBBSUse">
 		
-			SELECT BBS_ID FROM LETTNBBSUSE
+			SELECT BBS_ID FROM LET_TN_BBS_USE
 					WHERE TRGET_ID = #{clbId} 
 		
 	</select>
 
 	<update id="deleteAllBBSUseInfByCmmnty" parameterType="egovframework.let.cop.com.service.BoardUseInfVO">
 		<!-- [CDATA[
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
 			WHERE BBS_ID IN 
-				(SELECT BBS_ID FROM LETTNBBSUSE
+				(SELECT BBS_ID FROM LET_TN_BBS_USE
 					WHERE TRGET_ID = #{cmmntyId} )
 		]]-->
 		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -82,16 +82,16 @@
 
 	<update id="deleteAllBBSUseInfByClub" parameterType="egovframework.let.cop.com.service.BoardUseInfVO">
 		<!-- [CDATA[
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
 			WHERE BBS_ID IN 
-				(SELECT BBS_ID FROM LETTNBBSUSE
+				(SELECT BBS_ID FROM LET_TN_BBS_USE
 					WHERE TRGET_ID = #{clbId} )
 		]]-->
 		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -101,7 +101,7 @@
 	
 	<insert id="insertBBSUseInf" parameterType="egovframework.let.cop.com.service.BoardUseInf">
 		
-			INSERT INTO LETTNBBSUSE 
+			INSERT INTO LET_TN_BBS_USE 
 			(BBS_ID, TRGET_ID, REGIST_SE_CODE, USE_AT, 
 			 FRST_REGISTER_ID, FRST_REGIST_PNTTM )
 			VALUES
@@ -117,10 +117,10 @@
                 '시스템 활용' CMMNTY_ID, '시스템 활용' CMMNTY_NM,
                 '시스템 활용' CLB_ID, '시스템 활용' CLB_NM, '시스템 활용' BBS_TY_CODE
             FROM
-                LETTNBBSUSE a
-            LEFT OUTER JOIN LETTNBBSMASTER e
+                LET_TN_BBS_USE a
+            LEFT OUTER JOIN LET_TN_BBS_MASTER e
                 ON a.BBS_ID = e.BBS_ID
-            LEFT OUTER JOIN LETTCCMMNDETAILCODE b
+            LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE b
                 ON b.CODE = a.REGIST_SE_CODE
             WHERE
                 b.CODE_ID = 'COM001'
@@ -140,10 +140,10 @@
 			SELECT
 				COUNT(a.BBS_ID)
 			FROM
-                LETTNBBSUSE a
-            LEFT OUTER JOIN LETTNBBSMASTER e
+                LET_TN_BBS_USE a
+            LEFT OUTER JOIN LET_TN_BBS_MASTER e
                 ON a.BBS_ID = e.BBS_ID
-            LEFT OUTER JOIN LETTCCMMNDETAILCODE b
+            LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE b
                 ON b.CODE = a.REGIST_SE_CODE
             WHERE
                 b.CODE_ID = 'COM001'
@@ -162,10 +162,10 @@
                 '시스템 활용' CMMNTY_ID, '시스템 활용' CMMNTY_NM,
                 '시스템 활용' CLB_ID, '시스템 활용' CLB_NM, '시스템 활용' BBS_TY_CODE
             FROM
-                LETTNBBSUSE a
-            LEFT OUTER JOIN LETTNBBSMASTER e
+                LET_TN_BBS_USE a
+            LEFT OUTER JOIN LET_TN_BBS_MASTER e
                 ON a.BBS_ID = e.BBS_ID
-            LEFT OUTER JOIN LETTCCMMNDETAILCODE b
+            LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE b
                 ON b.CODE = a.REGIST_SE_CODE
             WHERE
                 b.CODE_ID = 'COM001'
@@ -178,7 +178,7 @@
  
  	<update id="updateBBSUseInf" parameterType="egovframework.let.cop.com.service.BoardUseInf">
  		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = #{useAt},
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -188,7 +188,7 @@
 
 	<update id="deleteBBSUseInfByBoardId" parameterType="egovframework.let.cop.com.service.BoardUseInf">
 		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = 'N',
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()
@@ -204,16 +204,16 @@
 					a.BBS_ID, b.BBS_NM, a.TRGET_ID, d.USER_NM, a.REGIST_SE_CODE, c.CODE_NM as REGIST_SE_CODE_NM,
 				    a.USE_AT, a.FRST_REGISTER_ID, DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM
 			FROM 
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
-			LEFT OUTER JOIN COMVNUSERMASTER d
+			LEFT OUTER JOIN COM_VN_USER_MASTER d
 				ON a.TRGET_ID = d.ESNTL_ID
 			WHERE
 				a.BBS_ID IN 
-			( SELECT BBS_ID FROM LETTNBBSUSE 
+			( SELECT BBS_ID FROM LET_TN_BBS_USE 
 				WHERE TRGET_ID = #{trgetId} AND USE_AT ='Y' )
 			AND a.REGIST_SE_CODE = 'REGC07'
 		UNION ALL
@@ -221,14 +221,14 @@
 					a.BBS_ID, b.BBS_NM, a.TRGET_ID, '[전체]' USER_NM, a.REGIST_SE_CODE, c.CODE_NM as REGIST_SE_CODE_NM,
 				    a.USE_AT, a.FRST_REGISTER_ID, DATE_FORMAT(a.FRST_REGIST_PNTTM, '%Y-%m-%d') as FRST_REGIST_PNTTM
 			FROM
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
 			WHERE
 				a.BBS_ID IN
-			( SELECT BBS_ID FROM LETTNBBSUSE
+			( SELECT BBS_ID FROM LET_TN_BBS_USE
 				WHERE TRGET_ID = #{trgetId} )
 			AND a.REGIST_SE_CODE in ('REGC05', 'REGC06')
 		UNION ALL
@@ -239,28 +239,28 @@
 					'REGC07' as REGIST_SE_CODE, '게시판사용자등록' as REGIST_SE_CODE_NM,
 				    '' as USE_AT, '' as FRST_REGISTER_ID, '' as FRST_REGIST_PNTTM
 			FROM
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
 			LEFT OUTER JOIN LETTNCMMNTYUSER e
 		        ON e.CMMNTY_ID = #{trgetId}
 			LEFT OUTER JOIN LETTNCLUBUSER f
 		        ON f.CLB_ID = #{trgetId}
-			LEFT OUTER JOIN COMVNUSERMASTER g
+			LEFT OUTER JOIN COM_VN_USER_MASTER g
 		        ON e.EMPLYR_ID = g.ESNTL_ID
-			LEFT OUTER JOIN COMVNUSERMASTER h
+			LEFT OUTER JOIN COM_VN_USER_MASTER h
 		        ON f.EMPLYR_ID = h.ESNTL_ID
 			WHERE
 				a.BBS_ID IN
-			( SELECT BBS_ID FROM LETTNBBSUSE 
+			( SELECT BBS_ID FROM LET_TN_BBS_USE 
 				WHERE TRGET_ID = #{trgetId} AND USE_AT ='Y' )
 			AND a.REGIST_SE_CODE in ('REGC05', 'REGC06')
 			AND (
-		        (a.BBS_ID, e.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LETTNBBSUSE)
+		        (a.BBS_ID, e.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LET_TN_BBS_USE)
 		        OR
-		        (a.BBS_ID, f.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LETTNBBSUSE)
+		        (a.BBS_ID, f.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LET_TN_BBS_USE)
 		      )
 		) tt
 		
@@ -279,58 +279,58 @@
 			SELECT 
 					a.BBS_ID, d.USER_NM
 			FROM 
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
-			LEFT OUTER JOIN COMVNUSERMASTER d
+			LEFT OUTER JOIN COM_VN_USER_MASTER d
 				ON a.TRGET_ID = d.ESNTL_ID
 			WHERE
 				a.BBS_ID IN 
-			( SELECT BBS_ID FROM LETTNBBSUSE 
+			( SELECT BBS_ID FROM LET_TN_BBS_USE 
 				WHERE TRGET_ID = #{trgetId} AND USE_AT ='Y' )
 			AND a.REGIST_SE_CODE = 'REGC07'
 		UNION ALL
 			SELECT
 					a.BBS_ID, '[전체]' USER_NM
 			FROM
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
 			WHERE
 				a.BBS_ID IN
-			( SELECT BBS_ID FROM LETTNBBSUSE
+			( SELECT BBS_ID FROM LET_TN_BBS_USE
 				WHERE TRGET_ID = #{trgetId} )
 			AND a.REGIST_SE_CODE in ('REGC05', 'REGC06')
 		UNION ALL
 			SELECT
 					a.BBS_ID, '' as USER_NM
 			FROM
-				LETTNBBSUSE a
-			LEFT OUTER JOIN LETTNBBSMASTER b
+				LET_TN_BBS_USE a
+			LEFT OUTER JOIN LET_TN_BBS_MASTER b
 				ON a.BBS_ID = b.BBS_ID
-			LEFT OUTER JOIN LETTCCMMNDETAILCODE c
+			LEFT OUTER JOIN LET_TC_CMMN_DETAIL_CODE c
 				ON c.CODE = a.REGIST_SE_CODE
 			LEFT OUTER JOIN LETTNCMMNTYUSER e
 		        ON e.CMMNTY_ID = #{trgetId}
 			LEFT OUTER JOIN LETTNCLUBUSER f
 		        ON f.CLB_ID = #{trgetId}
-			LEFT OUTER JOIN COMVNUSERMASTER g
+			LEFT OUTER JOIN COM_VN_USER_MASTER g
 		        ON e.EMPLYR_ID = g.ESNTL_ID
-			LEFT OUTER JOIN COMVNUSERMASTER h
+			LEFT OUTER JOIN COM_VN_USER_MASTER h
 		        ON f.EMPLYR_ID = h.ESNTL_ID
 			WHERE
 				a.BBS_ID IN
-			( SELECT BBS_ID FROM LETTNBBSUSE 
+			( SELECT BBS_ID FROM LET_TN_BBS_USE 
 				WHERE TRGET_ID = #{trgetId} AND USE_AT ='Y' )
 			AND a.REGIST_SE_CODE in ('REGC05', 'REGC06')
 			AND (
-		        (a.BBS_ID, e.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LETTNBBSUSE)
+		        (a.BBS_ID, e.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LET_TN_BBS_USE)
 		        OR
-		        (a.BBS_ID, f.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LETTNBBSUSE)
+		        (a.BBS_ID, f.EMPLYR_ID) not in (SELECT BBS_ID, TRGET_ID FROM LET_TN_BBS_USE)
 		      )
 		) tt
 		
@@ -341,7 +341,7 @@
 
 	<update id="updateBBSUseInfByTrget" parameterType="egovframework.let.cop.com.service.BoardUseInf">
 		
-			UPDATE LETTNBBSUSE SET 
+			UPDATE LET_TN_BBS_USE SET 
 				USE_AT = #{useAt},
 				LAST_UPDUSR_ID = #{lastUpdusrId},
 				LAST_UPDT_PNTTM = SYSDATE()

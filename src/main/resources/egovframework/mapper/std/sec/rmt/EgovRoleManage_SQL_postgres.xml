@@ -24,7 +24,7 @@
                    ROLE_TY, 
                    ROLE_SORT, 
                    ROLE_CREAT_DE
-              FROM LETTNROLEINFO
+              FROM LET_TN_ROLE_INFO
              WHERE ROLE_CODE = #{roleCode}		         
         
     </select>
@@ -35,12 +35,12 @@
                    ROLE_PTTRN, 
                    ROLE_DC, 
                    (SELECT CODE_NM 
-                      FROM LETTCCMMNDETAILCODE 
+                      FROM LET_TC_CMMN_DETAIL_CODE 
                      WHERE CODE_ID = 'COM029' 
                        AND CODE = ROLE_TY) AS ROLE_TY, 
                    ROLE_SORT, 
                    ROLE_CREAT_DE
-              FROM LETTNROLEINFO
+              FROM LET_TN_ROLE_INFO
              WHERE 1=1
             <if test='searchCondition == "1"'>AND
                 ROLE_NM LIKE '%' || #{searchKeyword} || '%'
@@ -51,7 +51,7 @@
 
 	<insert id="insertRole" parameterType="egovframework.let.sec.rmt.service.RoleManage">
 		
-			INSERT INTO LETTNROLEINFO 
+			INSERT INTO LET_TN_ROLE_INFO 
 				  ( ROLE_CODE
 				  , ROLE_NM
                   , ROLE_PTTRN
@@ -71,7 +71,7 @@
 
 	<update id="updateRole" parameterType="egovframework.let.sec.rmt.service.RoleManage">
 		
-			UPDATE LETTNROLEINFO 
+			UPDATE LET_TN_ROLE_INFO 
 			   SET ROLE_NM=#{roleNm}
                  , ROLE_PTTRN=#{rolePtn}
                  , ROLE_DC=#{roleDc}
@@ -84,7 +84,7 @@
 
 	<delete id="deleteRole">
 		
-			DELETE FROM LETTNROLEINFO 
+			DELETE FROM LET_TN_ROLE_INFO 
 			 WHERE ROLE_CODE=#{roleCode}
 		
 	</delete>
@@ -92,7 +92,7 @@
 	<select id="selectAuthorListTotCnt" parameterType="egovframework.let.sec.rmt.service.RoleManageVO" resultType="int">
 
 			SELECT COUNT(*) totcnt
-			FROM LETTNROLEINFO
+			FROM LET_TN_ROLE_INFO
 			WHERE 1=1
 			<if test='searchCondition == "1"'>AND
 				ROLE_NM LIKE '%' || #{searchKeyword} || '%'
@@ -101,7 +101,7 @@
 
     <select id="selectRoleAllList" parameterType="egovframework.let.sec.rmt.service.RoleManageVO" resultMap="role">
             SELECT ROLE_CODE, ROLE_NM, ROLE_PTTRN, ROLE_DC, ROLE_TY, ROLE_SORT, ROLE_CREAT_DE
-              FROM LETTNROLEINFO
+              FROM LET_TN_ROLE_INFO
     </select>
 
 </mapper>
