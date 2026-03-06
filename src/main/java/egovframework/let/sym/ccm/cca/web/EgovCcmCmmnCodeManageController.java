@@ -1,27 +1,31 @@
 package egovframework.let.sym.ccm.cca.web;
 
-import java.util.Map;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jakarta.validation.Valid;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.sym.ccm.cca.service.CmmnCode;
 import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
 import egovframework.let.sym.ccm.cca.service.EgovCcmCmmnCodeManageService;
+import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
-
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import jakarta.annotation.Resource;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -43,6 +47,8 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
  */
 @Controller
 public class EgovCcmCmmnCodeManageController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EgovCcmCmmnCodeManageController.class);
 
 	@Resource(name = "CmmnCodeManageService")
     private EgovCcmCmmnCodeManageService cmmnCodeManageService;
@@ -53,9 +59,6 @@ public class EgovCcmCmmnCodeManageController {
     /** EgovPropertyService */
     @Resource(name = "propertiesService")
     protected EgovPropertyService propertiesService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 공통코드를 삭제한다.
@@ -75,7 +78,24 @@ public class EgovCcmCmmnCodeManageController {
 	}
 
 	/**
-	 * 공통코드를 등록한다.
+	 * 공통코드 등록 화면으로 이동 (GET)
+	 * @param model
+	 * @return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist"
+	 * @throws Exception
+	 */
+	@GetMapping(value = "/sym/ccm/cca/EgovCcmCmmnCodeRegist.do")
+	public String insertCmmnCodeView(ModelMap model) throws Exception {
+		CmmnClCodeVO searchVO = new CmmnClCodeVO();
+		searchVO.setRecordCountPerPage(999999);
+		searchVO.setFirstIndex(0);
+		searchVO.setSearchCondition("CodeList");
+		model.addAttribute("cmmnClCode", cmmnClCodeManageService.selectCmmnClCodeList(searchVO));
+		model.addAttribute("cmmnCode", new CmmnCode());
+		return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist";
+	}
+
+	/**
+	 * 공통코드를 등록한다 (POST)
 	 * @param loginVO
 	 * @param cmmnCode
 	 * @param bindingResult
@@ -83,41 +103,27 @@ public class EgovCcmCmmnCodeManageController {
 	 * @return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist"
 	 * @throws Exception
 	 */
-    @RequestMapping(value="/sym/ccm/cca/EgovCcmCmmnCodeRegist.do")
-	public String insertCmmnCode (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("cmmnCode") CmmnCode cmmnCode
-			, BindingResult bindingResult
-			, ModelMap model
-			) throws Exception {
-    	if   (cmmnCode.getClCode() == null
-    		||cmmnCode.getClCode().equals("")) {
+	@PostMapping(value = "/sym/ccm/cca/EgovCcmCmmnCodeRegist.do")
+	public String insertCmmnCode(@ModelAttribute("loginVO") LoginVO loginVO,
+			@Valid @ModelAttribute("cmmnCode") CmmnCode cmmnCode, BindingResult bindingResult, ModelMap model)
+			throws Exception {
 
-    		CmmnClCodeVO searchVO;
-    		searchVO = new CmmnClCodeVO();
-    		searchVO.setRecordCountPerPage(999999);
-    		searchVO.setFirstIndex(0);
-    		searchVO.setSearchCondition("CodeList");
-            model.addAttribute("cmmnClCode", cmmnClCodeManageService.selectCmmnClCodeList(searchVO));
-
-    		return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist";
-    	}
-
-        beanValidator.validate(cmmnCode, bindingResult);
-		if (bindingResult.hasErrors()){
-    		CmmnClCodeVO searchVO;
-    		searchVO = new CmmnClCodeVO();
-    		searchVO.setRecordCountPerPage(999999);
-    		searchVO.setFirstIndex(0);
-    		searchVO.setSearchCondition("CodeList");
-            model.addAttribute("cmmnClCode", cmmnClCodeManageService.selectCmmnClCodeList(searchVO));
-
-            return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist";
+		// Validation 오류가 발생하면 등록 화면으로 돌아감
+		if (bindingResult.hasErrors()) {
+			// 분류코드 목록 다시 조회
+			CmmnClCodeVO searchVO = new CmmnClCodeVO();
+			searchVO.setRecordCountPerPage(999999);
+			searchVO.setFirstIndex(0);
+			searchVO.setSearchCondition("CodeList");
+			model.addAttribute("cmmnClCode", cmmnClCodeManageService.selectCmmnClCodeList(searchVO));
+			model.addAttribute("cmmnCode", cmmnCode);
+			return "/cmm/sym/ccm/EgovCcmCmmnCodeRegist";
 		}
 
-    	cmmnCode.setFrstRegisterId(loginVO.getUniqId());
-    	cmmnCodeManageService.insertCmmnCode(cmmnCode);
-        return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do";
-    }
+		cmmnCode.setFrstRegisterId(loginVO.getUniqId());
+		cmmnCodeManageService.insertCmmnCode(cmmnCode);
+		return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do";
+	}
 
 	/**
 	 * 공통코드 상세항목을 조회한다.
@@ -175,43 +181,81 @@ public class EgovCcmCmmnCodeManageController {
 	}
 
 	/**
-	 * 공통코드를 수정한다.
+	 * 공통코드 수정 화면으로 이동 (GET)
 	 * @param loginVO
 	 * @param cmmnCode
-	 * @param bindingResult
-	 * @param commandMap
 	 * @param model
 	 * @return "/cmm/sym/ccm/EgovCcmCmmnCodeModify"
 	 * @throws Exception
 	 */
-    @RequestMapping(value="/sym/ccm/cca/EgovCcmCmmnCodeModify.do")
-	public String updateCmmnCode (@ModelAttribute("loginVO") LoginVO loginVO
-			, @ModelAttribute("cmmnCode") CmmnCode cmmnCode
-			, BindingResult bindingResult
-			, @RequestParam Map <String, Object> commandMap
-			, ModelMap model
-			) throws Exception {
-		String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
-    	if (sCmd.equals("")) {
-    		CmmnCode vo =cmmnCodeManageService.selectCmmnCodeDetail(cmmnCode);
-    		model.addAttribute("cmmnCode", vo);
+	@GetMapping(value = "/sym/ccm/cca/EgovCcmCmmnCodeModify.do")
+	public String updateCmmnCodeView(@ModelAttribute("loginVO") LoginVO loginVO, CmmnCode cmmnCode, ModelMap model)
+			throws Exception {
+		CmmnCode vo = cmmnCodeManageService.selectCmmnCodeDetail(cmmnCode);
+		model.addAttribute("cmmnCode", vo);
+		return "/cmm/sym/ccm/EgovCcmCmmnCodeModify";
+	}
 
-    		return "/cmm/sym/ccm/EgovCcmCmmnCodeModify";
-    	} else if (sCmd.equals("Modify")) {
-            beanValidator.validate(cmmnCode, bindingResult);
-    		if (bindingResult.hasErrors()){
-        		CmmnCode vo =cmmnCodeManageService.selectCmmnCodeDetail(cmmnCode);
-        		model.addAttribute("cmmnCode", vo);
+	/**
+	 * 공통코드를 수정한다 (POST)
+	 * @param loginVO
+	 * @param cmmnCode
+	 * @param bindingResult
+	 * @param model
+	 * @param request
+	 * @return "/cmm/sym/ccm/EgovCcmCmmnCodeModify"
+	 * @throws Exception
+	 */
+	@PostMapping(value = "/sym/ccm/cca/EgovCcmCmmnCodeModify.do")
+	public String updateCmmnCode(@ModelAttribute("loginVO") LoginVO loginVO,
+			@Valid @ModelAttribute("cmmnCode") CmmnCode cmmnCode, BindingResult bindingResult, ModelMap model,
+			HttpServletRequest request)
+			throws Exception {
 
-        		return "/cmm/sym/ccm/EgovCcmCmmnCodeModify";
-    		}
+		// codeId와 clCode는 수정 불가이므로 항상 원본 값으로 보장
+		if (cmmnCode.getCodeId() != null && !cmmnCode.getCodeId().isEmpty()) {
+			CmmnCode tempCode = new CmmnCode();
+			tempCode.setCodeId(cmmnCode.getCodeId());
+			CmmnCode originalData = cmmnCodeManageService.selectCmmnCodeDetail(tempCode);
+			if (originalData != null) {
+				// codeId와 clCode는 항상 원본 값으로 설정 (중복 방지)
+				// clCodeNm도 함께 설정하여 화면에 표시되도록 함
+				cmmnCode.setCodeId(originalData.getCodeId());
+				cmmnCode.setClCode(originalData.getClCode());
+				cmmnCode.setClCodeNm(originalData.getClCodeNm());
+			} else {
+				
+				LOGGER.debug("원본 데이터 조회 실패: codeId=" + cmmnCode.getCodeId());
+			}
+		} else {
+			LOGGER.debug("codeId가 null이거나 비어있음");
+		}
 
-    		cmmnCode.setLastUpdusrId(loginVO.getUniqId());
-	    	cmmnCodeManageService.updateCmmnCode(cmmnCode);
-	        return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do";
-    	} else {
-    		return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do";
-    	}
-    }
+		// clCodeNm이 여전히 없고 clCode가 있다면, clCode로 직접 조회
+		if ((cmmnCode.getClCodeNm() == null || cmmnCode.getClCodeNm().isEmpty()) 
+				&& cmmnCode.getClCode() != null && !cmmnCode.getClCode().isEmpty()) {
+			try {
+				CmmnClCode tempClCode = new egovframework.let.sym.ccm.ccc.service.CmmnClCode();
+				tempClCode.setClCode(cmmnCode.getClCode());
+				CmmnClCode clCodeData = cmmnClCodeManageService.selectCmmnClCodeDetail(tempClCode);
+				if (clCodeData != null) {
+					cmmnCode.setClCodeNm(clCodeData.getClCodeNm());
+					LOGGER.debug("clCode로 직접 조회하여 clCodeNm 설정: " + cmmnCode.getClCodeNm());
+				}
+			} catch (DataAccessException e) { // 26.03.04 KISA 보안취약점 조치 : 구체적 Exception 추가
+				LOGGER.debug("clCode로 clCodeNm 조회 중 오류: " + e.getMessage());
+			}
+		}
+
+		// Validation 오류가 발생하면 수정 화면으로 돌아감
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("cmmnCode", cmmnCode);
+			return "/cmm/sym/ccm/EgovCcmCmmnCodeModify";
+		}
+
+		cmmnCode.setLastUpdusrId(loginVO.getUniqId());
+		cmmnCodeManageService.updateCmmnCode(cmmnCode);
+		return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do";
+	}
 
 }

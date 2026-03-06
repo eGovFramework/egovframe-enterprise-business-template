@@ -5,15 +5,15 @@
 
 
 	<select id="selectCmmnCodeList" parameterType="egovframework.let.sym.ccm.cca.service.CmmnCodeVO" resultType="egovMap">
-		
-			SELECT  B.CL_CODE_NM
-			     ,  A.CODE_ID
-			     ,  A.CODE_ID_NM
-			     ,  A.USE_AT
+
+			SELECT  B.CL_CODE_NM AS CL_CODE_NM
+			     ,  A.CODE_ID AS CODE_ID
+			     ,  A.CODE_ID_NM AS CODE_ID_NM
+			     ,  A.USE_AT AS USE_AT
 			  FROM  LETTCCMMNCODE   A
 			     ,  LETTCCMMNCLCODE B
 			 WHERE  A.CL_CODE = B.CL_CODE
-		
+
 			<if test='searchCondition == "1"'>AND
 				A.CODE_ID = #{searchKeyword}
 			</if>

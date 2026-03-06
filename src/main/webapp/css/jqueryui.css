@@ -1300,7 +1300,6 @@ a.ui-button:focus {
 .ui-corner-br {
 	border-bottom-right-radius: 3px;
 }
-
 .ui-dialog-corner-all {border-radius: 30px;}
 
 /* Overlays */

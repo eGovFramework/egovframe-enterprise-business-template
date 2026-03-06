@@ -8,20 +8,19 @@ import java.io.Serializable;
  * @since 2009.03.06
  * @version 1.0
  * @see
- *  
+ *
  * <pre>
  * << 개정이력(Modification Information) >>
- * 
+ *
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
- *  2009.03.06  박지욱          최초 생성 
- *  
+ *  2009.03.06  박지욱          최초 생성
+ *
  *  </pre>
  */
 public class SessionVO implements Serializable {
-	
+
 	private static final long serialVersionUID = -2848741427493626376L;
-	
 	/** 아이디 */
 	private String sUserId;
 	/** 이름 */

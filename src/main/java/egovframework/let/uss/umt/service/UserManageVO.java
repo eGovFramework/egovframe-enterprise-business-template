@@ -1,5 +1,9 @@
 package egovframework.let.uss.umt.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck;
+import jakarta.validation.constraints.Size;
+
 /**
  * 업무사용자VO클래스로서 업무사용자관리 비지니스로직 처리용 항목을 구성한다.
  * @author 공통서비스 개발팀 조재영
@@ -42,6 +46,7 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 지역번호
 	 */
+	@Size(max=4)
 	private String areaNo;
 	/**
 	 * 생일
@@ -54,6 +59,7 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 이메일주소
 	 */
+	@EgovEmailCheck
 	private String emailAdres;
 	/**
 	 * 사원번호
@@ -62,10 +68,14 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 사용자 ID
 	 */
+	@EgovNullCheck
+	@Size(max=20)
 	private String emplyrId;
 	/**
 	 * 사용자 명
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String emplyrNm;
 	/**
 	 * 사용자 상태
@@ -74,6 +84,7 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 팩스번호
 	 */
+	@Size(max=15)
 	private String fxnum;
 	/**
 	 * 그룹 ID
@@ -82,14 +93,17 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 집 주소
 	 */
+	@Size(max=100)
 	private String homeadres;
 	/**
 	 * 집끝전화번호
 	 */
+	@Size(max=4)
 	private String homeendTelno;
 	/**
 	 * 집중간전화번호
 	 */
+	@Size(max=4)
 	private String homemiddleTelno;
 	/**
 	 * 주민등록번호
@@ -106,6 +120,8 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 핸드폰번호
 	 */
+	@EgovNullCheck
+	@Size(max=15)
 	private String moblphonNo;
 	/**
 	 * 직위명
@@ -114,10 +130,12 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 사무실전화번호
 	 */
+	@Size(max=15)
 	private String offmTelno;
 	/**
 	 * 조직 ID
 	 */
+	@EgovNullCheck
 	private String orgnztId;
 	/**
 	 * 비밀번호
@@ -126,10 +144,13 @@ public class UserManageVO extends UserDefaultVO{
 	/**
 	 * 비밀번호 정답
 	 */
+	@EgovNullCheck
+	@Size(max=100)
 	private String passwordCnsr;
 	/**
 	 * 비밀번호 힌트
 	 */
+	@EgovNullCheck
 	private String passwordHint;
 	/**
 	 * 검색조건 가입일자 시작일

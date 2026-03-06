@@ -1,5 +1,7 @@
 package egovframework.let.sec.rmt.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 import egovframework.com.cmm.ComDefaultVO;
 
 /**
@@ -36,22 +38,30 @@ public class RoleManage extends ComDefaultVO {
 	/**
 	 * 롤명
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String roleNm;	
 	/**
 	 * 롤패턴
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String rolePtn;	
 	/**
 	 * 롤 설명
 	 */
+	@Size(max=50)
 	private String roleDc;		
 	/**
 	 * 롤 타입
 	 */
+	@EgovNullCheck
 	private String roleTyp;		
 	/**
 	 * 롤 Sort
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String roleSort;
 	/**
 	 * 롤 등록일시

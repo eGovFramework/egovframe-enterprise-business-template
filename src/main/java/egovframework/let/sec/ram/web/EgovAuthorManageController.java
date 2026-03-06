@@ -1,10 +1,7 @@
 package egovframework.let.sec.ram.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorManageService;
+import jakarta.annotation.Resource;
 
 /**
  * 권한관리에 관한 controller 클래스를 정의한다.
@@ -50,9 +50,6 @@ public class EgovAuthorManageController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 권한 목록화면 이동
@@ -118,6 +115,7 @@ public class EgovAuthorManageController {
 	 */
 	@GetMapping("/sec/ram/EgovAuthorInsertView.do")
 	public String insertAuthorView(final AuthorManageVO authorManageVO, final Model model) throws Exception {
+		model.addAttribute("authorManage", new AuthorManage());
 		return "/sec/ram/EgovAuthorInsert";
 	}
 
@@ -130,18 +128,17 @@ public class EgovAuthorManageController {
 	 */
 	@PostMapping(value = "/sec/ram/EgovAuthorInsert.do")
 	public String insertAuthor(final AuthorManageVO authorManageVO,
-			@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
-			SessionStatus status, Model model) throws Exception {
-
-		beanValidator.validate(authorManage, bindingResult); //validation 수행
+			@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
+			SessionStatus status, Model model, RedirectAttributes redirectAttributes) throws Exception {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("authorManage", authorManage);
 			return "/sec/ram/EgovAuthorInsert";
 		} else {
 			egovAuthorManageService.insertAuthor(authorManage);
 			status.setComplete();
-			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
-			addAttributeSearch(authorManageVO, model);
+			redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
+			addAttributeSearch(authorManageVO, redirectAttributes);
 			return "redirect:/sec/ram/EgovAuthor.do";
 		}
 	}
@@ -155,18 +152,16 @@ public class EgovAuthorManageController {
 	 */
 	@PostMapping(value = "/sec/ram/EgovAuthorUpdate.do")
 	public String updateAuthor(final AuthorManageVO authorManageVO,
-			@ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
-			SessionStatus status, Model model) throws Exception {
-
-		beanValidator.validate(authorManage, bindingResult); //validation 수행
+			@Valid @ModelAttribute("authorManage") AuthorManage authorManage, BindingResult bindingResult,
+			SessionStatus status, Model model, RedirectAttributes redirectAttributes) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			return "/sec/ram/EgovAuthorUpdate";
 		} else {
 			egovAuthorManageService.updateAuthor(authorManage);
 			status.setComplete();
-			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
-			addAttributeSearch(authorManageVO, model);
+			redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
+			addAttributeSearch(authorManageVO, redirectAttributes);
 			return "redirect:/sec/ram/EgovAuthor.do";
 		}
 	}
@@ -179,13 +174,13 @@ public class EgovAuthorManageController {
 	 */
 	@PostMapping(value = "/sec/ram/EgovAuthorDelete.do")
 	public String deleteAuthor(final AuthorManageVO authorManageVO,
-			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model)
+			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model, RedirectAttributes redirectAttributes)
 			throws Exception {
 
 		egovAuthorManageService.deleteAuthor(authorManage);
 		status.setComplete();
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(authorManageVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(authorManageVO, redirectAttributes);
 		return "redirect:/sec/ram/EgovAuthorList.do";
 	}
 
@@ -198,7 +193,7 @@ public class EgovAuthorManageController {
 	 */
 	@PostMapping(value = "/sec/ram/EgovAuthorListDelete.do")
 	public String deleteAuthorList(@RequestParam("authorCodes") String authorCodes, final AuthorManageVO authorManageVO,
-			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model)
+			@ModelAttribute("authorManage") AuthorManage authorManage, SessionStatus status, Model model, RedirectAttributes redirectAttributes)
 			throws Exception {
 
 		String[] strAuthorCodes = authorCodes.split(";");
@@ -207,8 +202,8 @@ public class EgovAuthorManageController {
 			egovAuthorManageService.deleteAuthor(authorManage);
 		}
 		status.setComplete();
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(authorManageVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(authorManageVO, redirectAttributes);
 		return "redirect:/sec/ram/EgovAuthorList.do";
 	}
 
@@ -222,11 +217,10 @@ public class EgovAuthorManageController {
 		return "sec/accessDenied";
 	}
 	
-	private void addAttributeSearch(final AuthorManageVO authorManageVO, final Model model) {
-		model.addAttribute("searchCondition", authorManageVO.getSearchCondition());
-		model.addAttribute("searchKeyword", authorManageVO.getSearchKeyword());
-		model.addAttribute("pageIndex", authorManageVO.getPageIndex());
-
-		model.addAttribute("authorCode", authorManageVO.getAuthorCode());
+	private void addAttributeSearch(final AuthorManageVO authorManageVO, final RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("searchCondition", authorManageVO.getSearchCondition());
+		redirectAttributes.addAttribute("searchKeyword", authorManageVO.getSearchKeyword());
+		redirectAttributes.addAttribute("pageIndex", authorManageVO.getPageIndex());
+		redirectAttributes.addAttribute("authorCode", authorManageVO.getAuthorCode());
 	}
 }

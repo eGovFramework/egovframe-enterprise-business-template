@@ -9,13 +9,13 @@ import java.util.regex.Pattern;
  * <pre>
  * << 개정이력(Modification Information) >>
  *
- *  수정일          수정자      수정내용
- *  -----------   --------  ---------------------------
- *  2011.10.10    한성곤      최초 생성
- *	2017-02-07    이정은      시큐어코딩(ES) - 시큐어코딩 경로 조작 및 자원 삽입[CWE-22, CWE-23, CWE-95, CWE-99]
- *  2018.08.17    신용호      filePathBlackList 수정
- *  2018.10.10    신용호      . => \\.으로 수정
- *  2024.12.04    신용호      filePathBlackList() basePath 파라미터 추가
+ *  수정일         수정자       수정내용
+ *  ----------   --------   ---------------------------
+ *  2011.10.10   한성곤       최초 생성
+ *	2017-02-07   이정은       시큐어코딩(ES) - 시큐어코딩 경로 조작 및 자원 삽입[CWE-22, CWE-23, CWE-95, CWE-99]
+ *  2018.08.17   신용호       filePathBlackList 수정
+ *  2018.10.10   신용호       . => \\.으로 수정
+ *  2024.12.04   신용호       filePathBlackList() basePath 파라미터 추가
  * </pre>
  */
 
@@ -66,7 +66,7 @@ public class EgovWebUtil {
 
 		return returnValue;
 	}
-	
+
 	/**
 	 * 파일경로 보안취약점 조치
 	 * # 주의사항
@@ -85,7 +85,7 @@ public class EgovWebUtil {
 			throw new SecurityException("base path does not allow Root.");
 		return filePathBlackList(basePath + value);
 	}
-
+	
 	/**
 	 * 행안부 보안취약점 점검 조치 방안.
 	 *
@@ -99,7 +99,7 @@ public class EgovWebUtil {
 		}
 
 		returnValue = returnValue.replaceAll("/", "");
-		returnValue = returnValue.replaceAll("\\\\", "");
+		returnValue = returnValue.replaceAll("\\\\", ""); // \
 		returnValue = returnValue.replaceAll("\\.\\.", ""); // ..
 		returnValue = returnValue.replaceAll("&", "");
 

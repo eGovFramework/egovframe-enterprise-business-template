@@ -16,18 +16,19 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-	<table style="display: inline;">
-		<c:forEach var="fileVO" items="${fileList}" varStatus="status">
-			<tr>
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					<img src='<c:url value='/cmm/fms/getImage.do'/>?atchFileId=<c:out value="${fileVO.atchFileId}"/>&fileSn=<c:out value="${fileVO.fileSn}"/>' alt="파일보기링크" />
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-			</tr>
-		</c:forEach>
-	</table>
+
+<table style="display: inline;">
+	<c:forEach var="fileVO" items="${fileList}" varStatus="status">
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td>
+				<img src='<c:url value='/cmm/fms/getImage.do'/>?atchFileId=<c:out value="${fileVO.atchFileId}"/>&fileSn=<c:out value="${fileVO.fileSn}"/>' alt="파일보기링크" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+	</c:forEach>
+</table>

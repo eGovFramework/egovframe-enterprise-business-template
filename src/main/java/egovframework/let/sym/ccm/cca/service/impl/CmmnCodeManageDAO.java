@@ -2,12 +2,11 @@ package egovframework.let.sym.ccm.cca.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.sym.ccm.cca.service.CmmnCode;
 import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  *

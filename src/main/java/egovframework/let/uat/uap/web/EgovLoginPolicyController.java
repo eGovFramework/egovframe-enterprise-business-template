@@ -1,10 +1,7 @@
 package egovframework.let.uat.uap.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,13 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
+import jakarta.annotation.Resource;
 
 /**
  * 로그인정책에 대한 controller 클래스를 정의한다.
@@ -47,9 +47,6 @@ public class EgovLoginPolicyController {
 
 	@Resource(name = "egovLoginPolicyService")
 	EgovLoginPolicyService egovLoginPolicyService;
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 로그인정책 목록 조회화면으로 이동한다.
@@ -132,9 +129,8 @@ public class EgovLoginPolicyController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uat/uap/addLoginPolicy.do")
-	public String insertLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult, ModelMap model) throws Exception {
-
-		beanValidator.validate(loginPolicy, bindingResult); //validation 수행
+	public String insertLoginPolicy(@Valid @ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult, ModelMap model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("loginPolicyVO", loginPolicy);
@@ -145,9 +141,9 @@ public class EgovLoginPolicyController {
 			loginPolicy.setUserId(user.getId());
 
 			egovLoginPolicyService.insertLoginPolicy(loginPolicy);
-			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
+			redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
 
-			addAttributeSearch(loginPolicy, model);
+			addAttributeSearch(loginPolicy, redirectAttributes);
 
 			return "redirect:/uat/uap/getLoginPolicy.do";
 		}
@@ -159,9 +155,8 @@ public class EgovLoginPolicyController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uat/uap/updtLoginPolicy.do")
-	public String updateLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult, ModelMap model) throws Exception {
-
-		beanValidator.validate(loginPolicy, bindingResult); //validation 수행
+	public String updateLoginPolicy(@Valid @ModelAttribute("loginPolicy") LoginPolicy loginPolicy, BindingResult bindingResult, ModelMap model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("loginPolicyVO", loginPolicy);
@@ -171,9 +166,9 @@ public class EgovLoginPolicyController {
 			loginPolicy.setUserId(user.getId());
 
 			egovLoginPolicyService.updateLoginPolicy(loginPolicy);
-			model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
+			redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
 
-			addAttributeSearch(loginPolicy, model);
+			addAttributeSearch(loginPolicy, redirectAttributes);
 
 			return "redirect:/uat/uap/selectLoginPolicyList.do";
 		}
@@ -185,22 +180,22 @@ public class EgovLoginPolicyController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uat/uap/removeLoginPolicy.do")
-	public String deleteLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, ModelMap model) throws Exception {
+	public String deleteLoginPolicy(@ModelAttribute("loginPolicy") LoginPolicy loginPolicy, ModelMap model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		egovLoginPolicyService.deleteLoginPolicy(loginPolicy);
 
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(loginPolicy, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(loginPolicy, redirectAttributes);
 
 		return "redirect:/uat/uap/selectLoginPolicyList.do";
 	}
 	
-	private void addAttributeSearch(LoginPolicy loginPolicy, ModelMap model) {
-		model.addAttribute("searchCondition", loginPolicy.getSearchCondition());
-		model.addAttribute("searchKeyword", loginPolicy.getSearchKeyword());
-		model.addAttribute("pageIndex", loginPolicy.getPageIndex());
-
-		model.addAttribute("emplyrId", loginPolicy.getEmplyrId());
+	private void addAttributeSearch(LoginPolicy loginPolicy, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("searchCondition", loginPolicy.getSearchCondition());
+		redirectAttributes.addAttribute("searchKeyword", loginPolicy.getSearchKeyword());
+		redirectAttributes.addAttribute("pageIndex", loginPolicy.getPageIndex());
+		redirectAttributes.addAttribute("emplyrId", loginPolicy.getEmplyrId());
 	}
 
 }

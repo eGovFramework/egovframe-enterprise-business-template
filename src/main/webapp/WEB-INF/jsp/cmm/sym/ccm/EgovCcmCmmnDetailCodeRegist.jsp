@@ -17,24 +17,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <c:url var="ImgUrl" value="/images"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 상세코드관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="cmmnDetailCode" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 <!--
 /* ********************************************************
@@ -59,9 +59,14 @@ function fn_egov_regist_CmmnDetailCode(form){
 /* ********************************************************
  * CodeId 가져오기
  ******************************************************** */
-function fn_egov_get_CodeId(form){
-    form.cmd.value = "";
-    form.submit();
+function fn_egov_get_CodeId(selectElement){
+    // GET 요청으로 분류코드 변경 시 코드ID 목록 갱신
+    var clCode = selectElement.value;
+    if (clCode && clCode.trim() !== '') {
+        location.href = "<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeRegist.do'/>?clCode=" + encodeURIComponent(clCode);
+    } else {
+        location.href = "<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeRegist.do'/>";
+    }
 }
 //-->
 </script>
@@ -102,7 +107,8 @@ function fn_egov_get_CodeId(form){
 
 								<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post">
 								
-								<input name="cmd" type="hidden" value="<c:out value='Regist'/>"/>
+								<!-- 분류코드 유지용 hidden 필드 -->
+								<input type="hidden" name="clCode" value="${cmmnCode.clCode}"/>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -121,7 +127,7 @@ function fn_egov_get_CodeId(form){
                                             </td>
                                             <td>
                                                 <label class="f_select" for="sel1">
-                                                    <select id="sel1" name="clCode" class="select" onchange="fn_egov_get_CodeId(document.cmmnDetailCode);" title="clCode">
+                                                    <select id="sel1" name="clCode" class="select" onchange="fn_egov_get_CodeId(this);" title="clCode">
                                                         <c:forEach var="result" items="${cmmnClCodeList}" varStatus="status">
                                                         	<option value='<c:out value="${result.clCode}"/>' <c:if test="${result.clCode == cmmnCode.clCode}">selected="selected"</c:if>>
                                                         		<c:out value="${result.clCodeNm}"/>
@@ -130,12 +136,15 @@ function fn_egov_get_CodeId(form){
                                                     </select>
                                                 </label>
                                                 <label class="f_select ml10" for="codeId">
-                                                    <select name="codeId" class="select" id="codeId">
+                                                    <form:select path="codeId" id="codeId" class="select">
+                                                        <form:option value="" label="선택하세요"/>
                                                         <c:forEach var="result" items="${cmmnCodeList}" varStatus="status">
-                                                        	<option value='<c:out value="${result.codeId}"/>' ><c:out value="${result.codeIdNm}"/></option>
+                                                        	<form:option value="${result.codeId}">${result.codeIdNm}</form:option>
                                                         </c:forEach>
-                                                    </select>
+                                                    </form:select>
                                                 </label>
+                                                <!-- 디버깅: cmmnCodeList 크기: ${fn:length(cmmnCodeList)}, clCode: ${cmmnCode.clCode} -->
+                                                <form:errors path="codeId" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -175,11 +184,12 @@ function fn_egov_get_CodeId(form){
                                             </td>
                                             <td>
                                                 <label class="f_select" for="useAt">
-                                                    <select id="useAt" name="useAt">
-                                                        <option value="Y" label="Yes">Yes</option>
-                                                        <option value="N" label="No">No</option>
-                                                    </select>
+                                                    <form:select path="useAt" id="useAt">
+                                                        <form:option value="Y" label="Yes"/>
+                                                        <form:option value="N" label="No"/>
+                                                    </form:select>
                                                 </label>
+                                                <form:errors path="useAt" />
                                             </td>
                                         </tr>
                                     </table>

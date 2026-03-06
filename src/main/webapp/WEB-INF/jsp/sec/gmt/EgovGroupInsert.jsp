@@ -18,7 +18,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 
 <c:set var="registerFlag" value="${empty groupManageVO.groupId ? 'INSERT' : 'UPDATE'}"/>
 <c:set var="registerFlagName" value="${empty groupManageVO.groupId ? '그룹 등록' : '그룹 수정'}"/>
@@ -29,16 +28,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 사용자그룹관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="groupManage" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 
 function fncSelectGroupList() {
@@ -133,14 +131,16 @@ function fncGroupDelete() {
                                             <col style="width: 190px;">
                                             <col style="width: auto;">
                                         </colgroup>
+                                        <c:if test="${registerFlag == 'UPDATE'}">
                                         <tr>
                                             <td class="lb">
                                                 <label for="groupId">그룹ID</label>
                                             </td>
                                             <td>
-                                                <input name="groupId" id="groupId" class="f_txt" type="text" value="<c:out value='${groupManage.groupId}'/>" title="그룹 ID"/>
+                                                <input name="groupId" id="groupId" class="f_txt" type="text" value="<c:out value='${groupManage.groupId}'/>" title="그룹 ID" readonly="readonly"/>
                                             </td>
                                         </tr>
+                                        </c:if>
                                         <tr>
                                             <td class="lb">
                                                 <label for="groupNm">그룹명</label>
@@ -148,7 +148,7 @@ function fncGroupDelete() {
                                             </td>
                                             <td>
                                                 <input name="groupNm" id="groupNm" class="f_txt" type="text" value="<c:out value='${groupManage.groupNm}'/>" title="그룹명" maxLength="50" />
-                                                &nbsp;<form:errors path="groupNm" />
+                                                <form:errors path="groupNm"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -157,8 +157,10 @@ function fncGroupDelete() {
                                             </td>
                                             <td>
                                                 <input name="groupDc" id="groupDc" class="f_txt w_full" type="text" value="<c:out value='${groupManage.groupDc}'/>" title="설명" maxLength="50" />
+                                                <form:errors path="groupDc"/>
                                             </td>
                                         </tr>
+                                        <c:if test="${registerFlag == 'UPDATE'}">
                                         <tr>
                                             <td class="lb">
                                                 <label for="">등록일자</label>
@@ -167,6 +169,7 @@ function fncGroupDelete() {
                                                 <input name="groupCreatDe" id="groupCreatDe" class="f_txt" type="text" value="<c:out value='${groupManage.groupCreatDe}'/>" title="등록일자" maxLength="50" readonly="readonly"/>
                                             </td>
                                         </tr>
+                                        </c:if>
                                     </table>
                                 </div>
 

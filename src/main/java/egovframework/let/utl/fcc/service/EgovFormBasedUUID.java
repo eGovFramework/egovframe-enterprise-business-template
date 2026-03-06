@@ -1,5 +1,7 @@
 package egovframework.let.utl.fcc.service;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -505,8 +507,8 @@ public class EgovFormBasedUUID implements Serializable {
      * deserialize it). This is necessary to set the transient fields to their
      * correct uninitialized value so they will be recomputed on demand.
      */
-    private void readObject(java.io.ObjectInputStream in)
-            throws java.io.IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
 
         in.defaultReadObject();
 

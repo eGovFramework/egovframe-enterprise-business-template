@@ -9,12 +9,8 @@ import java.net.URLEncoder;
 import java.util.Base64;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.egovframe.rte.fdl.cryptography.EgovCryptoService;
+import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +23,9 @@ import egovframework.com.cmm.EgovWebUtil;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 파일 다운로드를 위한 컨트롤러 클래스
@@ -57,13 +56,14 @@ public class EgovFileDownloadController {
 	
 	/** 암호화서비스 */
 	@Resource(name = "egovARIACryptoService")
-	EgovCryptoService cryptoService;
+	private EgovCryptoService cryptoService;
 
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileService;
-	
+
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
+		
 
 	/**
 	 * 브라우저 구분 얻기.
@@ -119,7 +119,6 @@ public class EgovFileDownloadController {
 			}
 			encodedFilename = sb.toString();
 		} else {
-			//throw new RuntimeException("Not supported browser");
 			throw new IOException("Not supported browser");
 		}
 
@@ -143,10 +142,10 @@ public class EgovFileDownloadController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
-
+			
 			// 암호화된 atchFileId 를 복호화. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 			String param_atchFileId = (String) commandMap.get("atchFileId");
-			   param_atchFileId = param_atchFileId.replaceAll(" ", "+");
+			param_atchFileId = param_atchFileId.replaceAll(" ", "+");
 			byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
 			String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
 			String decodedFileId = StringUtils.substringAfter(decodedString, "|");
@@ -198,9 +197,7 @@ public class EgovFileDownloadController {
 				}
 
 			} else {
-		
 				request.getRequestDispatcher("/cmm/error/egovBizException.jsp").forward(request, response);
-							
 			}
 		}
 	}

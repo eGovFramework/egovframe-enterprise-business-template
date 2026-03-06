@@ -25,7 +25,7 @@ public class AuthorRoleManageVO extends AuthorRoleManage {
 	private static final long serialVersionUID = 1L;
 
 	List <AuthorRoleManageVO> authorRoleList;
-	
+
 	/**
 	 * authorRoleList attribute 를 리턴한다.
 	 * @return List<AuthorRoleManageVO>

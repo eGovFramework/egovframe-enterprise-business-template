@@ -1,15 +1,7 @@
 package egovframework.let.sec.ram.web;
 
-import egovframework.com.cmm.EgovMessageSource;
-import egovframework.let.sec.ram.service.AuthorRoleManage;
-import egovframework.let.sec.ram.service.AuthorRoleManageVO;
-import egovframework.let.sec.ram.service.EgovAuthorRoleManageService;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,6 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import egovframework.com.cmm.EgovMessageSource;
+import egovframework.let.sec.ram.service.AuthorRoleManage;
+import egovframework.let.sec.ram.service.AuthorRoleManageVO;
+import egovframework.let.sec.ram.service.EgovAuthorRoleManageService;
+import jakarta.annotation.Resource;
 
 /**
  * 권한별 롤관리에 관한 controller 클래스를 정의한다.
@@ -108,8 +107,8 @@ public class EgovAuthorRoleController {
 	public String insertAuthorRole(@RequestParam("authorCode") String authorCode,
 			@RequestParam("roleCodes") String roleCodes, @RequestParam("regYns") String regYns,
 			final AuthorRoleManageVO authorRoleManageVO,
-			@ModelAttribute("authorRoleManage") AuthorRoleManage authorRoleManage, SessionStatus status, Model model)
-			throws Exception {
+			@ModelAttribute("authorRoleManage") AuthorRoleManage authorRoleManage, SessionStatus status, Model model,
+			RedirectAttributes redirectAttributes) throws Exception {
 		
     	String [] strRoleCodes = roleCodes.split(";");
     	String [] strRegYns = regYns.split(";");
@@ -126,14 +125,14 @@ public class EgovAuthorRoleController {
     	}
 
         status.setComplete();
-        model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));		
-        addAttributeSearch(authorRoleManageVO, model);
+        redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));		
+        addAttributeSearch(authorRoleManageVO, redirectAttributes);
 		return "redirect:/sec/ram/EgovAuthorRoleList.do";
 	}    
     
-    private void addAttributeSearch(final AuthorRoleManageVO authorRoleManageVO, final Model model) {
-		model.addAttribute("searchCondition", authorRoleManageVO.getSearchCondition());
-		model.addAttribute("searchKeyword", authorRoleManageVO.getSearchKeyword());
-		model.addAttribute("pageIndex", authorRoleManageVO.getPageIndex());
+    private void addAttributeSearch(final AuthorRoleManageVO authorRoleManageVO, final RedirectAttributes redirectAttributes) {
+    	redirectAttributes.addAttribute("searchCondition", authorRoleManageVO.getSearchCondition());
+    	redirectAttributes.addAttribute("searchKeyword", authorRoleManageVO.getSearchKeyword());
+    	redirectAttributes.addAttribute("pageIndex", authorRoleManageVO.getPageIndex());
 	}
 }

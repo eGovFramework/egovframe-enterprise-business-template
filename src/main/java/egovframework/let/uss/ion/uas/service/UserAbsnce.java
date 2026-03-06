@@ -1,5 +1,6 @@
 package egovframework.let.uss.ion.uas.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 import egovframework.com.cmm.ComDefaultVO;
 /**
  * 사용자부재에 대한 model 클래스를 정의한다.
@@ -32,6 +33,7 @@ public class UserAbsnce extends ComDefaultVO {
 	/**
 	 * 사용자명
 	 */
+	@EgovNullCheck
 	private String userNm;	
 	/**
 	 * 사용자부재여부

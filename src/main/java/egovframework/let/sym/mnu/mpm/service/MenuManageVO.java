@@ -1,6 +1,9 @@
 package egovframework.let.sym.mnu.mpm.service;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
 /** 
  * 메뉴목록관리 처리를 위한 VO 클래스르를 정의한다
@@ -24,20 +27,29 @@ public class MenuManageVO{
 
    /** 메뉴정보 */
    /** 메뉴번호 */
+   @Min(1)
    private   int      menuNo;
    /** 메뉴순서 */
+   @Min(1)
    private   int      menuOrdr;
    /** 메뉴명 */
+   @EgovNullCheck
+   @Size(max=30)
    private   String   menuNm;
    /** 상위메뉴번호 */
+   @Min(0)
    private   int      upperMenuId;
    /** 메뉴설명 */
    private   String   menuDc;
    /** 관련이미지경로 */
+   @Size(max=30)
    private   String   relateImagePath;
    /** 관련이미지명 */
+   @Size(max=30)
    private   String   relateImageNm;
    /** 프로그램파일명 */
+   @EgovNullCheck
+   @Size(max=60)
    private   String   progrmFileNm;
 
    /** 사이트맵 */

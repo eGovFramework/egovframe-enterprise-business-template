@@ -11,7 +11,6 @@
     author   : 공통서비스 개발팀 lee.m.j
     since    : 2009.02.01
 --%>
-
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
@@ -19,10 +18,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 
-<c:set var="registerFlag" value="${empty authorManageVO.authorCode ? 'INSERT' : 'UPDATE'}"/>
-<c:set var="registerFlagName" value="${empty authorManageVO.authorCode ? '권한 등록' : '권한 수정'}"/>
+<c:set var="registerFlag" value="${empty authorManage.authorCode ? 'INSERT' : 'UPDATE'}"/>
+<c:set var="registerFlagName" value="${empty authorManage.authorCode ? '권한 등록' : '권한 수정'}"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,16 +28,15 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 권한관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="authorManage" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 <!--
 function fncSelectAuthorList() {
@@ -139,7 +136,7 @@ function fncAuthorDelete() {
                                             </td>
                                             <td>
                                                 <input name="authorCode" id="authorCode" class="f_txt" type="text" value="<c:out value='${authorManage.authorCode}'/>" title="권한코드" />
-                                                &nbsp;<form:errors path="authorCode" />
+                                                <form:errors path="authorCode "/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,7 +146,7 @@ function fncAuthorDelete() {
                                             </td>
                                             <td>
                                                 <input name="authorNm" id="authorNm" class="f_txt" type="text" value="<c:out value='${authorManage.authorNm}'/>" maxLength="50" title="권한명" />
-                                                &nbsp;<form:errors path="authorNm" />
+                                                <form:errors path="authorNm" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -160,6 +157,7 @@ function fncAuthorDelete() {
                                                 <input name="authorDc" id="authorDc" class="f_txt w_full" type="text" value="<c:out value='${authorManage.authorDc}'/>" maxLength="50" title="설명" />
                                             </td>
                                         </tr>
+                                        <c:if test="${registerFlag == 'UPDATE'}">
                                         <tr>
                                             <td class="lb">
                                                 <label for="">등록일자</label>
@@ -168,6 +166,7 @@ function fncAuthorDelete() {
                                                 <input name="authorCreatDe" id="authorCreatDe" class="f_txt" type="text" value="<c:out value='${authorManage.authorCreatDe}'/>" maxLength="50" readonly="readonly" title="등록일자"/>
                                             </td>
                                         </tr>
+                                        </c:if>
                                     </table>
                                 </div>
 

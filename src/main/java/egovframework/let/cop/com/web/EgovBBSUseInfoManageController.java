@@ -2,34 +2,24 @@ package egovframework.let.cop.com.web;
 
 import java.util.Map;
 
-import egovframework.com.cmm.LoginVO;
-import egovframework.let.cop.com.service.BoardUseInf;
-import egovframework.let.cop.com.service.BoardUseInfVO;
-import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
-//SHT-CUSTOMIZING//import egovframework.let.cop.clb.service.ClubUser;
-//SHT-CUSTOMIZING//import egovframework.let.cop.clb.service.EgovClubManageService;
-//SHT-CUSTOMIZING//import egovframework.let.cop.cmy.service.CommunityUser;
-//SHT-CUSTOMIZING//import egovframework.let.cop.cmy.service.EgovCommunityManageService;
-//import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+
+import egovframework.com.cmm.LoginVO;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
+import egovframework.let.cop.com.service.BoardUseInf;
+import egovframework.let.cop.com.service.BoardUseInfVO;
+import egovframework.let.cop.com.service.EgovBBSUseInfoManageService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 게시판의 이용정보를 관리하기 위한 컨트롤러 클래스
@@ -57,53 +47,6 @@ public class EgovBBSUseInfoManageController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertyService;
 
-	//SHT-CUSTOMIZING//@Resource(name = "EgovCommunityManageService")
-	//SHT-CUSTOMIZING//private EgovCommunityManageService cmmntyService;	// 커뮤니티 관리자 권한 확인
-
-	//SHT-CUSTOMIZING//@Resource(name = "EgovClubManageService")
-	//SHT-CUSTOMIZING//private EgovClubManageService clubService;		// 동호회 운영자 권한 확인
-
-	@Autowired
-	private DefaultBeanValidator beanValidator;
-
-	/**
-	 * 커뮤니티 관리자 및 동호회 운영자 권한을 확인한다.
-	 *
-	 * @param boardUseInf
-	 * @throws EgovBizException
-	 */
-	//SHT-CUSTOMIZING//protected void checkAuthority(BoardUseInf boardUseInf) throws Exception {
-	//SHT-CUSTOMIZING//String targetId = boardUseInf.getTrgetId();
-
-	//SHT-CUSTOMIZING//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
-
-	//SHT-CUSTOMIZING//if (user == null) {
-	//SHT-CUSTOMIZING//throw new EgovBizException("인증된 사용자 정보가 존재하지 않습니다.");
-	//SHT-CUSTOMIZING//}
-
-	//SHT-CUSTOMIZING//if (targetId.startsWith("CMMNTY_")) {
-	//SHT-CUSTOMIZING//CommunityUser cmmntyUser = new CommunityUser();
-
-	//SHT-CUSTOMIZING//cmmntyUser.setCmmntyId(boardUseInf.getTrgetId());
-	//SHT-CUSTOMIZING//cmmntyUser.setEmplyrId(user.getUniqId());
-
-	//SHT-CUSTOMIZING//if (!cmmntyService.isManager(cmmntyUser)) {
-	//SHT-CUSTOMIZING//throw new EgovBizException("해당 커뮤니티 관리자만 사용하실 수 있습니다.");
-	//SHT-CUSTOMIZING//}
-	//SHT-CUSTOMIZING//} else if (targetId.startsWith("CLB_")) {
-	//SHT-CUSTOMIZING//ClubUser clubUser = new ClubUser();
-
-	//SHT-CUSTOMIZING//clubUser.setClbId(boardUseInf.getTrgetId());
-	//SHT-CUSTOMIZING//clubUser.setEmplyrId(user.getUniqId());
-
-	//SHT-CUSTOMIZING//if (!clubService.isOperator(clubUser)) {
-	//SHT-CUSTOMIZING//throw new EgovBizException("해당 동호회 운영자만 사용하실 수 있습니다.");
-	//SHT-CUSTOMIZING//}
-	//SHT-CUSTOMIZING//} else {
-	//SHT-CUSTOMIZING//throw new EgovBizException("대상ID 정보가 정확하지 않습니다.");
-	//SHT-CUSTOMIZING//}
-	//SHT-CUSTOMIZING//}
-
 	/**
 	 * 게시판 사용 정보를 삭제한다.
 	 *
@@ -115,21 +58,22 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("/cop/com/deleteBBSUseInf.do")
+	@RequestMapping("/cop/com/deleteBBSUseInf.do")
 	public String deleteBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("bdUseInf") BoardUseInf bdUseInf, SessionStatus status, ModelMap model)
 			throws Exception {
 
+		// 인증 서비스 확인
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		if (isAuthenticated) {
-			bbsUseService.deleteBBSUseInf(bdUseInf);
+		// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (!isAuthenticated) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
 		}
 
-		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
-		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
-		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
+		bbsUseService.deleteBBSUseInf(bdUseInf);
 
-		return "redirect:/cop/com/selectBBSUseInfs.do";
+		return "forward:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -141,7 +85,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/cop/com/addBBSUseInf.do")
+	@RequestMapping("/cop/com/addBBSUseInf.do")
 	public String addBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		return "cop/com/EgovBoardUseInfRegist";
 	}
@@ -157,17 +101,22 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("/cop/com/insertBBSUseInf.do")
-	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
+	@RequestMapping("/cop/com/insertBBSUseInf.do")
+	public String insertBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, BindingResult bindingResult,
 			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
-
-		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-		beanValidator.validate(boardUseInf, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			return "cop/com/EgovBoardUseInfRegist";
+		}
+
+		// 인증 서비스 확인
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+
+		// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
 		}
 
 		String trgetType = (String) commandMap.get("param_trgetType");
@@ -186,15 +135,9 @@ public class EgovBBSUseInfoManageController {
 		boardUseInf.setFrstRegisterId(user.getUniqId());
 		boardUseInf.setRegistSeCode(registSeCode);
 
-		if (isAuthenticated) {
-			bbsUseService.insertBBSUseInf(boardUseInf);
-		}
+		bbsUseService.insertBBSUseInf(boardUseInf);
 
-		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
-		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
-		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
-
-		return "redirect:/cop/com/selectBBSUseInfs.do";
+		return "forward:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -206,7 +149,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/cop/com/selectBBSUseInfs.do")
+	@RequestMapping("/cop/com/selectBBSUseInfs.do")
 	public String selectBBSUseInfs(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 
 		bdUseVO.setPageUnit(propertyService.getInt("pageUnit"));
@@ -245,18 +188,28 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("/cop/com/updateBBSUseInf.do")
-	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf, HttpServletRequest request,
-			ModelMap model) throws Exception {
-		if (EgovUserDetailsHelper.isAuthenticated()) {
-			bbsUseService.updateBBSUseInf(boardUseInf);
+	@RequestMapping("/cop/com/updateBBSUseInf.do")
+	public String updateBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
+			BindingResult bindingResult, HttpServletRequest request, ModelMap model) throws Exception {
+
+		if (bindingResult.hasErrors()) {
+			BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
+			model.addAttribute("bdUseVO", vo);
+			return "cop/com/EgovBoardUseInfInqire";
 		}
 
-		model.addAttribute("searchCnd", bdUseVO.getSearchCnd());
-		model.addAttribute("searchWrd", bdUseVO.getSearchWrd());
-		model.addAttribute("pageIndex", bdUseVO.getPageIndex());
+		// 인증 서비스 확인
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		return "redirect:/cop/com/selectBBSUseInfs.do";
+		// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (!isAuthenticated) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
+		}
+
+		bbsUseService.updateBBSUseInf(boardUseInf);
+
+		return "forward:/cop/com/selectBBSUseInfs.do";
 	}
 
 	/**
@@ -268,7 +221,7 @@ public class EgovBBSUseInfoManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/cop/com/selectBBSUseInf.do")
+	@RequestMapping("/cop/com/selectBBSUseInf.do")
 	public String selectBBSUseInf(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
 		BoardUseInfVO vo = bbsUseService.selectBBSUseInf(bdUseVO);
 
@@ -295,7 +248,6 @@ public class EgovBBSUseInfoManageController {
 	 */
 	@RequestMapping("/cop/com/selectBBSUseInfsByTrget.do")
 	public String selectBBSUseInfsByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, ModelMap model) throws Exception {
-		//SHT-CUSTOMIZING//checkAuthority(bdUseVO);	// server-side 권한 확인
 
 		bdUseVO.setPageUnit(propertyService.getInt("pageUnit"));
 		bdUseVO.setPageSize(propertyService.getInt("pageSize"));
@@ -335,20 +287,28 @@ public class EgovBBSUseInfoManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/updateBBSUseInfByTrget.do")
-	public String updateBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
-			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
-
-		//SHT-CUSTOMIZING//checkAuthority(bdUseVO);	// server-side 권한 확인
+	public String updateBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
+			BindingResult bindingResult, @RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
 
 		String param_trgetId = (String) commandMap.get("param_trgetId");
 
-		//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		if (bindingResult.hasErrors()) {
+			bdUseVO.setTrgetId(param_trgetId);
+			bdUseVO.setTrgetType(boardUseInf.getTrgetType());
+			return selectBBSUseInfsByTrget(bdUseVO, model);
+		}
+
+		// 인증 서비스 확인
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		if (isAuthenticated) {
-			boardUseInf.setTrgetId(param_trgetId);
-			bbsUseService.updateBBSUseInfByTrget(boardUseInf);
+		// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (!isAuthenticated) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
 		}
+
+		boardUseInf.setTrgetId(param_trgetId);
+		bbsUseService.updateBBSUseInfByTrget(boardUseInf);
 
 		return "forward:/cop/com/selectBBSUseInfsByTrget.do";
 	}
@@ -364,26 +324,36 @@ public class EgovBBSUseInfoManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/insertBBSUseInfByTrget.do")
-	public String insertBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
-			@RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
-
-		//SHT-CUSTOMIZING//checkAuthority(bdUseVO);	// server-side 권한 확인
+	public String insertBBSUseInfByTrget(@ModelAttribute("searchVO") BoardUseInfVO bdUseVO, @Valid @ModelAttribute("boardUseInf") BoardUseInf boardUseInf,
+			BindingResult bindingResult, @RequestParam Map<String, Object> commandMap, SessionStatus status, ModelMap model) throws Exception {
 
 		String paramTrgetId = (String) commandMap.get("param_trgetId");
 		String bbsId = (String) commandMap.get("bbsId");
+		String paramTrgetType = (String) commandMap.get("param_trgetType");
 
+		if (bindingResult.hasErrors()) {
+			bdUseVO.setTrgetId(paramTrgetId);
+			bdUseVO.setTrgetType(paramTrgetType != null ? paramTrgetType : boardUseInf.getTrgetType());
+			return selectBBSUseInfsByTrget(bdUseVO, model);
+		}
+
+		// 인증 서비스 확인
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		if (isAuthenticated) {
-			boardUseInf.setUseAt("Y");
-			boardUseInf.setFrstRegisterId(user.getUniqId());
-			boardUseInf.setRegistSeCode("REGC07");
-			boardUseInf.setBbsId(bbsId);
-			boardUseInf.setTrgetId(paramTrgetId);
-
-			bbsUseService.insertBBSUseInf(boardUseInf);
+		// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+		if (!isAuthenticated || user == null) {
+			model.addAttribute("message", "로그인이 필요합니다.");
+			return "uat/uia/EgovLoginUsr";
 		}
+
+		boardUseInf.setUseAt("Y");
+		boardUseInf.setFrstRegisterId(user.getUniqId());
+		boardUseInf.setRegistSeCode("REGC07");
+		boardUseInf.setBbsId(bbsId);
+		boardUseInf.setTrgetId(paramTrgetId);
+
+		bbsUseService.insertBBSUseInf(boardUseInf);
 
 		return "forward:/cop/com/selectBBSUseInfsByTrget.do";
 	}

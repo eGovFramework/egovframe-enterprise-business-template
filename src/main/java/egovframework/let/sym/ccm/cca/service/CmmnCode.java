@@ -4,22 +4,26 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+
 /**
  * 공통코드 모델 클래스
+ * 
  * @author 공통서비스 개발팀 이중호
  * @since 2009.04.01
  * @version 1.0
  * @see
  *
- * <pre>
+ *      <pre>
  * << 개정이력(Modification Information) >>
  *   
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
+ *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
- * </pre>
+ *      </pre>
  */
 public class CmmnCode implements Serializable {
 
@@ -31,45 +35,55 @@ public class CmmnCode implements Serializable {
 	/*
 	 * 코드ID
 	 */
-	private String codeId = "";
-	
+	@EgovNullCheck
+	@Size(max = 6)
+	private String codeId;
+
 	/*
 	 * 코드ID명
 	 */
-	private String codeIdNm = "";
-	
+	@EgovNullCheck
+	@Size(max = 60)
+	private String codeIdNm;
+
 	/*
 	 * 코드ID설명
 	 */
-	private String codeIdDc = "";
-	
+	@EgovNullCheck
+	@Size(max = 200)
+	private String codeIdDc;
+
 	/*
 	 * 분류코드
 	 */
-	private String clCode = "";
-	
+	@EgovNullCheck
+	@Size(max = 3)
+	private String clCode;
+
 	/*
 	 * 분류코드명
 	 */
-	private String clCodeNm = "";
-	
+	private String clCodeNm;
+
 	/*
 	 * 사용여부
 	 */
-    private String useAt = "";
+	@EgovNullCheck
+	private String useAt;
 
-    /*
-     * 최초등록자ID
-     */
-    private String frstRegisterId = "";
-    
-    /*
-     * 최종수정자ID
-     */
-    private String lastUpdusrId   = "";
+	/*
+	 * 최초등록자ID
+	 */
+	private String frstRegisterId = "";
+
+	/*
+	 * 최종수정자ID
+	 */
+	private String lastUpdusrId = "";
 
 	/**
 	 * codeId attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getCodeId() {
@@ -78,6 +92,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * codeId attribute 값을 설정한다.
+	 * 
 	 * @param codeId String
 	 */
 	public void setCodeId(String codeId) {
@@ -86,6 +101,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * codeIdNm attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getCodeIdNm() {
@@ -94,6 +110,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * codeIdNm attribute 값을 설정한다.
+	 * 
 	 * @param codeIdNm String
 	 */
 	public void setCodeIdNm(String codeIdNm) {
@@ -102,6 +119,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * codeIdDc attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getCodeIdDc() {
@@ -110,6 +128,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * codeIdDc attribute 값을 설정한다.
+	 * 
 	 * @param codeIdDc String
 	 */
 	public void setCodeIdDc(String codeIdDc) {
@@ -118,6 +137,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * clCode attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getClCode() {
@@ -126,6 +146,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * clCode attribute 값을 설정한다.
+	 * 
 	 * @param clCode String
 	 */
 	public void setClCode(String clCode) {
@@ -134,6 +155,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * clCodeNm attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getClCodeNm() {
@@ -142,6 +164,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * clCodeNm attribute 값을 설정한다.
+	 * 
 	 * @param clCodeNm String
 	 */
 	public void setClCodeNm(String clCodeNm) {
@@ -150,6 +173,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * useAt attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getUseAt() {
@@ -158,6 +182,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * useAt attribute 값을 설정한다.
+	 * 
 	 * @param useAt String
 	 */
 	public void setUseAt(String useAt) {
@@ -166,6 +191,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * frstRegisterId attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getFrstRegisterId() {
@@ -174,6 +200,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * frstRegisterId attribute 값을 설정한다.
+	 * 
 	 * @param frstRegisterId String
 	 */
 	public void setFrstRegisterId(String frstRegisterId) {
@@ -182,6 +209,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * lastUpdusrId attribute 를 리턴한다.
+	 * 
 	 * @return String
 	 */
 	public String getLastUpdusrId() {
@@ -190,6 +218,7 @@ public class CmmnCode implements Serializable {
 
 	/**
 	 * lastUpdusrId attribute 값을 설정한다.
+	 * 
 	 * @param lastUpdusrId String
 	 */
 	public void setLastUpdusrId(String lastUpdusrId) {
@@ -197,9 +226,9 @@ public class CmmnCode implements Serializable {
 	}
 
 	/**
-     * toString 메소드를 대치한다.
-     */
-    public String toString() {
-    	return ToStringBuilder.reflectionToString(this);
-    }
+	 * toString 메소드를 대치한다.
+	 */
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

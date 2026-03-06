@@ -3,25 +3,23 @@ package egovframework.let.sym.mnu.mpm.service.impl;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.excel.EgovExcelService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.mnu.mpm.service.EgovMenuManageService;
 import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
 import egovframework.let.sym.prm.service.impl.ProgrmManageDAO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.excel.EgovExcelService;
-
-import javax.annotation.Resource;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import jakarta.annotation.Resource;
 
 /**
  * 메뉴목록관리, 생성, 사이트맵을 처리하는 비즈니스 구현 클래스를 정의한다.
@@ -54,9 +52,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	private ProgrmManageDAO progrmManageDAO;
 	@Resource(name = "excelZipService")
 	private EgovExcelService excelZipService;
-
-	@Resource(name = "filterMultipartResolver")
-	CommonsMultipartResolver mailmultipartResolver;
 
 	/**
 	 * 메뉴 상세정보를 조회
@@ -146,7 +141,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 		String[] delMenuNo = checkedMenuNoForDel.split(",");
 
 		if (delMenuNo == null || (delMenuNo.length == 0)) {
-			throw new java.lang.Exception("String Split Error!");
+			throw new Exception("String Split Error!");
 		}
 		for (int i = 0; i < delMenuNo.length; i++) {
 			vo = new MenuManageVO();
@@ -313,7 +308,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return  String
 	 * @exception Exception
 	 */
-	private String bndeRegist(InputStream inputStream) throws Exception {
+	private String bndeRegist(InputStream inputStream) {
 		boolean success = false;
 		String requestValue = null;
 		//char FILE_SEPARATOR     = File.separatorChar;
@@ -382,7 +377,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 				return requestValue = "93"; // 엑셀 시트갯수 오류
 			}
 
-		} catch (Exception e) {
+		} catch (DataAccessException e) { // 26.03.04 KISA 보안취약점 조치 : 구체적 Exception 추가
 			LOGGER.debug("{}", e);
 
 			requestValue = "99";
@@ -396,7 +391,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return  boolean
 	 * @exception Exception
 	 */
-	private boolean progrmRegist(Sheet progrmSheet) throws Exception {
+	private boolean progrmRegist(Sheet progrmSheet) {
 		int count = 0;
 		boolean success = false;
 		try {
@@ -438,7 +433,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 			} else {
 				success = false;
 			}
-		} catch (Exception e) {
+		} catch (DataAccessException e) { // 26.03.04 KISA 보안취약점 조치 : 구체적 Exception 추가
 			LOGGER.debug("{}", e);
 
 			success = false;
@@ -452,7 +447,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean menuRegist(Sheet menuSheet) throws Exception {
+	private boolean menuRegist(Sheet menuSheet) {
 		boolean success = false;
 		int count = 0;
 		try {
@@ -465,12 +460,12 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 					Cell cell = null;
 					cell = row.getCell(0); //메뉴번호
 					if (cell != null) {
-						Double doubleCell = new Double(cell.getNumericCellValue());
+						Double doubleCell = Double.valueOf(cell.getNumericCellValue());
 						vo.setMenuNo(Integer.parseInt("" + doubleCell.longValue()));
 					}
 					cell = row.getCell(1); //메뉴순서
 					if (cell != null) {
-						Double doubleCell = new Double(cell.getNumericCellValue());
+						Double doubleCell = Double.valueOf(cell.getNumericCellValue());
 						vo.setMenuOrdr(Integer.parseInt("" + doubleCell.longValue()));
 					}
 					cell = row.getCell(2); //메뉴명
@@ -479,7 +474,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 					}
 					cell = row.getCell(3); //상위메뉴번호
 					if (cell != null) {
-						Double doubleCell = new Double(cell.getNumericCellValue());
+						Double doubleCell = Double.valueOf(cell.getNumericCellValue());
 						vo.setUpperMenuId(Integer.parseInt("" + doubleCell.longValue()));
 					}
 					cell = row.getCell(4); //메뉴설명
@@ -507,11 +502,10 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 				success = true;
 				
 			}
-		} catch (Exception e) {
+		} catch (DataAccessException e) { // 26.03.04 KISA 보안취약점 조치 : 구체적 Exception 추가
 			LOGGER.debug("{}", e);
-			
-			success = false;
 
+			success = false;
 		}
 		return success;
 	}
@@ -521,7 +515,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean deleteAllMenuList() throws Exception {
+	private boolean deleteAllMenuList() {
 		return menuManageDAO.deleteAllMenuList();
 	}
 
@@ -531,7 +525,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean insertProgrm(ProgrmManageVO vo) throws Exception {
+	private boolean insertProgrm(ProgrmManageVO vo) {
 		progrmManageDAO.insertProgrm(vo);
 		return true;
 	}
@@ -542,7 +536,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean insertMenuManageBind(MenuManageVO vo) throws Exception {
+	private boolean insertMenuManageBind(MenuManageVO vo) {
 		menuManageDAO.insertMenuManage(vo);
 		return true;
 	}
@@ -552,7 +546,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean deleteAllProgrm() throws Exception {
+	private boolean deleteAllProgrm() {
 		progrmManageDAO.deleteAllProgrm();
 		return true;
 	}
@@ -562,7 +556,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @return boolean
 	 * @exception Exception
 	 */
-	private boolean deleteAllProgrmDtls() throws Exception {
+	private boolean deleteAllProgrmDtls() {
 		progrmManageDAO.deleteAllProgrmDtls();
 		return true;
 	}

@@ -1,13 +1,11 @@
 package egovframework.let.sym.log.lgm.service;
 
-import egovframework.com.cmm.LoginVO;
-
-import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
-
-import javax.annotation.Resource;
-
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.springframework.util.StopWatch;
+
+import egovframework.com.cmm.LoginVO;
+import jakarta.annotation.Resource;
 
 /**
  * 시스템 로그 생성을 위한 ASPECT 클래스
@@ -49,9 +47,7 @@ public class EgovSysLogAspect {
 
 			Object retValue = joinPoint.proceed();
 			return retValue;
-		} catch (Throwable e) {
-			throw e;
-		} finally {
+		} finally { // 26.03.04 KISA 보안취약점 조치 : 불필요한 catch 제거
 			stopWatch.stop();
 
 			SysLog sysLog = new SysLog();
@@ -100,9 +96,7 @@ public class EgovSysLogAspect {
 
 			Object retValue = joinPoint.proceed();
 			return retValue;
-		} catch (Throwable e) {
-			throw e;
-		} finally {
+		} finally { // 26.03.04 KISA 보안취약점 조치 : 불필요한 catch 제거
 			stopWatch.stop();
 
 			SysLog sysLog = new SysLog();
@@ -151,9 +145,7 @@ public class EgovSysLogAspect {
 
 			Object retValue = joinPoint.proceed();
 			return retValue;
-		} catch (Throwable e) {
-			throw e;
-		} finally {
+		} finally { // 26.03.04 KISA 보안취약점 조치 : 불필요한 catch 제거
 			stopWatch.stop();
 
 			SysLog sysLog = new SysLog();
@@ -202,9 +194,7 @@ public class EgovSysLogAspect {
 
 			Object retValue = joinPoint.proceed();
 			return retValue;
-		} catch (Throwable e) {
-			throw e;
-		} finally {
+		} finally { // 26.03.04 KISA 보안취약점 조치 : 불필요한 catch 제거
 			stopWatch.stop();
 
 			SysLog sysLog = new SysLog();

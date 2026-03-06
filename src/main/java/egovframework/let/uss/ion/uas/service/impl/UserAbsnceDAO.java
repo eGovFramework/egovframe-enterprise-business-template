@@ -2,12 +2,11 @@ package egovframework.let.uss.ion.uas.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 /**
  * 사용자부재에 대한 DAO 클래스를 정의한다.
  * 사용자부재에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.

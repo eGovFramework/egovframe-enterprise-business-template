@@ -2,16 +2,14 @@ package egovframework.let.sym.prm.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.sym.prm.service.EgovProgrmManageService;
 import egovframework.let.sym.prm.service.ProgrmManageDtlVO;
 import egovframework.let.sym.prm.service.ProgrmManageVO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * 프로그램목록관리 및 프로그램변경관리에 관한 비즈니스 구현 클래스를 정의한다.

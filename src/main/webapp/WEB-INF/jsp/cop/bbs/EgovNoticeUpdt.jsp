@@ -18,7 +18,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <%@ taglib prefix="egovc" uri="/WEB-INF/tlds/egovc.tld" %>
 <c:url var="ImgUrl" value="/images"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,21 +27,20 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
+	<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="<c:url value='/js/jqueryui.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 	
 <script type="text/javascript" src="<c:url value='/js/EgovBBSMng.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/EgovMultiFile.js'/>" ></script>
 <script type="text/javascript" src="<c:url value='/js/EgovCalPopup.js'/>" ></script>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="board" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <c:if test="${anonymous == 'true'}"><c:set var="prefix" value="/anonymous"/></c:if>
 <script type="text/javascript">
     function fn_egov_validateForm(obj){
@@ -51,15 +49,14 @@
 
     function fn_egov_regist_notice(){
     	event.preventDefault();
-        //document.board.onsubmit();
 
         if (!validateBoard(document.board)){
             return;
         }
         
         if (confirm('<spring:message code="common.update.msg" />')) {
-            document.board.action = "<c:url value='/cop/bbs${prefix}/updateBoardArticle.do'/>";
-            document.board.submit();                    
+            document.board.action = "${pageContext.request.contextPath}/cop/bbs/updateBoardArticle.do";
+            document.board.submit();
         }
     }   
     
@@ -153,7 +150,7 @@
                         <div class="content_wrap">
                             <div id="contents" class="content">
                                  <!-- Location -->
-                                <div class="location">
+                                 <div class="location">
                                     <ul>
                                         <li><a class="home" href="">Home</a></li>
                                         <li><a href="">알림정보</a></li>
@@ -162,7 +159,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" onsubmit="return false">
+								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/cop/bbs/updateBoardArticle.do" onsubmit="return false">
 								
 								<input type="hidden" name="searchCnd" value="<c:out value="${searchVO.searchCnd}" />">
 								<input type="hidden" name="searchWrd" value="<c:out value="${searchVO.searchWrd}" />">
@@ -220,6 +217,7 @@
                                             </td>
                                         </tr>
                                         
+                                        <!-- 게시 기간 시작 -->
                                         <c:if test="${bdMstr.bbsAttrbCode == 'BBSA01'}">
 	                                        <tr>
 	                                            <td class="lb">
@@ -237,7 +235,9 @@
 	                                            </td>
 	                                        </tr>
                                         </c:if>
+                                        <!-- /게시 기간 끝 -->
                                         
+                                        <!-- 첨부파일목록 시작 -->
                                         <c:if test="${not empty result.atchFileId}">
 	                                        <tr>
 	                                            <td class="lb">
@@ -254,6 +254,7 @@
 	                                            </td>
 	                                        </tr>
                                         </c:if>
+                                        <!-- /첨부파일목록 끝 -->
                                         
                                         <!-- 파일첨부 시작 -->
                                         <c:if test="${bdMstr.fileAtchPosblAt == 'Y'}">
@@ -276,15 +277,16 @@
 	                                        </tr>
                                         </c:if>
                                         <!-- /파일첨부 끝 -->
+                                        
                                     </table>
                                     
                                     <!-- 파일첨부 스크립트 시작 -->
 	                                <c:if test="${bdMstr.fileAtchPosblAt == 'Y'}"> 
 									<script type="text/javascript">
-										var existFileNum = document.board.fileListCnt.value;
+										var existFileNum = document.board.fileListCnt ? document.board.fileListCnt.value : 0;
 								        var maxFileNum = document.board.posblAtchFileNumber.value;
-								
-								        if (existFileNum=="undefined" || existFileNum ==null) {
+
+								        if (existFileNum=="undefined" || existFileNum ==null || existFileNum === "") {
 								            existFileNum = 0;
 								        }
 								        if (maxFileNum=="undefined" || maxFileNum ==null) {
@@ -304,9 +306,10 @@
 									</script>
 									</c:if>
 									<!-- /파일첨부 스크립트 끝 -->
+									
                                 </div>
 
-								<!-- 목록/저장버튼  -->
+								<!-- 목록/저장버튼  시작-->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     </div>
@@ -320,7 +323,7 @@
                                         <a href="" class="btn btn_blue_46 w_100" onclick="fn_egov_select_noticeList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
-                                <!-- // 목록/저장버튼 끝  -->
+                                <!-- 목록/저장버튼  끝-->
                                 
                                 </form:form>
                                 

@@ -5,15 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.service.CmmnDetailCode;
 import egovframework.com.cmm.service.EgovCmmUseService;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * @Class Name : EgovCmmUseServiceImpl.java
@@ -56,8 +54,7 @@ public class EgovCmmUseServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 * @throws Exception
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public Map<String, List<CmmnDetailCode>> selectCmmCodeDetails(List voList) throws Exception {
+	public Map<String, List<CmmnDetailCode>> selectCmmCodeDetails(List<?> voList) throws Exception {
 		ComDefaultCodeVO vo;
 		Map<String, List<CmmnDetailCode>> map = new HashMap<String, List<CmmnDetailCode>>();
 

@@ -3,6 +3,9 @@ package egovframework.let.cop.com.service;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+
+import jakarta.validation.constraints.Size;
 
 /**
  * 템플릿 정보를 관리하기 위한 모델 클래스
@@ -13,47 +16,56 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * <pre>
  * << 개정이력(Modification Information) >>
- *   
+ *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.17  이삼섭          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
+ *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
  * </pre>
  */
-@SuppressWarnings("serial")
 public class TemplateInf implements Serializable {
 
-    /** 최초등록자 아이디 */
+    /**
+	 * serialVersion UID
+	 */
+	private static final long serialVersionUID = 600640077510261030L;
+
+	/** 최초등록자 아이디 */
     private String frstRegisterId = "";
-    
+
     /** 최초등록시점 */
     private String frstRegisterPnttm = "";
-    
+
     /** 최종수정자 아이디 */
     private String lastUpdusrId = "";
-    
+
     /** 최종수정시점 */
     private String lastUpdusrPnttm = "";
-    
+
     /** 템플릿 경로 */
+    @EgovNullCheck //(message="{cop.tmplatCours}은(는) 필수 입력항목입니다.")
+	@Size(max = 2000 /* , message="{cop.tmplatCours}은(는) 2000자 이하로 입력하세요." */)
     private String tmplatCours = "";
-    
+
     /** 템플릿 아이디 */
     private String tmplatId = "";
-    
+
     /** 템플릿 명 */
+    @EgovNullCheck //(message="{cop.tmplatNm}은(는) 필수 입력항목입니다.")
+	@Size(max = 120 /* , message="{cop.tmplatNm}은(는) 120자 이하로 입력하세요." */)
     private String tmplatNm = "";
-    
+
     /** 탬플릿 구분코드 */
+    @EgovNullCheck //(message="{cop.tmplatSeCode}은(는) 필수 입력항목입니다.")
     private String tmplatSeCode = "";
-    
+
     /** 사용여부 */
     private String useAt = "";
 
     /**
      * frstRegisterId attribute를 리턴한다.
-     * 
+     *
      * @return the frstRegisterId
      */
     public String getFrstRegisterId() {
@@ -62,7 +74,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * frstRegisterId attribute 값을 설정한다.
-     * 
+     *
      * @param frstRegisterId
      *            the frstRegisterId to set
      */
@@ -72,7 +84,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * frstRegisterPnttm attribute를 리턴한다.
-     * 
+     *
      * @return the frstRegisterPnttm
      */
     public String getFrstRegisterPnttm() {
@@ -81,7 +93,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * frstRegisterPnttm attribute 값을 설정한다.
-     * 
+     *
      * @param frstRegisterPnttm
      *            the frstRegisterPnttm to set
      */
@@ -91,7 +103,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * lastUpdusrId attribute를 리턴한다.
-     * 
+     *
      * @return the lastUpdusrId
      */
     public String getLastUpdusrId() {
@@ -100,7 +112,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * lastUpdusrId attribute 값을 설정한다.
-     * 
+     *
      * @param lastUpdusrId
      *            the lastUpdusrId to set
      */
@@ -110,7 +122,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * lastUpdusrPnttm attribute를 리턴한다.
-     * 
+     *
      * @return the lastUpdusrPnttm
      */
     public String getLastUpdusrPnttm() {
@@ -119,7 +131,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * lastUpdusrPnttm attribute 값을 설정한다.
-     * 
+     *
      * @param lastUpdusrPnttm
      *            the lastUpdusrPnttm to set
      */
@@ -129,7 +141,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatCours attribute를 리턴한다.
-     * 
+     *
      * @return the tmplatCours
      */
     public String getTmplatCours() {
@@ -138,7 +150,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatCours attribute 값을 설정한다.
-     * 
+     *
      * @param tmplatCours
      *            the tmplatCours to set
      */
@@ -148,7 +160,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatId attribute를 리턴한다.
-     * 
+     *
      * @return the tmplatId
      */
     public String getTmplatId() {
@@ -157,7 +169,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatId attribute 값을 설정한다.
-     * 
+     *
      * @param tmplatId
      *            the tmplatId to set
      */
@@ -167,7 +179,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatNm attribute를 리턴한다.
-     * 
+     *
      * @return the tmplatNm
      */
     public String getTmplatNm() {
@@ -176,7 +188,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatNm attribute 값을 설정한다.
-     * 
+     *
      * @param tmplatNm
      *            the tmplatNm to set
      */
@@ -186,7 +198,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatSeCode attribute를 리턴한다.
-     * 
+     *
      * @return the tmplatSeCode
      */
     public String getTmplatSeCode() {
@@ -195,7 +207,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * tmplatSeCode attribute 값을 설정한다.
-     * 
+     *
      * @param tmplatSeCode
      *            the tmplatSeCode to set
      */
@@ -205,7 +217,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * useAt attribute를 리턴한다.
-     * 
+     *
      * @return the useAt
      */
     public String getUseAt() {
@@ -214,7 +226,7 @@ public class TemplateInf implements Serializable {
 
     /**
      * useAt attribute 값을 설정한다.
-     * 
+     *
      * @param useAt
      *            the useAt to set
      */

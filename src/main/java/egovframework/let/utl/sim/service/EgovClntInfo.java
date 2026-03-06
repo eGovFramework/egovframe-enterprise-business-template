@@ -1,6 +1,6 @@
 package egovframework.let.utl.sim.service;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 //import egovframework.com.cmm.service.EgovProperties;
 /**
@@ -28,8 +28,8 @@ public class EgovClntInfo {
 	 * @return String ipAddr IP주소
 	 * @exception Exception
 	*/
-	public static String getClntIP(HttpServletRequest request) throws Exception {
-		
+	public static String getClntIP(HttpServletRequest request) {
+
 		// IP주소
 		String ipAddr = request.getRemoteAddr();
 		return ipAddr;
@@ -65,9 +65,13 @@ public class EgovClntInfo {
 	public static String getClntWebKind(HttpServletRequest request) throws Exception {
 		
 		String user_agent = request.getHeader("user-agent");
-		
+
 		// 웹브라우저 종류 조회
 		String webKind = "";
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (user_agent == null) {
+			return "Other Web Browsers";
+		}
 		if (user_agent.toUpperCase().indexOf("GECKO") != -1) {
 			if (user_agent.toUpperCase().indexOf("NESCAPE") != -1) {
 				webKind = "Netscape (Gecko/Netscape)";
@@ -105,9 +109,13 @@ public class EgovClntInfo {
 	public static String getClntWebVer(HttpServletRequest request) throws Exception {
 		
 		String user_agent = request.getHeader("user-agent");
-		
+
 		// 웹브라우저 버전 조회
 		String webVer = "";
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (user_agent == null) {
+			return webVer;
+		}
 		String [] arr = {"MSIE", "OPERA", "NETSCAPE", "FIREFOX", "SAFARI"};
 		for (int i = 0; i < arr.length; i++) {
 			int s_loc = user_agent.toUpperCase().indexOf(arr[i]);

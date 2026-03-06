@@ -27,12 +27,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 프로그램목록관리</title>
 
@@ -128,8 +128,8 @@ function insertProgramListManage() {
 function selectUpdtProgramListDetail(progrmFileNm) {
 	event.preventDefault();
     document.progrmManageForm.tmp_progrmNm.value = progrmFileNm;
-    document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>";
-    document.progrmManageForm.submit(); 
+    document.progrmManageForm.action = "<c:url value='/sym/prm/EgovProgramListDetailSelect.do'/>";
+    document.progrmManageForm.submit();
 }
 /* ********************************************************
  * focus 시작점 지정함수
@@ -246,7 +246,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                                     </span>
                                                 </td>
                                                 <td>
-	                                                <a href="<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>?tmp_progrmNm=<c:out value="${result.progrmFileNm}"/>" class="lnk" onclick="selectUpdtProgramListDetail('<c:out value="${result.progrmFileNm}"/>');">
+	                                                <a href="<c:url value='/sym/prm/EgovProgramListDetailSelect.do'/>?tmp_progrmNm=<c:out value="${result.progrmFileNm}"/>" class="lnk" onclick="selectUpdtProgramListDetail('<c:out value="${result.progrmFileNm}"/>');">
 	                                                	<c:out value="${result.progrmFileNm}"/>
 	                                                </a>
                                                 </td>

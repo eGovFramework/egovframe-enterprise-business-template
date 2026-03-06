@@ -17,24 +17,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <c:url var="ImgUrl" value="/images"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 상세코드관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="cmmnDetailCode" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 <!--
 /* ********************************************************
@@ -92,9 +92,8 @@ function fn_egov_modify_CmmnDetailCode(form){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post">
-								
-								<input name="cmd" type="hidden" value="Modify">
+								<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post" action="${pageContext.request.contextPath}/sym/ccm/cde/EgovCcmCmmnDetailCodeModify.do">
+
 								<form:hidden path="codeId"/>
 								<form:hidden path="code"/>
 
@@ -133,7 +132,7 @@ function fn_egov_modify_CmmnDetailCode(form){
                                             </td>
                                             <td>
                                                 <form:input class="f_txt w_full" path="codeNm" maxlength="60" id="codeNm"/>
-                                                <form:errors path="codeNm" />
+                                                <br/><form:errors path="codeNm" cssClass="error"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -143,7 +142,7 @@ function fn_egov_modify_CmmnDetailCode(form){
                                             </td>
                                             <td>
                                                 <form:textarea class="f_txtar w_full h_80" path="codeDc" rows="10" cols="30" id="codeDc"/>
-                                                <form:errors path="codeDc" />
+                                                <br/><form:errors path="codeDc" cssClass="error"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -153,11 +152,12 @@ function fn_egov_modify_CmmnDetailCode(form){
                                             </td>
                                             <td>
                                                 <label class="f_select" for="useAt">
-                                                    <select id="useAt" name="useAt">
-                                                        <option value="Y" label="Yes">Yes</option>
-                                                        <option value="N" label="No">No</option>
-                                                    </select>
+                                                    <form:select path="useAt" id="useAt" class="select">
+                                                        <form:option value="Y" label="Yes"/>
+                                                        <form:option value="N" label="No"/>
+                                                    </form:select>
                                                 </label>
+                                                <br/><form:errors path="useAt" cssClass="error"/>
                                             </td>
                                         </tr>
                                     </table>

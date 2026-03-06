@@ -17,29 +17,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
+	<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="<c:url value='/js/jqueryui.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 
 <link href="<c:url value='${brdMstrVO.tmplatCours}' />" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<c:url value='/js/EgovBBSMng.js' />"></script>
 <script type="text/javascript" src="<c:url value='/js/EgovMultiFile.js'/>" ></script>
 <script type="text/javascript" src="<c:url value='/js/EgovCalPopup.js'/>" ></script>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="board" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <c:if test="${anonymous == 'true'}"><c:set var="prefix" value="/anonymous"/></c:if>
 <script type="text/javascript">
     function fn_egov_validateForm(obj) {
@@ -48,9 +47,8 @@
     
     function fn_egov_regist_notice() {
     	event.preventDefault();
-        //document.board.onsubmit();
-        
-        if (!validateBoard(document.board)){
+
+    	if (!validateBoard(document.board)){
             return;
         }
         <c:if test="${bdMstr.bbsAttrbCode == 'BBSA02'}">
@@ -236,11 +234,12 @@
 	                                        <tr>
 	                                            <td class="lb">
 	                                            	<label for="egovComFileUploader" ><spring:message code="cop.atchFile" /></label>
+	                                            	<br/><small style="color: #666;">최대 <c:out value="${bdMstr.posblAtchFileNumber}"/>개 파일 첨부 가능</small>
 	                                            </td>
 	                                            <td>
 	                                                <div class="board_attach2" id="file_upload_posbl">
 	                                                    <input name="file_1" id="egovComFileUploader" type="file" />
-	                                                    <div id="egovComFileList"></div>
+	                                                    <div id="egovComFileList" style="margin-top: 10px;"></div>
 	                                                </div>
 	                                                <div class="board_attach2" id="file_upload_imposbl">
 	                                                </div>
@@ -255,18 +254,38 @@
                                     
                                     <c:if test="${bdMstr.fileAtchPosblAt == 'Y'}">
 			                        <script type="text/javascript">
+			                            // posblAtchFileNumber 값 가져오기
 			                            var maxFileNum = document.board.posblAtchFileNumber.value;
-			                            if(maxFileNum==null || maxFileNum==""){
-			                                maxFileNum = 3;
+			                            if(maxFileNum == null || maxFileNum == "" || maxFileNum == "0"){
+			                                maxFileNum = 3; // 기본값
 			                            } 
+			                            
+			                            console.log('최대 파일 개수 설정:', maxFileNum);
+			                            
+			                            // MultiSelector 초기화
 			                            var multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum );
 			                            multi_selector.addElement( document.getElementById( 'egovComFileUploader' ) );
+			                            
+			                            // 폼 제출 시 파일 개수 검증
+			                            function validateFileCount() {
+			                                var fileCount = multi_selector.getFileCount();
+			                                console.log('현재 선택된 파일 개수:', fileCount);
+			                                return true; // 개별 파일 선택 시 이미 검증하므로 true 반환
+			                            }
+			                            
+			                            // 기존 폼 검증 함수 확장
+			                            var originalValidateBoard = window.validateBoard;
+			                            window.validateBoard = function(form) {
+			                                if (originalValidateBoard && !originalValidateBoard(form)) {
+			                                    return false;
+			                                }
+			                                return validateFileCount();
+			                            };
 			                        </script>
                         			</c:if>
                                     
                                 </div>
 
-								<!-- 목록/저장버튼  -->
                                 <div class="board_view_bot">
                                     <div class="left_col btn3">
                                     </div>

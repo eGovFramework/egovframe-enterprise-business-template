@@ -1,8 +1,11 @@
 package egovframework.let.uat.uap.service;
 
-import egovframework.com.cmm.ComDefaultVO;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import org.egovframe.rte.ptl.reactive.validation.EgovIPCheck;
+import jakarta.validation.constraints.Size;
+
+import egovframework.com.cmm.ComDefaultVO;
 /**
  * 로그인정책에 대한 model 클래스를 정의한다.
  * 로그인정책정보의 사용자ID, IP정보, 중복허용여부, 제한여부 항목을 관리한다.
@@ -30,10 +33,13 @@ public class LoginPolicy extends ComDefaultVO {
     /**
 	 * 사용자 ID
 	 */	
+	@EgovNullCheck
 	private String emplyrId;
     /**
 	 * 사용자 명
 	 */	
+	@EgovNullCheck
+	@Size(max=50)
 	private String emplyrNm;	
     /**
 	 * 사용자 구분
@@ -42,6 +48,9 @@ public class LoginPolicy extends ComDefaultVO {
     /**
 	 * IP정보
 	 */	
+	@EgovNullCheck
+	@EgovIPCheck
+	@Size(max=23)
     private String ipInfo;
     /**
 	 * 중복허용여부

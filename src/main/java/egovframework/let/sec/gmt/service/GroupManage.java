@@ -1,5 +1,7 @@
 package egovframework.let.sec.gmt.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 import egovframework.com.cmm.ComDefaultVO;
 
 /**
@@ -36,6 +38,8 @@ public class GroupManage extends ComDefaultVO {
 	/**
 	 * 그룹명
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String groupNm;
 	/**
 	 * 그룹등록일시
@@ -44,6 +48,7 @@ public class GroupManage extends ComDefaultVO {
 	/**
 	 * 그룹설명
 	 */
+	@Size(max=50)
 	private String groupDc;
 	
 	/**

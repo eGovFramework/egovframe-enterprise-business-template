@@ -1,23 +1,23 @@
 <%--
   Class Name : EgovIncHeader.jsp
-  Description : 화면상단 Header (include)
+  Description : 화면상단 Header(include)
   Modification Information
- 
-      수정일         수정자                   수정내용
-    -------    --------    ---------------------------
-     2011.08.31   JJY       경량환경 버전 생성
- 
+
+       수정일      수정자         수정내용
+    ----------  --------  ---------------------------
+    2011.08.31  JJY       경량환경 버전 생성
+
     author   : 실행환경개발팀 JJY
-    since    : 2011.08.31 
+    since    : 2011.08.31
 --%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="<c:url value='/js/jqueryui.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 
 <script type="text/javaScript" language="javascript">
 
@@ -48,47 +48,49 @@ function fn_egov_modal_remove() {
 <div class="header">
     <div class="inner">
         <div class="left_col">
-            <h1 class="logo"><a href="<c:url value='/'/>cmm/main/mainPage.do"><img src="<c:url value='/'/>images/logo.png" alt="표준프레임워크 포털 eGovFrame 샘플 포탈"></a></h1>
-            <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/'/>images/ico_question.png" alt="메뉴구성 설명"></a>
+            <h1 class="logo"><a href="<c:url value='/cmm/main/mainPage.do'/>"><img src="<c:url value='/images/logo.png'/>" alt="표준프레임워크 포털 eGovFrame 샘플 포털"></a></h1>
+            <a class="go" href="#LINK" onclick="fn_egov_modal_create(); return false;"><img src="<c:url value='/images/ico_question.png'/>" alt="메뉴구성 설명"></a>
         </div>
 
-		<%
-			LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO");
-			if(loginVO == null){
-		%>
+<%
+    LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO");
+    if(loginVO == null){
+%>
 			<div class="top_menu">
 	            <span class="t"><span>로그인정보 없음</span> &nbsp</span>
 	            <span class="d">로그인후 사용하십시오</span>
 	            <a href="<c:url value='/uat/uia/egovLoginUsr.do'/>" class="btn btn_blue_15 w_90">로그인</a>
 	        </div>
-		<% } else { %>
-			<c:set var="loginName" value="<%= loginVO.getName()%>"/>
-	        <div class="top_menu">
+<% }else{ %>
+		<c:set var="loginName" value="<%= loginVO.getName()%>"/>
+	    <div class="top_menu">
 	            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;"><c:out value="${loginName}" /> 님</span>의 최종접속정보는 </span>
 	            <span class="d">2021-06-30 12:45 입니다.</span>
 	            <a href="<c:url value='/uat/uia/actionLogout.do'/>" class="btn btn_blue_15 w_90">로그아웃</a>
-	        </div>
-        <% } %>
+        </div>
+<% } %>
+
+
 
         <!-- gnb -->
-        <div class="gnb">
-            <ul>
-                <c:forEach var="result" items="${list_headmenu}" varStatus="status">
-                	<li><a href="" onclick="goMenuPage('<c:out value="${result.menuNo}" />');" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
-                </c:forEach>
+		<div class="gnb">
+			<ul>
+		    	<c:forEach var="result" items="${list_headmenu}" varStatus="status">
+		    	<li><a href="" onclick="goMenuPage('<c:out value="${result.menuNo}" />');" class='<c:if test="${result.menuOrdr >= 5}">manager</c:if>'><c:out value="${result.menuNm}"/></a></li>
+		        </c:forEach>
                 <c:if test="${fn:length(list_headmenu) == 0 }">
                 	<li>등록된 메뉴가 없습니다.</li>
                 </c:if>
-            </ul>
-        </div>
+		    </ul>
+		</div>
         <!-- gnb -->
 
-		<!-- util menu -->
+        <!-- util menu -->
 		<%
 			if(loginVO == null){
 		%>
-			<div class="util_menu">
-	            <ul>
+        <div class="util_menu">
+            <ul>
 	                <li></li>
 	            </ul>
 	        </div>
@@ -96,8 +98,8 @@ function fn_egov_modal_remove() {
 			<div class="util_menu">
 	            <ul>
 	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
-	            </ul>
-	        </div>
+            </ul>
+        </div>
         <% } %>
         <!--// util menu -->
         
@@ -219,10 +221,6 @@ function getLastLink(baseMenuNo){
 function goMenuPage(baseMenuNo){
 	event.preventDefault();
 	document.getElementById("baseMenuNo").value=baseMenuNo;
-	//document.getElementById("link").value=getLastLink(baseMenuNo);
-    //document.menuListForm.chkURL.value=url;
-//     document.menuListForm.action = "<c:url value='/'/>"+getLastLink(baseMenuNo).substring(1);
-//     document.menuListForm.submit();
     var link = '<c:url value="/" />' + getLastLink(baseMenuNo).substring(1);
     if (link.indexOf('?') === -1) {
         link = link + '?';

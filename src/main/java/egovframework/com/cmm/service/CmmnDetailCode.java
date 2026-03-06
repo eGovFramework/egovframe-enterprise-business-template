@@ -2,6 +2,9 @@ package egovframework.com.cmm.service;
 
 import java.io.Serializable;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
+
 /**
  * 공통상세코드 모델 클래스
  * @author 공통서비스 개발팀 이중호
@@ -25,42 +28,51 @@ public class CmmnDetailCode implements Serializable {
 	/*
 	 * 코드ID
 	 */
-	private String codeId = "";
+	@EgovNullCheck
+	@Size(max = 6)
+    private String codeId;
 
-	/*
-	 * 코드ID명
-	 */
-	private String codeIdNm = "";
+    /*
+     * 코드ID명
+     */
+    private String codeIdNm;
 
-	/*
-	 * 코드
-	 */
-	private String code = "";
+    /*
+     * 코드
+     */
+	@EgovNullCheck
+	@Size(max = 15)
+	private String code;
 
 	/*
 	 * 코드명
 	 */
-	private String codeNm = "";
+	@EgovNullCheck
+	@Size(max = 60)
+    private String codeNm;
 
-	/*
-	 * 코드설명
-	 */
-	private String codeDc = "";
+    /*
+     * 코드설명
+     */
+	@EgovNullCheck
+	@Size(max = 200)
+    private String codeDc;
 
-	/*
-	 * 사용여부
-	 */
-	private String useAt = "";
+    /*
+     * 사용여부
+     */
+	@EgovNullCheck
+    private String useAt;
 
-	/*
-	 * 최초등록자ID
-	 */
-	private String frstRegisterId = "";
+    /*
+     * 최초등록자ID
+     */
+    private String frstRegisterId = "";
 
-	/*
-	 * 최종수정자ID
-	 */
-	private String lastUpdusrId = "";
+    /*
+     * 최종수정자ID
+     */
+    private String lastUpdusrId   = "";
 
 	/**
 	 * codeId attribute 를 리턴한다.

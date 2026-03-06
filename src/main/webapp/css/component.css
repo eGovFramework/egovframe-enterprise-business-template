@@ -14,6 +14,9 @@
     .btn_search_w {width: 46px; height: 46px; border-radius: 5px; font-size: 0; background: #169bd5 url(../images/ico_search_w.png) no-repeat center;}
     .btn_calendar {width: 46px; height: 46px; border: 1px solid #dde2e5; border-radius: 5px; font-size: 0; background: #fff url(../images/ico_calendar.png) no-repeat center;}
 
+    .btn_area {font-size: 0;}
+    .btn_area > .btn + .btn {margin-left: 10px;}
+
 
 /* Label */
 .label {display: inline-block; height: 30px; padding: 0 10px; border-radius: 4px; font-size: 16px; font-weight: 300; line-height: 30px; vertical-align: top;}

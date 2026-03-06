@@ -42,7 +42,7 @@ public interface EgovCcmCmmnClCodeManageService {
 	 * @return CmmnClCode(공통분류코드)
 	 * @throws Exception
 	 */
-	 CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) throws Exception;
+	 CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode);
 
 	/**
 	 * 공통분류코드 목록을 조회한다.

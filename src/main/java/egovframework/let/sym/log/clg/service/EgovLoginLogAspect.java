@@ -1,10 +1,9 @@
 package egovframework.let.sym.log.clg.service;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 
 import egovframework.com.cmm.LoginVO;
+import jakarta.annotation.Resource;
 
 /**
  * 시스템 로그 생성을 위한 ASPECT 클래스

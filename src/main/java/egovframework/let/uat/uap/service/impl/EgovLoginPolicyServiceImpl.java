@@ -2,15 +2,13 @@ package egovframework.let.uat.uap.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * 로그인정책에 대한 ServiceImpl 클래스를 정의한다.
@@ -60,7 +58,7 @@ public class EgovLoginPolicyServiceImpl extends EgovAbstractServiceImpl implemen
 	 * @param loginPolicyVO - 로그인정책 VO
 	 * @return LoginPolicyVO - 로그인정책 VO
 	 */
-	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO) throws Exception {
+	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO) {
 		return loginPolicyDAO.selectLoginPolicy(loginPolicyVO);
 	}
 

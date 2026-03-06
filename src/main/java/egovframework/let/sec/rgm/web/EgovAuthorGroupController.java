@@ -1,7 +1,5 @@
 package egovframework.let.sec.rgm.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.ram.service.AuthorManageVO;
@@ -18,6 +17,7 @@ import egovframework.let.sec.ram.service.EgovAuthorManageService;
 import egovframework.let.sec.rgm.service.AuthorGroup;
 import egovframework.let.sec.rgm.service.AuthorGroupVO;
 import egovframework.let.sec.rgm.service.EgovAuthorGroupService;
+import jakarta.annotation.Resource;
 
 /**
  * 권한그룹에 관한 controller 클래스를 정의한다.
@@ -113,7 +113,8 @@ public class EgovAuthorGroupController {
 	public String insertAuthorGroup(@RequestParam("userIds") String userIds,
 			@RequestParam("authorCodes") String authorCodes, @RequestParam("regYns") String regYns,
 			@RequestParam("mberTyCodes") String mberTyCode, final AuthorGroupVO authorGroupVO,
-			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model)
+			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model,
+			RedirectAttributes redirectAttributes)
 			throws Exception {
 		
     	String [] strUserIds = userIds.split(";");
@@ -132,8 +133,8 @@ public class EgovAuthorGroupController {
     	}
 
         status.setComplete();
-        model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));		
-        addAttributeSearch(authorGroupVO, model);
+        //redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));		
+        addAttributeSearch(authorGroupVO, redirectAttributes);
 		return "redirect:/sec/rgm/EgovAuthorGroupList.do";
 	}
 
@@ -146,7 +147,8 @@ public class EgovAuthorGroupController {
 	 */ 
     @PostMapping(value = "/sec/rgm/EgovAuthorGroupDelete.do")
 	public String deleteAuthorGroup(@RequestParam("userIds") String userIds, final AuthorGroupVO authorGroupVO,
-			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model)
+			@ModelAttribute("authorGroup") AuthorGroup authorGroup, SessionStatus status, Model model,
+			RedirectAttributes redirectAttributes)
 			throws Exception {
 		
     	String [] strUserIds = userIds.split(";");
@@ -156,15 +158,15 @@ public class EgovAuthorGroupController {
     	}
     	
 		status.setComplete();
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(authorGroupVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(authorGroupVO, redirectAttributes);
 		return "redirect:/sec/rgm/EgovAuthorGroupList.do";
 	}
     
-    private void addAttributeSearch(final AuthorGroupVO authorGroupVO, final Model model) {
-		model.addAttribute("searchCondition", authorGroupVO.getSearchCondition());
-		model.addAttribute("searchKeyword", authorGroupVO.getSearchKeyword());
-		model.addAttribute("pageIndex", authorGroupVO.getPageIndex());
+    private void addAttributeSearch(final AuthorGroupVO authorGroupVO, final RedirectAttributes redirectAttributes) {
+    	redirectAttributes.addAttribute("searchCondition", authorGroupVO.getSearchCondition());
+    	redirectAttributes.addAttribute("searchKeyword", authorGroupVO.getSearchKeyword());
+    	redirectAttributes.addAttribute("pageIndex", authorGroupVO.getPageIndex());
 	}
 
 

@@ -2,14 +2,12 @@ package egovframework.let.sts.cst.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.let.sts.com.StatsVO;
 import egovframework.let.sts.cst.service.EgovConectStatsService;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * 접속 통계 검색 비즈니스 구현 클래스

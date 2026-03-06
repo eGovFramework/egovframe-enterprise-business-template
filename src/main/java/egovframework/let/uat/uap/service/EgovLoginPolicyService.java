@@ -42,7 +42,7 @@ public interface EgovLoginPolicyService {
 	 * @param loginPolicyVO - 로그인정책 VO
 	 * @return LoginPolicyVO - 로그인정책 VO
 	 */
-	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO) throws Exception;
+	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO);
 
 	/**
 	 * 로그인정책 정보를 신규로 등록한다.

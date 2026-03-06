@@ -6,20 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.bbs.service.Board;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import egovframework.let.utl.fcc.service.EgovDateUtil;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.cmmn.trace.LeaveaTrace;
-import org.egovframe.rte.fdl.property.EgovPropertyService;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * 게시물 관리를 위한 서비스 구현 클래스
@@ -49,8 +46,6 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 
     @Resource(name = "propertiesService")
     protected EgovPropertyService propertyService;
-
-    @Resource(name="leaveaTrace") LeaveaTrace leaveaTrace;
 
     /**
      * 게시물 한 건을 삭제 한다.

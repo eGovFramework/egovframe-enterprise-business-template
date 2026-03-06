@@ -2,11 +2,10 @@ package egovframework.let.sym.log.lgm.service.impl;
 
 import java.util.List;
 
-import egovframework.let.sym.log.lgm.service.SysLog;
-
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
 import org.springframework.stereotype.Repository;
+
+import egovframework.let.sym.log.lgm.service.SysLog;
 
 /**
  * 로그관리(시스템)를 위한 데이터 접근 클래스

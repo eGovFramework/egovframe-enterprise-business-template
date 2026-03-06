@@ -1,11 +1,8 @@
 package egovframework.let.sec.gmt.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.gmt.service.EgovGroupManageService;
 import egovframework.let.sec.gmt.service.GroupManage;
 import egovframework.let.sec.gmt.service.GroupManageVO;
+import jakarta.annotation.Resource;
 
 /**
  * 그룹관리에 관한 controller 클래스를 정의한다.
@@ -56,9 +56,6 @@ public class EgovGroupManageController {
     /** Message ID Generation */
     @Resource(name="egovGroupIdGnrService")    
     private EgovIdGnrService egovGroupIdGnrService;
-    
-    @Autowired
-	private DefaultBeanValidator beanValidator;
     
     /**
 	 * 그룹 목록화면 이동
@@ -119,10 +116,11 @@ public class EgovGroupManageController {
 	 * 그룹 등록화면 이동
 	 * @return String
 	 * @exception Exception
-	 */     
+	 */
     @GetMapping(value="/sec/gmt/EgovGroupInsertView.do")
-    public String insertGroupView()
+    public String insertGroupView(Model model)
             throws Exception {
+        model.addAttribute("groupManage", new GroupManage());
         return "/sec/gmt/EgovGroupInsert";
     }
 
@@ -134,22 +132,22 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */ 
     @PostMapping(value = "/sec/gmt/EgovGroupInsert.do")
-	public String insertGroup(@ModelAttribute("groupManage") GroupManage groupManage,
-			@ModelAttribute("groupManageVO") GroupManageVO groupManageVO, BindingResult bindingResult,
-			SessionStatus status, Model model) throws Exception {
-    	
-    	beanValidator.validate(groupManage, bindingResult); //validation 수행
-    	
-    	if (bindingResult.hasErrors()) { 
+	public String insertGroup(@Valid @ModelAttribute("groupManage") GroupManage groupManage,
+			BindingResult bindingResult, @ModelAttribute("groupManageVO") GroupManageVO groupManageVO, 
+			SessionStatus status, Model model, RedirectAttributes redirectAttributes) throws Exception {
+
+    	if (bindingResult.hasErrors()) {
+			model.addAttribute("groupManage", groupManage);
 			return "/sec/gmt/EgovGroupInsert";
 		} else {
 	    	groupManage.setGroupId(egovGroupIdGnrService.getNextStringId());
 	        groupManageVO.setGroupId(groupManage.getGroupId());
-	        
+
+	        egovGroupManageService.insertGroup(groupManage, groupManageVO);
+
 	        status.setComplete();
-	        model.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
-	        model.addAttribute("groupManage", egovGroupManageService.insertGroup(groupManage, groupManageVO));
-	        addAttributeSearch(groupManageVO, model);
+	        redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.insert"));
+	        addAttributeSearch(groupManageVO, redirectAttributes);
 			return "redirect:/sec/gmt/EgovGroupList.do";
 		}
 	}
@@ -161,18 +159,16 @@ public class EgovGroupManageController {
 	 * @exception Exception
 	 */     
     @PostMapping(value = "/sec/gmt/EgovGroupUpdate.do")
-	public String updateGroup(final GroupManageVO groupManageVO, @ModelAttribute("groupManage") GroupManage groupManage,
-			BindingResult bindingResult, SessionStatus status, Model model) throws Exception {
-    	
-    	beanValidator.validate(groupManage, bindingResult); //validation 수행
-    	
+	public String updateGroup(final GroupManageVO groupManageVO, @Valid @ModelAttribute("groupManage") GroupManage groupManage,
+			BindingResult bindingResult, SessionStatus status, Model model, RedirectAttributes redirectAttributes) throws Exception {
+
     	if (bindingResult.hasErrors()) { 
 			return "/sec/gmt/EgovGroupUpdate";
 		} else {
     	    egovGroupManageService.updateGroup(groupManage);
             status.setComplete();
-            model.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
-            addAttributeSearch(groupManageVO, model);
+            redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.update"));
+            addAttributeSearch(groupManageVO, redirectAttributes);
 			return "redirect:/sec/gmt/EgovGroup.do";
 		}
 	}	
@@ -185,11 +181,11 @@ public class EgovGroupManageController {
 	 */
     @PostMapping(value = "/sec/gmt/EgovGroupDelete.do")
 	public String deleteGroup(final GroupManageVO groupManageVO, @ModelAttribute("groupManage") GroupManage groupManage,
-			SessionStatus status, Model model) throws Exception {
+			SessionStatus status, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		egovGroupManageService.deleteGroup(groupManage);
 		status.setComplete();
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(groupManageVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(groupManageVO, redirectAttributes);
 		return "redirect:/sec/gmt/EgovGroupList.do";
 	}
 
@@ -202,7 +198,7 @@ public class EgovGroupManageController {
 	 */   
     @PostMapping(value = "/sec/gmt/EgovGroupListDelete.do")
 	public String deleteGroupList(@RequestParam("groupIds") String groupIds, final GroupManageVO groupManageVO,
-			@ModelAttribute("groupManage") GroupManage groupManage, SessionStatus status, Model model)
+			@ModelAttribute("groupManage") GroupManage groupManage, SessionStatus status, Model model, RedirectAttributes redirectAttributes)
 			throws Exception {
     	String [] strGroupIds = groupIds.split(";");
     	for(int i=0; i<strGroupIds.length;i++) {
@@ -210,8 +206,8 @@ public class EgovGroupManageController {
     		egovGroupManageService.deleteGroup(groupManage);
     	}
 		status.setComplete();
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(groupManageVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(groupManageVO, redirectAttributes);
 		return "redirect:/sec/gmt/EgovGroupList.do";
 	}
 	
@@ -256,11 +252,10 @@ public class EgovGroupManageController {
         return "/sec/gmt/EgovGroupSearch";
 	}
     
-    private void addAttributeSearch(final GroupManageVO groupManageVO, final Model model) {
-		model.addAttribute("searchCondition", groupManageVO.getSearchCondition());
-		model.addAttribute("searchKeyword", groupManageVO.getSearchKeyword());
-		model.addAttribute("pageIndex", groupManageVO.getPageIndex());
-
-		model.addAttribute("groupId", groupManageVO.getGroupId());
+    private void addAttributeSearch(final GroupManageVO groupManageVO, final RedirectAttributes redirectAttributes) {
+    	redirectAttributes.addAttribute("searchCondition", groupManageVO.getSearchCondition());
+    	redirectAttributes.addAttribute("searchKeyword", groupManageVO.getSearchKeyword());
+    	redirectAttributes.addAttribute("pageIndex", groupManageVO.getPageIndex());
+    	redirectAttributes.addAttribute("groupId", groupManageVO.getGroupId());
 	}
 }

@@ -2,13 +2,9 @@ package egovframework.let.uss.umt.web;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.validation.Valid;
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.service.EgovCmmUseService;
@@ -25,6 +22,8 @@ import egovframework.let.uss.umt.service.EgovUserManageService;
 import egovframework.let.uss.umt.service.UserDefaultVO;
 import egovframework.let.uss.umt.service.UserManageVO;
 import egovframework.let.utl.sim.service.EgovFileScrty;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 업무사용자관련 요청을  비지니스 클래스로 전달하고 처리된결과를  해당   웹 화면으로 전달하는  Controller를 정의한다
@@ -61,10 +60,6 @@ public class EgovUserManageController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
-
-	/** DefaultBeanValidator beanValidator */
-	@Autowired
-	private DefaultBeanValidator beanValidator;
 
 	/**
 	 * 사용자목록을 조회한다. (pageing)
@@ -173,7 +168,8 @@ public class EgovUserManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/uss/umt/user/EgovUserInsert.do")
-	public String insertUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult, Model model) throws Exception {
+	public String insertUser(@Valid @ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -182,7 +178,7 @@ public class EgovUserManageController {
         	return "uat/uia/EgovLoginUsr";
     	}
 
-		beanValidator.validate(userManageVO, bindingResult);
+    	// zzz validation 처리 필요
 		if (bindingResult.hasErrors()) {
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
 			//패스워드힌트목록을 코드정보로부터 조회
@@ -214,9 +210,9 @@ public class EgovUserManageController {
 		} else {
 			userManageService.insertUser(userManageVO);
 			//Exception 없이 진행시 등록성공메시지
-			model.addAttribute("resultMsg", "success.common.insert");
+			redirectAttributes.addAttribute("resultMsg", "success.common.insert");
 		}
-		addAttributeSearch(userManageVO, model);
+		addAttributeSearch(userManageVO, redirectAttributes);
 
 		return "redirect:/uss/umt/user/EgovUserManage.do";
 	}
@@ -282,7 +278,8 @@ public class EgovUserManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/uss/umt/user/EgovUserSelectUpdt.do")
-	public String updateUser(@ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult, Model model) throws Exception {
+	public String updateUser(@Valid @ModelAttribute("userManageVO") UserManageVO userManageVO, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -291,8 +288,12 @@ public class EgovUserManageController {
         	return "uat/uia/EgovLoginUsr";
     	}
 
-		beanValidator.validate(userManageVO, bindingResult);
 		if (bindingResult.hasErrors()) {
+			// Validation 오류 로그 출력
+			bindingResult.getAllErrors().forEach(error -> {
+				System.out.println("Validation Error: " + error.toString());
+			});
+
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
 
 			//패스워드힌트목록을 코드정보로부터 조회
@@ -324,9 +325,9 @@ public class EgovUserManageController {
 			userManageService.insertUserHistory(userManageVO);
 			userManageService.updateUser(userManageVO);
 			//Exception 없이 진행시 수정성공메시지
-			model.addAttribute("resultMsg", "success.common.update");
+			redirectAttributes.addAttribute("resultMsg", "success.common.update");
 			
-			addAttributeSearch(userManageVO, model);
+			addAttributeSearch(userManageVO, redirectAttributes);
 
 			return "redirect:/uss/umt/user/EgovUserManage.do";
 		}
@@ -341,7 +342,8 @@ public class EgovUserManageController {
 	 * @throws Exception
 	 */
 	@PostMapping("/uss/umt/user/EgovUserDelete.do")
-	public String deleteUser(@RequestParam("checkedIdForDel") String checkedIdForDel, @ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model) throws Exception {
+	public String deleteUser(@RequestParam("checkedIdForDel") String checkedIdForDel, @ModelAttribute("searchVO") UserDefaultVO userSearchVO, Model model,
+			RedirectAttributes redirectAttributes) throws Exception {
 
 		// 미인증 사용자에 대한 보안처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -352,9 +354,9 @@ public class EgovUserManageController {
 
 		userManageService.deleteUser(checkedIdForDel);
 		//Exception 없이 진행시 등록성공메시지
-		model.addAttribute("resultMsg", "success.common.delete");
+		redirectAttributes.addAttribute("resultMsg", "success.common.delete");
 		
-		addAttributeSearch(userSearchVO, model);
+		addAttributeSearch(userSearchVO, redirectAttributes);
 
 		return "redirect:/uss/umt/user/EgovUserManage.do";
 	}
@@ -435,11 +437,35 @@ public class EgovUserManageController {
 		String newPassword2 = (String) commandMap.get("newPassword2");
 		String uniqId = (String) commandMap.get("uniqId");
 
+		// 새 비밀번호 필수 입력 체크
+		if (newPassword == null || newPassword.trim().isEmpty()) {
+			model.addAttribute("userManageVO", userManageVO);
+			model.addAttribute("userSearchVO", userSearchVO);
+			model.addAttribute("resultMsg", "fail.user.passwordUpdate3");
+			return "cmm/uss/umt/EgovUserPasswordUpdt";
+		}
+
+		// 새 비밀번호 길이 체크
+		if (newPassword.length() > 20) {
+			model.addAttribute("userManageVO", userManageVO);
+			model.addAttribute("userSearchVO", userSearchVO);
+			model.addAttribute("resultMsg", "fail.user.passwordUpdate4");
+			return "cmm/uss/umt/EgovUserPasswordUpdt";
+		}
+
 		boolean isCorrectPassword = false;
 		UserManageVO resultVO = new UserManageVO();
 		userManageVO.setPassword(newPassword);
 		userManageVO.setOldPassword(oldPassword);
 		userManageVO.setUniqId(uniqId);
+
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (userManageVO.getEmplyrId() == null || userManageVO.getEmplyrId().isEmpty()) {
+			model.addAttribute("userManageVO", userManageVO);
+			model.addAttribute("userSearchVO", userSearchVO);
+			model.addAttribute("resultMsg", "fail.common.msg");
+			return "cmm/uss/umt/EgovUserPasswordUpdt";
+		}
 
 		String resultMsg = "";
 		resultVO = userManageService.selectPassword(userManageVO);
@@ -499,10 +525,10 @@ public class EgovUserManageController {
 		return "cmm/uss/umt/EgovUserPasswordUpdt";
 	}
 	
-	private void addAttributeSearch(UserDefaultVO userDefaultVO, Model model) {
-		model.addAttribute("searchCondition", userDefaultVO.getSearchCondition());
-		model.addAttribute("searchKeyword", userDefaultVO.getSearchKeyword());
-		model.addAttribute("pageIndex", userDefaultVO.getPageIndex());
+	private void addAttributeSearch(UserDefaultVO userDefaultVO, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("searchCondition", userDefaultVO.getSearchCondition());
+		redirectAttributes.addAttribute("searchKeyword", userDefaultVO.getSearchKeyword());
+		redirectAttributes.addAttribute("pageIndex", userDefaultVO.getPageIndex());
 	}
 
 }

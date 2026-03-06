@@ -2,12 +2,11 @@ package egovframework.let.uat.uap.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 /**
  * 로그인정책에 대한 DAO 클래스를 정의한다.
  * 로그인정책에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.
@@ -53,7 +52,7 @@ public class LoginPolicyDAO extends EgovAbstractMapper {
 	 * @param loginPolicyVO - 로그인정책 VO
 	 * @return LoginPolicyVO - 로그인정책 VO
 	 */
-	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO) throws Exception {
+	public LoginPolicyVO selectLoginPolicy(LoginPolicyVO loginPolicyVO) {
 		return (LoginPolicyVO)selectOne("loginPolicyDAO.selectLoginPolicy", loginPolicyVO);
 	}
 

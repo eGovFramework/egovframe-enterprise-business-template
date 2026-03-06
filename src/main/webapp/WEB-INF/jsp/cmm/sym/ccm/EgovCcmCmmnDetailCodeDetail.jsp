@@ -24,12 +24,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 상세코드관리</title>
 <script type="text/javaScript" language="javascript">
@@ -49,23 +49,14 @@ function fnList(){
  * 수정화면으로  바로가기
  ******************************************************** */
 function fnModify(){
-    var varForm              = document.all["Form"];
-    varForm.action           = "<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeModify.do'/>";
-    varForm.codeId.value     = "${result.codeId}";
-    varForm.code.value       = "${result.code}";
-    varForm.cmd.value        = "Modify";
-    varForm.submit();
+    location.href = "<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeModify.do'/>?codeId=${result.codeId}&code=${result.code}";
 }
 /* ********************************************************
  * 삭제 처리 함수
  ******************************************************** */
 function fnDelete(){
     if (confirm("<spring:message code='common.delete.msg'/>")) {
-        var varForm              = document.all["Form"];
-        varForm.action           = "<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeRemove.do'/>";
-        varForm.codeId.value     = "${result.codeId}";
-        varForm.code.value       = "${result.code}";
-        varForm.submit();
+        document.Form.submit();
     }
 }
 //-->
@@ -104,10 +95,10 @@ function fnDelete(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="Form" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do'/>">
-								
-								<input type="hidden" name="codeId">
-								<input type="hidden" name="code">
+								<form name="Form" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeRemove.do'/>">
+
+								<input type="hidden" name="codeId" value="${result.codeId}">
+								<input type="hidden" name="code" value="${result.code}">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -148,25 +139,21 @@ function fnDelete(){
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                                <label for="codeDc">코드설명</label>
+                                                <span class="min">코드설명</span>
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <textarea class="f_txtar w_full h_80" cols="30" rows="10" id="codeDc"><c:out value="${result.codeDc}"/></textarea>
+                                            	<c:out value="${result.codeDc}"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="lb">
-                                            	<label for="useAt">사용여부</label>
+                                            	<span class="min">사용여부</span>
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <label class="f_select" for="useAt">
-                                                    <select id="useAt" name="useAt">
-                                                        <option value="Y" <c:if test="${result.useAt == 'Y'}">selected="selected"</c:if> >Yes</option>
-                                                        <option value="N" <c:if test="${result.useAt == 'N'}">selected="selected"</c:if> >No</option>
-                                                    </select>
-                                                </label>
+                                            	<c:if test="${result.useAt == 'Y'}">Yes</c:if>
+                                            	<c:if test="${result.useAt == 'N'}">No</c:if>
                                             </td>
                                         </tr>
                                     </table>
@@ -186,10 +173,7 @@ function fnDelete(){
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
-                                
-                                <!-- 검색조건 유지 -->
-                                <input name="cmd" type="hidden" value="<c:out value='save'/>"/>
-                                
+
                                 </form>
                                 
                             </div>

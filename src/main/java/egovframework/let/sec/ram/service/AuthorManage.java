@@ -1,5 +1,7 @@
 package egovframework.let.sec.ram.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+import jakarta.validation.constraints.Size;
 import egovframework.com.cmm.ComDefaultVO;
 
 /**
@@ -33,6 +35,7 @@ public class AuthorManage extends ComDefaultVO {
 	/**
 	 * 권한코드
 	 */
+	@EgovNullCheck
 	private String authorCode;
 	/**
 	 * 권한등록일자
@@ -41,10 +44,13 @@ public class AuthorManage extends ComDefaultVO {
 	/**
 	 * 권한코드설명
 	 */
+	@Size(max=50)
 	private String authorDc;
 	/**
 	 * 권한 명
 	 */
+	@EgovNullCheck
+	@Size(max=50)
 	private String authorNm;
 	
 	/**

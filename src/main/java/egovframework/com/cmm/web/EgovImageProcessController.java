@@ -8,12 +8,8 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
-import org.egovframe.rte.fdl.cryptography.EgovCryptoService;
+import org.egovframe.rte.fdl.crypto.EgovCryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,6 +22,9 @@ import egovframework.com.cmm.SessionVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.service.FileVO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @Class Name : EgovImageProcessController.java
@@ -43,9 +42,13 @@ import egovframework.com.cmm.service.FileVO;
  * @see
  *
  */
-@SuppressWarnings("serial")
 @Controller
 public class EgovImageProcessController extends HttpServlet {
+
+	/**
+	 *  serialVersion UID
+	 */
+	private static final long serialVersionUID = -6339945210971171173L;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovImageProcessController.class);
 
@@ -55,7 +58,7 @@ public class EgovImageProcessController extends HttpServlet {
 	/** 암호화서비스 */
 	@Resource(name = "egovARIACryptoService")
 	EgovCryptoService cryptoService;
-
+	
 	// 주의 : 반드시 기본값 "egovframe"을 다른것으로 변경하여 사용하시기 바랍니다.
 	public static final String ALGORITHM_KEY = EgovProperties.getProperty("Globals.File.algorithmKey");
 
@@ -86,18 +89,16 @@ public class EgovImageProcessController extends HttpServlet {
 		vo.setFileSn(fileSn);
 
 		FileVO fvo = fileService.selectFileInf(vo);
-
-		//String fileLoaction = fvo.getFileStreCours() + fvo.getStreFileNm();
+		
 		String fileStreCours = EgovWebUtil.filePathBlackList(fvo.getFileStreCours());
 		String streFileNm = EgovWebUtil.filePathBlackList(fvo.getStreFileNm());
 		
-		File file = null;
+		File file = new File(fileStreCours, streFileNm);
 		FileInputStream fis = null;
 
 		BufferedInputStream in = null;
 		ByteArrayOutputStream bStream = null;
 		try {
-		    file = new File(fileStreCours, streFileNm);
 			fis = new FileInputStream(file);
 			in = new BufferedInputStream(fis);
 			bStream = new ByteArrayOutputStream();
@@ -114,16 +115,15 @@ public class EgovImageProcessController extends HttpServlet {
 				} else {
 					type = "image/" + fvo.getFileExtsn().toLowerCase();
 				}
+				type = "image/" + fvo.getFileExtsn().toLowerCase();
 
 			} else {
 				LOGGER.debug("Image fileType is null.");
 			}
 
-			response.setHeader("Content-Type", EgovWebUtil.removeCRLF(type));
+			response.setHeader("Content-Type", type);
 			response.setContentLength(bStream.size());
-
 			bStream.writeTo(response.getOutputStream());
-
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 

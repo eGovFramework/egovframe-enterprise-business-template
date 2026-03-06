@@ -3,15 +3,13 @@ package egovframework.let.sym.log.lgm.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import egovframework.let.sym.log.lgm.service.EgovSysLogService;
-import egovframework.let.sym.log.lgm.service.SysLog;
-
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
+
+import egovframework.let.sym.log.lgm.service.EgovSysLogService;
+import egovframework.let.sym.log.lgm.service.SysLog;
+import jakarta.annotation.Resource;
 
 /**
  * 로그관리(시스템)를 위한 서비스 구현 클래스

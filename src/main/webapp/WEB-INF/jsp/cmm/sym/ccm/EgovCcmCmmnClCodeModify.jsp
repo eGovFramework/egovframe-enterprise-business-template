@@ -17,24 +17,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <c:url var="ImgUrl" value="/images"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 분류코드관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="cmmnClCode" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 <!--
 /* ********************************************************
@@ -91,8 +91,8 @@ function fn_egov_modify_CmmnClCode(form){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnClCode" name="cmmnClCode" method="post">
-								
+								<form:form modelAttribute="cmmnClCode" name="cmmnClCode" id="cmmnClCode" method="post" action="${pageContext.request.contextPath}/sym/ccm/ccc/EgovCcmCmmnClCodeModify.do">
+
 								<input name="cmd" type="hidden" value="Modify">
 								<form:hidden path="clCode"/>
 
@@ -112,7 +112,7 @@ function fn_egov_modify_CmmnClCode(form){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input class="f_txt" type="text" id="" value="<c:out value='${cmmnClCode.clCode}' />">
+                                                <c:out value="${cmmnClCode.clCode}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -143,8 +143,8 @@ function fn_egov_modify_CmmnClCode(form){
                                             <td>
                                                 <label class="f_select" for="useAt">
                                                     <select id="useAt" name="useAt">
-                                                        <option value="Y" label="Yes">Yes</option>
-                                                        <option value="N" label="No">No</option>
+                                                        <option value="Y" <c:if test="${cmmnClCode.useAt == 'Y'}">selected="selected"</c:if>>Yes</option>
+                                                        <option value="N" <c:if test="${cmmnClCode.useAt == 'N'}">selected="selected"</c:if>>No</option>
                                                     </select>
                                                 </label>
                                             </td>
@@ -158,7 +158,7 @@ function fn_egov_modify_CmmnClCode(form){
                                     </div>
 
                                     <div class="right_col btn1">
-                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_modify_CmmnClCode(document.cmmnClCode); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
+                                        <a href="#LINK" class="btn btn_blue_46 w_100" onclick="javascript:fn_egov_modify_CmmnClCode(document.getElementById('cmmnClCode')); return false;"><spring:message code="button.save" /></a><!-- 저장 -->
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fn_egov_list_CmmnClCode(); return false;"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>

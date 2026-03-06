@@ -18,28 +18,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <c:url var="ImgUrl" value="/images"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
-	<script src="<c:url value='/'/>js/jquery.js"></script>
-	<script src="<c:url value='/'/>js/jqueryui.js"></script>
-	<link rel="stylesheet" href="<c:url value='/'/>css/jqueryui.css">
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
+	<script src="<c:url value='/js/jquery.js'/>"></script>
+	<script src="<c:url value='/js/jqueryui.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 
 <title>내부업무 사이트 > 내부시스템관리 > 메뉴목록관리</title>
 
-<script type="text/javascript" src="<c:url value="/validator.do" />"></script>
-<validator:javascript formName="menuManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidator.js" />"></script>
 <script language="javascript1.2" type="text/javaScript">
 <!--
 /* ********************************************************
@@ -60,9 +60,9 @@ function insertMenuManage(form) {
  * 파일목록조회  함수
  ******************************************************** */
 function searchFileNm() {
-	
-    document.all.tmp_SearchElementName.value = "progrmFileNm";
-    
+
+    document.getElementsByName("tmp_SearchElementName")[0].value = "progrmFileNm";
+
     var $dialog = $('<div id="modalPan"></div>')
 	.html('<iframe style="border: 0px; " src="' + "<c:url value='/sym/prm/EgovProgramListSearch.do'/>" +'" width="100%" height="100%"></iframe>')
 	.dialog({
@@ -76,12 +76,17 @@ function searchFileNm() {
 }
 
 function fn_egov_returnValue(retVal){
-	
-	if(document.all.progrmFileNm_view){
-		document.all.progrmFileNm_view.value = retVal;
-		document.all.progrmFileNm.value = retVal;
+
+	var viewElement = document.getElementById("progrmFileNm_view");
+	var hiddenElement = document.getElementsByName("progrmFileNm")[0];
+
+	if(viewElement){
+		viewElement.value = retVal;
     }
-	
+	if(hiddenElement){
+		hiddenElement.value = retVal;
+    }
+
 	fn_egov_modal_remove();
 }
 
@@ -251,8 +256,7 @@ function press() {
                                 <!-- 검색조건 유지 -->
 								<input type="hidden" name="tmp_SearchElementName" value="">
 								<input type="hidden" name="tmp_SearchElementVal" value="">
-								<input name="cmd" type="hidden" value="<c:out value='insert'/>">
-								
+
 								</form:form>
                                 
                             </div>

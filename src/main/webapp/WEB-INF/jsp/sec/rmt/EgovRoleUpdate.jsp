@@ -18,10 +18,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 
-<c:set var="registerFlag" value="${empty roleManageVO.roleCode ? 'INSERT' : 'UPDATE'}"/>
-<c:set var="registerFlagName" value="${empty roleManageVO.roleCode ? '롤 등록' : '롤 수정'}"/>
+<c:set var="registerFlag" value="${empty roleManage.roleCode ? 'INSERT' : 'UPDATE'}"/>
+<c:set var="registerFlagName" value="${empty roleManage.roleCode ? '롤 등록' : '롤 수정'}"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,58 +28,57 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 롤관리</title>
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="roleManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javaScript" language="javascript">
 
 function fncSelectRoleList() {
 	event.preventDefault();
-    var varFrom = document.getElementById("roleManageVO");
+    var varFrom = document.getElementById("roleManage");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleList.do'/>";
     varFrom.method = 'get';
-    varFrom.submit();     
+    varFrom.submit();
 }
 
 function fncRoleInsert() {
 	event.preventDefault();
-	
-    var varFrom = document.getElementById("roleManageVO");
+
+    var varFrom = document.getElementById("roleManage");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleInsert.do'/>";
 
-    if(!validateRoleManageVO(varFrom)){           
+    if(!validateRoleManage(varFrom)){
         return;
     }else{
         if(confirm('<spring:message code="common.regist.msg" />')){
             varFrom.submit();
         }
-    } 
+    }
 }
 
 function fncRoleUpdate() {
 	event.preventDefault();
-    var varFrom = document.getElementById("roleManageVO");
+    var varFrom = document.getElementById("roleManage");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleUpdate.do'/>";
 
-    if(!validateRoleManageVO(varFrom)){           
+    if(!validateRoleManage(varFrom)){
         return;
     }else{
         if(confirm('<spring:message code="common.update.msg" />')){
             varFrom.submit();
         }
-    } 
+    }
 }
 
 function fncRoleDelete() {
 	event.preventDefault();
-    var varFrom = document.getElementById("roleManageVO");
+    var varFrom = document.getElementById("roleManage");
     varFrom.action = "<c:url value='/sec/rmt/EgovRoleDelete.do'/>";
     if(confirm('<spring:message code="common.delete.msg" />')){
         varFrom.submit();
@@ -122,7 +120,7 @@ function fncRoleDelete() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="roleManageVO" method="post" >
+								<form:form modelAttribute="roleManage" method="post" action="${pageContext.request.contextPath}/sec/rmt/EgovRoleUpdate.do">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -150,7 +148,7 @@ function fncRoleDelete() {
                                             </td>
                                             <td>
                                                 <input name="roleNm" id="roleNm" class="f_txt" type="text" value="<c:out value='${roleManage.roleNm}'/>" maxLength="50" title="롤명" />
-                                                &nbsp;<form:errors path="roleNm" />
+                                                <form:errors path="roleNm"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -160,7 +158,7 @@ function fncRoleDelete() {
                                             </td>
                                             <td>
                                                 <input name="rolePtn" id="rolePtn" class="f_txt" type="text" value="<c:out value='${roleManage.rolePtn}'/>" maxLength="50" title="롤패턴" />
-                                                &nbsp;<form:errors path="rolePtn" />
+                                                <form:errors path="rolePtn" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -193,6 +191,7 @@ function fncRoleDelete() {
                                             </td>
                                             <td>
                                                 <input name="roleSort" id="roleSort" class="f_txt" type="text" value="<c:out value='${roleManage.roleSort}'/>" maxLength="50" title="롤sort" />
+                                                <form:errors path="roleSort"/>
                                             </td>
                                         </tr>
                                         <tr>

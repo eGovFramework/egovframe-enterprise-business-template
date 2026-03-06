@@ -1,16 +1,16 @@
 <%--
-  Class Name : EgovMainView.jsp 
+  Class Name : EgovMainView.jsp
   Description : 메인화면
   Modification Information
- 
+
       수정일         수정자                   수정내용
     -------    --------    ---------------------------
      2011.08.31   JJY       경량환경 버전 생성
- 
+
     author   : 실행환경개발팀 JJY
-    since    : 2011.08.31 
+    since    : 2011.08.31
 --%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,20 +23,17 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 	
 <title>표준프레임워크 경량환경 내부업무템플릿</title>
 </head>
 <body>
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>	
-<!-- 전체 레이어 시작 -->
-
-<body>
 
     <!-- Skip navigation -->
     <a href="#contents" class="skip_navi">본문 바로가기</a>
@@ -99,7 +96,7 @@
                                         			<c:forEach begin="0" end="${result.replyLc}" step="1">
                                         				&nbsp;
                                         			</c:forEach>
-                                        			<img src="<c:url value='/'/>images/ico_reply.png" alt="reply arrow">
+                                        			<img src="<c:url value='/images/ico_reply.png'/>" alt="reply arrow">
                                         		</c:if>
                                             	<a href="<c:url value='/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA'/>">
                                             		<c:out value="${result.nttSj}" />
@@ -124,5 +121,6 @@
         <c:import url="/sym/mms/EgovFooter.do" />
         <!--// Footer -->
     </div>
+    
 </body>
 </html>

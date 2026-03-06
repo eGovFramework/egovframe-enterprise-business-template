@@ -18,25 +18,25 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
+
 <c:url var="ImgUrl" value="/images"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 프로그램목록관리</title>
 
-<script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="progrmManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script language="javascript1.2" type="text/javaScript">
 <!--
 /* ********************************************************
@@ -48,7 +48,7 @@ function updateProgramListManage(form) {
         if(!validateProgrmManageVO(form)){          
             return;
         }else{
-            form.action="<c:url value='/'/>sym/prm/EgovProgramListDetailSelectUpdt.do";
+            form.action="<c:url value='/sym/prm/EgovProgramListDetailSelectUpdt.do'/>";
             form.submit();
         }
     }
@@ -60,7 +60,7 @@ function updateProgramListManage(form) {
 function deleteProgramListManage(form) {
 	event.preventDefault();
     if(confirm("<spring:message code="common.delete.msg" />")){
-        form.action="<c:url value='/'/>sym/prm/EgovProgramListManageDelete.do";
+        form.action="<c:url value='/sym/prm/EgovProgramListManageDelete.do'/>";
         form.submit();
     }
 }
@@ -70,7 +70,7 @@ function deleteProgramListManage(form) {
  ******************************************************** */
  function selectList(){
 	    event.preventDefault();
-	    location.href = "<c:url value='/'/>sym/prm/EgovProgramListManageSelect.do?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${param.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
+	    location.href = "<c:out value="${pageContext.request.contextPath}"/>/sym/prm/EgovProgramListManageSelect.do?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${param.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
 	}
 <c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
 -->

@@ -2,15 +2,13 @@ package egovframework.let.uss.ion.uas.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 /**
  * 사용자부재에 대한 ServiceImpl 클래스를 정의한다.
  * 사용자부재에 대한 등록, 수정, 삭제, 조회, 반영확인 기능을 제공한다.

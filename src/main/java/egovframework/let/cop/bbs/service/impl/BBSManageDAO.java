@@ -2,12 +2,11 @@ package egovframework.let.cop.bbs.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.cop.bbs.service.Board;
 import egovframework.let.cop.bbs.service.BoardVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * 게시물 관리를 위한 데이터 접근 클래스

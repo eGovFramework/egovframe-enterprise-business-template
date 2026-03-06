@@ -24,12 +24,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 공통코드관리</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -53,10 +53,7 @@ function fnList(){
  * 수정화면으로  바로가기
  ******************************************************** */
 function fnModify(){
-    var varForm              = document.all["Form"];
-    varForm.action           = "<c:url value='/sym/ccm/cca/EgovCcmCmmnCodeModify.do'/>";
-    varForm.codeId.value     = "${result.codeId}";
-    varForm.submit();
+    location.href = "<c:url value='/sym/ccm/cca/EgovCcmCmmnCodeModify.do'/>?codeId=${result.codeId}";
 }
 /* ********************************************************
  * 삭제 처리 함수

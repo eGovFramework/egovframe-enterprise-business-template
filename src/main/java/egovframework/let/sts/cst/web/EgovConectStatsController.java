@@ -2,8 +2,6 @@ package egovframework.let.sts.cst.web;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import egovframework.let.sts.com.StatsVO;
 import egovframework.let.sts.cst.service.EgovConectStatsService;
+import jakarta.annotation.Resource;
 
 /**
  * 접속 통계 검색 컨트롤러 클래스

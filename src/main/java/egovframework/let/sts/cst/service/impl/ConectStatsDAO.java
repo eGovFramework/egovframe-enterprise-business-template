@@ -2,11 +2,10 @@ package egovframework.let.sts.cst.service.impl;
 
 import java.util.List;
 
-import egovframework.let.sts.com.StatsVO;
-
 import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
 import org.springframework.stereotype.Repository;
+
+import egovframework.let.sts.com.StatsVO;
 
 /**
  * 접속 통계 검색 DAO 클래스

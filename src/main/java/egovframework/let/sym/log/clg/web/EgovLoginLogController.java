@@ -2,8 +2,6 @@ package egovframework.let.sym.log.clg.web;
 
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.let.sym.log.clg.service.EgovLoginLogService;
 import egovframework.let.sym.log.clg.service.LoginLog;
+import jakarta.annotation.Resource;
 
 /**
  * 접속로그정보를 관리하기 위한 컨트롤러 클래스
@@ -63,9 +62,15 @@ public class EgovLoginLogController {
 		loginLog.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		loginLog.setLastIndex(paginationInfo.getLastRecordIndex());
 		loginLog.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		loginLog.setSearchBgnDe(loginLog.getSearchBgnDe().replaceAll("-", ""));
-		loginLog.setSearchEndDe(loginLog.getSearchEndDe().replaceAll("-", ""));
+		
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (loginLog.getSearchBgnDe() != null) {
+			loginLog.setSearchBgnDe(loginLog.getSearchBgnDe().replaceAll("-", ""));
+		}
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (loginLog.getSearchEndDe() != null) {
+			loginLog.setSearchEndDe(loginLog.getSearchEndDe().replaceAll("-", ""));
+		}
 
 		HashMap<?, ?> _map = (HashMap<?, ?>) loginLogService.selectLoginLogInf(loginLog);
 		int totCnt = Integer.parseInt((String) _map.get("resultCnt"));

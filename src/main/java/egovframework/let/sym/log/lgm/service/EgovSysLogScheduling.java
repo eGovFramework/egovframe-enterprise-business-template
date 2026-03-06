@@ -1,10 +1,9 @@
 package egovframework.let.sym.log.lgm.service;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
+
+import jakarta.annotation.Resource;
 
 /**
  * 시스템 로그 요약을 위한 스케쥴링 클래스

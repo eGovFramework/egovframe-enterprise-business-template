@@ -2,12 +2,11 @@ package egovframework.let.sym.ccm.ccc.service.impl;
 
 import java.util.List;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
-
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
-
-import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -54,7 +53,7 @@ public class CmmnClCodeManageDAO extends EgovAbstractMapper {
 	 * @param cmmnClCode
 	 * @return CmmnClCode(공통분류코드)
 	 */
-	public CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) throws Exception {
+	public CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) {
 		return (CmmnClCode)selectOne("CmmnClCodeManageDAO.selectCmmnClCodeDetail", cmmnClCode);
 	}
 

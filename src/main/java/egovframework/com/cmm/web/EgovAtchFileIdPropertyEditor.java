@@ -32,12 +32,8 @@ public class EgovAtchFileIdPropertyEditor extends PropertyEditorSupport {
 		LOGGER.debug("===>>> setText : "+text);
 		String decryptText = "";
 		if (text != null && !"".equals(text) ) {
-			try {
-				decryptText = EgovFileMngController.decrypt(text);
-			} catch (Exception e) {
-				LOGGER.debug(e.getMessage());
-				decryptText = "FILE_ID_DECRIPT_EXCEPTION_01";
-			}
+			// 26.03.04 KISA 보안취약점 조치 : 불필요한 try-catch 제거
+			decryptText = EgovFileMngController.decrypt(text);
 		}
 		this.setValue(decryptText);
 
@@ -48,6 +44,6 @@ public class EgovAtchFileIdPropertyEditor extends PropertyEditorSupport {
 		LOGGER.debug("===>>> getText : "+getValue());
 		return String.valueOf(getValue());
 
-	}	
+	}
 
 }

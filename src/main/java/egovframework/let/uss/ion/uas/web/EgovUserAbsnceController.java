@@ -1,10 +1,7 @@
 package egovframework.let.uss.ion.uas.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,13 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springmodules.validation.commons.DefaultBeanValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
+import jakarta.annotation.Resource;
 
 /**
  * 사용자부재에 대한 controller 클래스를 정의한다.
@@ -48,9 +48,6 @@ public class EgovUserAbsnceController {
 	@Resource(name = "egovUserAbsnceService")
 	private EgovUserAbsnceService egovUserAbsnceService;
 
-	@Autowired
-	private DefaultBeanValidator beanValidator;
-
 	/**
 	 * 사용자부재 목록화면 이동
 	 * @return String
@@ -58,7 +55,6 @@ public class EgovUserAbsnceController {
 	 */
 	@GetMapping("/uss/ion/uas/selectUserAbsnceListView.do")
 	public String selectUserAbsnceListView() throws Exception {
-
 		return "/uss/ion/uas/EgovUserAbsnceList";
 	}
 
@@ -68,7 +64,7 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@GetMapping("/uss/ion/uas/selectUserAbsnceList.do")
-	public String selectUserAbsnceList(@RequestParam("selAbsnceAt") String selAbsnceAt, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
+	public String selectUserAbsnceList(@RequestParam(value="selAbsnceAt", defaultValue="A") String selAbsnceAt, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
 
 		/** paging */
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -108,7 +104,8 @@ public class EgovUserAbsnceController {
 
 		UserAbsnceVO vo = (UserAbsnceVO) model.getAttribute("userAbsnce");
 
-		if (vo.getRegYn().equals("N"))
+		// 26.03.04 KISA 보안취약점 조치 : null check 추가
+		if (vo == null || vo.getRegYn() == null || vo.getRegYn().equals("N"))
 			return "/uss/ion/uas/EgovUserAbsnceRegist";
 		else
 			return "/uss/ion/uas/EgovUserAbsnceUpdt";
@@ -134,10 +131,8 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uss/ion/uas/addUserAbsnce.do")
-	public String insertUserAbsnce(@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, BindingResult bindingResult,
+	public String insertUserAbsnce(@Valid @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, BindingResult bindingResult,
 			Model model) throws Exception {
-
-		beanValidator.validate(userAbsnce, bindingResult); //validation 수행
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("userAbsnceVO", userAbsnceVO);
@@ -160,7 +155,7 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uss/ion/uas/updtUserAbsnce.do")
-	public String updateUserAbsnce(@ModelAttribute("userAbsnce") UserAbsnce userAbsnce, BindingResult bindingResult, Model model) throws Exception {
+	public String updateUserAbsnce(@Valid @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, BindingResult bindingResult, Model model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("userAbsnceVO", userAbsnce);
@@ -183,11 +178,11 @@ public class EgovUserAbsnceController {
 	 */
 	@PostMapping("/uss/ion/uas/removeUserAbsnce.do")
 	public String deleteUserAbsnce(UserAbsnceVO userAbsnceVO, @ModelAttribute("userAbsnce") UserAbsnce userAbsnce,
-			Model model) throws Exception {
+			Model model, RedirectAttributes redirectAttributes) throws Exception {
 
 		egovUserAbsnceService.deleteUserAbsnce(userAbsnce);
-		model.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
-		addAttributeSearch(userAbsnceVO, model);
+		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
+		addAttributeSearch(userAbsnceVO, redirectAttributes);
 		return "redirect:/uss/ion/uas/selectUserAbsnceList.do";
 	}
 
@@ -236,11 +231,10 @@ public class EgovUserAbsnceController {
 		return "/uss/ion/uas/EgovUserAbsnceMainList";
 	}
 	
-	private void addAttributeSearch(UserAbsnceVO userAbsnceVO, Model model) {
-		model.addAttribute("searchCondition", userAbsnceVO.getSearchCondition());
-		model.addAttribute("searchKeyword", userAbsnceVO.getSearchKeyword());
-		model.addAttribute("pageIndex", userAbsnceVO.getPageIndex());
-
-		model.addAttribute("selAbsnceAt", userAbsnceVO.getSelAbsnceAt());
+	private void addAttributeSearch(UserAbsnceVO userAbsnceVO, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("searchCondition", userAbsnceVO.getSearchCondition());
+		redirectAttributes.addAttribute("searchKeyword", userAbsnceVO.getSearchKeyword());
+		redirectAttributes.addAttribute("pageIndex", userAbsnceVO.getPageIndex());
+		redirectAttributes.addAttribute("selAbsnceAt", userAbsnceVO.getSelAbsnceAt());
 	}
 }

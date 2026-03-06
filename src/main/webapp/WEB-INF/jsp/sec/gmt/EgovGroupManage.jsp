@@ -24,12 +24,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
-	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
-	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
-	<script src="<c:url value='/'/>js/ui.js"></script>
+	<link rel="stylesheet" href="<c:url value='/css/base.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/layout.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/component.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/page.css'/>">
+	<script src="<c:url value='/js/jquery-1.11.2.min.js'/>"></script>
+	<script src="<c:url value='/js/ui.js'/>"></script>
 
 <title>내부업무 사이트 > 내부시스템관리 > 사용자그룹관리</title>
 
@@ -255,7 +255,7 @@ function press() {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="" class="lnk" onclick="fncSelectGroup('<c:out value="${group.groupId}"/>')"><c:out value="${group.groupId}"/></a>
+                                                    <a href="#" class="lnk" onclick="fncSelectGroup('<c:out value="${group.groupId}"/>'); return false;"><c:out value="${group.groupId}"/></a>
                                                 </td>
                                                 <td><c:out value="${group.groupNm}"/></td>
                                                 <td><c:out value="${group.groupDc}"/></td>

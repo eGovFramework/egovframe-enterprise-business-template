@@ -2,19 +2,17 @@ package egovframework.let.sym.log.lgm.web;
 
 import java.util.HashMap;
 
-import egovframework.let.sym.log.lgm.service.EgovSysLogService;
-import egovframework.let.sym.log.lgm.service.SysLog;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
-import javax.annotation.Resource;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import egovframework.let.sym.log.lgm.service.EgovSysLogService;
+import egovframework.let.sym.log.lgm.service.SysLog;
+import jakarta.annotation.Resource;
 
 /**
  * 시스템 로그정보를 관리하기 위한 컨트롤러 클래스

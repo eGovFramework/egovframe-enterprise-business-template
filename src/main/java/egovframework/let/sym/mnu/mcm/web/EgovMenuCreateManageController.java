@@ -1,7 +1,5 @@
 package egovframework.let.sym.mnu.mcm.web;
 
-import javax.annotation.Resource;
-
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.fdl.security.userdetails.util.EgovUserDetailsHelper;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -11,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sym.mnu.mcm.service.EgovMenuCreateManageService;
 import egovframework.let.sym.mnu.mcm.service.MenuCreatVO;
+import jakarta.annotation.Resource;
 
 /**
  * 메뉴목록 관리및 메뉴생성, 사이트맵 생성을 처리하는 비즈니스 구현 클래스
@@ -141,7 +141,7 @@ public class EgovMenuCreateManageController {
 	public String insertMenuCreatList(@RequestParam("checkedAuthorForInsert") String checkedAuthorForInsert,
 			@RequestParam("checkedMenuNoForInsert") String checkedMenuNoForInsert,
 			@ModelAttribute("searchVO") ComDefaultVO searchVO, @ModelAttribute("menuCreatVO") MenuCreatVO menuCreatVO,
-			Model model) throws Exception {
+			Model model, RedirectAttributes redirectAttributes) throws Exception {
 		String resultMsg = "";
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -156,16 +156,16 @@ public class EgovMenuCreateManageController {
 			menuCreateManageService.insertMenuCreatList(checkedAuthorForInsert, checkedMenuNoForInsert);
 			resultMsg = egovMessageSource.getMessage("success.common.insert");
 		}
-		model.addAttribute("resultMsg", resultMsg);
-		model.addAttribute("authorCode", menuCreatVO.getAuthorCode());
-		addAttributeSearch(searchVO, model);
+		redirectAttributes.addAttribute("resultMsg", resultMsg);
+		redirectAttributes.addAttribute("authorCode", menuCreatVO.getAuthorCode());
+		addAttributeSearch(searchVO, redirectAttributes);
 		return "redirect:/sym/mnu/mcm/EgovMenuCreatSelect.do";
 	}
 	
-	private void addAttributeSearch(final ComDefaultVO searchVO, final Model model) {
-		model.addAttribute("searchCondition", searchVO.getSearchCondition());
-		model.addAttribute("searchKeyword", searchVO.getSearchKeyword());
-		model.addAttribute("pageIndex", searchVO.getPageIndex());
+	private void addAttributeSearch(final ComDefaultVO searchVO, final RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("searchCondition", searchVO.getSearchCondition());
+		redirectAttributes.addAttribute("searchKeyword", searchVO.getSearchKeyword());
+		redirectAttributes.addAttribute("pageIndex", searchVO.getPageIndex());
 	}
 
 }

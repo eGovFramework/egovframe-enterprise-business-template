@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.springframework.stereotype.Service;
+
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
-
-import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
 /**
  * @Class Name : EgovFileMngServiceImpl.java
@@ -40,8 +38,7 @@ public class EgovFileMngServiceImpl extends EgovAbstractServiceImpl implements E
 	 * @see egovframework.com.cmm.service.EgovFileMngService#deleteFileInfs(java.util.List)
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public void deleteFileInfs(List fvoList) throws Exception {
+	public void deleteFileInfs(List<?> fvoList) throws Exception {
 		fileMngDAO.deleteFileInfs(fvoList);
 	}
 
@@ -64,9 +61,8 @@ public class EgovFileMngServiceImpl extends EgovAbstractServiceImpl implements E
 	 *
 	 * @see egovframework.com.cmm.service.EgovFileMngService#insertFileInfs(java.util.List)
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
-	public String insertFileInfs(List fvoList) throws Exception {
+	public String insertFileInfs(List<?> fvoList) throws Exception {
 		String atchFileId = "";
 
 		if (fvoList.size() != 0) {
@@ -93,9 +89,8 @@ public class EgovFileMngServiceImpl extends EgovAbstractServiceImpl implements E
 	 *
 	 * @see egovframework.com.cmm.service.EgovFileMngService#updateFileInfs(java.util.List)
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
-	public void updateFileInfs(List fvoList) throws Exception {
+	public void updateFileInfs(List<?> fvoList) throws Exception {
 		//Delete & Insert
 		fileMngDAO.updateFileInfs(fvoList);
 	}
