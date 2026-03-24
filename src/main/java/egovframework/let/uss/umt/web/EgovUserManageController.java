@@ -289,10 +289,6 @@ public class EgovUserManageController {
     	}
 
 		if (bindingResult.hasErrors()) {
-			// Validation 오류 로그 출력
-			bindingResult.getAllErrors().forEach(error -> {
-				System.out.println("Validation Error: " + error.toString());
-			});
 
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
 

@@ -156,19 +156,21 @@ public class EgovMenuManageController {
 		String sLocationUrl = null;
 		String resultMsg = "";
 
-		String[] delMenuNo = checkedMenuNoForDel.split(",");
-		menuManageVO.setMenuNo(Integer.parseInt(delMenuNo[0]));
-
-		if (menuManageService.selectUpperMenuNoByPk(menuManageVO) != 0) {
-			resultMsg = egovMessageSource.getMessage("fail.common.delete.upperMenuExist");
-			sLocationUrl = "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
-		} else if (delMenuNo == null || (delMenuNo.length == 0)) {
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가 및 empty 체크 순서 정정
+		String[] delMenuNo = checkedMenuNoForDel != null ? checkedMenuNoForDel.split(",") : new String[0];
+		if (delMenuNo.length == 0) {
 			resultMsg = egovMessageSource.getMessage("fail.common.delete");
 			sLocationUrl = "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
 		} else {
-			menuManageService.deleteMenuManageList(checkedMenuNoForDel);
-			resultMsg = egovMessageSource.getMessage("success.common.delete");
-			sLocationUrl = "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
+			menuManageVO.setMenuNo(Integer.parseInt(delMenuNo[0]));
+			if (menuManageService.selectUpperMenuNoByPk(menuManageVO) != 0) {
+				resultMsg = egovMessageSource.getMessage("fail.common.delete.upperMenuExist");
+				sLocationUrl = "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
+			} else {
+				menuManageService.deleteMenuManageList(checkedMenuNoForDel);
+				resultMsg = egovMessageSource.getMessage("success.common.delete");
+				sLocationUrl = "forward:/sym/mnu/mpm/EgovMenuManageSelect.do";
+			}
 		}
 		model.addAttribute("resultMsg", resultMsg);
 		return sLocationUrl;

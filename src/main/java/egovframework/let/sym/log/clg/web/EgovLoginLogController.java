@@ -50,7 +50,6 @@ public class EgovLoginLogController {
 	 */
 	@GetMapping(value = "/sym/log/clg/SelectLoginLogList.do")
 	public String selectLoginLogInf(@ModelAttribute("searchVO") LoginLog loginLog, ModelMap model) throws Exception {
-		System.out.println("eeee:::" + loginLog);
 		loginLog.setPageUnit(propertyService.getInt("pageUnit"));
 		loginLog.setPageSize(propertyService.getInt("pageSize"));
 
@@ -94,7 +93,8 @@ public class EgovLoginLogController {
 	@GetMapping(value = "/sym/log/clg/InqireLoginLog.do")
 	public String selectLoginLog(@ModelAttribute("searchVO") LoginLog loginLog, @RequestParam("logId") String logId, ModelMap model) throws Exception {
 
-		loginLog.setLogId(logId.trim());
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가
+		loginLog.setLogId(logId != null ? logId.trim() : "");
 
 		LoginLog vo = loginLogService.selectLoginLog(loginLog);
 		model.addAttribute("result", vo);
