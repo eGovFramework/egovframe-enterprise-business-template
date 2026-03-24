@@ -89,7 +89,8 @@ public class EgovSysLogController {
 			@RequestParam("requstId") String requstId,
 			ModelMap model) throws Exception{
 
-		sysLog.setRequstId(requstId.trim());
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가
+		sysLog.setRequstId(requstId != null ? requstId.trim() : "");
 
 		SysLog vo = sysLogService.selectSysLog(sysLog);
 		model.addAttribute("result", vo);

@@ -137,8 +137,9 @@ public class EgovProgrmManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		String[] delProgrmFileNm = checkedProgrmFileNmForDel.split(",");
-		if (delProgrmFileNm == null || (delProgrmFileNm.length == 0)) {
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가
+		String[] delProgrmFileNm = checkedProgrmFileNmForDel != null ? checkedProgrmFileNmForDel.split(",") : new String[0];
+		if (delProgrmFileNm.length == 0) {
 			resultMsg = egovMessageSource.getMessage("fail.common.delete");
 		} else {
 			progrmManageService.deleteProgrmManageList(checkedProgrmFileNmForDel);

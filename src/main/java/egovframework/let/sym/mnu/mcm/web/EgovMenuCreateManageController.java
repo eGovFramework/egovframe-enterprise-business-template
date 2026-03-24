@@ -149,8 +149,9 @@ public class EgovMenuCreateManageController {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "uat/uia/EgovLoginUsr";
 		}
-		String[] insertMenuNo = checkedMenuNoForInsert.split(",");
-		if (insertMenuNo == null || (insertMenuNo.length == 0)) {
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가
+		String[] insertMenuNo = checkedMenuNoForInsert != null ? checkedMenuNoForInsert.split(",") : new String[0];
+		if (insertMenuNo.length == 0) {
 			resultMsg = egovMessageSource.getMessage("fail.common.insert");
 		} else {
 			menuCreateManageService.insertMenuCreatList(checkedAuthorForInsert, checkedMenuNoForInsert);

@@ -194,7 +194,8 @@ public class EgovUserAbsnceController {
 	@PostMapping("/uss/ion/uas/removeUserAbsnceList.do")
 	public String deleteUserAbsnceList(@RequestParam("userIds") String userIds, @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, Model model) throws Exception {
 
-		String[] strUserIds = userIds.split(";");
+		// 26.03.23 KISA 보안취약점 조치 : null check 추가
+		String[] strUserIds = userIds != null ? userIds.split(";") : new String[0];
 
 		for (int i = 0; i < strUserIds.length; i++) {
 			userAbsnce.setUserId(strUserIds[i]);
