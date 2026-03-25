@@ -50,6 +50,7 @@ public class EgovLoginLogController {
 	 */
 	@GetMapping(value = "/sym/log/clg/SelectLoginLogList.do")
 	public String selectLoginLogInf(@ModelAttribute("searchVO") LoginLog loginLog, ModelMap model) throws Exception {
+		
 		loginLog.setPageUnit(propertyService.getInt("pageUnit"));
 		loginLog.setPageSize(propertyService.getInt("pageSize"));
 
