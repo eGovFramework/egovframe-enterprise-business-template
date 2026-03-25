@@ -197,6 +197,11 @@ public class EgovUserAbsnceController {
 		// 26.03.23 KISA 보안취약점 조치 : null check 추가
 		String[] strUserIds = userIds != null ? userIds.split(";") : new String[0];
 
+		if (strUserIds.length == 0) {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.delete"));
+			return "forward:/uss/ion/uas/selectUserAbsnceList.do";
+		}
+
 		for (int i = 0; i < strUserIds.length; i++) {
 			userAbsnce.setUserId(strUserIds[i]);
 			egovUserAbsnceService.deleteUserAbsnce(userAbsnce);
