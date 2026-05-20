@@ -32,6 +32,10 @@
 target/
 src/main/webapp/META-INF/
 
+# Local environment overrides (use .env.example as template)
+.env
+.env.local
+
 # OS
 .DS_Store
 
