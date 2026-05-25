@@ -2,16 +2,15 @@ package egovframework.let.sym.log.clg.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sym.log.clg.service.LoginLog;
-import jakarta.annotation.Resource;
 
 /**
- * 시스템 로그 관리를 위한 데이터 접근 클래스
+ * 접속로그 관리에 대한 Mapper 인터페이스를 정의한다.
  * @author 공통서비스개발팀 이삼섭
  * @since 2009.03.11
- * @version 1.0
+ * @version 2.0
  * @see
  *
  * <pre>
@@ -26,53 +25,38 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("loginLogDAO")
-public class LoginLogDAO {
-
-	@Resource(name = "loginLogMapper")
-	private LoginLogMapper loginLogMapper;
+@EgovMapper("loginLogMapper")
+public interface LoginLogMapper {
 
 	/**
 	 * 접속로그를 기록한다.
-	 *
 	 * @param loginLog LoginLog
-	 * @throws Exception
+	 * @exception Exception
 	 */
-	public void logInsertLoginLog(LoginLog loginLog) throws Exception {
-		loginLogMapper.logInsertLoginLog(loginLog);
-	}
+	void logInsertLoginLog(LoginLog loginLog) throws Exception;
 
 	/**
 	 * 접속로그를 조회한다.
-	 *
 	 * @param loginLog LoginLog
 	 * @return LoginLog
-	 * @throws Exception
+	 * @exception Exception
 	 */
-	public LoginLog selectLoginLog(LoginLog loginLog) throws Exception {
-		return loginLogMapper.selectLoginLog(loginLog);
-	}
+	LoginLog selectLoginLog(LoginLog loginLog) throws Exception;
 
 	/**
 	 * 접속로그 목록을 조회한다.
-	 *
 	 * @param loginLog LoginLog
 	 * @return List
-	 * @throws Exception
+	 * @exception Exception
 	 */
-	public List<LoginLog> selectLoginLogInf(LoginLog loginLog) throws Exception {
-		return loginLogMapper.selectLoginLogInf(loginLog);
-	}
+	List<LoginLog> selectLoginLogInf(LoginLog loginLog) throws Exception;
 
 	/**
 	 * 접속로그 목록의 총 건수를 조회한다.
-	 *
 	 * @param loginLog LoginLog
 	 * @return int
-	 * @throws Exception
+	 * @exception Exception
 	 */
-	public int selectLoginLogInfCnt(LoginLog loginLog) throws Exception {
-		return loginLogMapper.selectLoginLogInfCnt(loginLog);
-	}
+	int selectLoginLogInfCnt(LoginLog loginLog) throws Exception;
 
 }
