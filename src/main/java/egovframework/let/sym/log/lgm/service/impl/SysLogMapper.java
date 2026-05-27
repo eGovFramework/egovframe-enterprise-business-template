@@ -2,16 +2,15 @@ package egovframework.let.sym.log.lgm.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sym.log.lgm.service.SysLog;
-import jakarta.annotation.Resource;
 
 /**
- * 로그관리(시스템)를 위한 데이터 접근 클래스
+ * 시스템 로그 관리에 대한 Mapper 인터페이스를 정의한다.
  * @author 공통서비스개발팀 이삼섭
  * @since 2009.03.11
- * @version 1.0
+ * @version 2.0
  * @see
  *
  * <pre>
@@ -26,63 +25,50 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("SysLogDAO")
-public class SysLogDAO {
-
-	@Resource(name = "sysLogMapper")
-	private SysLogMapper sysLogMapper;
+@EgovMapper("sysLogMapper")
+public interface SysLogMapper {
 
 	/**
 	 * 시스템 로그정보를 생성한다.
-	 *
 	 * @param sysLog SysLog
 	 * @throws Exception
 	 */
-	public void logInsertSysLog(SysLog sysLog) throws Exception {
-		sysLogMapper.logInsertSysLog(sysLog);
-	}
+	void logInsertSysLog(SysLog sysLog) throws Exception;
 
 	/**
 	 * 시스템 로그정보를 요약한다.
-	 *
 	 * @throws Exception
 	 */
-	public void logInsertSysLogSummary() throws Exception {
-		sysLogMapper.logInsertSysLogSummary();
-		sysLogMapper.logDeleteSysLogSummary();
-	}
+	void logInsertSysLogSummary() throws Exception;
+
+	/**
+	 * 시스템 로그 6개월전 로그를 삭제한다.
+	 * @throws Exception
+	 */
+	void logDeleteSysLogSummary() throws Exception;
 
 	/**
 	 * 시스템 로그정보를 조회한다.
-	 *
 	 * @param sysLog SysLog
 	 * @return SysLog
 	 * @throws Exception
 	 */
-	public SysLog selectSysLog(SysLog sysLog) throws Exception {
-		return sysLogMapper.selectSysLog(sysLog);
-	}
+	SysLog selectSysLog(SysLog sysLog) throws Exception;
 
 	/**
 	 * 시스템 로그정보 목록을 조회한다.
-	 *
 	 * @param sysLog SysLog
 	 * @return List
 	 * @throws Exception
 	 */
-	public List<SysLog> selectSysLogInf(SysLog sysLog) throws Exception {
-		return sysLogMapper.selectSysLogInf(sysLog);
-	}
+	List<SysLog> selectSysLogInf(SysLog sysLog) throws Exception;
 
 	/**
 	 * 시스템 로그정보 목록의 총 건수를 조회한다.
-	 *
 	 * @param sysLog SysLog
 	 * @return int
 	 * @throws Exception
 	 */
-	public int selectSysLogInfCnt(SysLog sysLog) throws Exception {
-		return sysLogMapper.selectSysLogInfCnt(sysLog);
-	}
+	int selectSysLogInfCnt(SysLog sysLog) throws Exception;
 
 }
