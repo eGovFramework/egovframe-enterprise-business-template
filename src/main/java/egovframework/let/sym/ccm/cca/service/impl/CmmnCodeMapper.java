@@ -2,15 +2,13 @@ package egovframework.let.sym.ccm.cca.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sym.ccm.cca.service.CmmnCode;
 import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
-import jakarta.annotation.Resource;
 
 /**
- *
- * 공통코드에 대한 데이터 접근 클래스를 정의한다
+ * 공통코드 MyBatis 매퍼 인터페이스
  * @author 공통서비스 개발팀 이중호
  * @since 2009.04.01
  * @version 1.0
@@ -27,65 +25,46 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("CmmnCodeManageDAO")
-public class CmmnCodeManageDAO {
-
-	@Resource(name = "cmmnCodeMapper")
-	private CmmnCodeMapper cmmnCodeMapper;
+@EgovMapper("cmmnCodeMapper")
+public interface CmmnCodeMapper {
 
 	/**
 	 * 공통코드를 삭제한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void deleteCmmnCode(CmmnCode cmmnCode) throws Exception {
-		cmmnCodeMapper.deleteCmmnCode(cmmnCode);
-	}
+	void deleteCmmnCode(CmmnCode cmmnCode);
 
 	/**
 	 * 공통코드를 등록한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void insertCmmnCode(CmmnCode cmmnCode) throws Exception {
-		cmmnCodeMapper.insertCmmnCode(cmmnCode);
-	}
+	void insertCmmnCode(CmmnCode cmmnCode);
 
 	/**
 	 * 공통코드 상세항목을 조회한다.
 	 * @param cmmnCode
 	 * @return CmmnCode(공통코드)
 	 */
-	public CmmnCode selectCmmnCodeDetail(CmmnCode cmmnCode) throws Exception {
-		return cmmnCodeMapper.selectCmmnCodeDetail(cmmnCode);
-	}
+	CmmnCode selectCmmnCodeDetail(CmmnCode cmmnCode);
 
 	/**
 	 * 공통코드 목록을 조회한다.
 	 * @param searchVO
 	 * @return List(공통코드 목록)
-	 * @throws Exception
 	 */
-	public List<?> selectCmmnCodeList(CmmnCodeVO searchVO) throws Exception {
-		return cmmnCodeMapper.selectCmmnCodeList(searchVO);
-	}
+	List<?> selectCmmnCodeList(CmmnCodeVO searchVO);
 
 	/**
 	 * 공통코드 총 갯수를 조회한다.
 	 * @param searchVO
 	 * @return int(공통코드 총 갯수)
 	 */
-	public int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO) throws Exception {
-		return cmmnCodeMapper.selectCmmnCodeListTotCnt(searchVO);
-	}
+	int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO);
 
 	/**
 	 * 공통코드를 수정한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void updateCmmnCode(CmmnCode cmmnCode) throws Exception {
-		cmmnCodeMapper.updateCmmnCode(cmmnCode);
-	}
+	void updateCmmnCode(CmmnCode cmmnCode);
 
 }

@@ -2,15 +2,13 @@ package egovframework.let.sym.ccm.ccc.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
-import jakarta.annotation.Resource;
 
 /**
- *
- * 공통분류코드에 대한 데이터 접근 클래스를 정의한다
+ * 공통분류코드 MyBatis 매퍼 인터페이스
  * @author 공통서비스 개발팀 이중호
  * @since 2009.04.01
  * @version 1.0
@@ -27,65 +25,46 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("CmmnClCodeManageDAO")
-public class CmmnClCodeManageDAO {
-
-	@Resource(name = "cmmnClCodeMapper")
-	private CmmnClCodeMapper cmmnClCodeMapper;
+@EgovMapper("cmmnClCodeMapper")
+public interface CmmnClCodeMapper {
 
 	/**
 	 * 공통분류코드를 삭제한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void deleteCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-		cmmnClCodeMapper.deleteCmmnClCode(cmmnClCode);
-	}
+	void deleteCmmnClCode(CmmnClCode cmmnClCode);
 
 	/**
 	 * 공통분류코드를 등록한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void insertCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-		cmmnClCodeMapper.insertCmmnClCode(cmmnClCode);
-	}
+	void insertCmmnClCode(CmmnClCode cmmnClCode);
 
 	/**
 	 * 공통분류코드 상세항목을 조회한다.
 	 * @param cmmnClCode
 	 * @return CmmnClCode(공통분류코드)
 	 */
-	public CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) {
-		return cmmnClCodeMapper.selectCmmnClCodeDetail(cmmnClCode);
-	}
+	CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode);
 
 	/**
 	 * 공통분류코드 목록을 조회한다.
 	 * @param searchVO
 	 * @return List(공통분류코드 목록)
-	 * @throws Exception
 	 */
-	public List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO) throws Exception {
-		return cmmnClCodeMapper.selectCmmnClCodeList(searchVO);
-	}
+	List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO);
 
 	/**
 	 * 공통분류코드 총 갯수를 조회한다.
 	 * @param searchVO
 	 * @return int(공통분류코드 총 갯수)
 	 */
-	public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) throws Exception {
-		return cmmnClCodeMapper.selectCmmnClCodeListTotCnt(searchVO);
-	}
+	int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO);
 
 	/**
 	 * 공통분류코드를 수정한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void updateCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-		cmmnClCodeMapper.updateCmmnClCode(cmmnClCode);
-	}
+	void updateCmmnClCode(CmmnClCode cmmnClCode);
 
 }
