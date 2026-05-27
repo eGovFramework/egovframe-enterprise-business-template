@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 import egovframework.com.cmm.service.CmmnDetailCode;
+import jakarta.annotation.Resource;
 
 /**
  * @Class Name : CmmUseDAO.java
@@ -14,16 +15,20 @@ import egovframework.com.cmm.service.CmmnDetailCode;
  *
  *    수정일       수정자         수정내용
  *    -------        -------     -------------------
- *    2009. 3. 11.     이삼섭
+ *    2009. 3. 11.     이삼섭    최초생성
+ *    2024.11.01  표준프레임워크센터  @EgovMapper 어노테이션 방식으로 전환
  *
  * @author 공통 서비스 개발팀 이삼섭
  * @since 2009. 3. 11.
- * @version
+ * @version 2.0
  * @see
  *
  */
 @Repository("cmmUseDAO")
-public class CmmUseDAO extends EgovComAbstractDAO {
+public class CmmUseDAO {
+
+	@Resource(name = "cmmUseDAO")
+	private CmmUseMapper cmmUseMapper;
 
     /**
      * 주어진 조건에 따른 공통코드를 불러온다.
@@ -33,7 +38,7 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      * @throws Exception
      */
 	public List<CmmnDetailCode> selectCmmCodeDetail(ComDefaultCodeVO vo) throws Exception {
-		return selectList("CmmUseDAO.selectCmmCodeDetail", vo);
+		return cmmUseMapper.selectCmmCodeDetail(vo);
     }
 
     /**
@@ -44,7 +49,7 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      * @throws Exception
      */
     public List<CmmnDetailCode> selectOgrnztIdDetail(ComDefaultCodeVO vo) throws Exception {
-    	return selectList("CmmUseDAO.selectOgrnztIdDetail", vo);
+    	return cmmUseMapper.selectOgrnztIdDetail(vo);
     }
 
     /**
@@ -55,6 +60,6 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      * @throws Exception
      */
     public List<CmmnDetailCode> selectGroupIdDetail(ComDefaultCodeVO vo) throws Exception {
-    	return selectList("CmmUseDAO.selectGroupIdDetail", vo);
+    	return cmmUseMapper.selectGroupIdDetail(vo);
     }
 }
