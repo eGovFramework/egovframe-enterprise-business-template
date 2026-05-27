@@ -2,11 +2,11 @@ package egovframework.let.sym.cal.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.cal.service.Restde;
 import egovframework.let.sym.cal.service.RestdeVO;
+import jakarta.annotation.Resource;
 
 /**
  *
@@ -23,149 +23,151 @@ import egovframework.let.sym.cal.service.RestdeVO;
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2025.05.28  표준프레임워크센터  @EgovMapper 어노테이션 방식으로 전환
  *
  * </pre>
  */
 @Repository("RestdeManageDAO")
-public class RestdeManageDAO extends EgovAbstractMapper {
+public class RestdeManageDAO {
+
+	@Resource(name = "restdeManageMapper")
+	private RestdeManageMapper restdeManageMapper;
 
 	/**
 	 * 일반달력 팝업 정보를 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(일반달력 팝업 날짜정보)
 	 * @throws Exception
 	 */
-    public List<?> selectNormalRestdePopup(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectNormalRestdePopup", restde);
+	public List<Restde> selectNormalRestdePopup(Restde restde) throws Exception {
+		return restdeManageMapper.selectNormalRestdePopup(restde);
 	}
 
 	/**
 	 * 행정달력 팝업 정보를 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(행정달력 팝업 날짜정보)
 	 * @throws Exception
 	 */
-    public List<?> selectAdministRestdePopup(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectAdministRestdePopup", restde);
+	public List<Restde> selectAdministRestdePopup(Restde restde) throws Exception {
+		return restdeManageMapper.selectAdministRestdePopup(restde);
 	}
 
 	/**
 	 * 일반달력 일간 정보를 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(일반달력 일간 날짜정보)
 	 * @throws Exception
 	 */
-    public List<?> selectNormalDayCal(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectNormalDayCal", restde);
+	public List<Restde> selectNormalDayCal(Restde restde) throws Exception {
+		return restdeManageMapper.selectNormalDayCal(restde);
 	}
 
 	/**
 	 * 일반달력 일간 휴일을 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(일반달력 일간 휴일정보)
 	 * @throws Exception
 	 */
-    public List<?> selectNormalDayRestde(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectNormalDayRestde", restde);
+	public List<Restde> selectNormalDayRestde(Restde restde) throws Exception {
+		return restdeManageMapper.selectNormalDayRestde(restde);
 	}
 
 	/**
 	 * 일반달력 월간 휴일을 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(일반달력 월간 휴일정보)
 	 * @throws Exception
 	 */
-    public List<?> selectNormalMonthRestde(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectNormalMonthRestde", restde);
+	public List<Restde> selectNormalMonthRestde(Restde restde) throws Exception {
+		return restdeManageMapper.selectNormalMonthRestde(restde);
 	}
 
 	/**
 	 * 행정달력 일간 정보를 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(행정달력 일간 날짜정보)
 	 * @throws Exception
 	 */
-    public List<?> selectAdministDayCal(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectAdministDayCal", restde);
+	public List<Restde> selectAdministDayCal(Restde restde) throws Exception {
+		return restdeManageMapper.selectAdministDayCal(restde);
 	}
 
 	/**
 	 * 행정달력 일간 휴일을 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(행정달력 일간 휴일정보)
 	 * @throws Exception
 	 */
-    public List<?> selectAdministDayRestde(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectAdministDayRestde", restde);
+	public List<Restde> selectAdministDayRestde(Restde restde) throws Exception {
+		return restdeManageMapper.selectAdministDayRestde(restde);
 	}
 
 	/**
 	 * 행정달력 월간 휴일을 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return List(행정달력 월간 휴일정보)
 	 * @throws Exception
 	 */
-    public List<?> selectAdministMonthRestde(Restde restde) throws Exception {
-        return selectList("RestdeManageDAO.selectAdministMonthRestde", restde);
+	public List<Restde> selectAdministMonthRestde(Restde restde) throws Exception {
+		return restdeManageMapper.selectAdministMonthRestde(restde);
 	}
 
 	/**
 	 * 휴일을 삭제한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @throws Exception
 	 */
 	public void deleteRestde(Restde restde) throws Exception {
-		delete("RestdeManageDAO.deleteRestde", restde);
+		restdeManageMapper.deleteRestde(restde);
 	}
-
 
 	/**
 	 * 휴일을 등록한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @throws Exception
 	 */
 	public void insertRestde(Restde restde) throws Exception {
-        insert("RestdeManageDAO.insertRestde", restde);
+		restdeManageMapper.insertRestde(restde);
 	}
 
 	/**
 	 * 휴일 상세항목을 조회한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @return Restde(휴일)
 	 * @throws Exception
 	 */
 	public Restde selectRestdeDetail(Restde restde) throws Exception {
-		return (Restde) selectOne("RestdeManageDAO.selectRestdeDetail", restde);
+		return restdeManageMapper.selectRestdeDetail(restde);
 	}
 
-
-    /**
-     * 휴일 목록을 조회한다.
-     * @param searchVO
+	/**
+	 * 휴일 목록을 조회한다.
+	 * @param searchVO RestdeVO
 	 * @return List(휴일 목록)
-     * @throws Exception
-     */
-    public List<?> selectRestdeList(RestdeVO searchVO) throws Exception {
-        return selectList("RestdeManageDAO.selectRestdeList", searchVO);
-    }
+	 * @throws Exception
+	 */
+	public List<Restde> selectRestdeList(RestdeVO searchVO) throws Exception {
+		return restdeManageMapper.selectRestdeList(searchVO);
+	}
 
-    /**
-     * 글 총 갯수를 조회한다.
-     * @param searchVO
-     * @return int(휴일 총 갯수)
-     * @throws Exception
-     */
-    public int selectRestdeListTotCnt(RestdeVO searchVO) throws Exception {
-        return (Integer)selectOne("RestdeManageDAO.selectRestdeListTotCnt", searchVO);
-    }
+	/**
+	 * 휴일 총 갯수를 조회한다.
+	 * @param searchVO RestdeVO
+	 * @return int(휴일 총 갯수)
+	 * @throws Exception
+	 */
+	public int selectRestdeListTotCnt(RestdeVO searchVO) throws Exception {
+		return restdeManageMapper.selectRestdeListTotCnt(searchVO);
+	}
 
 	/**
 	 * 휴일을 수정한다.
-	 * @param restde
+	 * @param restde Restde
 	 * @throws Exception
 	 */
 	public void updateRestde(Restde restde) throws Exception {
-		update("RestdeManageDAO.updateRestde", restde);
+		restdeManageMapper.updateRestde(restde);
 	}
 
 }
