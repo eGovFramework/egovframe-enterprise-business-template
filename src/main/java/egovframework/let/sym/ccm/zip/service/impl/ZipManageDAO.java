@@ -2,11 +2,11 @@ package egovframework.let.sym.ccm.zip.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.ccm.zip.service.Zip;
 import egovframework.let.sym.ccm.zip.service.ZipVO;
+import jakarta.annotation.Resource;
 
 /**
  *
@@ -27,80 +27,41 @@ import egovframework.let.sym.ccm.zip.service.ZipVO;
  * </pre>
  */
 @Repository("ZipManageDAO")
-public class ZipManageDAO extends EgovAbstractMapper {
+public class ZipManageDAO {
 
-	/**
-	 * 우편번호를 삭제한다.
-	 * @param zip
-	 * @throws Exception
-	 */
+	@Resource(name = "zipManageMapper")
+	private ZipManageMapper zipManageMapper;
+
 	public void deleteZip(Zip zip) throws Exception {
-		delete("ZipManageDAO.deleteZip", zip);
+		zipManageMapper.deleteZip(zip);
 	}
 
-	/**
-	 * 우편번호 전체를 삭제한다.
-	 * @throws Exception
-	 */
 	public void deleteAllZip() throws Exception {
-		delete("ZipManageDAO.deleteAllZip", new Object());
+		zipManageMapper.deleteAllZip();
 	}
 
-	/**
-	 * 우편번호를 등록한다.
-	 * @param zip
-	 * @throws Exception
-	 */
 	public void insertZip(Zip zip) throws Exception {
-        insert("ZipManageDAO.insertZip", zip);
+		zipManageMapper.insertZip(zip);
 	}
 
-	/**
-	 * 우편번호 엑셀파일을 등록한다.
-	 * @param zip
-	 * @throws Exception
-	 */
 	public void insertExcelZip() throws Exception {
-		delete("ZipManageDAO.deleteAllZip", new Object());
+		zipManageMapper.deleteAllZip();
 	}
 
-
-	/**
-	 * 우편번호 상세항목을 조회한다.
-	 * @param zip
-	 * @return Zip(우편번호)
-	 */
 	public Zip selectZipDetail(Zip zip) throws Exception {
-		return (Zip) selectOne("ZipManageDAO.selectZipDetail", zip);
+		return zipManageMapper.selectZipDetail(zip);
 	}
 
-
-    /**
-	 * 우편번호 목록을 조회한다.
-     * @param searchVO
-     * @return List(우편번호 목록)
-     * @throws Exception
-     */
 	public List<?> selectZipList(ZipVO searchVO) throws Exception {
-        return selectList("ZipManageDAO.selectZipList", searchVO);
-    }
+		return zipManageMapper.selectZipList(searchVO);
+	}
 
-    /**
-	 * 우편번호 총 갯수를 조회한다.
-     * @param searchVO
-     * @return int(우편번호 총 갯수)
-     */
-    public int selectZipListTotCnt(ZipVO searchVO) throws Exception {
-        return (Integer)selectOne("ZipManageDAO.selectZipListTotCnt", searchVO);
-    }
+	public int selectZipListTotCnt(ZipVO searchVO) throws Exception {
+		return zipManageMapper.selectZipListTotCnt(searchVO);
+	}
 
-	/**
-	 * 우편번호를 수정한다.
-	 * @param zip
-	 * @throws Exception
-	 */
 	public void updateZip(Zip zip) throws Exception {
-		update("ZipManageDAO.updateZip", zip);
+		zipManageMapper.updateZip(zip);
 	}
 
 }

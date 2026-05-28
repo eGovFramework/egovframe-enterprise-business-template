@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="loginDAO">
+<mapper namespace="egovframework.let.uat.uia.service.impl.LoginMapper">
 
 
 	<!-- 로그인 처리를 위한 resultMap -->
@@ -27,7 +27,7 @@
 	</resultMap>
 	-->
 	<!-- 일반 로그인 -->
-	<select id="loginDAO.actionLogin" resultMap="login">
+	<select id="actionLogin" resultMap="login">
 		<if test="userSe == &quot;USR&quot;">
 			
             SELECT EMPLYR_ID AS id
@@ -47,7 +47,7 @@
 	</select>
 	
 	<!-- 인증서 로그인
-	<select id="loginDAO.actionCrtfctLogin" resultMap="login">
+	<select id="actionCrtfctLogin" resultMap="login">
 		<![CDATA[
 		SELECT emplyr_id AS id
 		     , USER_NM AS name
@@ -63,7 +63,7 @@
 	</select>
 	 -->
 	<!-- 아이디 찾기
-	<select id="loginDAO.searchId" resultMap="id">
+	<select id="searchId" resultMap="id">
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
 			SELECT mber_id AS id
@@ -94,7 +94,7 @@
 	</select>
 	 -->
 	<!-- 비밀번호 찾기 
-	<select id="loginDAO.searchPassword" resultMap="password">
+	<select id="searchPassword" resultMap="password">
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
 			SELECT password AS password
@@ -134,7 +134,7 @@
 	</select>
 	-->
 	<!-- 변경된 비밀번호를 저장 
-	<update id="loginDAO.updatePassword">
+	<update id="updatePassword">
 		<isEqual property="userSe" compareValue="GNR">
 			<![CDATA[
 			UPDATE LETTNGNRLMBER

@@ -2,10 +2,10 @@ package egovframework.let.sym.log.lgm.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.log.lgm.service.SysLog;
+import jakarta.annotation.Resource;
 
 /**
  * 로그관리(시스템)를 위한 데이터 접근 클래스
@@ -26,63 +26,30 @@ import egovframework.let.sym.log.lgm.service.SysLog;
  * </pre>
  */
 @Repository("SysLogDAO")
-public class SysLogDAO extends EgovAbstractMapper {
+public class SysLogDAO {
 
-	/**
-	 * 시스템 로그정보를 생성한다.
-	 *
-	 * @param SysLog
-	 * @return
-	 * @throws Exception
-	 */
-	public void logInsertSysLog(SysLog sysLog) throws Exception{
-		insert("SysLogDAO.logInsertSysLog", sysLog);
+	@Resource(name = "sysLogMapper")
+	private SysLogMapper sysLogMapper;
+
+	public void logInsertSysLog(SysLog sysLog) throws Exception {
+		sysLogMapper.logInsertSysLog(sysLog);
 	}
 
-	/**
-	 * 시스템 로그정보를 요약한다.
-	 *
-	 * @param
-	 * @return
-	 * @throws Exception
-	 */
-	public void logInsertSysLogSummary() throws Exception{
-		insert("SysLogDAO.logInsertSysLogSummary", null);
-		delete("SysLogDAO.logDeleteSysLogSummary", null);
+	public void logInsertSysLogSummary() throws Exception {
+		sysLogMapper.logInsertSysLogSummary();
+		sysLogMapper.logDeleteSysLogSummary();
 	}
 
-	/**
-	 * 시스템 로그정보를 조회한다.
-	 *
-	 * @param sysLog
-	 * @return sysLog
-	 * @throws Exception
-	 */
-	public SysLog selectSysLog(SysLog sysLog) throws Exception{
-
-		return (SysLog) selectOne("SysLogDAO.selectSysLog", sysLog);
+	public SysLog selectSysLog(SysLog sysLog) throws Exception {
+		return sysLogMapper.selectSysLog(sysLog);
 	}
 
-	/**
-	 * 시스템 로그정보 목록을 조회한다.
-	 *
-	 * @param sysLog
-	 * @return
-	 * @throws Exception
-	 */
-	public List<?> selectSysLogInf(SysLog sysLog) throws Exception{
-		return selectList("SysLogDAO.selectSysLogInf", sysLog);
+	public List<?> selectSysLogInf(SysLog sysLog) throws Exception {
+		return sysLogMapper.selectSysLogInf(sysLog);
 	}
 
-	/**
-	 * 시스템 로그정보 목록의 숫자를 조회한다.
-	 * @param sysLog
-	 * @return
-	 * @throws Exception
-	 */
-	public int selectSysLogInfCnt(SysLog sysLog) throws Exception{
-
-		return (Integer)selectOne("SysLogDAO.selectSysLogInfCnt", sysLog);
+	public int selectSysLogInfCnt(SysLog sysLog) throws Exception {
+		return sysLogMapper.selectSysLogInfCnt(sysLog);
 	}
 
 }

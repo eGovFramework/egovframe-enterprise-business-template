@@ -2,11 +2,11 @@ package egovframework.let.uss.umt.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.uss.umt.service.UserDefaultVO;
 import egovframework.let.uss.umt.service.UserManageVO;
+import jakarta.annotation.Resource;
 
 /**
  * 사용자관리에 관한 데이터 접근 클래스를 정의한다.
@@ -26,94 +26,49 @@ import egovframework.let.uss.umt.service.UserManageVO;
  * </pre>
  */
 @Repository("userManageDAO")
-public class UserManageDAO extends EgovAbstractMapper{
+public class UserManageDAO {
 
-    /**
-     * 입력한 사용자아이디의 중복여부를 체크하여 사용가능여부를 확인
-     * @param checkId 중복체크대상 아이디
-     * @return int 사용가능여부(아이디 사용회수 )
-     */
-    public int checkIdDplct(String checkId){
-        return (Integer)selectOne("userManageDAO.checkIdDplct_S", checkId);
-    }
+	@Resource(name = "userManageMapper")
+	private UserManageMapper userManageMapper;
 
-    /**
-     * 화면에 조회된 사용자의 정보를 데이터베이스에서 삭제
-     * @param delId 삭제대상 업무사용자 아이디
-     */
-    public void deleteUser(String delId){
-        delete("userManageDAO.deleteUser_S", delId);
-    }
+	public int checkIdDplct(String checkId) {
+		return userManageMapper.checkIdDplct_S(checkId);
+	}
 
+	public void deleteUser(String delId) {
+		userManageMapper.deleteUser_S(delId);
+	}
 
-    /**
-     * 사용자의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
-     * @param userManageVO 업무사용자 등록정보
-     * @return String result 등록결과
-     */
-    public void insertUser(UserManageVO userManageVO){
-        insert("userManageDAO.insertUser_S", userManageVO);
-    }
+	public void insertUser(UserManageVO userManageVO) {
+		userManageMapper.insertUser_S(userManageVO);
+	}
 
-    /**
-     * 기 등록된 사용자 중 검색조건에 맞는 사용자들의 정보를 데이터베이스에서 읽어와 화면에 출력
-     * @param uniqId 상세조회대상 업무사용자아이디
-     * @return UserManageVO 업무사용자  상세정보
-     */
-    public UserManageVO selectUser(String uniqId){
-        return (UserManageVO) selectOne("userManageDAO.selectUser_S", uniqId);
-    }
+	public UserManageVO selectUser(String uniqId) {
+		return userManageMapper.selectUser_S(uniqId);
+	}
 
-    /**
-     * 기 등록된 특정 사용자의 정보를 데이터베이스에서 읽어와 화면에 출력
-     * @param userSearchVO 검색조건
-     * @return List 업무사용자 목록정보
-     */
-	public List<?> selectUserList(UserDefaultVO userSearchVO){
-        return selectList("userManageDAO.selectUserList_S", userSearchVO);
-    }
+	public List<?> selectUserList(UserDefaultVO userSearchVO) {
+		return userManageMapper.selectUserList_S(userSearchVO);
+	}
 
-    /**
-     * 사용자총 갯수를 조회한다.
-     * @param userSearchVO 검색조건
-     * @return int 업무사용자 총갯수
-     */
-    public int selectUserListTotCnt(UserDefaultVO userSearchVO) {
-        return (Integer)selectOne("userManageDAO.selectUserListTotCnt_S", userSearchVO);
-    }
+	public int selectUserListTotCnt(UserDefaultVO userSearchVO) {
+		return userManageMapper.selectUserListTotCnt_S(userSearchVO);
+	}
 
-    /**
-     * 화면에 조회된 사용자의 기본정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
-     * @param userManageVO 업무사용자 수정정보
-     */
-    public void updateUser(UserManageVO userManageVO){
-        update("userManageDAO.updateUser_S",userManageVO);
-    }
+	public void updateUser(UserManageVO userManageVO) {
+		userManageMapper.updateUser_S(userManageVO);
+	}
 
-    /**
-     * 사용자정보 수정시 히스토리 정보를 추가
-     * @param userManageVO 업무사용자 히스토리 정보
-     * @return String 히스토리 등록결과
-     */
-    public void insertUserHistory(UserManageVO userManageVO){
-    	insert("userManageDAO.insertUserHistory_S", userManageVO);
-    }
+	public void insertUserHistory(UserManageVO userManageVO) {
+		userManageMapper.insertUserHistory_S(userManageVO);
+	}
 
-    /**
-     * 업무사용자 암호수정
-     * @param passVO 업무사용자수정정보(비밀번호)
-     */
-    public void updatePassword(UserManageVO passVO) {
-        update("userManageDAO.updatePassword_S", passVO);
-    }
+	public void updatePassword(UserManageVO passVO) {
+		userManageMapper.updatePassword_S(passVO);
+	}
 
-    /**
-     * 업무사용자가 비밀번호를 기억하지 못할 때 비밀번호를 찾을 수 있도록 함
-     * @param userManageVO 업무 사용자암호 조회조건정보
-     * @return UserManageVO 업무사용자 암호정보
-     */
-    public UserManageVO selectPassword(UserManageVO userManageVO){
-    	return (UserManageVO) selectOne("userManageDAO.selectPassword_S", userManageVO);
-    }
+	public UserManageVO selectPassword(UserManageVO userManageVO) {
+		return userManageMapper.selectPassword_S(userManageVO);
+	}
 
 }

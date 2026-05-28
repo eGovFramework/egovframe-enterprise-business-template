@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="loginDAO">
+<mapper namespace="egovframework.let.uat.uia.service.impl.LoginMapper">
 
 
 	<!-- 로그인 처리를 위한 resultMap -->
@@ -27,7 +27,7 @@
 	</resultMap>
 	
 	<!-- 일반 로그인 -->
-	<select id="loginDAO.actionLogin" resultMap="login">
+	<select id="actionLogin" resultMap="login">
 		<!-- 일반회원 -->
 		<if test="userSe == &quot;GNR&quot;">
 			
@@ -82,7 +82,7 @@
 	</select>
 	
 	<!-- 인증서 로그인 -->
-	<select id="loginDAO.actionCrtfctLogin" resultMap="login">
+	<select id="actionCrtfctLogin" resultMap="login">
 		
 		SELECT emplyr_id AS id
 		     , USER_NM AS name
@@ -98,7 +98,7 @@
 	</select>
 	
 	<!-- 아이디 찾기 -->
-	<select id="loginDAO.searchId" resultMap="id">
+	<select id="searchId" resultMap="id">
 		<!-- 일반회원 -->
 		<if test="userSe == &quot;GNR&quot;">
 			
@@ -132,7 +132,7 @@
 	</select>
 	
 	<!-- 비밀번호 찾기 -->
-	<select id="loginDAO.searchPassword" resultMap="password">
+	<select id="searchPassword" resultMap="password">
 		<!-- 일반회원 -->
 		<if test="userSe == &quot;GNR&quot;">
 			
@@ -175,7 +175,7 @@
 	</select>
 	
 	<!-- 변경된 비밀번호를 저장 -->
-	<update id="loginDAO.updatePassword">
+	<update id="updatePassword">
 		<!-- 일반회원 -->
 		<if test="userSe == &quot;GNR&quot;">
 			

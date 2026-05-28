@@ -2,10 +2,10 @@ package egovframework.let.sym.log.clg.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.log.clg.service.LoginLog;
+import jakarta.annotation.Resource;
 
 /**
  * 시스템 로그 관리를 위한 데이터 접근 클래스
@@ -26,51 +26,25 @@ import egovframework.let.sym.log.clg.service.LoginLog;
  * </pre>
  */
 @Repository("loginLogDAO")
-public class LoginLogDAO extends EgovAbstractMapper {
+public class LoginLogDAO {
 
-	/**
-	 * 접속로그를 기록한다.
-	 *
-	 * @param LoginLog
-	 * @return
-	 * @throws Exception
-	 */
-	public void logInsertLoginLog(LoginLog loginLog) throws Exception{
-		insert("LoginLogDAO.logInsertLoginLog", loginLog);
+	@Resource(name = "loginLogMapper")
+	private LoginLogMapper loginLogMapper;
+
+	public void logInsertLoginLog(LoginLog loginLog) throws Exception {
+		loginLogMapper.logInsertLoginLog(loginLog);
 	}
 
-	/**
-	 * 접속로그를 조회한다.
-	 *
-	 * @param loginLog
-	 * @return loginLog
-	 * @throws Exception
-	 */
-	public LoginLog selectLoginLog(LoginLog loginLog) throws Exception{
-
-		return (LoginLog) selectOne("LoginLogDAO.selectLoginLog", loginLog);
+	public LoginLog selectLoginLog(LoginLog loginLog) throws Exception {
+		return loginLogMapper.selectLoginLog(loginLog);
 	}
 
-	/**
-	 * 접속로그를 목록을 조회한다.
-	 *
-	 * @param loginLog
-	 * @return
-	 * @throws Exception
-	 */
-	public List<?> selectLoginLogInf(LoginLog loginLog) throws Exception{
-		return selectList("LoginLogDAO.selectLoginLogInf", loginLog);
+	public List<?> selectLoginLogInf(LoginLog loginLog) throws Exception {
+		return loginLogMapper.selectLoginLogInf(loginLog);
 	}
 
-	/**
-	 * 접속로그 목록의 숫자를 조회한다.
-	 * @param loginLog
-	 * @return
-	 * @throws Exception
-	 */
-	public int selectLoginLogInfCnt(LoginLog loginLog) throws Exception{
-
-		return (Integer)selectOne("LoginLogDAO.selectLoginLogInfCnt", loginLog);
+	public int selectLoginLogInfCnt(LoginLog loginLog) throws Exception {
+		return loginLogMapper.selectLoginLogInfCnt(loginLog);
 	}
 
 }

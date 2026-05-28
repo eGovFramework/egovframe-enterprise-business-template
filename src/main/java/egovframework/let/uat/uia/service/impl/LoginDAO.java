@@ -1,8 +1,10 @@
 package egovframework.let.uat.uia.service.impl;
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.com.cmm.LoginVO;
+import jakarta.annotation.Resource;
+
 /**
  * 일반 로그인을 처리하는 DAO 클래스
  * @author 공통서비스 개발팀 박지욱
@@ -21,46 +23,25 @@ import egovframework.com.cmm.LoginVO;
  *  </pre>
  */
 @Repository("loginDAO")
-public class LoginDAO extends EgovAbstractMapper {
+public class LoginDAO {
 
-	/**
-	 * 일반 로그인을 처리한다
-	 * @param vo LoginVO
-	 * @return LoginVO
-	 * @exception Exception
-	 */
-    public LoginVO actionLogin(LoginVO vo) throws Exception {
-    	return (LoginVO)selectOne("loginDAO.actionLogin", vo);
-    }
+	@Resource(name = "loginMapper")
+	private LoginMapper loginMapper;
 
-    /**
-	 * 아이디를 찾는다.
-	 * @param vo LoginVO
-	 * @return LoginVO
-	 * @exception Exception
-	 */
-    public LoginVO searchId(LoginVO vo) throws Exception {
+	public LoginVO actionLogin(LoginVO vo) throws Exception {
+		return loginMapper.actionLogin(vo);
+	}
 
-    	return (LoginVO)selectOne("loginDAO.searchId", vo);
-    }
+	public LoginVO searchId(LoginVO vo) throws Exception {
+		return loginMapper.searchId(vo);
+	}
 
-    /**
-	 * 비밀번호를 찾는다.
-	 * @param vo LoginVO
-	 * @return LoginVO
-	 * @exception Exception
-	 */
-    public LoginVO searchPassword(LoginVO vo) throws Exception {
+	public LoginVO searchPassword(LoginVO vo) throws Exception {
+		return loginMapper.searchPassword(vo);
+	}
 
-    	return (LoginVO)selectOne("loginDAO.searchPassword", vo);
-    }
+	public void updatePassword(LoginVO vo) throws Exception {
+		loginMapper.updatePassword(vo);
+	}
 
-    /**
-	 * 변경된 비밀번호를 저장한다.
-	 * @param vo LoginVO
-	 * @exception Exception
-	 */
-    public void updatePassword(LoginVO vo) throws Exception {
-    	update("loginDAO.updatePassword", vo);
-    }
 }

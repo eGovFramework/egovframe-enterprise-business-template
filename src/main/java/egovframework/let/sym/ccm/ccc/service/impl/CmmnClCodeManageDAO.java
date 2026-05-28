@@ -2,11 +2,11 @@ package egovframework.let.sym.ccm.ccc.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
+import jakarta.annotation.Resource;
 
 /**
  *
@@ -27,63 +27,33 @@ import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
  * </pre>
  */
 @Repository("CmmnClCodeManageDAO")
-public class CmmnClCodeManageDAO extends EgovAbstractMapper {
+public class CmmnClCodeManageDAO {
 
-	/**
-	 * 공통분류코드를 삭제한다.
-	 * @param cmmnClCode
-	 * @throws Exception
-	 */
+	@Resource(name = "cmmnClCodeManageMapper")
+	private CmmnClCodeManageMapper cmmnClCodeManageMapper;
+
 	public void deleteCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-		delete("CmmnClCodeManageDAO.deleteCmmnClCode", cmmnClCode);
+		cmmnClCodeManageMapper.deleteCmmnClCode(cmmnClCode);
 	}
 
-
-	/**
-	 * 공통분류코드를 등록한다.
-	 * @param cmmnClCode
-	 * @throws Exception
-	 */
 	public void insertCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-        insert("CmmnClCodeManageDAO.insertCmmnClCode", cmmnClCode);
+		cmmnClCodeManageMapper.insertCmmnClCode(cmmnClCode);
 	}
 
-	/**
-	 * 공통분류코드 상세항목을 조회한다.
-	 * @param cmmnClCode
-	 * @return CmmnClCode(공통분류코드)
-	 */
 	public CmmnClCode selectCmmnClCodeDetail(CmmnClCode cmmnClCode) {
-		return (CmmnClCode)selectOne("CmmnClCodeManageDAO.selectCmmnClCodeDetail", cmmnClCode);
+		return cmmnClCodeManageMapper.selectCmmnClCodeDetail(cmmnClCode);
 	}
 
-
-    /**
-	 * 공통분류코드 목록을 조회한다.
-     * @param searchVO
-     * @return List(공통분류코드 목록)
-     * @throws Exception
-     */
 	public List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO) throws Exception {
-        return selectList("CmmnClCodeManageDAO.selectCmmnClCodeList", searchVO);
-    }
+		return cmmnClCodeManageMapper.selectCmmnClCodeList(searchVO);
+	}
 
-    /**
-	 * 공통분류코드 총 갯수를 조회한다.
-     * @param searchVO
-     * @return int(공통분류코드 총 갯수)
-     */
-    public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) throws Exception {
-        return (Integer)selectOne("CmmnClCodeManageDAO.selectCmmnClCodeListTotCnt", searchVO);
-    }
+	public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) throws Exception {
+		return cmmnClCodeManageMapper.selectCmmnClCodeListTotCnt(searchVO);
+	}
 
-	/**
-	 * 공통분류코드를 수정한다.
-	 * @param cmmnClCode
-	 * @throws Exception
-	 */
 	public void updateCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
-		update("CmmnClCodeManageDAO.updateCmmnClCode", cmmnClCode);
+		cmmnClCodeManageMapper.updateCmmnClCode(cmmnClCode);
 	}
 
 }

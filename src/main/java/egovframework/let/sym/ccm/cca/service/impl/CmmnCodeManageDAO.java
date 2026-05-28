@@ -2,11 +2,11 @@ package egovframework.let.sym.ccm.cca.service.impl;
 
 import java.util.List;
 
-import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
 import org.springframework.stereotype.Repository;
 
 import egovframework.let.sym.ccm.cca.service.CmmnCode;
 import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
+import jakarta.annotation.Resource;
 
 /**
  *
@@ -27,7 +27,10 @@ import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
  * </pre>
  */
 @Repository("CmmnCodeManageDAO")
-public class CmmnCodeManageDAO extends EgovAbstractMapper {
+public class CmmnCodeManageDAO {
+
+	@Resource(name = "cmmnCodeManageMapper")
+	private CmmnCodeManageMapper cmmnCodeManageMapper;
 
 	/**
 	 * 공통코드를 삭제한다.
@@ -35,9 +38,8 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public void deleteCmmnCode(CmmnCode cmmnCode) throws Exception {
-		delete("CmmnCodeManageDAO.deleteCmmnCode", cmmnCode);
+		cmmnCodeManageMapper.deleteCmmnCode(cmmnCode);
 	}
-
 
 	/**
 	 * 공통코드를 등록한다.
@@ -45,37 +47,38 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public void insertCmmnCode(CmmnCode cmmnCode) throws Exception {
-        insert("CmmnCodeManageDAO.insertCmmnCode", cmmnCode);
+		cmmnCodeManageMapper.insertCmmnCode(cmmnCode);
 	}
 
 	/**
 	 * 공통코드 상세항목을 조회한다.
 	 * @param cmmnCode
 	 * @return CmmnCode(공통코드)
+	 * @throws Exception
 	 */
 	public CmmnCode selectCmmnCodeDetail(CmmnCode cmmnCode) throws Exception {
-		return (CmmnCode)selectOne("CmmnCodeManageDAO.selectCmmnCodeDetail", cmmnCode);
+		return cmmnCodeManageMapper.selectCmmnCodeDetail(cmmnCode);
 	}
 
-
-    /**
+	/**
 	 * 공통코드 목록을 조회한다.
-     * @param searchVO
-     * @return List(공통코드 목록)
-     * @throws Exception
-     */
+	 * @param searchVO
+	 * @return List(공통코드 목록)
+	 * @throws Exception
+	 */
 	public List<?> selectCmmnCodeList(CmmnCodeVO searchVO) throws Exception {
-        return selectList("CmmnCodeManageDAO.selectCmmnCodeList", searchVO);
-    }
+		return cmmnCodeManageMapper.selectCmmnCodeList(searchVO);
+	}
 
-    /**
+	/**
 	 * 공통코드 총 갯수를 조회한다.
-     * @param searchVO
-     * @return int(공통코드 총 갯수)
-     */
-    public int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO) throws Exception {
-        return (Integer)selectOne("CmmnCodeManageDAO.selectCmmnCodeListTotCnt", searchVO);
-    }
+	 * @param searchVO
+	 * @return int(공통코드 총 갯수)
+	 * @throws Exception
+	 */
+	public int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO) throws Exception {
+		return cmmnCodeManageMapper.selectCmmnCodeListTotCnt(searchVO);
+	}
 
 	/**
 	 * 공통코드를 수정한다.
@@ -83,7 +86,7 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public void updateCmmnCode(CmmnCode cmmnCode) throws Exception {
-		update("CmmnCodeManageDAO.updateCmmnCode", cmmnCode);
+		cmmnCodeManageMapper.updateCmmnCode(cmmnCode);
 	}
 
 }
