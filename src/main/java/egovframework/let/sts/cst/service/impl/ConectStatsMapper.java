@@ -2,13 +2,12 @@ package egovframework.let.sts.cst.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sts.com.StatsVO;
-import jakarta.annotation.Resource;
 
 /**
- * 접속 통계 검색 DAO 클래스
+ * 접속 통계 검색 Mapper 인터페이스
  * @author 공통서비스 개발팀 박지욱
  * @since 2009.03.12
  * @version 1.0
@@ -26,11 +25,8 @@ import jakarta.annotation.Resource;
  *
  *  </pre>
  */
-@Repository("conectStatsDAO")
-public class ConectStatsDAO {
-
-	@Resource(name = "conectStatsMapper")
-	private ConectStatsMapper conectStatsMapper;
+@EgovMapper
+public interface ConectStatsMapper {
 
 	/**
 	 * 접속 통계를 조회한다
@@ -38,7 +34,5 @@ public class ConectStatsDAO {
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<?> selectConectStats(StatsVO vo) throws Exception {
-        return conectStatsMapper.selectConectStats(vo);
-    }
+	List<?> selectConectStats(StatsVO vo) throws Exception;
 }

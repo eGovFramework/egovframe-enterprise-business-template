@@ -2,15 +2,13 @@ package egovframework.let.sym.cal.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.egovframe.rte.psl.dataaccess.mapper.EgovMapper;
 
 import egovframework.let.sym.cal.service.Restde;
 import egovframework.let.sym.cal.service.RestdeVO;
-import jakarta.annotation.Resource;
 
 /**
- *
- * 휴일에 대한 데이터 접근 클래스를 정의한다
+ * 휴일에 대한 데이터 접근 Mapper 인터페이스
  * @author 공통서비스 개발팀 이중호
  * @since 2009.04.01
  * @version 1.0
@@ -27,11 +25,8 @@ import jakarta.annotation.Resource;
  *
  * </pre>
  */
-@Repository("RestdeManageDAO")
-public class RestdeManageDAO {
-
-	@Resource(name = "restdeManageMapper")
-	private RestdeManageMapper restdeManageMapper;
+@EgovMapper
+public interface RestdeManageMapper {
 
 	/**
 	 * 일반달력 팝업 정보를 조회한다.
@@ -39,9 +34,7 @@ public class RestdeManageDAO {
 	 * @return List(일반달력 팝업 날짜정보)
 	 * @throws Exception
 	 */
-	public List<?> selectNormalRestdePopup(Restde restde) throws Exception {
-		return restdeManageMapper.selectNormalRestdePopup(restde);
-	}
+	List<?> selectNormalRestdePopup(Restde restde) throws Exception;
 
 	/**
 	 * 행정달력 팝업 정보를 조회한다.
@@ -49,9 +42,7 @@ public class RestdeManageDAO {
 	 * @return List(행정달력 팝업 날짜정보)
 	 * @throws Exception
 	 */
-	public List<?> selectAdministRestdePopup(Restde restde) throws Exception {
-		return restdeManageMapper.selectAdministRestdePopup(restde);
-	}
+	List<?> selectAdministRestdePopup(Restde restde) throws Exception;
 
 	/**
 	 * 일반달력 일간 정보를 조회한다.
@@ -59,9 +50,7 @@ public class RestdeManageDAO {
 	 * @return List(일반달력 일간 날짜정보)
 	 * @throws Exception
 	 */
-	public List<?> selectNormalDayCal(Restde restde) throws Exception {
-		return restdeManageMapper.selectNormalDayCal(restde);
-	}
+	List<?> selectNormalDayCal(Restde restde) throws Exception;
 
 	/**
 	 * 일반달력 일간 휴일을 조회한다.
@@ -69,9 +58,7 @@ public class RestdeManageDAO {
 	 * @return List(일반달력 일간 휴일정보)
 	 * @throws Exception
 	 */
-	public List<?> selectNormalDayRestde(Restde restde) throws Exception {
-		return restdeManageMapper.selectNormalDayRestde(restde);
-	}
+	List<?> selectNormalDayRestde(Restde restde) throws Exception;
 
 	/**
 	 * 일반달력 월간 휴일을 조회한다.
@@ -79,9 +66,7 @@ public class RestdeManageDAO {
 	 * @return List(일반달력 월간 휴일정보)
 	 * @throws Exception
 	 */
-	public List<?> selectNormalMonthRestde(Restde restde) throws Exception {
-		return restdeManageMapper.selectNormalMonthRestde(restde);
-	}
+	List<?> selectNormalMonthRestde(Restde restde) throws Exception;
 
 	/**
 	 * 행정달력 일간 정보를 조회한다.
@@ -89,9 +74,7 @@ public class RestdeManageDAO {
 	 * @return List(행정달력 일간 날짜정보)
 	 * @throws Exception
 	 */
-	public List<?> selectAdministDayCal(Restde restde) throws Exception {
-		return restdeManageMapper.selectAdministDayCal(restde);
-	}
+	List<?> selectAdministDayCal(Restde restde) throws Exception;
 
 	/**
 	 * 행정달력 일간 휴일을 조회한다.
@@ -99,9 +82,7 @@ public class RestdeManageDAO {
 	 * @return List(행정달력 일간 휴일정보)
 	 * @throws Exception
 	 */
-	public List<?> selectAdministDayRestde(Restde restde) throws Exception {
-		return restdeManageMapper.selectAdministDayRestde(restde);
-	}
+	List<?> selectAdministDayRestde(Restde restde) throws Exception;
 
 	/**
 	 * 행정달력 월간 휴일을 조회한다.
@@ -109,27 +90,21 @@ public class RestdeManageDAO {
 	 * @return List(행정달력 월간 휴일정보)
 	 * @throws Exception
 	 */
-	public List<?> selectAdministMonthRestde(Restde restde) throws Exception {
-		return restdeManageMapper.selectAdministMonthRestde(restde);
-	}
+	List<?> selectAdministMonthRestde(Restde restde) throws Exception;
 
 	/**
 	 * 휴일을 삭제한다.
 	 * @param restde
 	 * @throws Exception
 	 */
-	public void deleteRestde(Restde restde) throws Exception {
-		restdeManageMapper.deleteRestde(restde);
-	}
+	void deleteRestde(Restde restde) throws Exception;
 
 	/**
 	 * 휴일을 등록한다.
 	 * @param restde
 	 * @throws Exception
 	 */
-	public void insertRestde(Restde restde) throws Exception {
-		restdeManageMapper.insertRestde(restde);
-	}
+	void insertRestde(Restde restde) throws Exception;
 
 	/**
 	 * 휴일 상세항목을 조회한다.
@@ -137,9 +112,7 @@ public class RestdeManageDAO {
 	 * @return Restde(휴일)
 	 * @throws Exception
 	 */
-	public Restde selectRestdeDetail(Restde restde) throws Exception {
-		return restdeManageMapper.selectRestdeDetail(restde);
-	}
+	Restde selectRestdeDetail(Restde restde) throws Exception;
 
 	/**
 	 * 휴일 목록을 조회한다.
@@ -147,9 +120,7 @@ public class RestdeManageDAO {
 	 * @return List(휴일 목록)
 	 * @throws Exception
 	 */
-	public List<?> selectRestdeList(RestdeVO searchVO) throws Exception {
-		return restdeManageMapper.selectRestdeList(searchVO);
-	}
+	List<?> selectRestdeList(RestdeVO searchVO) throws Exception;
 
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -157,17 +128,12 @@ public class RestdeManageDAO {
 	 * @return int(휴일 총 갯수)
 	 * @throws Exception
 	 */
-	public int selectRestdeListTotCnt(RestdeVO searchVO) throws Exception {
-		return restdeManageMapper.selectRestdeListTotCnt(searchVO);
-	}
+	int selectRestdeListTotCnt(RestdeVO searchVO) throws Exception;
 
 	/**
 	 * 휴일을 수정한다.
 	 * @param restde
 	 * @throws Exception
 	 */
-	public void updateRestde(Restde restde) throws Exception {
-		restdeManageMapper.updateRestde(restde);
-	}
-
+	void updateRestde(Restde restde) throws Exception;
 }
