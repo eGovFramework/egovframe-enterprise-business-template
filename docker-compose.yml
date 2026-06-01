@@ -5,10 +5,6 @@ services:
     container_name: egov-ebt
     ports:
       - "8080:8080"
-    environment:
-      - Globals.Url=jdbc:log4jdbc:mysql://mysql-db:3306/${MYSQL_DATABASE:-ebt}?useSSL=false
-      - Globals.UserName=${MYSQL_USER:-root}
-      - Globals.Password=${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD must be set in .env}
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -28,10 +24,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD must be set in .env}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-ebt}
+      MYSQL_USER: ${MYSQL_USER:-ebt}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ebt01}
       MYSQL_CHARSET: utf8mb4
       MYSQL_COLLATION: utf8mb4_unicode_ci
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./DATABASE/mysql/all_ebt_ddl_mysql.sql:/docker-entrypoint-initdb.d/01_ddl.sql:ro
+      - ./DATABASE/mysql/all_ebt_data_mysql.sql:/docker-entrypoint-initdb.d/02_data.sql:ro
     healthcheck:
       test: [ "CMD-SHELL", "mysql --protocol=TCP -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD -e 'SELECT 1' || exit 1" ]
       interval: 1s
