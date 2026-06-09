@@ -1,6 +1,10 @@
 package egovframework.let.uat.uap.service;
 
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 로그인정책에 대한 VO 클래스를 정의한다.
  * 로그인정책정보의 목록 항목을 관리한다.
@@ -11,14 +15,16 @@ import java.util.List;
  *
  * <pre>
  * << 개정이력(Modification Information) >>
- *   
+ *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.08.03  lee.m.j        최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
+ *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
  * </pre>
  */
+@Getter
+@Setter
 public class LoginPolicyVO extends LoginPolicy {
 
 	/**
@@ -32,32 +38,6 @@ public class LoginPolicyVO extends LoginPolicy {
 	/**
 	 * 삭제 여부
 	 */
-	String [] delYn;
-	
-	/**
-	 * @return the loginPolicyList
-	 */
-	public List<LoginPolicyVO> getLoginPolicyList() {
-		return loginPolicyList;
-	}
-	/**
-	 * @param loginPolicyList the loginPolicyList to set
-	 */
-	public void setLoginPolicyList(List<LoginPolicyVO> loginPolicyList) {
-		this.loginPolicyList = loginPolicyList;
-	}
-	/**
-	 * @return the delYn
-	 */
-	public String[] getDelYn() {
-		return delYn;
-	}
-	/**
-	 * @param delYn the delYn to set
-	 */
-	public void setDelYn(String[] delYn) {
-		this.delYn = delYn;
-	}
-	
-	
+	String[] delYn;
+
 }
