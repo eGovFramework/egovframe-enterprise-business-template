@@ -94,7 +94,7 @@ function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
 
-<c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
+<c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
 //-->
 </script>
 </head>

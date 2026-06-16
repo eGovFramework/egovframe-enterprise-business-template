@@ -236,11 +236,11 @@ function fn_egov_init_date(){
                                 <div class="condition2">
                                 	
                                 	<input type="hidden" name="cal_url" value="<c:url value='/sym/cmm/EgovNormalCalPopup.do'/>" />
-				                    <input type="hidden" name="fromDate" value="${statsInfo.fromDate}" size="10"/>
-				                    <input type="hidden" name="toDate" value="${statsInfo.toDate}" size="10"/>
+				                    <input type="hidden" name="fromDate" value="<c:out value="${statsInfo.fromDate}"/>" size="10"/>
+				                    <input type="hidden" name="toDate" value="<c:out value="${statsInfo.toDate}"/>" size="10"/>
                                 	
-                                	<input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="${searchVO.searchBgnDe}" title="시작일자입력" />&nbsp ~ &nbsp
-                                    <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="${searchVO.searchEndDe}" title="종료일자입력" >
+                                	<input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="<c:out value="${searchVO.searchBgnDe}"/>" title="시작일자입력" />&nbsp ~ &nbsp
+                                    <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="<c:out value="${searchVO.searchEndDe}"/>" title="종료일자입력" >
                                     
                                     <label class="f_select ml20" for="PD">
                                         <select id="PD" name="PD" class="select" onchange="fnChangePdKind();" title="기간구분 선택">
@@ -297,14 +297,14 @@ function fn_egov_init_date(){
 	                                        	
 	                                        	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
 	                                        		<tr>
-	                                        			<td>${resultInfo.statsDate}</td>
-	                                        			<td>${resultInfo.conectMethod}</td>
-	                                        			<td>${resultInfo.creatCo}</td>
-	                                        			<td>${resultInfo.updtCo}</td>
-	                                        			<td>${resultInfo.inqireCo}</td>
-	                                        			<td>${resultInfo.deleteCo}</td>
-	                                        			<td>${resultInfo.outptCo}</td>
-	                                        			<td>${resultInfo.errorCo}</td>
+	                                        			<td><c:out value="${resultInfo.statsDate}"/></td>
+	                                        			<td><c:out value="${resultInfo.conectMethod}"/></td>
+	                                        			<td><c:out value="${resultInfo.creatCo}"/></td>
+	                                        			<td><c:out value="${resultInfo.updtCo}"/></td>
+	                                        			<td><c:out value="${resultInfo.inqireCo}"/></td>
+	                                        			<td><c:out value="${resultInfo.deleteCo}"/></td>
+	                                        			<td><c:out value="${resultInfo.outptCo}"/></td>
+	                                        			<td><c:out value="${resultInfo.errorCo}"/></td>
 	                                        		</tr>
 	                                        	</c:forEach>
 	                                        </tbody>
@@ -321,13 +321,13 @@ function fn_egov_init_date(){
 	                                    	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
 		                                        <thead>
 		                                            <tr>
-		                                                <th scope="col">${resultInfo.statsDate}</th>
+		                                                <th scope="col"><c:out value="${resultInfo.statsDate}"/></th>
 		                                            </tr>
 		                                        </thead>
 		                                        <tbody>
 	                                        		<tr>
 	                                        			<td>
-	                                        				<img src="<c:url value='/images_old/left_bg.gif'/>" width="<c:out value='${resultInfo.statsCo * statsInfo.maxUnit}'/>" height="10" align="left" alt=""/>&nbsp;(${resultInfo.statsCo}&nbsp;회)
+	                                        				<img src="<c:url value='/images_old/left_bg.gif'/>" width="<c:out value="${resultInfo.statsCo * statsInfo.maxUnit}"/>" height="10" align="left" alt=""/>&nbsp;(<c:out value="${resultInfo.statsCo}"/>&nbsp;회)
 	                                        			</td>
 	                                        		</tr>
 		                                        </tbody>
@@ -340,8 +340,8 @@ function fn_egov_init_date(){
 	                                    <table summary="">
 	                                    	<c:forEach items="${conectStats}" var="resultInfo" varStatus="status">
                                         		<tr>
-                                        			<td>${resultInfo.statsDate}</td>
-                                        			<td>${resultInfo.statsCo}&nbsp;회</td>
+                                        			<td><c:out value="${resultInfo.statsDate}"/></td>
+                                        			<td><c:out value="${resultInfo.statsCo}"/>&nbsp;회</td>
                                         		</tr>
 		                                    </c:forEach>
 	                                    </table>

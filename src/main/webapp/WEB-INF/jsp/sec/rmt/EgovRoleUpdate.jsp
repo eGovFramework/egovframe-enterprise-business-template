@@ -120,7 +120,7 @@ function fncRoleDelete() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="roleManage" method="post" action="${pageContext.request.contextPath}/sec/rmt/EgovRoleUpdate.do">
+				<form:form modelAttribute="roleManage" method="post" action="<c:url value='/sec/rmt/EgovRoleUpdate.do'/>">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

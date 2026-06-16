@@ -1,11 +1,11 @@
 package egovframework.let.uat.uap.service;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 import org.egovframe.rte.ptl.reactive.validation.EgovIPCheck;
-import jakarta.validation.constraints.Size;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
 
 import egovframework.com.cmm.ComDefaultVO;
+import jakarta.validation.constraints.Size;
 /**
  * 로그인정책에 대한 model 클래스를 정의한다.
  * 로그인정책정보의 사용자ID, IP정보, 중복허용여부, 제한여부 항목을 관리한다.

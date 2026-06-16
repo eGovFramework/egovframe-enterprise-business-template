@@ -87,17 +87,17 @@ function fnUpdate(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="passwordChgVO" method="post" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserPasswordUpdt.do" >
-								<!-- onsubmit="return FormValidation(document.passwordChgVO);" > -->
-								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
-								<input name="checkedIdForDel" type="hidden" />
-								<!-- 검색조건 유지 -->
-								<input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
-								<input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
-								<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
-								<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
-								<!-- 우편번호검색 -->
-								<input type="hidden" name="url" value="<c:url value='/sym/ccm/zip/EgovCcmZipSearchPopup.do'/>" />
+				<form name="passwordChgVO" method="post" action="<c:url value='/uss/umt/user/EgovUserPasswordUpdt.do'/>" >
+				<!-- onsubmit="return FormValidation(document.passwordChgVO);" > -->
+				<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
+				<input name="checkedIdForDel" type="hidden" />
+				<!-- 검색조건 유지 -->
+				<input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
+				<input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
+				<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
+				<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
+				<!-- 우편번호검색 -->
+				<input type="hidden" name="url" value="<c:url value='/sym/ccm/zip/EgovCcmZipSearchPopup.do'/>" />
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

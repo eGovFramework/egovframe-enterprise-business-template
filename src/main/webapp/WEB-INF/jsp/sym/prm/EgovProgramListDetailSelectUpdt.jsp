@@ -70,9 +70,9 @@ function deleteProgramListManage(form) {
  ******************************************************** */
  function selectList(){
 	    event.preventDefault();
-	    location.href = "<c:out value="${pageContext.request.contextPath}"/>/sym/prm/EgovProgramListManageSelect.do?searchCondition=<c:out value="${searchVO.searchCondition}" />&searchKeyword=<c:out value="${param.searchKeyword}" />&pageIndex=<c:out value="${searchVO.pageIndex}" />";
+	    location.href = "<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>?searchCondition=<c:out value='${searchVO.searchCondition}'/>&searchKeyword=<c:out value='${param.searchKeyword}'/>&pageIndex=<c:out value='${searchVO.pageIndex}'/>";
 	}
-<c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
+<c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
 -->
 </script>
 </head>

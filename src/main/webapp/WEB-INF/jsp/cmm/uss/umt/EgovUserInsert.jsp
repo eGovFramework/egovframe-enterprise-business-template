@@ -184,9 +184,9 @@ function fn_egov_modal_remove() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="userManageVO" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserInsert.do" name="userManageVO" method="post" >
-								<!-- 우편번호검색 -->
-								<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
+				<form:form modelAttribute="userManageVO" action="<c:url value='/uss/umt/user/EgovUserInsert.do'/>" name="userManageVO" method="post" >
+				<!-- 우편번호검색 -->
+				<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

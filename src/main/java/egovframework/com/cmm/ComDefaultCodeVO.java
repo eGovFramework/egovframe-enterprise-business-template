@@ -2,10 +2,10 @@ package egovframework.com.cmm;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *  클래스

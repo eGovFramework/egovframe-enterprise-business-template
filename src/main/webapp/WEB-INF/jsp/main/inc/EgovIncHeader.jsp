@@ -53,21 +53,21 @@ function fn_egov_modal_remove() {
         </div>
 
 <%
-    LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO");
-    if(loginVO == null){
+    LoginVO headerLoginVO = (LoginVO) session.getAttribute("loginVO");
+    if (headerLoginVO == null) {
 %>
 			<div class="top_menu">
 	            <span class="t"><span>로그인정보 없음</span> &nbsp</span>
 	            <span class="d">로그인후 사용하십시오</span>
 	            <a href="<c:url value='/uat/uia/egovLoginUsr.do'/>" class="btn btn_blue_15 w_90">로그인</a>
 	        </div>
-<% }else{ %>
-		<c:set var="loginName" value="<%= loginVO.getName()%>"/>
-	    <div class="top_menu">
+<% } else { %>
+		<c:set var="loginName" value="<%= headerLoginVO.getName() %>"/>
+			<div class="top_menu">
 	            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;"><c:out value="${loginName}" /> 님</span>의 최종접속정보는 </span>
 	            <span class="d">2021-06-30 12:45 입니다.</span>
 	            <a href="<c:url value='/uat/uia/actionLogout.do'/>" class="btn btn_blue_15 w_90">로그아웃</a>
-        </div>
+	        </div>
 <% } %>
 
 
@@ -86,21 +86,22 @@ function fn_egov_modal_remove() {
         <!-- gnb -->
 
         <!-- util menu -->
-		<%
-			if(loginVO == null){
-		%>
+		<c:choose>
+		<c:when test="${empty headerLoginVO}">
         <div class="util_menu">
             <ul>
 	                <li></li>
 	            </ul>
 	        </div>
-		<% } else { %>
+		</c:when>
+		<c:otherwise>
 			<div class="util_menu">
 	            <ul>
 	                <li><a href="" class="allmenu" title="전체메뉴">전체메뉴</a></li>
             </ul>
         </div>
-        <% } %>
+        </c:otherwise>
+        </c:choose>
         <!--// util menu -->
         
     </div>
@@ -108,15 +109,14 @@ function fn_egov_modal_remove() {
 <!--// Header -->
 
 <!-- 전체메뉴 팝업 -->
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div class="all_menu" id="">
     <div>
         <div class="inner">
             <div>
                 <h2>알림정보</h2>
                 <ul>
-                    <li><a href="${ctx}/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항</a></li>
-                    <li><a href="${ctx}/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC">업무게시판</a></li>
+                    <li><a href="<c:url value='/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA'/>">공지사항</a></li>
+                    <li><a href="<c:url value='/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC'/>">업무게시판</a></li>
                 </ul>
             </div>
 
@@ -149,17 +149,17 @@ function fn_egov_modal_remove() {
                 <h2>내무서비스관리</h2>
                 <h3>내부업무게시판관리</h3>
                 <ul>
-                    <li><a href="${ctx}/cop/bbs/SelectBBSMasterInfs.do">게시판생성관리</a></li>
-                    <li><a href="${ctx}/cop/com/selectBBSUseInfs.do">게시판사용관리</a></li>
-                    <li><a href="${ctx}/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">공지사항관리</a></li>
-                    <li><a href="${ctx}/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC">업무게시판관리</a></li>
+                    <li><a href="<c:url value='/cop/bbs/SelectBBSMasterInfs.do'/>">게시판생성관리</a></li>
+                    <li><a href="<c:url value='/cop/com/selectBBSUseInfs.do'/>">게시판사용관리</a></li>
+                    <li><a href="<c:url value='/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA'/>">공지사항관리</a></li>
+                    <li><a href="<c:url value='/cop/bbs/admin/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC'/>">업무게시판관리</a></li>
                 </ul>
                 
                 <h3>사용현황관리</h3>
                 <ul>
-                    <li><a href="${ctx}/sym/log/clg/SelectLoginLogList.do">접속로그관리</a></li>
-                    <li><a href="${ctx}/sts/cst/selectConectStats.do">접속통계관리</a></li>
-                    <li><a href="${ctx}/uat/uap/selectLoginPolicyList.do">로그인정책관리</a></li>
+                    <li><a href="<c:url value='/sym/log/clg/SelectLoginLogList.do'/>">접속로그관리</a></li>
+                    <li><a href="<c:url value='/sts/cst/selectConectStats.do'/>">접속통계관리</a></li>
+                    <li><a href="<c:url value='/uat/uap/selectLoginPolicyList.do'/>">로그인정책관리</a></li>
                 </ul>
             </div>
 
@@ -167,31 +167,31 @@ function fn_egov_modal_remove() {
                 <h2>내부시스템관리</h2>
                 <h3>사용자관리</h3>
                 <ul>
-                    <li><a href="${ctx}/uss/umt/user/EgovUserManage.do">사용자등록관리</a></li>
-                    <li><a href="${ctx}/uss/ion/uas/selectUserAbsnceListView.do">사용자부재관리</a></li>
+                    <li><a href="<c:url value='/uss/umt/user/EgovUserManage.do'/>">사용자등록관리</a></li>
+                    <li><a href="<c:url value='/uss/ion/uas/selectUserAbsnceListView.do'/>">사용자부재관리</a></li>
                 </ul>
 
                 <h3>사용자권한관리</h3>
                 <ul>
-                    <li><a href="${ctx}/sec/ram/EgovAuthorList.do">권한관리</a></li>
-                    <li><a href="${ctx}/sec/gmt/EgovGroupList.do">사용자그룹관리</a></li>
-                    <li><a href="${ctx}/sec/rgm/EgovAuthorGroupListView.do">사용자별권한관리</a></li>
-                    <li><a href="${ctx}/sec/rmt/EgovRoleList.do">롤관리</a></li>
+                    <li><a href="<c:url value='/sec/ram/EgovAuthorList.do'/>">권한관리</a></li>
+                    <li><a href="<c:url value='/sec/gmt/EgovGroupList.do'/>">사용자그룹관리</a></li>
+                    <li><a href="<c:url value='/sec/rgm/EgovAuthorGroupListView.do'/>">사용자별권한관리</a></li>
+                    <li><a href="<c:url value='/sec/rmt/EgovRoleList.do'/>">롤관리</a></li>
                 </ul>
 
                 <h3>메뉴관리</h3>
                 <ul>
-                    <li><a href="${ctx}/sym/prm/EgovProgramListManageSelect.do">프로그램목록관리</a></li>
-                    <li><a href="${ctx}/sym/mnu/mcm/EgovMenuCreatManageSelect.do">메뉴생성관리</a></li>
-                    <li><a href="${ctx}/sym/mnu/mpm/EgovMenuManageSelect.do">메뉴목록관리</a></li>
+                    <li><a href="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>">프로그램목록관리</a></li>
+                    <li><a href="<c:url value='/sym/mnu/mcm/EgovMenuCreatManageSelect.do'/>">메뉴생성관리</a></li>
+                    <li><a href="<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>">메뉴목록관리</a></li>
                 </ul>
 
                 <h3>코드관리</h3>
                 <ul>
-                    <li><a href="${ctx}/sym/ccm/ccc/EgovCcmCmmnClCodeList.do">분류코드관리</a></li>
-                    <li><a href="${ctx}/sym/ccm/cca/EgovCcmCmmnCodeList.do">공통코드관리</a></li>
-                    <li><a href="${ctx}/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do">상세코드관리</a></li>
-                    <li><a href="${ctx}/sym/ccm/zip/EgovCcmZipList.do">우편번호관리</a></li>
+                    <li><a href="<c:url value='/sym/ccm/ccc/EgovCcmCmmnClCodeList.do'/>">분류코드관리</a></li>
+                    <li><a href="<c:url value='/sym/ccm/cca/EgovCcmCmmnCodeList.do'/>">공통코드관리</a></li>
+                    <li><a href="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do'/>">상세코드관리</a></li>
+                    <li><a href="<c:url value='/sym/ccm/zip/EgovCcmZipList.do'/>">우편번호관리</a></li>
                 </ul>
             </div>
         </div>

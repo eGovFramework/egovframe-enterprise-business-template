@@ -1,10 +1,11 @@
 package egovframework.let.uss.umt.service;
 
+import org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck;
+import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
+
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.egovframe.rte.ptl.reactive.validation.EgovNullCheck;
-import org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck;
-import jakarta.validation.constraints.Size;
 
 /**
  * 업무사용자VO클래스로서 업무사용자관리 비지니스로직 처리용 항목을 구성한다.

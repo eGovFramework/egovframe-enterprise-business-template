@@ -42,9 +42,7 @@ function actionLogin() {
         alert("비밀번호를 입력하세요");
         return false;
     } else {
-        document.loginForm.action="<c:url value='/uat/uia/actionSecurityLogin.do'/>";
-        //document.loginForm.j_username.value = document.loginForm.userSe.value + document.loginForm.username.value;
-        //document.loginForm.action="<c:url value='/j_spring_security_check'/>";
+        document.loginForm.action="<c:url value='/uat/uia/actionLogin.do'/>";
         document.loginForm.submit();
     }
 }
@@ -152,7 +150,6 @@ function fnInit() {
 		                            <input type="hidden" name="userSe" value="USR"/>
 		                            <input name="j_username" type="hidden"/>
 		                            </form:form>
-                                </form>
                             </div>
                         </div>
                     </div>
