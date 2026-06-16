@@ -92,10 +92,10 @@ function fn_egov_modify_CmmnDetailCode(form){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post" action="${pageContext.request.contextPath}/sym/ccm/cde/EgovCcmCmmnDetailCodeModify.do">
+				<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeModify.do'/>">
 
-								<form:hidden path="codeId"/>
-								<form:hidden path="code"/>
+				<form:hidden path="codeId"/>
+				<form:hidden path="code"/>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -113,7 +113,7 @@ function fn_egov_modify_CmmnDetailCode(form){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${cmmnDetailCode.codeIdNm}
+                                            	<c:out value="${cmmnDetailCode.codeIdNm}"/>
                                             </td>
                                         </tr>
                                         <tr>

@@ -50,8 +50,8 @@ function fn_egov_list_Zip(){
 function fn_egov_modify_Zip(){
     var varForm              = document.all["Form"];
     varForm.action           = "<c:url value='/sym/ccm/zip/EgovCcmZipModify.do'/>";
-    varForm.zip.value        = "${result.zip}";
-    varForm.sn.value         = "${result.sn}";
+    varForm.zip.value        = "<c:out value='${result.zip}'/>";
+    varForm.sn.value         = "<c:out value='${result.sn}'/>";
     varForm.submit();
 }
 /* ********************************************************
@@ -61,8 +61,8 @@ function fn_egov_delete_Zip(){
     if (confirm("<spring:message code='common.delete.msg'/>")) {
         var varForm              = document.all["Form"];
         varForm.action           = "<c:url value='/sym/ccm/zip/EgovCcmZipRemove.do'/>";
-        varForm.zip.value        = "${result.zip}";
-        varForm.sn.value         = "${result.sn}";
+        varForm.zip.value        = "<c:out value='${result.zip}'/>";
+        varForm.sn.value         = "<c:out value='${result.sn}'/>";
         varForm.submit();
     }
 }

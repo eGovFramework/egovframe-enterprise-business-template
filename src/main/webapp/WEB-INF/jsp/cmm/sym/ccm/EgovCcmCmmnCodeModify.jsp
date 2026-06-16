@@ -92,10 +92,10 @@ function fn_egov_list_CmmnCode(){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnCode" name="cmmnCode" method="post" action="${pageContext.request.contextPath}/sym/ccm/cca/EgovCcmCmmnCodeModify.do">
+				<form:form modelAttribute="cmmnCode" name="cmmnCode" method="post" action="<c:url value='/sym/ccm/cca/EgovCcmCmmnCodeModify.do'/>">
 
-								<form:hidden path="clCode"/>
-								<form:hidden path="codeId"/>
+				<form:hidden path="clCode"/>
+				<form:hidden path="codeId"/>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -113,7 +113,7 @@ function fn_egov_list_CmmnCode(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${cmmnCode.clCodeNm}
+                                            	<c:out value="${cmmnCode.clCodeNm}"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,7 +122,7 @@ function fn_egov_list_CmmnCode(){
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                            	${cmmnCode.codeId}
+                                            	<c:out value="${cmmnCode.codeId}"/>
                                             </td>
                                         </tr>
                                         <tr>

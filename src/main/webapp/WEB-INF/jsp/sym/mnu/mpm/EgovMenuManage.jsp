@@ -147,7 +147,7 @@ function fMenuManageSelect(){
     document.menuManageForm.action = "<c:url value='/sym/mpm/EgovMenuManageSelect.do'/>";
     document.menuManageForm.submit();
 }
-<c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
+<c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
 -->
 </script>
 

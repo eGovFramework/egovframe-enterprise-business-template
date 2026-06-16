@@ -152,7 +152,7 @@ function ipValidate() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="loginPolicy" method="post" action="${pageContext.request.contextPath}/uat/uap/updtLoginPolicy.do">
+								<form:form modelAttribute="loginPolicy" method="post" action="<c:url value='/uat/uap/updtLoginPolicy.do'/>">
 
                                 <h1 class="tit_1">내부서비스관리</h1>
 

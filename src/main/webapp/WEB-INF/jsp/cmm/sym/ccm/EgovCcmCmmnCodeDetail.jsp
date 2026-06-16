@@ -62,7 +62,7 @@ function fnDelete(){
     if (confirm("<spring:message code='common.delete.msg'/>")) {
         var varForm              = document.all["Form"];
         varForm.action           = "<c:url value='/sym/ccm/cca/EgovCcmCmmnCodeRemove.do'/>";
-        varForm.codeId.value     = "${result.codeId}";
+        varForm.codeId.value     = "<c:out value='${result.codeId}'/>";
         varForm.submit();
     }
 }

@@ -117,7 +117,7 @@ function fncAuthorDelete() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="authorManage" method="post" action="${pageContext.request.contextPath}/sec/ram/EgovAuthorUpdate.do">
+								<form:form modelAttribute="authorManage" method="post" action="<c:url value='/sec/ram/EgovAuthorUpdate.do'/>">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

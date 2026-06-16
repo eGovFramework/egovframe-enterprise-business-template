@@ -100,7 +100,7 @@ function fncUserAbsnceDelete() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="userAbsnce" action="${pageContext.request.contextPath}/uss/ion/uas/addUserAbsnce.do" method="post">
+				<form:form modelAttribute="userAbsnce" action="<c:url value='/uss/ion/uas/addUserAbsnce.do'/>" method="post">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

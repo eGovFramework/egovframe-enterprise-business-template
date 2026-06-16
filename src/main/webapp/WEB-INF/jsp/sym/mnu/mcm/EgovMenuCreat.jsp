@@ -90,7 +90,7 @@ function fn_egov_cancel_popup() {
 	parent.fn_egov_modal_remove();
 }
 
-<c:if test="${!empty param.resultMsg}">alert("${param.resultMsg}");</c:if>
+<c:if test="${!empty param.resultMsg}">alert("<c:out value='${param.resultMsg}'/>");</c:if>
 -->
 </script>
 
