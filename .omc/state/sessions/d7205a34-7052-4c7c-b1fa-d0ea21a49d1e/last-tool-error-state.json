@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cat /tmp/deptree_ent.txt; echo \\\"---\\\"; which mvn mvnw gtimeout 2>&1; echo \\\"---\\\"; ls /Users/m/Documents/IdeaProjects/21.egov/contribution/source/egovframe-enterprise-business-template/mv...",
+  "error": "Exit code 1\n(eval):2: command not found: timeout\n---\n/opt/homebrew/bin/mvn\nmvnw not found\ngtimeout not found\n---\nls: /Users/m/Documents/IdeaProjects/21.egov/contribution/source/egovframe-enterprise-business-template/mvnw: No such file or directory",
+  "timestamp": "2026-06-17T12:33:05.129Z",
+  "retry_count": 1
+}
