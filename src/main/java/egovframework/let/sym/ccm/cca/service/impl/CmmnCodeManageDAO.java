@@ -23,6 +23,7 @@ import egovframework.let.sym.ccm.cca.service.CmmnCodeVO;
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -32,9 +33,8 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통코드를 삭제한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void deleteCmmnCode(CmmnCode cmmnCode) throws Exception {
+	public void deleteCmmnCode(CmmnCode cmmnCode) {
 		delete("CmmnCodeManageDAO.deleteCmmnCode", cmmnCode);
 	}
 
@@ -42,9 +42,8 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통코드를 등록한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void insertCmmnCode(CmmnCode cmmnCode) throws Exception {
+	public void insertCmmnCode(CmmnCode cmmnCode) {
         insert("CmmnCodeManageDAO.insertCmmnCode", cmmnCode);
 	}
 
@@ -53,7 +52,7 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	 * @param cmmnCode
 	 * @return CmmnCode(공통코드)
 	 */
-	public CmmnCode selectCmmnCodeDetail(CmmnCode cmmnCode) throws Exception {
+	public CmmnCode selectCmmnCodeDetail(CmmnCode cmmnCode) {
 		return (CmmnCode)selectOne("CmmnCodeManageDAO.selectCmmnCodeDetail", cmmnCode);
 	}
 
@@ -62,9 +61,8 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
 	 * 공통코드 목록을 조회한다.
      * @param searchVO
      * @return List(공통코드 목록)
-     * @throws Exception
      */
-	public List<?> selectCmmnCodeList(CmmnCodeVO searchVO) throws Exception {
+	public List<?> selectCmmnCodeList(CmmnCodeVO searchVO) {
         return selectList("CmmnCodeManageDAO.selectCmmnCodeList", searchVO);
     }
 
@@ -73,16 +71,15 @@ public class CmmnCodeManageDAO extends EgovAbstractMapper {
      * @param searchVO
      * @return int(공통코드 총 갯수)
      */
-    public int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO) throws Exception {
+    public int selectCmmnCodeListTotCnt(CmmnCodeVO searchVO) {
         return (Integer)selectOne("CmmnCodeManageDAO.selectCmmnCodeListTotCnt", searchVO);
     }
 
 	/**
 	 * 공통코드를 수정한다.
 	 * @param cmmnCode
-	 * @throws Exception
 	 */
-	public void updateCmmnCode(CmmnCode cmmnCode) throws Exception {
+	public void updateCmmnCode(CmmnCode cmmnCode) {
 		update("CmmnCodeManageDAO.updateCmmnCode", cmmnCode);
 	}
 
