@@ -23,6 +23,7 @@ import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
  *  -------    --------    ---------------------------
  *   2009.08.03  lee.m.j        최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행           [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -34,7 +35,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return List - 사용자부재 목록
 	 */
-	public List<UserAbsnceVO> selectUserAbsnceList(UserAbsnceVO userAbsnceVO) throws Exception {
+	public List<UserAbsnceVO> selectUserAbsnceList(UserAbsnceVO userAbsnceVO) {
 		return selectList("userAbsnceDAO.selectUserAbsnceList", userAbsnceVO);
 	}
 
@@ -42,9 +43,8 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * 사용자부재목록 총 갯수를 조회한다.
 	 * @param mainImageVO - 사용자부재 VO
 	 * @return int
-	 * @exception Exception
 	 */
-    public int selectUserAbsnceListTotCnt(UserAbsnceVO userAbsnceVO) throws Exception {
+    public int selectUserAbsnceListTotCnt(UserAbsnceVO userAbsnceVO) {
         return (Integer)selectOne("userAbsnceDAO.selectUserAbsnceListTotCnt", userAbsnceVO);
     }
 
@@ -53,7 +53,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return UserAbsnceVO - 사용자부재 VO
 	 */
-	public UserAbsnceVO selectUserAbsnce(UserAbsnceVO userAbsnceVO) throws Exception {
+	public UserAbsnceVO selectUserAbsnce(UserAbsnceVO userAbsnceVO) {
 		return (UserAbsnceVO) selectOne("userAbsnceDAO.selectUserAbsnce", userAbsnceVO);
 	}
 
@@ -61,7 +61,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * 사용자부재정보를 신규로 등록한다.
 	 * @param userAbsnce - 사용자부재 model
 	 */
-	public void insertUserAbsnce(UserAbsnce userAbsnce) throws Exception {
+	public void insertUserAbsnce(UserAbsnce userAbsnce) {
 		insert("userAbsnceDAO.insertUserAbsnce", userAbsnce);
 	}
 
@@ -69,7 +69,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * 기 등록된 사용자부재정보를 수정한다.
 	 * @param userAbsnce - 사용자부재 model
 	 */
-	public void updateUserAbsnce(UserAbsnce userAbsnce) throws Exception {
+	public void updateUserAbsnce(UserAbsnce userAbsnce) {
 		update("userAbsnceDAO.updateUserAbsnce", userAbsnce);
 	}
 
@@ -77,7 +77,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * 기 등록된 사용자부재정보를 삭제한다.
 	 * @param userAbsnce - 사용자부재 model
 	 */
-	public void deleteUserAbsnce(UserAbsnce userAbsnce) throws Exception {
+	public void deleteUserAbsnce(UserAbsnce userAbsnce) {
 		delete("userAbsnceDAO.deleteUserAbsnce", userAbsnce);
 	}
 
@@ -86,7 +86,7 @@ public class UserAbsnceDAO extends EgovAbstractMapper {
 	 * @param userAbsnceVO - 사용자부재 VO
 	 * @return UserAbsnceVO - 사용자부재 VO
 	 */
-	public UserAbsnceVO selectUserAbsnceResult(UserAbsnceVO userAbsnceVO) throws Exception {
+	public UserAbsnceVO selectUserAbsnceResult(UserAbsnceVO userAbsnceVO) {
 		return null;
 	}
 }
