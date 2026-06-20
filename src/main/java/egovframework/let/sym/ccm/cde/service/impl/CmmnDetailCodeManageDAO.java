@@ -23,6 +23,7 @@ import egovframework.let.sym.ccm.cde.service.CmmnDetailCodeVO;
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -32,9 +33,8 @@ public class CmmnDetailCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통상세코드를 삭제한다.
 	 * @param cmmnDetailCode
-	 * @throws Exception
 	 */
-	public void deleteCmmnDetailCode(CmmnDetailCode cmmnDetailCode) throws Exception {
+	public void deleteCmmnDetailCode(CmmnDetailCode cmmnDetailCode) {
 		delete("CmmnDetailCodeManageDAO.deleteCmmnDetailCode", cmmnDetailCode);
 	}
 
@@ -42,9 +42,8 @@ public class CmmnDetailCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통상세코드를 등록한다.
 	 * @param cmmnDetailCode
-	 * @throws Exception
 	 */
-	public void insertCmmnDetailCode(CmmnDetailCode cmmnDetailCode) throws Exception {
+	public void insertCmmnDetailCode(CmmnDetailCode cmmnDetailCode) {
         insert("CmmnDetailCodeManageDAO.insertCmmnDetailCode", cmmnDetailCode);
 	}
 
@@ -53,7 +52,7 @@ public class CmmnDetailCodeManageDAO extends EgovAbstractMapper {
 	 * @param cmmnDetailCode
 	 * @return CmmnDetailCode(공통상세코드)
 	 */
-	public CmmnDetailCode selectCmmnDetailCodeDetail(CmmnDetailCode cmmnDetailCode) throws Exception {
+	public CmmnDetailCode selectCmmnDetailCodeDetail(CmmnDetailCode cmmnDetailCode) {
 		return (CmmnDetailCode) selectOne("CmmnDetailCodeManageDAO.selectCmmnDetailCodeDetail", cmmnDetailCode);
 	}
 
@@ -62,9 +61,8 @@ public class CmmnDetailCodeManageDAO extends EgovAbstractMapper {
 	 * 공통상세코드 목록을 조회한다.
      * @param searchVO
      * @return List(공통상세코드 목록)
-     * @throws Exception
      */
-	public List<?> selectCmmnDetailCodeList(CmmnDetailCodeVO searchVO) throws Exception {
+	public List<?> selectCmmnDetailCodeList(CmmnDetailCodeVO searchVO) {
         return selectList("CmmnDetailCodeManageDAO.selectCmmnDetailCodeList", searchVO);
     }
 
@@ -73,16 +71,15 @@ public class CmmnDetailCodeManageDAO extends EgovAbstractMapper {
      * @param searchVO
      * @return int(공통상세코드 총 갯수)
      */
-    public int selectCmmnDetailCodeListTotCnt(CmmnDetailCodeVO searchVO) throws Exception {
+    public int selectCmmnDetailCodeListTotCnt(CmmnDetailCodeVO searchVO) {
         return (Integer)selectOne("CmmnDetailCodeManageDAO.selectCmmnDetailCodeListTotCnt", searchVO);
     }
 
 	/**
 	 * 공통상세코드를 수정한다.
 	 * @param cmmnDetailCode
-	 * @throws Exception
 	 */
-	public void updateCmmnDetailCode(CmmnDetailCode cmmnDetailCode) throws Exception {
+	public void updateCmmnDetailCode(CmmnDetailCode cmmnDetailCode) {
 		update("CmmnDetailCodeManageDAO.updateCmmnDetailCode", cmmnDetailCode);
 	}
 
