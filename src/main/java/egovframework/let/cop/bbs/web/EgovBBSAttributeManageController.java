@@ -335,7 +335,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/insertBdMstrByTrget.do")
+	@RequestMapping(value = "/cop/bbs/insertBdMstrByTrget.do", method = RequestMethod.POST)
 	public String insertBdMstrByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 			@Valid @ModelAttribute("boardMaster") BoardMaster boardMaster,
 			BindingResult bindingResult, SessionStatus status,
@@ -459,7 +459,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/UpdateBBSMasterInfByTrget.do")
+	@RequestMapping(value = "/cop/bbs/UpdateBBSMasterInfByTrget.do", method = RequestMethod.POST)
 	public String updateBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 		@ModelAttribute("boardMaster") BoardMaster boardMaster,
 		BindingResult bindingResult, ModelMap model) throws Exception {
@@ -538,7 +538,7 @@ public class EgovBBSAttributeManageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/DeleteBBSMasterInfByTrget.do")
+	@RequestMapping(value = "/cop/bbs/DeleteBBSMasterInfByTrget.do", method = RequestMethod.POST)
 	public String deleteBBSMasterInfByTrget(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO,
 		@ModelAttribute("boardMaster") BoardMaster boardMaster,
 		SessionStatus status) throws Exception {

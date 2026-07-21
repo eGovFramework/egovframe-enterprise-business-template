@@ -96,6 +96,7 @@ function fnDelete(){
                                 <!--// Location -->
 
 				<form name="Form" method="post" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeRemove.do'/>">
+				<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
 				<input type="hidden" name="codeId" value="<c:out value='${result.codeId}'/>">
 				<input type="hidden" name="code" value="<c:out value='${result.code}'/>">

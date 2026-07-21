@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -335,7 +336,7 @@ public class EgovProgrmManageController {
 	 * @exception Exception
 	 */
 	/*프로그램변경요청등록*/
-	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstStre.do")
+	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstStre.do", method = RequestMethod.POST)
 	public String insertProgrmChangeRequst(@RequestParam Map<String, Object> commandMap, @Valid @ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
 			BindingResult bindingResult, Model model) throws Exception {
 		String resultMsg = "";
@@ -382,7 +383,7 @@ public class EgovProgrmManageController {
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDetailSelectUpdt.do")
+	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDetailSelectUpdt.do", method = RequestMethod.POST)
 	public String updateProgrmChangeRequst(@Valid @ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult, Model model) throws Exception {
 		String sLocationUrl = null;
 		String resultMsg = "";
@@ -427,7 +428,7 @@ public class EgovProgrmManageController {
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDelete.do")
+	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstDelete.do", method = RequestMethod.POST)
 	public String deleteProgrmChangeRequst(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, Model model) throws Exception {
 		String sLocationUrl = null;
 		// 0. Spring Security 사용자권한 처리
@@ -525,7 +526,7 @@ public class EgovProgrmManageController {
 	 * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt.do")
+	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt.do", method = RequestMethod.POST)
 	public String updateProgrmChangRequstProcess(@Valid @ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, BindingResult bindingResult, Model model)
 			throws Exception {
 		String sLocationUrl = null;
@@ -592,7 +593,7 @@ public class EgovProgrmManageController {
 	 * @exception Exception
 	 */
 	/*프로그램변경요청처리 삭제*/
-	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDelete.do")
+	@RequestMapping(value = "/sym/prm/EgovProgramChangRequstProcessDelete.do", method = RequestMethod.POST)
 	public String deleteProgrmChangRequstProcess(@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO, Model model) throws Exception {
 		// 0. Spring Security 사용자권한 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();

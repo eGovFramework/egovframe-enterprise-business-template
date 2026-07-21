@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.annotation.RequireAdmin;
 import egovframework.let.uss.ion.uas.service.EgovUserAbsnceService;
 import egovframework.let.uss.ion.uas.service.UserAbsnce;
 import egovframework.let.uss.ion.uas.service.UserAbsnceVO;
@@ -95,9 +96,11 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@GetMapping("/uss/ion/uas/getUserAbsnce.do")
-	public String selectUserAbsnce(@RequestParam("userId") String userId, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
+	public String selectUserAbsnce(@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
 
-		userAbsnceVO.setUserId(userId);
+		// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID만 조회할 수 있다.
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		userAbsnceVO.setUserId(user.getId());
 		model.addAttribute("userAbsnce", egovUserAbsnceService.selectUserAbsnce(userAbsnceVO));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 
@@ -116,8 +119,10 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@GetMapping("/uss/ion/uas/addViewUserAbsnce.do")
-	public String insertUserAbsnceView(@RequestParam("userId") String userId, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
-		userAbsnceVO.setUserId(userId);
+	public String insertUserAbsnceView(@ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, Model model) throws Exception {
+		// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID로만 등록화면을 구성한다.
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		userAbsnceVO.setUserId(user.getId());
 		model.addAttribute("userAbsnce", egovUserAbsnceService.selectUserAbsnce(userAbsnceVO));
 		model.addAttribute("message", egovMessageSource.getMessage("success.common.select"));
 
@@ -138,6 +143,9 @@ public class EgovUserAbsnceController {
 			return "/uss/ion/msi/EgovMainImageRegist";
 		} else {
 			LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID로만 등록할 수 있다.
+			userAbsnce.setUserId(user.getId());
+			userAbsnceVO.setUserId(user.getId());
 			userAbsnce.setLastUpdusrId(user.getId());
 			// userAbsnce.setLastUpdusrId("jung");
 
@@ -162,6 +170,8 @@ public class EgovUserAbsnceController {
 		} else {
 
 			LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+			// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID만 수정할 수 있다.
+			userAbsnce.setUserId(user.getId());
 			userAbsnce.setLastUpdusrId(user.getId());
 			//userAbsnce.setLastUpdusrId("jung");
 
@@ -179,6 +189,10 @@ public class EgovUserAbsnceController {
 	public String deleteUserAbsnce(UserAbsnceVO userAbsnceVO, @ModelAttribute("userAbsnce") UserAbsnce userAbsnce,
 			Model model, RedirectAttributes redirectAttributes) throws Exception {
 
+		// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID만 삭제할 수 있다.
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		userAbsnce.setUserId(user.getId());
+
 		egovUserAbsnceService.deleteUserAbsnce(userAbsnce);
 		redirectAttributes.addAttribute("message", egovMessageSource.getMessage("success.common.delete"));
 		addAttributeSearch(userAbsnceVO, redirectAttributes);
@@ -190,6 +204,7 @@ public class EgovUserAbsnceController {
 	 * @param userAbsnce - 사용자부재 model
 	 * @return String - 리턴 Url
 	 */
+	@RequireAdmin
 	@PostMapping("/uss/ion/uas/removeUserAbsnceList.do")
 	public String deleteUserAbsnceList(@RequestParam("userIds") String userIds, @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, Model model) throws Exception {
 

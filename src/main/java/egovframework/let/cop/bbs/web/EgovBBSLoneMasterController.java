@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
@@ -90,7 +91,7 @@ public class EgovBBSLoneMasterController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/insertBoardMaster.do")
+	@RequestMapping(value = "/cop/bbs/insertBoardMaster.do", method = RequestMethod.POST)
 	public String insertBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @Valid @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
 			SessionStatus status, ModelMap model) throws Exception {
 
@@ -190,7 +191,7 @@ public class EgovBBSLoneMasterController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/updateBoardMaster.do")
+	@RequestMapping(value = "/cop/bbs/updateBoardMaster.do", method = RequestMethod.POST)
 	public String updateBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @Valid @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
 			ModelMap model) throws Exception {
 
@@ -222,7 +223,7 @@ public class EgovBBSLoneMasterController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/cop/bbs/deleteBoardMaster.do")
+	@RequestMapping(value = "/cop/bbs/deleteBoardMaster.do", method = RequestMethod.POST)
 	public String deleteBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status)
 			throws Exception {
 

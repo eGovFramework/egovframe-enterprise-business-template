@@ -66,7 +66,10 @@ function fn_egov_modal_remove() {
 			<div class="top_menu">
 	            <span class="t"><span onclick="alert('개인정보 확인 등의 링크 제공'); return false;" style="cursor: pointer;"><c:out value="${loginName}" /> 님</span>의 최종접속정보는 </span>
 	            <span class="d">2021-06-30 12:45 입니다.</span>
-	            <a href="<c:url value='/uat/uia/actionLogout.do'/>" class="btn btn_blue_15 w_90">로그아웃</a>
+	            <a href="#" onclick="document.logoutForm.submit(); return false;" class="btn btn_blue_15 w_90">로그아웃</a>
+	            <form name="logoutForm" method="post" action="<c:url value='/uat/uia/actionLogout.do'/>" style="display:none;">
+	            	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
+	            </form>
 	        </div>
 <% } %>
 
@@ -243,6 +246,7 @@ function actionLogout()
 
 <!-- Menu list -->
 <form name="menuListForm" action="" method="post">
+<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	<input type="hidden" id="testData" value="꽥" />
     <input type="hidden" id="baseMenuNo" name="baseMenuNo" value="<%=session.getAttribute("baseMenuNo")%>" />
     <input type="hidden" id="link" name="link" value="" />

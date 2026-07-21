@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -110,7 +111,7 @@ public class EgovCcmZipManageController {
 	 * @return "forward:/sym/ccm/zip/EgovCcmZipList.do"
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/ccm/zip/EgovCcmZipRemove.do")
+	@RequestMapping(value = "/sym/ccm/zip/EgovCcmZipRemove.do", method = RequestMethod.POST)
 	public String deleteZip(@ModelAttribute("loginVO") LoginVO loginVO, Zip zip, ModelMap model) throws Exception {
 		zipManageService.deleteZip(zip);
 		return "forward:/sym/ccm/zip/EgovCcmZipList.do";
@@ -159,7 +160,7 @@ public class EgovCcmZipManageController {
 	 * @return "/cmm/sym/zip/EgovCcmExcelZipRegist"
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/ccm/zip/EgovCcmExcelZipRegist.do")
+	@RequestMapping(value = "/sym/ccm/zip/EgovCcmExcelZipRegist.do", method = RequestMethod.POST)
 	public String insertExcelZip(@ModelAttribute("loginVO") LoginVO loginVO, final HttpServletRequest request, @RequestParam Map<String, Object> commandMap, Model model)
 			throws Exception {
 
@@ -270,7 +271,7 @@ public class EgovCcmZipManageController {
 	 * @return "/cmm/sym/zip/EgovCcmZipModify"
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/ccm/zip/EgovCcmZipModify.do")
+	@RequestMapping(value = "/sym/ccm/zip/EgovCcmZipModify.do", method = RequestMethod.POST)
 	public String updateZip(@ModelAttribute("loginVO") LoginVO loginVO, @Valid @ModelAttribute("zip") Zip zip, BindingResult bindingResult, @RequestParam Map<String, Object> commandMap,
 			ModelMap model) throws Exception {
 		String sCmd = commandMap.get("cmd") == null ? "" : (String) commandMap.get("cmd");

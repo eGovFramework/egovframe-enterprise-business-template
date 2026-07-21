@@ -164,8 +164,16 @@ public class EgovFileMngController {
 
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		if (isAuthenticated) {
-			fileService.deleteFileInf(fileVO);
+		if (!isAuthenticated) {
+			return "redirect:/cmm/main/mainPage.do";
+		}
+
+		fileService.deleteFileInf(fileVO);
+
+		// 오픈 리다이렉트(CWE-601) 방지 - 외부 URL이나 프로토콜 상대경로가 아닌
+		// 애플리케이션 내부의 절대경로만 리다이렉트 대상으로 허용한다.
+		if (!isSafeInternalUrl(returnUrl)) {
+			return "redirect:/cmm/main/mainPage.do";
 		}
 
 		// --------------------------------------------
@@ -275,5 +283,25 @@ public class EgovFileMngController {
 			}
 		}
 		return returnVal;
+	}
+
+	/**
+	 * 오픈 리다이렉트(CWE-601) 방지를 위해 애플리케이션 내부의 절대경로인지 검증한다.
+	 *
+	 * @param url 검증할 리다이렉트 URL
+	 * @return 내부 상대경로이면 true
+	 */
+	private boolean isSafeInternalUrl(String url) {
+		if (url == null) {
+			return false;
+		}
+		String trimmed = url.trim();
+		if (trimmed.isEmpty()) {
+			return false;
+		}
+		if (!trimmed.startsWith("/") || trimmed.startsWith("//") || trimmed.startsWith("/\\") || trimmed.contains(":")) {
+			return false;
+		}
+		return true;
 	}
 }

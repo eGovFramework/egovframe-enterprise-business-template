@@ -1,5 +1,7 @@
 package egovframework.let.sym.log.clg.web;
 
+import egovframework.com.cmm.annotation.RequireAdmin;
+
 import java.util.HashMap;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -48,6 +50,7 @@ public class EgovLoginLogController {
 	 * @return sym/log/clg/EgovLoginLogList
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@GetMapping(value = "/sym/log/clg/SelectLoginLogList.do")
 	public String selectLoginLogInf(@ModelAttribute("searchVO") LoginLog loginLog, ModelMap model) throws Exception {
 		
@@ -91,6 +94,7 @@ public class EgovLoginLogController {
 	 * @return sym/log/clg/EgovLoginLogInqire
 	 * @throws Exception
 	 */
+	@RequireAdmin
 	@GetMapping(value = "/sym/log/clg/InqireLoginLog.do")
 	public String selectLoginLog(@ModelAttribute("searchVO") LoginLog loginLog, @RequestParam("logId") String logId, ModelMap model) throws Exception {
 

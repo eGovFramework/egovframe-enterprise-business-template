@@ -103,6 +103,7 @@ function fn_egov_delete_Zip(){
                                 <!--// Location -->
 
 								<form name="Form" method="post" action="<c:url value='/sym/ccm/zip/EgovCcmZipModify.do'/>">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								
 								<input type="hidden" name="zip">
 								<input type="hidden" name="sn">
