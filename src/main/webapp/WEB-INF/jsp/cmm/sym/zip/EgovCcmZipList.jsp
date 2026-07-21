@@ -118,6 +118,7 @@ function fn_egov_detail_Zip(zip,sn){
                                 <!--// Location -->
 
 								<form name="listForm" action="<c:url value='/sym/ccm/zip/EgovCcmZipList.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -204,6 +205,7 @@ function fn_egov_detail_Zip(zip,sn){
                                 </form>
 
 								<form name="Form" method="post" action="<c:url value='/sym/ccm/zip/EgovCcmZipDetail.do'/>">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 								    <input type="hidden" name="zip">
 								    <input type="hidden" name="sn">
 								</form>

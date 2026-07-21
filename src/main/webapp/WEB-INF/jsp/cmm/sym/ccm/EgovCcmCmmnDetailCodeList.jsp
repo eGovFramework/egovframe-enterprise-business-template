@@ -113,6 +113,7 @@ function fnDelete(){
                                 <!--// Location -->
 
 								<form name="listForm" action="<c:url value='/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do'/>" method="post">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -198,6 +199,7 @@ function fnDelete(){
                                 </form>
             
 					            <form name="Form" action="" method="post" >
+					            <c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 					                <input type=hidden name="codeId">
 					                <input type=hidden name="code">
 					            </form>

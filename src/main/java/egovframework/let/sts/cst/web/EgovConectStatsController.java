@@ -1,5 +1,7 @@
 package egovframework.let.sts.cst.web;
 
+import egovframework.com.cmm.annotation.RequireAdmin;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,7 @@ public class EgovConectStatsController {
 	 * @return String
 	 * @exception Exception
 	 */
+    @RequireAdmin
     @GetMapping(value="/sts/cst/selectConectStats.do")
 	public String selectUserStats(@ModelAttribute("statsVO") StatsVO statsVO,
 			ModelMap model) throws Exception {

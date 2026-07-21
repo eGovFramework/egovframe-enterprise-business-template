@@ -148,6 +148,14 @@ public class EgovFileDownloadController {
 			param_atchFileId = param_atchFileId.replaceAll(" ", "+");
 			byte[] decodedBytes = Base64.getDecoder().decode(param_atchFileId);
 			String decodedString = new String(cryptoService.decrypt(decodedBytes, ALGORITHM_KEY));
+
+			// 세션 바인딩 검증 - atchFileId 발급 당시의 세션ID와 현재 세션ID가 일치해야 한다.
+			String issuedSessionId = StringUtils.substringBefore(decodedString, "|");
+			if (issuedSessionId == null || issuedSessionId.isEmpty() || !issuedSessionId.equals(request.getSession().getId())) {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN);
+				return;
+			}
+
 			String decodedFileId = StringUtils.substringAfter(decodedString, "|");
 			String fileSn = (String) commandMap.get("fileSn");
 	

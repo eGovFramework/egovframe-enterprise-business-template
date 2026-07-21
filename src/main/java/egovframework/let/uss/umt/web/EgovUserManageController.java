@@ -179,6 +179,11 @@ public class EgovUserManageController {
     	}
 
     	// zzz validation 처리 필요
+		// 비밀번호 최소 길이 검증 - 자가등록 시 1자리 등 취약한 비밀번호가 등록되지 않도록 함
+		if (userManageVO.getPassword() == null || userManageVO.getPassword().length() < 8) {
+			bindingResult.rejectValue("password", "size", new Object[] { 8, 20 }, "비밀번호는 8자 이상이어야 합니다.");
+		}
+
 		if (bindingResult.hasErrors()) {
 			ComDefaultCodeVO vo = new ComDefaultCodeVO();
 			//패스워드힌트목록을 코드정보로부터 조회

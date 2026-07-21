@@ -98,6 +98,7 @@
                                 <div class="condition">
                                 
                                 	<form name="frm" action ="<c:url value='/cop/com/selectTemplateInfs.do'/>" method="post">
+                                	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 			                        
 			                        <input type="hidden" name="tmplatId" value="" />
 			                        <input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>

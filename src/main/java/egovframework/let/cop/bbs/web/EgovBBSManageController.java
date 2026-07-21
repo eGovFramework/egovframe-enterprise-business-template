@@ -73,6 +73,24 @@ public class EgovBBSManageController {
 	EgovMessageSource egovMessageSource;
 
 	/**
+	 * 게시물 작성자 본인이거나 관리자 권한을 가진 사용자인지 확인한다.
+	 *
+	 * @param user 현재 로그인한 사용자
+	 * @param frstRegisterId 게시물 작성자 ID(frstRegisterId)
+	 * @return 소유자이거나 관리자이면 true
+	 */
+	private boolean isOwner(LoginVO user, String frstRegisterId) {
+		if (user == null || user.getUniqId() == null) {
+			return false;
+		}
+		if (frstRegisterId != null && frstRegisterId.equals(user.getUniqId())) {
+			return true;
+		}
+		List<String> authorities = EgovUserDetailsHelper.getAuthorities();
+		return authorities != null && authorities.contains("ROLE_ADMIN");
+	}
+
+	/**
 	 * XSS 방지 처리.
 	 *
 	 * @param data
@@ -493,6 +511,11 @@ public class EgovBBSManageController {
 		if (isAuthenticated) {
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 			bdvo = bbsMngService.selectBoardArticle(boardVO);
+
+			// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 수정폼/게시물 내용을 조회할 수 있다.
+			if (!isOwner(user, bdvo.getFrstRegisterId())) {
+				return "cmm/error/accessDenied";
+			}
 		}
 
 		model.addAttribute("result", bdvo);
@@ -533,6 +556,12 @@ public class EgovBBSManageController {
 
 		// 기존 게시글의 첨부파일 ID를 조회
 		BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+
+		// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 게시물을 수정할 수 있다.
+		if (!isOwner(user, existingBoard.getFrstRegisterId())) {
+			return "cmm/error/accessDenied";
+		}
+
 		String atchFileId = existingBoard.getAtchFileId();
 
 		// null 처리
@@ -623,6 +652,12 @@ public class EgovBBSManageController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
+			// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 게시물을 삭제할 수 있다.
+			BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+			if (!isOwner(user, existingBoard.getFrstRegisterId())) {
+				return "cmm/error/accessDenied";
+			}
+
 			board.setLastUpdusrId(user.getUniqId());
 
 			bbsMngService.deleteBoardArticle(board);
