@@ -26,6 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 class EgovLoginControllerTestSelenium {
 
 	/**
+	 * 테스트 기본 URL
+	 */
+	private static final String BASE_URL = System.getProperty("test.baseUrl", "http://localhost:8080");
+
+	/**
 	 * 웹 드라이버
 	 */
 	private WebDriver driver;
@@ -47,7 +52,7 @@ class EgovLoginControllerTestSelenium {
 		// given
 
 		// 로그인 화면 이동
-		driver.get("http://localhost:8080/ebt_webapp/uat/uia/egovLoginUsr.do");
+		driver.get(BASE_URL + "/uat/uia/egovLoginUsr.do");
 
 		final JavascriptExecutor executor = (JavascriptExecutor) driver;
 
