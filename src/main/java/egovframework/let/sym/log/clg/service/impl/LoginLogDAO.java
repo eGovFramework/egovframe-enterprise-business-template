@@ -22,6 +22,7 @@ import egovframework.let.sym.log.clg.service.LoginLog;
  *   2009.03.11  이삼섭          최초 생성
  *   2011.07.01  이기하          패키지 분리(sym.log -> sym.log.clg)
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -33,9 +34,8 @@ public class LoginLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param LoginLog
 	 * @return
-	 * @throws Exception
 	 */
-	public void logInsertLoginLog(LoginLog loginLog) throws Exception{
+	public void logInsertLoginLog(LoginLog loginLog) {
 		insert("LoginLogDAO.logInsertLoginLog", loginLog);
 	}
 
@@ -44,9 +44,8 @@ public class LoginLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param loginLog
 	 * @return loginLog
-	 * @throws Exception
 	 */
-	public LoginLog selectLoginLog(LoginLog loginLog) throws Exception{
+	public LoginLog selectLoginLog(LoginLog loginLog) {
 
 		return (LoginLog) selectOne("LoginLogDAO.selectLoginLog", loginLog);
 	}
@@ -56,9 +55,8 @@ public class LoginLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param loginLog
 	 * @return
-	 * @throws Exception
 	 */
-	public List<?> selectLoginLogInf(LoginLog loginLog) throws Exception{
+	public List<?> selectLoginLogInf(LoginLog loginLog) {
 		return selectList("LoginLogDAO.selectLoginLogInf", loginLog);
 	}
 
@@ -66,9 +64,8 @@ public class LoginLogDAO extends EgovAbstractMapper {
 	 * 접속로그 목록의 숫자를 조회한다.
 	 * @param loginLog
 	 * @return
-	 * @throws Exception
 	 */
-	public int selectLoginLogInfCnt(LoginLog loginLog) throws Exception{
+	public int selectLoginLogInfCnt(LoginLog loginLog) {
 
 		return (Integer)selectOne("LoginLogDAO.selectLoginLogInfCnt", loginLog);
 	}
