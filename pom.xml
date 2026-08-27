@@ -57,6 +57,7 @@
 		<protobuf.java.version>3.25.5</protobuf.java.version>
 		<xmlbeans.version>5.3.0</xmlbeans.version>
 		<parsson.version>1.1.7</parsson.version>
+		<hikaricp.version>6.3.3</hikaricp.version>
 	</properties>
 
 	<dependencies>
@@ -174,8 +175,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>${hikaricp.version}</version>
 		</dependency>
 
 		<dependency>
@@ -274,15 +276,30 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- HSQL : 인메모리 DB (Globals.DbType=hsql 사용 시) -->
 		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.27.7</version>
-			<scope>test</scope>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.7.4</version>
 		</dependency>
-
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.glassfish.expressly</groupId>
+					<artifactId>expressly</artifactId>
+					<version>5.0.0</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
 	<build>
 		<defaultGoal>install</defaultGoal>

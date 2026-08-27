@@ -23,6 +23,7 @@ import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
  *  -------    --------    ---------------------------
  *   2009.04.01  이중호          최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -32,9 +33,8 @@ public class CmmnClCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통분류코드를 삭제한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void deleteCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
+	public void deleteCmmnClCode(CmmnClCode cmmnClCode) {
 		delete("CmmnClCodeManageDAO.deleteCmmnClCode", cmmnClCode);
 	}
 
@@ -42,9 +42,8 @@ public class CmmnClCodeManageDAO extends EgovAbstractMapper {
 	/**
 	 * 공통분류코드를 등록한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void insertCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
+	public void insertCmmnClCode(CmmnClCode cmmnClCode) {
         insert("CmmnClCodeManageDAO.insertCmmnClCode", cmmnClCode);
 	}
 
@@ -62,9 +61,8 @@ public class CmmnClCodeManageDAO extends EgovAbstractMapper {
 	 * 공통분류코드 목록을 조회한다.
      * @param searchVO
      * @return List(공통분류코드 목록)
-     * @throws Exception
      */
-	public List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO) throws Exception {
+	public List<?> selectCmmnClCodeList(CmmnClCodeVO searchVO) {
         return selectList("CmmnClCodeManageDAO.selectCmmnClCodeList", searchVO);
     }
 
@@ -73,16 +71,15 @@ public class CmmnClCodeManageDAO extends EgovAbstractMapper {
      * @param searchVO
      * @return int(공통분류코드 총 갯수)
      */
-    public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) throws Exception {
+    public int selectCmmnClCodeListTotCnt(CmmnClCodeVO searchVO) {
         return (Integer)selectOne("CmmnClCodeManageDAO.selectCmmnClCodeListTotCnt", searchVO);
     }
 
 	/**
 	 * 공통분류코드를 수정한다.
 	 * @param cmmnClCode
-	 * @throws Exception
 	 */
-	public void updateCmmnClCode(CmmnClCode cmmnClCode) throws Exception {
+	public void updateCmmnClCode(CmmnClCode cmmnClCode) {
 		update("CmmnClCodeManageDAO.updateCmmnClCode", cmmnClCode);
 	}
 

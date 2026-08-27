@@ -22,6 +22,7 @@ import egovframework.let.sym.log.lgm.service.SysLog;
  *   2009.03.11  이삼섭          최초 생성
  *   2011.07.01  이기하          패키지 분리(sym.log -> sym.log.lgm)
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.06.20  이백행          [2026년 컨트리뷰션] 불필요한 예외(throws Exception) 제거
  *
  * </pre>
  */
@@ -33,9 +34,8 @@ public class SysLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param SysLog
 	 * @return
-	 * @throws Exception
 	 */
-	public void logInsertSysLog(SysLog sysLog) throws Exception{
+	public void logInsertSysLog(SysLog sysLog) {
 		insert("SysLogDAO.logInsertSysLog", sysLog);
 	}
 
@@ -44,9 +44,8 @@ public class SysLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param
 	 * @return
-	 * @throws Exception
 	 */
-	public void logInsertSysLogSummary() throws Exception{
+	public void logInsertSysLogSummary() {
 		insert("SysLogDAO.logInsertSysLogSummary", null);
 		delete("SysLogDAO.logDeleteSysLogSummary", null);
 	}
@@ -56,9 +55,8 @@ public class SysLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param sysLog
 	 * @return sysLog
-	 * @throws Exception
 	 */
-	public SysLog selectSysLog(SysLog sysLog) throws Exception{
+	public SysLog selectSysLog(SysLog sysLog) {
 
 		return (SysLog) selectOne("SysLogDAO.selectSysLog", sysLog);
 	}
@@ -68,9 +66,8 @@ public class SysLogDAO extends EgovAbstractMapper {
 	 *
 	 * @param sysLog
 	 * @return
-	 * @throws Exception
 	 */
-	public List<?> selectSysLogInf(SysLog sysLog) throws Exception{
+	public List<?> selectSysLogInf(SysLog sysLog) {
 		return selectList("SysLogDAO.selectSysLogInf", sysLog);
 	}
 
@@ -78,9 +75,8 @@ public class SysLogDAO extends EgovAbstractMapper {
 	 * 시스템 로그정보 목록의 숫자를 조회한다.
 	 * @param sysLog
 	 * @return
-	 * @throws Exception
 	 */
-	public int selectSysLogInfCnt(SysLog sysLog) throws Exception{
+	public int selectSysLogInfCnt(SysLog sysLog) {
 
 		return (Integer)selectOne("SysLogDAO.selectSysLogInfCnt", sysLog);
 	}
