@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: egov-ebt
+  labels:
+    app.kubernetes.io/name: egov-ebt
+    app.kubernetes.io/part-of: egovframe-template
+data:
+  # Non-secret overrides for the existing Globals.* properties — credentials come from a Secret.
+  Globals.Url: "jdbc:log4jdbc:mysql://mysql:3306/ebt?useSSL=false"

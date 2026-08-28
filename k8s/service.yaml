@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: egov-ebt
+  labels:
+    app.kubernetes.io/name: egov-ebt
+    app.kubernetes.io/part-of: egovframe-template
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: egov-ebt
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
