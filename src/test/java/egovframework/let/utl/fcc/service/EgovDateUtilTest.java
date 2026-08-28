@@ -190,27 +190,27 @@ class EgovDateUtilTest {
     // ===================== isLeapYear =====================
 
     @Test
-    @DisplayName("isLeapYear - 4의 배수이고 100의 배수 아님(2004): 윤년이므로 false")
+    @DisplayName("isLeapYear - 4의 배수이고 100의 배수 아님(2004): 윤년이므로 true")
     void isLeapYear_typicalLeapYear() {
-        assertFalse(EgovDateUtil.isLeapYear(2004));
+        assertTrue(EgovDateUtil.isLeapYear(2004));
     }
 
     @Test
-    @DisplayName("isLeapYear - 평년(2005): true")
+    @DisplayName("isLeapYear - 평년(2005): false")
     void isLeapYear_nonLeapYear() {
-        assertTrue(EgovDateUtil.isLeapYear(2005));
+        assertFalse(EgovDateUtil.isLeapYear(2005));
     }
 
     @Test
-    @DisplayName("isLeapYear - 100의 배수이나 400의 배수 아님(1900): 평년이므로 true")
+    @DisplayName("isLeapYear - 100의 배수이나 400의 배수 아님(1900): 평년이므로 false")
     void isLeapYear_century_nonLeap() {
-        assertTrue(EgovDateUtil.isLeapYear(1900));
+        assertFalse(EgovDateUtil.isLeapYear(1900));
     }
 
     @Test
-    @DisplayName("isLeapYear - 400의 배수(2000): 윤년이므로 false")
+    @DisplayName("isLeapYear - 400의 배수(2000): 윤년이므로 true")
     void isLeapYear_400multiple() {
-        assertFalse(EgovDateUtil.isLeapYear(2000));
+        assertTrue(EgovDateUtil.isLeapYear(2000));
     }
 
     // ===================== formatDate =====================
