@@ -124,7 +124,7 @@ function insertMenuManage() {
  * 일괄처리 화면호출 함수
  ******************************************************** */
 /* function bndeInsertMenuManage() {
-        document.menuManageForm.action = "<c:url value='/sym/mpm/EgovMenuRegistInsert.do'/>";
+        document.menuManageForm.action = "<c:url value='/sym/mnu/mpm/EgovMenuRegistInsert.do'/>";
         document.menuManageForm.submit();   
     }
  */
@@ -144,7 +144,7 @@ function selectUpdtMenuManageDetail(menuNo) {
  * 최초조회 함수
  ******************************************************** */
 function fMenuManageSelect(){ 
-    document.menuManageForm.action = "<c:url value='/sym/mpm/EgovMenuManageSelect.do'/>";
+    document.menuManageForm.action = "<c:url value='/sym/mnu/mpm/EgovMenuManageSelect.do'/>";
     document.menuManageForm.submit();
 }
 <c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
@@ -211,8 +211,8 @@ function fMenuManageSelect(){
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="<c:url value='/sym/mpm/EgovMenuRegistInsert.do'/>" class="btn btn_blue_46 w_100" onclick="bndeInsertMenuManage(); return false;">일괄등록</a><!-- 일괄등록 -->
-                                        <a href="<c:url value='/sym/mpm/EgovMenuRegistInsert.do'/>" class="btn btn_blue_46 w_100" onclick="insertMenuManage(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
+                                        <a href="<c:url value='/sym/mnu/mpm/EgovMenuRegistInsert.do'/>" class="btn btn_blue_46 w_100" onclick="bndeInsertMenuManage(); return false;">일괄등록</a><!-- 일괄등록 -->
+                                        <a href="<c:url value='/sym/mnu/mpm/EgovMenuRegistInsert.do'/>" class="btn btn_blue_46 w_100" onclick="insertMenuManage(); return false;"><spring:message code="button.create" /></a><!-- 등록 -->
                                         <a href="#LINK" class="btn btn_blue_46 w_100" onclick="fDeleteMenuList(); return false;"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@ function fMenuManageSelect(){
                                                 </td>
                                                 <td><c:out value="${result.menuNo}"/></td>
                                                 <td>
-	                                                <a href="<c:url value='/sym/mpm/EgovMenuManageListDetailSelect.do?req_menuNo='/>${result.menuNo}" class="lnk" onclick="selectUpdtMenuManageDetail('<c:out value="${result.menuNo}"/>'); return false;">
+	                                                <a href="<c:url value='/sym/mnu/mpm/EgovMenuManageListDetailSelect.do?req_menuNo='/>${result.menuNo}" class="lnk" onclick="selectUpdtMenuManageDetail('<c:out value="${result.menuNo}"/>'); return false;">
 	                                                	<c:out value="${result.menuNm}"/>
 	                                                </a>
                                                 </td>

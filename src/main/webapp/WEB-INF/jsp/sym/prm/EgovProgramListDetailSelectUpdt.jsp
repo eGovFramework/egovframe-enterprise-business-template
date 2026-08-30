@@ -182,7 +182,7 @@ function deleteProgramListManage(form) {
 
                                     <div class="right_col btn1">
                                         <a href="" class="btn btn_blue_46 w_100" onclick="updateProgramListManage(document.getElementById('progrmManageVO'));"><spring:message code="button.save" /></a><!-- 저장 -->
-                                        <a href="<c:url value='/sym/mpm/EgovProgramListManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList();"><spring:message code="button.list" /></a><!-- 목록 -->
+                                        <a href="<c:url value='/sym/prm/EgovProgramListManageSelect.do'/>" class="btn btn_blue_46 w_100" onclick="selectList();"><spring:message code="button.list" /></a><!-- 목록 -->
                                     </div>
                                 </div>
                                 <!-- // 목록/저장버튼 끝  -->
