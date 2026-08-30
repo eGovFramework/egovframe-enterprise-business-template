@@ -99,6 +99,15 @@
 		 WHERE MENU_NO = #{menuNo}
 		
 	</select>
+	
+	<!-- 상위 메뉴번호 존재여부 조회 -->
+    <select id="selectUpperMenuNoByPk" parameterType="egovframework.let.sym.mnu.mpm.service.MenuManageVO" resultType="int">
+        
+        SELECT COUNT(MENU_NO) AS totcnt
+          FROM LETTNMENUINFO
+         WHERE UPPER_MENU_NO = #{menuNo}
+        
+    </select>
 
 	<select id="selectMenuListT_D" parameterType="comDefaultVO" resultType="egovMap">
 		 
