@@ -81,7 +81,7 @@
 			VALUES ( #{progrmFileNm}
 				  , #{progrmStrePath}
 				  , #{progrmKoreanNm}
-				  , #progrmDc:CLOB#
+				  , #{progrmDc}
 				  , #{URL} )
 		
 	</insert>
@@ -91,7 +91,7 @@
 			UPDATE LETTNPROGRMLIST 
 			SET PROGRM_STRE_PATH =#{progrmStrePath}
 				, PROGRM_KOREAN_NM=#{progrmKoreanNm}
-				, PROGRM_DC      =#progrmDc:CLOB#
+				, PROGRM_DC      =#{progrmDc}
 				, URL            =#{URL}
 			WHERE PROGRM_FILE_NM=#{progrmFileNm}
 		
