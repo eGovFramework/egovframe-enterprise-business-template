@@ -115,8 +115,8 @@
 			VALUES (  #{progrmFileNm}
                  , #{rqesterNo}
                  , #{rqesterPersonId}
-                 , #changerqesterCn:CLOB#
-                 , #rqesterProcessCn:CLOB#
+                 , #{changerqesterCn}
+                 , #{rqesterProcessCn}
                  , TO_DATE(#{rqesterDe},'yyyy-mm-dd')
                  , #{rqesterSj} 
                  , 'A')
@@ -127,8 +127,8 @@
 		
 			UPDATE LETTHPROGRMCHANGEDTLS
 			SET    RQESTER_ID         = #{rqesterPersonId} 
-			     , CHANGE_REQUST_CN   = #changerqesterCn:CLOB#
-			     , REQUST_PROCESS_CN = #rqesterProcessCn:CLOB#
+			     , CHANGE_REQUST_CN   = #{changerqesterCn}
+			     , REQUST_PROCESS_CN = #{rqesterProcessCn}
                  , REQUST_DE         = TO_DATE(#{rqesterDe},'yyyy-mm-dd')       
                  , REQUST_SJ         = #{rqesterSj} 
 			WHERE PROGRM_FILE_NM=#{progrmFileNm}
@@ -147,8 +147,8 @@
 	<update id="updateProgrmChangeRequstProcess_S" parameterType="egovframework.let.sym.prm.service.ProgrmManageDtlVO">
 		
 			UPDATE LETTHPROGRMCHANGEDTLS
-			SET    CHANGE_REQUST_CN   = #changerqesterCn:CLOB#  
-			     , REQUST_PROCESS_CN = #rqesterProcessCn:CLOB# 
+			SET    CHANGE_REQUST_CN   = #{changerqesterCn}  
+			     , REQUST_PROCESS_CN = #{rqesterProcessCn} 
                  , OPETR_ID           = #{opetrId}         
                  , PROCESS_STTUS_CODE = #{processSttus}    
                  , PROCESS_DE         = TO_DATE(#{processDe},'yyyy-mm-dd')        
