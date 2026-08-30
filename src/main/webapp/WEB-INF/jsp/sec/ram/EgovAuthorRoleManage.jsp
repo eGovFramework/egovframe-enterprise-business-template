@@ -133,7 +133,7 @@ function fncSelectAuthorList(){
 
 function fncSelectAuthorRole(roleCode) {
     document.listForm.roleCode.value = roleCode;
-    document.listForm.action = "<c:url value='/sec/ram/EgovRole.do'/>";
+    document.listForm.action = "<c:url value='/sec/rmt/EgovRole.do'/>";
     document.listForm.submit();     
 }
 

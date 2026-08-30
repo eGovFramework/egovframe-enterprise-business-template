@@ -200,7 +200,7 @@ function selectUpdtProgramListDetail(progrmFileNm) {
                                     </div>
 
                                     <div class="right_col">
-                                        <a href="<c:url value='/sym/mpm/EgovProgramListRegist.do'/>" class="btn btn_blue_46 w_100" onclick="insertProgramListManage();"><spring:message code="button.create" /></a><!-- 등록 -->
+                                        <a href="<c:url value='/sym/prm/EgovProgramListRegist.do'/>" class="btn btn_blue_46 w_100" onclick="insertProgramListManage();"><spring:message code="button.create" /></a><!-- 등록 -->
                                         <a href="" class="btn btn_blue_46 w_100" onclick="fDeleteProgrmManageList();"><spring:message code="button.delete" /></a><!-- 삭제 -->
                                     </div>
                                 </div>
