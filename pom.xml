@@ -335,11 +335,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>true</skipTests>
 					<reportFormat>xml</reportFormat>
 					<excludes>
 						<exclude>**/Abstract*.java</exclude>
 						<exclude>**/*Suite.java</exclude>
+						<!-- 데이터베이스 연결이 필요한 테스트 -->
+						<exclude>**/BBSAttributeManageDAOTestInsertBBSMasterInfTest.java</exclude>
+						<exclude>**/EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest.java</exclude>
+						<exclude>**/EgovBBSAttributeManageControllerTestInsertBBSMasterInfTest.java</exclude>
 					</excludes>
 					<includes>
 						<include>**/*Test.java</include>
