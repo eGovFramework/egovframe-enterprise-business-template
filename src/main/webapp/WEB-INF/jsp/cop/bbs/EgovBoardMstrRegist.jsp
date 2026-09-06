@@ -36,7 +36,7 @@
 	<link rel="stylesheet" href="<c:url value='/css/jqueryui.css'/>">
 
 <script type="text/javascript" src="<c:url value='/js/EgovBBSMng.js' />"></script>
-<script type="text/javascript" src="<c:url value="/js/EgovValidation"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/EgovValidation.js"/>"></script>
 <script type="text/javascript">
     function fn_egov_regist_brdMstr(){
     	event.preventDefault();
