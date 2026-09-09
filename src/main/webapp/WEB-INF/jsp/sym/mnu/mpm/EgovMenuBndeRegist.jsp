@@ -53,7 +53,7 @@ function insertMenuManage() {
  ******************************************************** */
 function deleteMenuList() {
     if(confirm("메뉴일괄삭제를 하시겠습니까?. \n 메뉴정보와  프로그램목록, 프로그램 변경내역 데이타 모두  삭제 삭제처리 됩니다.")){
-        document.menuManageRegistForm.action ="<c:url value='/sym/mpm/EgovMenuBndeAllDelete.do'/>";
+        document.menuManageRegistForm.action ="<c:url value='/sym/mnu/mpm/EgovMenuBndeAllDelete.do'/>";
         document.menuManageRegistForm.submit();
     }
 }
@@ -118,7 +118,7 @@ function checkFile(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="menuManageRegistForm" action ="<c:url value='/sym/mpm/EgovMenuBndeRegist.do'/>" method="post" enctype="multipart/form-data">
+								<form name="menuManageRegistForm" action ="<c:url value='/sym/mnu/mpm/EgovMenuBndeRegist.do'/>" method="post" enctype="multipart/form-data">
 								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">내부시스템관리</h1>

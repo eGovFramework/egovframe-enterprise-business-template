@@ -45,7 +45,7 @@ var imgpath = "<c:url value='/images'/>";
  * 조회 함수
  ******************************************************** */
 function selectMenuCreatTmp() {
-    document.menuCreatManageForm.action = "<c:url value='/sym/mpm/EgovMenuCreatSelect.do'/>";
+    document.menuCreatManageForm.action = "<c:url value='/sym/mnu/mcm/EgovMenuCreatSelect.do'/>";
     document.menuCreatManageForm.submit();
 }
 

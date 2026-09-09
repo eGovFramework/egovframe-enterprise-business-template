@@ -98,7 +98,7 @@ function fnUpdate(){
 				<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
 				<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
 				<!-- 우편번호검색 -->
-				<input type="hidden" name="url" value="<c:url value='/sym/ccm/zip/EgovCcmZipSearchPopup.do'/>" />
+				<input type="hidden" name="url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

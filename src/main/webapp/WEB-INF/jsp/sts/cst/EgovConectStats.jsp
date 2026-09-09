@@ -222,7 +222,7 @@ function fn_egov_init_date(){
                                 </div>
                                 <!--// Location -->
 
-								<form name="listForm" action="<c:url value='/sts/selectConectStats.do'/>" method="get">
+								<form name="listForm" action="<c:url value='/sts/cst/selectConectStats.do'/>" method="get">
 								
 			                    <input type="hidden" name="pdKind" value='<c:out value="${statsInfo.pdKind}"/>'/>
 			                    <input type="hidden" name="statsKind" value='<c:out value="${statsInfo.statsKind}"/>'/>
