@@ -38,7 +38,6 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovSpringSecurityLoginFilter.class);
 
 	private static final String LOGIN_PATH = "/uat/uia/egovLoginUsr.do";
-	private static final String ACTION_LOGIN_PATH = "/uat/uia/actionLogin.do";
 
 	@Resource(name = "loginService")
 	private EgovLoginService loginService;
@@ -134,15 +133,6 @@ public class EgovSpringSecurityLoginFilter extends OncePerRequestFilter {
 		}
 		request.setAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 		request.getRequestDispatcher(LOGIN_PATH).forward(request, response);
-	}
-
-	private static String stripContextPath(HttpServletRequest request) {
-		String contextPath = request.getContextPath();
-		String uri = request.getRequestURI();
-		if (StringUtils.hasText(contextPath) && uri.startsWith(contextPath)) {
-			return uri.substring(contextPath.length());
-		}
-		return uri;
 	}
 
 	private static final class LoginFormSpringSecurityParameterWrapper extends HttpServletRequestWrapper {
