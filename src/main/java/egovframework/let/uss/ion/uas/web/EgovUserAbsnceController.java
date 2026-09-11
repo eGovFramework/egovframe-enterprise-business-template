@@ -135,12 +135,12 @@ public class EgovUserAbsnceController {
 	 * @return String - 리턴 Url
 	 */
 	@PostMapping("/uss/ion/uas/addUserAbsnce.do")
-	public String insertUserAbsnce(@Valid @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO, BindingResult bindingResult,
+	public String insertUserAbsnce(@Valid @ModelAttribute("userAbsnce") UserAbsnce userAbsnce, BindingResult bindingResult, @ModelAttribute("userAbsnceVO") UserAbsnceVO userAbsnceVO,
 			Model model) throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("userAbsnceVO", userAbsnceVO);
-			return "/uss/ion/msi/EgovMainImageRegist";
+			return "/uss/ion/uas/EgovUserAbsnceRegist";
 		} else {
 			LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 			// 소유권 검증 - 요청 파라미터가 아닌 로그인한 본인의 사용자ID로만 등록할 수 있다.
