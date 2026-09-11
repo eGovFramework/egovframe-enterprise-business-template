@@ -14,8 +14,8 @@
 		<property name="jobDetail" ref="sysLogging" />
 		<!-- 시작하고 1분후에 실행한다. (milisecond) 60000-->
 		<property name="startDelay" value="30000" />
-		<!-- 매 24시간마다 실행한다.864000000 (milisecond) -->
-		<property name="repeatInterval" value="864000000" />
+		<!-- 매 24시간마다 실행한다.86400000 (milisecond) -->
+		<property name="repeatInterval" value="86400000" />
 	</bean>
 
 	<!-- 시스템 로그 요약 스케줄러 -->
