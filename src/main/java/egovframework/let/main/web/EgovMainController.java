@@ -54,11 +54,9 @@ public class EgovMainController {
 	 *
 	 * @param request
 	 * @param commandMap
-	 * @exception Exception Exception
 	 */
 	@RequestMapping(value = "/cmm/forwardPage.do")
-	public String forwardPageWithMenuNo(HttpServletRequest request, @RequestParam Map<String, Object> commandMap)
-	  throws Exception{
+	public String forwardPageWithMenuNo(HttpServletRequest request, @RequestParam Map<String, Object> commandMap) {
 		return "";
 	}
 
@@ -68,11 +66,9 @@ public class EgovMainController {
 	 *
 	 * @param request
 	 * @param model
-	 * @exception Exception Exception
 	 */
 	@RequestMapping(value = "/cmm/main/mainPage.do")
-	public String getMgtMainPage(HttpServletRequest request, ModelMap model)
-	  throws Exception{
+	public String getMgtMainPage(HttpServletRequest request, ModelMap model) {
 
 		// 공지사항 메인 컨텐츠 조회 시작 ---------------------------------
 		BoardVO boardVO = new BoardVO();
@@ -122,14 +118,12 @@ public class EgovMainController {
      * Header Page를 조회한다.
      * @param menuManageVO MenuManageVO
      * @return 출력페이지정보 "EgovIncHeader"
-     * @exception Exception
      */
     @RequestMapping(value="/sym/mms/EgovHeader.do")
     public String selectHeader(
     		@ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
     		@RequestParam(value="flag", required=false) String flag,
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
 
     	LoginVO user =
     		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
@@ -157,10 +151,9 @@ public class EgovMainController {
      * Footer Page를 조회한다.
      * @param 
      * @return 출력페이지정보 "EgovIncFooter"
-     * @exception Exception
      */
     @RequestMapping(value="/sym/mms/EgovFooter.do")
-    public String selectFooter(ModelMap model) throws Exception {
+    public String selectFooter(ModelMap model) {
     	return "main/inc/EgovIncFooter";
     }
     
@@ -168,10 +161,9 @@ public class EgovMainController {
      * 좌측메뉴를 조회한다.
      * @param 
      * @return 출력페이지정보 "EgovIncLeftmenu"
-     * @exception Exception
      */
     @RequestMapping(value="/sym/mms/EgovMenuLeft.do")
-    public String selectMenuLeft(ModelMap model) throws Exception {
+    public String selectMenuLeft(ModelMap model) {
 
     	//LoginVO user = EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
 
@@ -190,13 +182,11 @@ public class EgovMainController {
      * Head메뉴를 조회한다.
      * @param menuManageVO MenuManageVO
      * @return 출력페이지정보 "main_headG", "main_head"
-     * @exception Exception
      */
     @RequestMapping(value="/sym/mms/EgovMainMenuHead.do")
     public String selectMainMenuHead(
     		@ModelAttribute("menuManageVO") MenuManageVO menuManageVO,
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
 
     	LoginVO user =
     		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
@@ -224,12 +214,10 @@ public class EgovMainController {
      * @param menuManageVO MenuManageVO
      * @param vStartP      String
      * @return 출력페이지정보 "main_left"
-     * @exception Exception
      */
     @RequestMapping(value="/sym/mms/EgovMainMenuLeft.do")
     public String selectMainMenuLeft(
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
 
     	//LoginVO user = EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
     	//LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
