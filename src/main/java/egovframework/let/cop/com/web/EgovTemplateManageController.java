@@ -60,10 +60,9 @@ public class EgovTemplateManageController {
 	 * @param searchVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/selectTemplateInfs.do")
-	public String selectTemplateInfs(HttpServletRequest request, @ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model) throws Exception {
+	public String selectTemplateInfs(HttpServletRequest request, @ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model) {
 		
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("baseMenuNo", "5000000");
@@ -99,10 +98,9 @@ public class EgovTemplateManageController {
 	 * @param searchVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/selectTemplateInf.do")
-	public String selectTemplateInf(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model) throws Exception {
+	public String selectTemplateInf(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, ModelMap model) {
 
 		ComDefaultCodeVO codeVO = new ComDefaultCodeVO();
 
@@ -124,11 +122,10 @@ public class EgovTemplateManageController {
 	 * @param tmplatInfo
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/com/insertTemplateInf.do", method = RequestMethod.POST)
 	public String insertTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @Valid @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+			SessionStatus status, ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -160,10 +157,9 @@ public class EgovTemplateManageController {
 	 * @param searchVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/addTemplateInf.do")
-	public String addTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, ModelMap model) throws Exception {
+	public String addTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, ModelMap model) {
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
 
 		vo.setCodeId("COM005");
@@ -182,11 +178,10 @@ public class EgovTemplateManageController {
 	 * @param tmplatInfo
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/com/updateTemplateInf.do", method = RequestMethod.POST)
 	public String updateTemplateInf(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, @Valid @ModelAttribute("templateInf") TemplateInf templateInf, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+			SessionStatus status, ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -222,11 +217,9 @@ public class EgovTemplateManageController {
 	 * @param tmplatInfo
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/bbs/deleteTemplateInf.do", method = RequestMethod.POST)
-	public String deleteTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @ModelAttribute("tmplatInf") TemplateInf tmplatInf, SessionStatus status, ModelMap model)
-			throws Exception {
+	public String deleteTemplateInf(@ModelAttribute("searchVO") TemplateInfVO searchVO, @ModelAttribute("tmplatInf") TemplateInf tmplatInf, SessionStatus status, ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -246,10 +239,9 @@ public class EgovTemplateManageController {
 	 * @param searchVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/selectTemplateInfsPop.do")
-	public String selectTemplateInfsPop(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, @RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+	public String selectTemplateInfsPop(@ModelAttribute("searchVO") TemplateInfVO tmplatInfVO, @RequestParam Map<String, Object> commandMap, ModelMap model) {
 
 		String typeFlag = (String) commandMap.get("typeFlag");
 
@@ -297,10 +289,9 @@ public class EgovTemplateManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/com/openPopup.do")
-	public String openPopupWindow(@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+	public String openPopupWindow(@RequestParam Map<String, Object> commandMap, ModelMap model) {
 
 		String requestUrl = (String) commandMap.get("requestUrl");
 		String trgetId = (String) commandMap.get("trgetId");

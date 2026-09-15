@@ -58,10 +58,9 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMasterVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/addBoardMaster.do")
-	public String addBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String addBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) {
 		BoardMaster boardMaster = new BoardMaster();
 
 		ComDefaultCodeVO vo = new ComDefaultCodeVO();
@@ -89,11 +88,10 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMaster
 	 * @param status
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/bbs/insertBoardMaster.do", method = RequestMethod.POST)
 	public String insertBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @Valid @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			SessionStatus status, ModelMap model) throws Exception {
+			SessionStatus status, ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -134,10 +132,9 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMasterVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/selectBoardMasterList.do")
-	public String selectBoardMasterList(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
+	public String selectBoardMasterList(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) {
 		boardMasterVO.setPageUnit(propertyService.getInt("pageUnit"));
 		boardMasterVO.setPageSize(propertyService.getInt("pageSize"));
 
@@ -169,10 +166,9 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMasterVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping("/cop/bbs/selectBoardMaster.do")
-	public String selectBoardMaster(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) throws Exception {
+	public String selectBoardMaster(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) {
 		BoardMasterVO vo = bbsLoneService.selectMaster(searchVO);
 
 		model.addAttribute("result", vo);
@@ -189,11 +185,10 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMaster
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/bbs/updateBoardMaster.do", method = RequestMethod.POST)
 	public String updateBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @Valid @ModelAttribute("boardMaster") BoardMaster boardMaster, BindingResult bindingResult,
-			ModelMap model) throws Exception {
+			ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -221,11 +216,9 @@ public class EgovBBSLoneMasterController {
 	 * @param boardMaster
 	 * @param status
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cop/bbs/deleteBoardMaster.do", method = RequestMethod.POST)
-	public String deleteBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status)
-			throws Exception {
+	public String deleteBoardMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster, SessionStatus status) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
