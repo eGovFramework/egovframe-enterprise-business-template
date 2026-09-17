@@ -231,7 +231,7 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <form:input path="emplyrNm" id="emplyrNm" class="f_txt w_full" maxlength="60" />
+                                                <form:input path="emplyrNm" id="emplyrNm" class="f_txt w_full" maxlength="50" />
                                                 <form:errors path="emplyrNm" />
                                             </td>
                                             <td class="lb">
