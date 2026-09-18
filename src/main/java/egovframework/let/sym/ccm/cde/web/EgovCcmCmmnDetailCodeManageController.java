@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.LoginVO;
@@ -73,7 +74,7 @@ public class EgovCcmCmmnDetailCodeManageController {
 	 * @return "forward:/sym/ccm/cde/EgovCcmCmmnDetailCodeList.do"
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/sym/ccm/cde/EgovCcmCmmnDetailCodeRemove.do")
+	@RequestMapping(value = "/sym/ccm/cde/EgovCcmCmmnDetailCodeRemove.do", method = RequestMethod.POST)
 	public String deleteCmmnDetailCode(@ModelAttribute("loginVO") LoginVO loginVO, CmmnDetailCode cmmnDetailCode,
 			ModelMap model) throws Exception {
 		cmmnDetailCodeManageService.deleteCmmnDetailCode(cmmnDetailCode);

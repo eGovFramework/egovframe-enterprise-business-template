@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
-
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.uat.uap.service.EgovLoginPolicyService;
 import egovframework.let.uat.uap.service.LoginPolicy;
 import egovframework.let.uat.uap.service.LoginPolicyVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 로그인정책에 대한 controller 클래스를 정의한다.

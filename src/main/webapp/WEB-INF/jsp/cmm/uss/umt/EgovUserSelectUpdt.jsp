@@ -158,19 +158,19 @@ function fn_egov_modal_remove() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="userManageVO" action="${pageContext.request.contextPath}/uss/umt/user/EgovUserSelectUpdt.do" name="userManageVO" method="post" >
+				<form:form modelAttribute="userManageVO" action="<c:url value='/uss/umt/user/EgovUserSelectUpdt.do'/>" name="userManageVO" method="post" >
 								
-								<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
-								<input name="checkedIdForDel" type="hidden" />
-								<!-- 검색조건 유지 -->
-								<input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
-								<input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
-								<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
-								<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
-								<!-- 우편번호검색 -->
-								<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
-								<!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
-								<input type="hidden" name="userTyForPassword" value="<c:out value='${userManageVO.userTy}'/>" />
+				<!-- 상세정보 사용자 삭제시 prameter 전달용 input -->
+				<input name="checkedIdForDel" type="hidden" />
+				<!-- 검색조건 유지 -->
+				<input type="hidden" name="searchCondition" value="<c:out value='${userSearchVO.searchCondition}'/>"/>
+				<input type="hidden" name="searchKeyword" value="<c:out value='${userSearchVO.searchKeyword}'/>"/>
+				<input type="hidden" name="sbscrbSttus" value="<c:out value='${userSearchVO.sbscrbSttus}'/>"/>
+				<input type="hidden" name="pageIndex" value="<c:out value='${userSearchVO.pageIndex}'/>"/>
+				<!-- 우편번호검색 -->
+				<input type="hidden" name="zip_url" value="<c:url value='/sym/cmm/EgovCcmZipSearchPopup.do'/>" />
+				<!-- 사용자유형정보 : password 수정화면으로 이동시 타겟 유형정보 확인용, 만약검색조건으로 유형이 포함될경우 혼란을 피하기위해 userTy명칭을 쓰지 않음-->
+				<input type="hidden" name="userTyForPassword" value="<c:out value='${userManageVO.userTy}'/>" />
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

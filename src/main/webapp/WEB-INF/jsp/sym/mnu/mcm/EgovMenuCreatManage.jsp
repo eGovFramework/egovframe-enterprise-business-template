@@ -94,7 +94,7 @@ function fn_egov_modal_remove() {
 	$('#modalPan').remove();
 }
 
-<c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
+<c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
 //-->
 </script>
 </head>
@@ -131,7 +131,7 @@ function fn_egov_modal_remove() {
                                 </div>
                                 <!--// Location -->
 
-								<form name="menuCreatManageForm" action ="<c:url value='/sym/mpm/EgovMenuCreatManageSelect.do'/>" method="get">
+								<form name="menuCreatManageForm" action ="<c:url value='/sym/mnu/mcm/EgovMenuCreatManageSelect.do'/>" method="get">
 								
 								<input name="checkedMenuNoForDel" type="hidden" />
 								<input name="authorCode" type="hidden" />

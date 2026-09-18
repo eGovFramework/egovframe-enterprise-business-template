@@ -58,7 +58,7 @@ function fnDelete(){
     if (confirm("<spring:message code="common.delete.msg" />")) {
         var varForm              = document.all["Form"];
         varForm.action           = "<c:url value='/sym/ccm/ccc/EgovCcmCmmnClCodeRemove.do'/>";
-        varForm.clCode.value     = "${result.clCode}";
+        varForm.clCode.value     = "<c:out value='${result.clCode}'/>";
         varForm.submit();
     }
 }
@@ -100,6 +100,7 @@ function fnDelete(){
                                 <!--// Location -->
 
 								<form name="Form" method="post" action="<c:url value='/sym/ccm/ccc/EgovCcmCmmnClCodeModify.do'/>">
+								<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

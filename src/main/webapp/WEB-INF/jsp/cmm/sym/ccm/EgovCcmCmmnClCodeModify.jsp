@@ -91,10 +91,10 @@ function fn_egov_modify_CmmnClCode(form){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnClCode" name="cmmnClCode" id="cmmnClCode" method="post" action="${pageContext.request.contextPath}/sym/ccm/ccc/EgovCcmCmmnClCodeModify.do">
+				<form:form modelAttribute="cmmnClCode" name="cmmnClCode" id="cmmnClCode" method="post" action="<c:url value='/sym/ccm/ccc/EgovCcmCmmnClCodeModify.do'/>">
 
-								<input name="cmd" type="hidden" value="Modify">
-								<form:hidden path="clCode"/>
+				<input name="cmd" type="hidden" value="Modify">
+				<form:hidden path="clCode"/>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

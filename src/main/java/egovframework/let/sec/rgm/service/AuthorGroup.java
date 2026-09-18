@@ -1,6 +1,8 @@
 package egovframework.let.sec.rgm.service;
 
 import egovframework.com.cmm.ComDefaultVO;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -12,15 +14,17 @@ import egovframework.com.cmm.ComDefaultVO;
  *
  * <pre>
  * << 개정이력(Modification Information) >>
- *   
+ *
  *   수정일      수정자           수정내용
  *  -------    --------    ---------------------------
  *   2009.03.20  이문준          최초 생성
- *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성 
+ *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *
  * </pre>
  */
 
+@Getter
+@Setter
 public class AuthorGroup extends ComDefaultVO {
 	/**
 	 * serialVersionUID
@@ -29,7 +33,7 @@ public class AuthorGroup extends ComDefaultVO {
 	/**
 	 * 권한그룹관리
 	 */
-	private AuthorGroup authorGroup;	
+	private AuthorGroup authorGroup;
 	/**
 	 * 설정대상 사용자 ID
 	 */
@@ -41,14 +45,14 @@ public class AuthorGroup extends ComDefaultVO {
 	/**
 	 * 설정대상 그룹 ID
 	 */
-	private String groupId;	
+	private String groupId;
 	/**
 	 * 설정대상 사용자 유형 코드
 	 */
 	private String mberTyCode;
 	/**
 	 * 설정대상 사용자 유형 명
-	 */	
+	 */
 	private String mberTyNm;
 	/**
 	 * 권한코드
@@ -62,135 +66,5 @@ public class AuthorGroup extends ComDefaultVO {
 	 * Uniq ID
 	 */
 	private String uniqId;
-	
-	/**
-	 * authorGroup attribute 를 리턴한다.
-	 * @return AuthorGroup
-	 */
-	public AuthorGroup getAuthorGroup() {
-		return authorGroup;
-	}
-	/**
-	 * authorGroup attribute 값을 설정한다.
-	 * @param authorGroup AuthorGroup 
-	 */
-	public void setAuthorGroup(AuthorGroup authorGroup) {
-		this.authorGroup = authorGroup;
-	}
-	/**
-	 * userId attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getUserId() {
-		return userId;
-	}
-	/**
-	 * userId attribute 값을 설정한다.
-	 * @param userId String 
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	/**
-	 * userNm attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getUserNm() {
-		return userNm;
-	}
-	/**
-	 * userNm attribute 값을 설정한다.
-	 * @param userNm String 
-	 */
-	public void setUserNm(String userNm) {
-		this.userNm = userNm;
-	}
-	/**
-	 * groupId attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getGroupId() {
-		return groupId;
-	}
-	/**
-	 * groupId attribute 값을 설정한다.
-	 * @param groupId String 
-	 */
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
-	/**
-	 * mberTyCode attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getMberTyCode() {
-		return mberTyCode;
-	}
-	/**
-	 * mberTyCode attribute 값을 설정한다.
-	 * @param mberTyCode String 
-	 */
-	public void setMberTyCode(String mberTyCode) {
-		this.mberTyCode = mberTyCode;
-	}
-	/**
-	 * mberTyNm attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getMberTyNm() {
-		return mberTyNm;
-	}
-	/**
-	 * mberTyNm attribute 값을 설정한다.
-	 * @param mberTyNm String 
-	 */
-	public void setMberTyNm(String mberTyNm) {
-		this.mberTyNm = mberTyNm;
-	}
-	/**
-	 * authorCode attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getAuthorCode() {
-		return authorCode;
-	}
-	/**
-	 * authorCode attribute 값을 설정한다.
-	 * @param authorCode String 
-	 */
-	public void setAuthorCode(String authorCode) {
-		this.authorCode = authorCode;
-	}
-	/**
-	 * regYn attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getRegYn() {
-		return regYn;
-	}
-	/**
-	 * regYn attribute 값을 설정한다.
-	 * @param regYn String 
-	 */
-	public void setRegYn(String regYn) {
-		this.regYn = regYn;
-	}
-	/**
-	 * uniqId attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getUniqId() {
-		return uniqId;
-	}
-	/**
-	 * uniqId attribute 값을 설정한다.
-	 * @param uniqId String 
-	 */
-	public void setUniqId(String uniqId) {
-		this.uniqId = uniqId;
-	}
-	
 
-	
-	
 }

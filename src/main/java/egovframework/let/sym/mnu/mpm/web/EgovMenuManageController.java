@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import jakarta.validation.Valid;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.EgovMessageSource;
@@ -31,6 +30,7 @@ import egovframework.let.sym.mnu.mpm.service.MenuManageVO;
 import egovframework.let.sym.prm.service.EgovProgrmManageService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 메뉴목록 관리및 메뉴생성, 사이트맵 생성을 처리하는 비즈니스 구현 클래스
@@ -143,7 +143,7 @@ public class EgovMenuManageController {
 	 * @return 출력페이지정보 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
-	@RequestMapping("/sym/mnu/mpm/EgovMenuManageListDelete.do")
+	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageListDelete.do", method = RequestMethod.POST)
 	public String deleteMenuManageList(@RequestParam("checkedMenuNoForDel") String checkedMenuNoForDel,
 			@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model)
 			throws Exception {
@@ -287,7 +287,7 @@ public class EgovMenuManageController {
 	 * @return 출력페이지정보 "forward:/sym/mnu/mpm/EgovMenuManageSelect.do"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageDelete.do")
+	@RequestMapping(value = "/sym/mnu/mpm/EgovMenuManageDelete.do", method = RequestMethod.POST)
 	public String deleteMenuManage(@ModelAttribute("menuManageVO") MenuManageVO menuManageVO, ModelMap model)
 			throws Exception {
 		String resultMsg = "";

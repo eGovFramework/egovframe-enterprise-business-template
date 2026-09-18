@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
@@ -1182,7 +1183,7 @@ public class EgovCalRestdeManageController {
 	 * @return "forward:/sym/cal/EgovRestdeList.do"
 	 * @throws Exception
 	 */
-    @RequestMapping(value="/sym/cal/EgovRestdeRemove.do")
+    @RequestMapping(value="/sym/cal/EgovRestdeRemove.do", method = RequestMethod.POST)
 	public String deleteRestde(@ModelAttribute("loginVO") LoginVO loginVO, Restde restde, ModelMap model) throws Exception {
     	restdeManageService.deleteRestde(restde);
         return "forward:/sym/cal/EgovRestdeList.do";
@@ -1249,7 +1250,7 @@ public class EgovCalRestdeManageController {
      * @return "/cmm/sym/cal/EgovRestdeModify"
      * @throws Exception
      */
-    @RequestMapping(value="/sym/cal/EgovRestdeModify.do")
+    @RequestMapping(value="/sym/cal/EgovRestdeModify.do", method = RequestMethod.POST)
 	public String updateRestde (@ModelAttribute("loginVO") LoginVO loginVO
 			, @ModelAttribute("restde") Restde restde
 			, BindingResult bindingResult

@@ -187,7 +187,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form name="frm" id="frm" action ="<c:url value='/sym/log/SelectLoginLogList.do'/>" method="get">
+								<form name="frm" id="frm" action ="<c:url value='/sym/log/clg/SelectLoginLogList.do'/>" method="get">
 								
 								<input type="hidden" name="cal_url" value="<c:url value='/sym/cmm/EgovNormalCalPopup.do'/>" />
 
@@ -201,7 +201,7 @@
                                     <input type="text" name="searchBgnDe" id="searchBgnDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchBgnDe}'/>" title="시작일자입력" />&nbsp ~ &nbsp
                                     <input type="text" name="searchEndDe" id="searchEndDe" class="f_date" maxlength="10" value="<c:out value='${searchVO.searchEndDe}'/>" title="종료일자입력" >
 
-                                    <a href="<c:url value='/sym/log/SelectLoginLogList.do'/>" class="item btn btn_blue_46 w_100 ml10" onclick="fn_egov_select_loginLog('1');"><spring:message code='button.inquire' /></a><!-- 조회 -->
+                                    <a href="<c:url value='/sym/log/clg/SelectLoginLogList.do'/>" class="item btn btn_blue_46 w_100 ml10" onclick="fn_egov_select_loginLog('1');"><spring:message code='button.inquire' /></a><!-- 조회 -->
                                     <a href="" class="item btn btn_blue_46 w_100" onclick="event.preventDefault(); document.frm.searchBgnDe.value=''; document.frm.searchEndDe.value='';">초기화</a><!-- 초기화 -->
                                 </div>
                                 <!--// 검색조건 -->

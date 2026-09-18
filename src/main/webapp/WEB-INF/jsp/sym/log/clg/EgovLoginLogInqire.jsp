@@ -48,6 +48,7 @@ function fn_egov_cancel_popup() {
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
 	<form name="Form" method="post" action="#LINK" >
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
 	<!-- 로그인 로그 정보 팝업 -->
     <div class="popup POP_LOGIN_LOG">

@@ -74,17 +74,13 @@ function fncGoAfterErrorPage(){
         <div class="error_page">
             <h1>Error</h1>
             <div class="inner">
-<!--				<p>세션이 만료되었습니다.</p> -->
-<!--				<p>데이터 처리 중 오류가 발생하였습니다.</p> -->
-<!-- 				<p>수행중 오류가 발생하였습니다.</p> -->
-<!-- 				<p>알 수 없는 오류가 발생하였습니다.</p> -->
 				<%= request.getAttribute(org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION) %>
 				<%	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 					if (auth != null) { 
 						
 					}
 				%>
-				<p>${exception.message}</p>
+				<p><c:out value="${exception.message}"/></p>
                 <br>
                 <a href="#LINK" class="btn btn_blue_46 w_130" onclick="javascript:fncGoAfterErrorPage(); return false;">이전페이지</a>
             </div>

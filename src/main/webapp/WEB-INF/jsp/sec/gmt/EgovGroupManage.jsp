@@ -188,7 +188,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form id="listForm" name="listForm" action="<c:url value='/sec/gmt/EgovAuthorList.do'/>" method="get">
+								<form:form id="listForm" name="listForm" action="<c:url value='/sec/ram/EgovAuthorList.do'/>" method="get">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 

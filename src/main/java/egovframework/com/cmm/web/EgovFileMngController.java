@@ -71,12 +71,11 @@ public class EgovFileMngController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cmm/fms/selectFileInfs.do")
 	public String selectFileInfs(@ModelAttribute("searchVO") FileVO fileVO,
 			HttpServletRequest request,
-			@RequestParam Map<String, Object> commandMap, ModelMap model) throws Exception {
+			@RequestParam Map<String, Object> commandMap, ModelMap model) {
 
 		String param_atchFileId = (String) commandMap.get("param_atchFileId");
 		byte[] encrypted_atchFileId = Base64.getDecoder().decode(param_atchFileId);
@@ -91,7 +90,7 @@ public class EgovFileMngController {
 		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
-			String toEncrypt = sessionId + "|" + file.atchFileId;
+			String toEncrypt = sessionId + "|" + file.getAtchFileId();
 			file.setAtchFileId(Base64.getEncoder().encodeToString(
 					cryptoService.encrypt(toEncrypt.getBytes(), ALGORITHM_KEY)));
 		}
@@ -112,13 +111,12 @@ public class EgovFileMngController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/cmm/fms/selectFileInfsForUpdate.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String selectFileInfsForUpdate(@ModelAttribute("searchVO") FileVO fileVO,
 			@RequestParam Map<String, Object> commandMap,
 			HttpServletRequest request,
-			ModelMap model) throws Exception {
+			ModelMap model) {
 
 		String param_atchFileId = (String) commandMap.get("param_atchFileId");
 		byte[] encrypted_atchFileId = Base64.getDecoder().decode(param_atchFileId);
@@ -134,7 +132,7 @@ public class EgovFileMngController {
 		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
-			String toEncrypt = sessionId + "|" + file.atchFileId;
+			String toEncrypt = sessionId + "|" + file.getAtchFileId();
 			file.setAtchFileId(Base64.getEncoder().encodeToString(
 					cryptoService.encrypt(toEncrypt.getBytes(), ALGORITHM_KEY)));
 		}
@@ -155,17 +153,23 @@ public class EgovFileMngController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@PostMapping("/cmm/fms/deleteFileInfs.do")
 	public String deleteFileInf(@ModelAttribute("searchVO") FileVO fileVO, @RequestParam("returnUrl") String returnUrl,
-			HttpServletRequest request, ModelMap model)
-			throws Exception {
+			HttpServletRequest request, ModelMap model) {
 
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-		if (isAuthenticated) {
-			fileService.deleteFileInf(fileVO);
+		if (!isAuthenticated) {
+			return "redirect:/cmm/main/mainPage.do";
+		}
+
+		fileService.deleteFileInf(fileVO);
+
+		// 오픈 리다이렉트(CWE-601) 방지 - 외부 URL이나 프로토콜 상대경로가 아닌
+		// 애플리케이션 내부의 절대경로만 리다이렉트 대상으로 허용한다.
+		if (!isSafeInternalUrl(returnUrl)) {
+			return "redirect:/cmm/main/mainPage.do";
 		}
 
 		// --------------------------------------------
@@ -197,13 +201,12 @@ public class EgovFileMngController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cmm/fms/selectImageFileInfs.do")
 	public String selectImageFileInfs(@ModelAttribute("searchVO") FileVO fileVO,
 			@RequestParam Map<String, Object> commandMap,
 			HttpServletRequest request,
-			ModelMap model) throws Exception {
+			ModelMap model) {
 
 		String param_atchFileId = (String) commandMap.get("atchFileId");
 		String decodedAtchFileId = "";
@@ -219,7 +222,7 @@ public class EgovFileMngController {
 		// FileId를 유추하지 못하도록 세션ID와 함께 암호화하여 표시한다. (2022.12.06 추가) - 파일아이디가 유추 불가능하도록 조치
 		for (FileVO file : result) {
 			String sessionId = request.getSession().getId();
-			String toEncrypt = sessionId + "|" + file.atchFileId;
+			String toEncrypt = sessionId + "|" + file.getAtchFileId();
 			file.setAtchFileId(
 					Base64.getEncoder().encodeToString(cryptoService.encrypt(toEncrypt.getBytes(), ALGORITHM_KEY)));
 		}
@@ -275,5 +278,25 @@ public class EgovFileMngController {
 			}
 		}
 		return returnVal;
+	}
+
+	/**
+	 * 오픈 리다이렉트(CWE-601) 방지를 위해 애플리케이션 내부의 절대경로인지 검증한다.
+	 *
+	 * @param url 검증할 리다이렉트 URL
+	 * @return 내부 상대경로이면 true
+	 */
+	private boolean isSafeInternalUrl(String url) {
+		if (url == null) {
+			return false;
+		}
+		String trimmed = url.trim();
+		if (trimmed.isEmpty()) {
+			return false;
+		}
+		if (!trimmed.startsWith("/") || trimmed.startsWith("//") || trimmed.startsWith("/\\") || trimmed.contains(":")) {
+			return false;
+		}
+		return true;
 	}
 }

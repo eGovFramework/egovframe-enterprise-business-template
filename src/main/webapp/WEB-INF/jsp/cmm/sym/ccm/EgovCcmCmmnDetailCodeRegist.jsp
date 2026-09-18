@@ -105,10 +105,10 @@ function fn_egov_get_CodeId(selectElement){
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post">
+				<form:form modelAttribute="cmmnDetailCode" name="cmmnDetailCode" method="post">
 								
-								<!-- 분류코드 유지용 hidden 필드 -->
-								<input type="hidden" name="clCode" value="${cmmnCode.clCode}"/>
+				<!-- 분류코드 유지용 hidden 필드 -->
+				<input type="hidden" name="clCode" value="<c:out value='${cmmnCode.clCode}'/>"/>
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
@@ -139,7 +139,7 @@ function fn_egov_get_CodeId(selectElement){
                                                     <form:select path="codeId" id="codeId" class="select">
                                                         <form:option value="" label="선택하세요"/>
                                                         <c:forEach var="result" items="${cmmnCodeList}" varStatus="status">
-                                                        	<form:option value="${result.codeId}">${result.codeIdNm}</form:option>
+                                                        	<form:option value='<c:out value="${result.codeId}"/>'><c:out value="${result.codeIdNm}"/></form:option>
                                                         </c:forEach>
                                                     </form:select>
                                                 </label>

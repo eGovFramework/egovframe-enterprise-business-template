@@ -27,6 +27,10 @@
 		<display-name>springMultipartFilter</display-name>
 		<filter-name>springMultipartFilter</filter-name>
 		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+		<init-param>
+			<param-name>multipartResolverBeanName</param-name>
+			<param-value>multipartResolver</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>springMultipartFilter</filter-name>
@@ -49,6 +53,32 @@
 
 	<!-- security start -->
 	<filter>
+		<filter-name>egovSpringSecurityLoginFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>egovSpringSecurityLoginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>egovSpringSecurityLogoutFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>egovSpringSecurityLogoutFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<init-param>
@@ -58,6 +88,22 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!--
+		Spring Security 인증 결과와 세션 loginVO 동기화 (springSecurityFilterChain 이후 등록)
+	-->
+	<filter>
+		<filter-name>egovLoginSessionSyncFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>egovLoginSessionSyncFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
@@ -83,7 +129,6 @@
 			<param-value>/WEB-INF/config/egovframework/springmvc/*.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		<!-- Spring Framework 6.2.8 multipart 설정 -->
 		<multipart-config>
 			<max-file-size>10485760</max-file-size> <!-- 10MB (globals.properties와 일치) -->
 			<max-request-size>104857600</max-request-size> <!-- 100MB (여러 파일 업로드 고려) -->
@@ -104,7 +149,14 @@
 	</login-config>
 
 	<session-config>
-		<session-timeout>600</session-timeout>
+		<session-timeout>60</session-timeout>
+		<cookie-config>
+			<http-only>true</http-only>
+			<!-- Secure 속성이 true이면 HTTPS가 아닌 연결에서는 브라우저가 세션 쿠키를 전송하지 않아
+				 로컬 HTTP 환경에서 로그인 후 리다이렉트 무한루프가 발생한다. 로컬 개발 시에는 false로
+				 두고, 운영환경은 반드시 HTTPS로 서비스하며 이 값을 true로 변경해야 한다. -->
+			<secure>false</secure>
+		</cookie-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
 

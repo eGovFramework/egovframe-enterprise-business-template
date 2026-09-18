@@ -268,7 +268,7 @@ function press() {
     					                </select>
                                     </label>
                                     <span class="item f_search">
-                                        <input class="f_input w_350" name="searchKeyword" type="text" value="<c:out value='${authorGroupVO.searchKeyword}'/>" title="검색" onkeypress="press();"/>
+                                        <input class="f_input w_350" name="searchKeyword" type="text" value="<c:out value="${authorGroupVO.searchKeyword}"/>" title="검색" onkeypress="press();"/>
                                         <button class="btn" type="submit" onclick="fncSelectAuthorGroupList('1')"><spring:message code='button.inquire' /></button><!-- 조회 -->
                                     </span>
                                 </div>
@@ -330,7 +330,7 @@ function press() {
                                                 <td><c:out value="${authorGroup.userNm}"/></td>
                                                 <td>
                                                 	<c:out value="${authorGroup.mberTyNm}"/>
-                                                	<input type="hidden" name="mberTyCode" value="${authorGroup.mberTyCode}"/>
+                                                	<input type="hidden" name="mberTyCode" value="<c:out value="${authorGroup.mberTyCode}"/>"/>
                                                 </td>
                                                 <td>
                                                     <label class="f_select" for="">
@@ -370,7 +370,7 @@ function press() {
 								<input type="hidden" name="authorCodes"/>
 								<input type="hidden" name="regYns"/>
 								<input type="hidden" name="mberTyCodes"/>
-								<input type="hidden" name="pageIndex" value="<c:out value='${authorGroupVO.pageIndex}'/>"/>
+								<input type="hidden" name="pageIndex" value="<c:out value="${authorGroupVO.pageIndex}"/>"/>
 								
 								</form:form>
                                 

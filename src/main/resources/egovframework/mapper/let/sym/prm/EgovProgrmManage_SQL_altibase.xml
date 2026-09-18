@@ -9,7 +9,7 @@
 		<result property="progrmFileNm" column="progrmFileNm"/>
 		<result property="progrmStrePath" column="progrmStrePath"/>
 		<result property="progrmKoreanNm" column="progrmKoreanNm"/>
-		<result property="progrmDc" column="progrmDc" jdbcType="CLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+		<result property="progrmDc" column="progrmDc"/>
 		<result property="URL" column="URL"/>
 	</resultMap> 
  
@@ -81,7 +81,7 @@
 			VALUES ( #{progrmFileNm}
 				  , #{progrmStrePath}
 				  , #{progrmKoreanNm}
-				  , #progrmDc:CLOB#
+				  , #{progrmDc}
 				  , #{URL} )
 		
 	</insert>
@@ -91,7 +91,7 @@
 			UPDATE LETTNPROGRMLIST 
 			SET PROGRM_STRE_PATH =#{progrmStrePath}
 				, PROGRM_KOREAN_NM=#{progrmKoreanNm}
-				, PROGRM_DC      =#progrmDc:CLOB#
+				, PROGRM_DC      =#{progrmDc}
 				, URL            =#{URL}
 			WHERE PROGRM_FILE_NM=#{progrmFileNm}
 		

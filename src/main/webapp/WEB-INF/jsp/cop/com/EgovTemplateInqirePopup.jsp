@@ -65,6 +65,7 @@
     <div class="popup POP_TEMPLATE_INFO" style="display: block;">
     
     	<form name="frm" action ="<c:url value='/cop/com/selectTemplateInfsPop.do'/>" method="post">
+    	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
     	
     	<input type="hidden" name="tmplatId" value="" />
     	

@@ -133,6 +133,7 @@ public class EgovMainController {
 
     	LoginVO user =
     		EgovUserDetailsHelper.isAuthenticated()? (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser():null;
+
     	if(EgovUserDetailsHelper.isAuthenticated() && user!=null){
     		menuManageVO.setTmp_Id(user.getId());
         	menuManageVO.setTmp_Password(user.getPassword());
@@ -146,10 +147,6 @@ public class EgovMainController {
     		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeft(menuManageVO));
     	}else{
     		menuManageVO.setAuthorCode("ROLE_ANONYMOUS");
-//    		
-//    		model.addAttribute("list_headmenu", menuManageService.selectMainMenuHeadByAuthor(menuManageVO));
-//    		model.addAttribute("list_menulist", menuManageService.selectMainMenuLeftByAuthor(menuManageVO));
-//    		
     	}
 
     	return "main/inc/EgovIncHeader"; // 업무화면의 상단메뉴 화면

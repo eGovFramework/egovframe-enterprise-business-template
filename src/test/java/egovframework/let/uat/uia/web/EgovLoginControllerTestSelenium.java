@@ -3,11 +3,13 @@ package egovframework.let.uat.uia.web;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -26,6 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 class EgovLoginControllerTestSelenium {
 
 	/**
+	 * 테스트 기본 URL
+	 */
+	private static final String BASE_URL = System.getProperty("test.baseUrl", "http://localhost:8080");
+
+	/**
 	 * 웹 드라이버
 	 */
 	private WebDriver driver;
@@ -35,7 +42,15 @@ class EgovLoginControllerTestSelenium {
 	 */
 	@BeforeEach
 	public void setup() {
-		driver = new ChromeDriver();
+		try {
+			driver = new ChromeDriver();
+//			driver = new EdgeDriver();
+//			driver = new FirefoxDriver();
+//			driver = new InternetExplorerDriver();
+//			driver = new SafariDriver();
+		} catch (WebDriverException e) {
+			Assumptions.abort("WebDriver를 실행할 수 없어 테스트를 건너뜁니다.");
+		}
 	}
 
 	@Test
@@ -47,7 +62,7 @@ class EgovLoginControllerTestSelenium {
 		// given
 
 		// 로그인 화면 이동
-		driver.get("http://localhost:8080/ebt_webapp/uat/uia/egovLoginUsr.do");
+		driver.get(BASE_URL + "/uat/uia/egovLoginUsr.do");
 
 		final JavascriptExecutor executor = (JavascriptExecutor) driver;
 

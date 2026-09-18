@@ -57,7 +57,7 @@
         }
         
         if (confirm('<spring:message code="common.update.msg" />')) {
-            document.board.action = "${pageContext.request.contextPath}/cop/bbs/admin/updateBoardArticle.do";
+            document.board.action = "<c:url value='/cop/bbs/admin/updateBoardArticle.do'/>";
             document.board.submit();
         }
     }   
@@ -162,7 +162,7 @@
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/cop/bbs/admin/updateBoardArticle.do" onsubmit="return false">
+								<form:form modelAttribute="board" name="board" method="post" enctype="multipart/form-data" action="<c:url value='/cop/bbs/admin/updateBoardArticle.do'/>" onsubmit="return false">
 								
 								<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
 								<input type="hidden" name="returnUrl" value="<c:url value='/cop/bbs/admin/forUpdateBoardArticle.do'/>"/>

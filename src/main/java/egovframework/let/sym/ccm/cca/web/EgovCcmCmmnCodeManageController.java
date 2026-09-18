@@ -2,6 +2,9 @@ package egovframework.let.sym.ccm.cca.web;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -9,13 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jakarta.validation.Valid;
-
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.cmm.LoginVO;
 import egovframework.let.sym.ccm.cca.service.CmmnCode;
@@ -25,7 +22,8 @@ import egovframework.let.sym.ccm.ccc.service.CmmnClCode;
 import egovframework.let.sym.ccm.ccc.service.CmmnClCodeVO;
 import egovframework.let.sym.ccm.ccc.service.EgovCcmCmmnClCodeManageService;
 import jakarta.annotation.Resource;
-import org.springframework.dao.DataAccessException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  *
@@ -68,7 +66,7 @@ public class EgovCcmCmmnCodeManageController {
 	 * @return "forward:/sym/ccm/cca/EgovCcmCmmnCodeList.do"
 	 * @throws Exception
 	 */
-    @RequestMapping(value="/sym/ccm/cca/EgovCcmCmmnCodeRemove.do")
+    @RequestMapping(value="/sym/ccm/cca/EgovCcmCmmnCodeRemove.do", method = RequestMethod.POST)
 	public String deleteCmmnCode (@ModelAttribute("loginVO") LoginVO loginVO
 			, CmmnCode cmmnCode
 			, ModelMap model

@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>egovframework</groupId>
 	<artifactId>egovframe-template-enterprise</artifactId>
-	<packaging>war</packaging>
 	<version>5.0.0</version>
+	<packaging>war</packaging>
 	<name>egovframe-template-enterprise</name>
 	<url>http://www.egovframe.go.kr</url>
 
@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>org.egovframe.web</groupId>
 		<artifactId>egovframe-web-config-parent</artifactId>
-		<version>5.0.0</version>
+		<version>5.0.1</version>
 	</parent>
 
 	<repositories>
@@ -51,12 +51,8 @@
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<log4j2.version>2.25.3</log4j2.version>
-		<slf4j.version>2.0.17</slf4j.version>
-		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 		<protobuf.java.version>3.25.5</protobuf.java.version>
-		<xmlbeans.version>5.3.0</xmlbeans.version>
-		<parsson.version>1.1.7</parsson.version>
+		<hikaricp.version>6.3.3</hikaricp.version>
 	</properties>
 
 	<dependencies>
@@ -132,27 +128,22 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j2-impl</artifactId>
-			<version>${log4j2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
@@ -169,12 +160,12 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>${commons-beanutils.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>${hikaricp.version}</version>
 		</dependency>
 
 		<dependency>
@@ -194,14 +185,12 @@
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
-			<version>${xmlbeans.version}</version>
 		</dependency>
 
 		<!-- CVE-2023-7272/CVE-2023-4043: 취약점 보완용 업데이트 -->
 		<dependency>
 			<groupId>org.eclipse.parsson</groupId>
 			<artifactId>parsson</artifactId>
-			<version>${parsson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -273,6 +262,26 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- HSQL : 인메모리 DB (Globals.DbType=hsql 사용 시) -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.27.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -285,6 +294,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<release>${java.version}</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -304,11 +319,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>true</skipTests>
 					<reportFormat>xml</reportFormat>
 					<excludes>
 						<exclude>**/Abstract*.java</exclude>
 						<exclude>**/*Suite.java</exclude>
+						<!-- 데이터베이스 연결이 필요한 테스트 -->
+						<exclude>**/BBSAttributeManageDAOTestInsertBBSMasterInfTest.java</exclude>
+						<exclude>**/EgovBBSAttributeManageServiceImplTestInsertBBSMastetInfTest.java</exclude>
+						<exclude>**/EgovBBSAttributeManageControllerTestInsertBBSMasterInfTest.java</exclude>
 					</excludes>
 					<includes>
 						<include>**/*Test.java</include>

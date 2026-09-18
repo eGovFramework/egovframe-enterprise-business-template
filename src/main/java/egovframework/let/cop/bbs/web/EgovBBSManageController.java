@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.service.EgovFileMngService;
@@ -32,6 +31,7 @@ import egovframework.let.cop.bbs.service.EgovBBSAttributeManageService;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 /**
  * 게시물 관리를 위한 컨트롤러 클래스
@@ -73,6 +73,24 @@ public class EgovBBSManageController {
 	EgovMessageSource egovMessageSource;
 
 	/**
+	 * 게시물 작성자 본인이거나 관리자 권한을 가진 사용자인지 확인한다.
+	 *
+	 * @param user 현재 로그인한 사용자
+	 * @param frstRegisterId 게시물 작성자 ID(frstRegisterId)
+	 * @return 소유자이거나 관리자이면 true
+	 */
+	private boolean isOwner(LoginVO user, String frstRegisterId) {
+		if (user == null || user.getUniqId() == null) {
+			return false;
+		}
+		if (frstRegisterId != null && frstRegisterId.equals(user.getUniqId())) {
+			return true;
+		}
+		List<String> authorities = EgovUserDetailsHelper.getAuthorities();
+		return authorities != null && authorities.contains("ROLE_ADMIN");
+	}
+
+	/**
 	 * XSS 방지 처리.
 	 *
 	 * @param data
@@ -110,11 +128,10 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/selectBoardList.do")
 	public String selectBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
+			HttpServletRequest request) {
 		// 메인화면에서 넘어온 경우 메뉴 갱신을 위해 추가
 		request.getSession().setAttribute("baseMenuNo", "1000000");
 		
@@ -186,10 +203,9 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/selectBoardArticle.do")
-	public String selectBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String selectBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) {
 		LoginVO user = new LoginVO();
 		if (EgovUserDetailsHelper.isAuthenticated()) {
 			user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
@@ -234,10 +250,9 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/addBoardArticle.do")
-	public String addBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String addBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
@@ -276,14 +291,12 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/insertBoardArticle.do")
 	public String insertBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status, ModelMap model,
-			RedirectAttributes redirectAttributes)
-			throws Exception {
+			RedirectAttributes redirectAttributes) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -349,10 +362,9 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/addReplyBoardArticle.do")
-	public String addReplyBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String addReplyBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
@@ -392,14 +404,12 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/replyBoardArticle.do")
 	public String replyBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status,
-			RedirectAttributes redirectAttributes)
-			throws Exception {
+			RedirectAttributes redirectAttributes) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -470,11 +480,10 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/forUpdateBoardArticle.do")
 	public String selectBoardArticleForUpdt(@ModelAttribute("searchVO") BoardVO boardVO,
-			@ModelAttribute("board") BoardVO vo, ModelMap model) throws Exception {
+			@ModelAttribute("board") BoardVO vo, ModelMap model) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -493,6 +502,11 @@ public class EgovBBSManageController {
 		if (isAuthenticated) {
 			bmvo = bbsAttrbService.selectBBSMasterInf(master);
 			bdvo = bbsMngService.selectBoardArticle(boardVO);
+
+			// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 수정폼/게시물 내용을 조회할 수 있다.
+			if (!isOwner(user, bdvo.getFrstRegisterId())) {
+				return "cmm/error/accessDenied";
+			}
 		}
 
 		model.addAttribute("result", bdvo);
@@ -519,20 +533,24 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/updateBoardArticle.do")
 	public String updateBoardArticle(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("bdMstr") BoardMaster bdMstr,
 			@Valid @ModelAttribute("board") Board board, BindingResult bindingResult, ModelMap model, SessionStatus status,
-			RedirectAttributes redirectAttributes)
-			throws Exception {
+			RedirectAttributes redirectAttributes) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		// 기존 게시글의 첨부파일 ID를 조회
 		BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+
+		// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 게시물을 수정할 수 있다.
+		if (!isOwner(user, existingBoard.getFrstRegisterId())) {
+			return "cmm/error/accessDenied";
+		}
+
 		String atchFileId = existingBoard.getAtchFileId();
 
 		// null 처리
@@ -612,17 +630,22 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@PostMapping("/cop/bbs/deleteBoardArticle.do")
 	public String deleteBoardArticle(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
 			@ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model,
-			RedirectAttributes redirectAttributes) throws Exception {
+			RedirectAttributes redirectAttributes) {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
 		if (isAuthenticated) {
+			// 소유권(작성자) 검증 - 작성자 본인 또는 관리자만 게시물을 삭제할 수 있다.
+			BoardVO existingBoard = bbsMngService.selectBoardArticle(boardVO);
+			if (!isOwner(user, existingBoard.getFrstRegisterId())) {
+				return "cmm/error/accessDenied";
+			}
+
 			board.setLastUpdusrId(user.getUniqId());
 
 			bbsMngService.deleteBoardArticle(board);
@@ -643,10 +666,9 @@ public class EgovBBSManageController {
 	 * @param sessionVO
 	 * @param model
 	 * @return
-	 * @throws Exception
 	 */
 	@GetMapping("/cop/bbs/previewBoardList.do")
-	public String previewBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String previewBoardArticles(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) {
 
 		String template = boardVO.getSearchWrd(); // 템플릿 URL
 

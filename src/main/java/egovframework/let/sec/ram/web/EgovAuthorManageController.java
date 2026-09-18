@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
-
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.sec.ram.service.AuthorManage;
 import egovframework.let.sec.ram.service.AuthorManageVO;
 import egovframework.let.sec.ram.service.EgovAuthorManageService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 
 /**
  * 권한관리에 관한 controller 클래스를 정의한다.

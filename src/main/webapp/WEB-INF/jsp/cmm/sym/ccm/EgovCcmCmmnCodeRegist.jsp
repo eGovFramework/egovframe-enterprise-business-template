@@ -113,7 +113,7 @@ function fn_egov_list_CmmnCode(){
                                                     <form:select path="clCode" id="clCode" class="select">
                                                         <form:option value="" label="선택하세요"/>
                                                         <c:forEach var="result" items="${cmmnClCode}" varStatus="status">
-                                                        	<form:option value="${result.clCode}" label="${result.clCodeNm}"/>
+                                                        	<form:option value='<c:out value="${result.clCode}"/>' label='<c:out value="${result.clCodeNm}"/>'/>
                                                         </c:forEach>
                                                     </form:select>
                                                 </label>

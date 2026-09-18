@@ -45,7 +45,7 @@ var imgpath = "<c:url value='/images'/>";
  * 조회 함수
  ******************************************************** */
 function selectMenuCreatTmp() {
-    document.menuCreatManageForm.action = "<c:url value='/sym/mpm/EgovMenuCreatSelect.do'/>";
+    document.menuCreatManageForm.action = "<c:url value='/sym/mnu/mcm/EgovMenuCreatSelect.do'/>";
     document.menuCreatManageForm.submit();
 }
 
@@ -90,7 +90,7 @@ function fn_egov_cancel_popup() {
 	parent.fn_egov_modal_remove();
 }
 
-<c:if test="${!empty param.resultMsg}">alert("${param.resultMsg}");</c:if>
+<c:if test="${!empty param.resultMsg}">alert("<c:out value='${param.resultMsg}'/>");</c:if>
 -->
 </script>
 
@@ -100,6 +100,7 @@ function fn_egov_cancel_popup() {
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
 	<form name="menuCreatManageForm" action ="/sym/mpm/EgovMenuCreatSiteMapSelect.do" method="post">
+	<c:if test="${not empty _csrf}"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></c:if>
 	
 	<input name="checkedMenuNoForInsert" type="hidden" >
 	<input name="checkedAuthorForInsert"  type="hidden" >

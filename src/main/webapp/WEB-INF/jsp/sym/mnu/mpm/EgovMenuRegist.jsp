@@ -111,7 +111,7 @@ function press() {
         searchFileNm();    // 원래 검색 function 호출
     }
 }
-<c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
+<c:if test="${!empty resultMsg}">alert("<c:out value='${resultMsg}'/>");</c:if>
 -->
 </script>
 </head>
@@ -148,7 +148,7 @@ function press() {
                                 </div>
                                 <!--// Location -->
 
-								<form:form modelAttribute="menuManageVO" name="menuManageVO" method="post" action="${pageContext.request.contextPath}/sym/mnu/mpm/EgovMenuRegistInsert.do">
+				<form:form modelAttribute="menuManageVO" name="menuManageVO" method="post" action="<c:url value='/sym/mnu/mpm/EgovMenuRegistInsert.do'/>">
 
                                 <h1 class="tit_1">내부시스템관리</h1>
 
