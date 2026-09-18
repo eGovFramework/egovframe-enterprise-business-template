@@ -21,33 +21,23 @@ spec:
         app.kubernetes.io/name: egov-ebt
         app.kubernetes.io/part-of: egovframe-template
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z -w2 mysql 3306; do echo waiting for mysql; sleep 2; done
       containers:
         - name: app
           # Replace with your registry/tag, e.g. ghcr.io/<org>/egov-ebt:5.0.0
+          # DB 접속 정보(호스트/계정)는 이미지 빌드시 globals.properties에 반영되어 있음 —
+          # 이 앱은 Spring Boot가 아닌 Tomcat WAR이라 컨테이너 환경변수를 읽지 않는다.
           image: egov-ebt:5.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 8080
-          envFrom:
-            - configMapRef:
-                name: egov-ebt
-          env:
-            - name: Globals.UserName
-              valueFrom:
-                secretKeyRef:
-                  name: egov-ebt-db
-                  key: username
-            - name: Globals.Password
-              valueFrom:
-                secretKeyRef:
-                  name: egov-ebt-db
-                  key: password
           resources:
             requests:
               cpu: "300m"
