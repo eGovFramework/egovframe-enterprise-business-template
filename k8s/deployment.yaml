@@ -21,6 +21,11 @@ spec:
         app.kubernetes.io/name: egov-ebt
         app.kubernetes.io/part-of: egovframe-template
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       initContainers:
         - name: wait-for-mysql
           image: busybox:1.36
@@ -28,6 +33,27 @@ spec:
             - sh
             - -c
             - until nc -z -w2 mysql 3306; do echo waiting for mysql; sleep 2; done
+        - name: prepare-webapp-dirs
+          # Tomcat 이미지의 webapps/conf 는 root 소유라 non-root(1000)로는 WAR를 펼치지 못한다.
+          # 이 initContainer만 root로 실행해 emptyDir로 복사·소유권 이전을 해 둔다(파드 기본
+          # securityContext의 non-root 제약을 이 컨테이너에 한해 명시적으로 재정의).
+          image: egov-ebt:5.0.0
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+          command:
+            - sh
+            - -c
+            - |
+              cp -a /usr/local/tomcat/webapps/. /work-webapps/
+              mkdir -p /work-catalina/localhost
+              chown -R 1000:1000 /work-webapps /work-catalina
+          volumeMounts:
+            - name: tomcat-webapps
+              mountPath: /work-webapps
+            - name: tomcat-catalina
+              mountPath: /work-catalina
       containers:
         - name: app
           # Replace with your registry/tag, e.g. ghcr.io/<org>/egov-ebt:5.0.0
@@ -71,10 +97,18 @@ spec:
               mountPath: /usr/local/tomcat/temp
             - name: tomcat-logs
               mountPath: /usr/local/tomcat/logs
+            - name: tomcat-webapps
+              mountPath: /usr/local/tomcat/webapps
+            - name: tomcat-catalina
+              mountPath: /usr/local/tomcat/conf/Catalina
       volumes:
         - name: tomcat-work
           emptyDir: {}
         - name: tomcat-temp
           emptyDir: {}
         - name: tomcat-logs
+          emptyDir: {}
+        - name: tomcat-webapps
+          emptyDir: {}
+        - name: tomcat-catalina
           emptyDir: {}

@@ -49,10 +49,15 @@ kubectl create secret generic egov-ebt-mysql \
 만듭니다(`/docker-entrypoint-initdb.d` 는 데이터 볼륨이 비어 있을 때 1회만 실행됩니다).
 아래 명령은 프로젝트 루트에서 실행합니다.
 
+MySQL 공식 이미지는 `/docker-entrypoint-initdb.d` 안의 스크립트를 파일명 순서로 실행하므로,
+DDL이 DML보다 먼저 실행되도록 키 이름에 번호를 붙입니다(원본 파일명 그대로 넣으면
+`all_ebt_data_mysql.sql`이 `all_ebt_ddl_mysql.sql`보다 알파벳순으로 앞서 테이블 생성 전에
+데이터를 넣으려다 실패합니다).
+
 ```bash
 kubectl create configmap egov-ebt-mysql-initdb \
-  --from-file=DATABASE/mysql/all_ebt_ddl_mysql.sql \
-  --from-file=DATABASE/mysql/all_ebt_data_mysql.sql
+  --from-file=01_ddl.sql=DATABASE/mysql/all_ebt_ddl_mysql.sql \
+  --from-file=02_data.sql=DATABASE/mysql/all_ebt_data_mysql.sql
 ```
 
 ## 4. 매니페스트 적용
