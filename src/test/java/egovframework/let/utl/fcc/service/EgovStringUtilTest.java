@@ -1,5 +1,6 @@
 package egovframework.let.utl.fcc.service;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -279,5 +280,19 @@ class EgovStringUtilTest {
     @DisplayName("isNullToString: 객체 → toString().trim()")
     void isNullToString_object_returnsTrimmedString() {
         assertEquals("hello", EgovStringUtil.isNullToString("  hello  "));
+    }
+
+    // ── split ────────────────────────────────────────────────────────────────
+
+    @Test
+    @DisplayName("split(source, separator): 구분자가 2글자 이상이어도 필드에 잔여문자가 남지 않음")
+    void split_multiCharSeparator_noResidualChar() {
+        assertArrayEquals(new String[] {"a", "b", "c"}, EgovStringUtil.split("a::b::c", "::"));
+    }
+
+    @Test
+    @DisplayName("split(source, separator, arraylength): 구분자가 2글자 이상이어도 필드에 잔여문자가 남지 않음")
+    void splitWithArrayLength_multiCharSeparator_noResidualChar() {
+        assertArrayEquals(new String[] {"a", "b", "c"}, EgovStringUtil.split("a::b::c", "::", 3));
     }
 }
