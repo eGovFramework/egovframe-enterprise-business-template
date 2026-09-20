@@ -269,7 +269,7 @@ function fn_egov_modal_remove() {
                                                 <span class="req">필수</span>
                                             </td>
                                             <td>
-                                                <input name="emplyrNm" id="emplyrNm" title="사용자이름" type="text" class="f_txt w_full" value="" maxlength="60" />
+                                                <input name="emplyrNm" id="emplyrNm" title="사용자이름" type="text" class="f_txt w_full" value="" maxlength="50" />
                                                 <form:errors path="emplyrNm" />
                                             </td>
                                             <td class="lb">
@@ -319,11 +319,11 @@ function fn_egov_modal_remove() {
                                                 <label for="areaNo">집전화<br>지역번호</label>
                                             </td>
                                             <td>
-                                                <form:input path="areaNo" id="areaNo" title="areaNo" class="f_txt w_70" maxlength="5" />
+                                                <form:input path="areaNo" id="areaNo" title="areaNo" class="f_txt w_70" maxlength="4" />
                                                 <span class="f_txt_inner mr5 ml5" title="전화번호 첫번째">-</span>
-                                                <form:input path="homemiddleTelno" title="homemiddleTelno" id="homemiddleTelno" class="f_txt w_70" maxlength="5" />
+                                                <form:input path="homemiddleTelno" title="homemiddleTelno" id="homemiddleTelno" class="f_txt w_70" maxlength="4" />
                                                 <span class="f_txt_inner mr5 ml5">-</span>
-                                                <form:input path="homeendTelno" title="homeendTelno" id="homeendTelno" class="f_txt w_70" maxlength="5" />
+                                                <form:input path="homeendTelno" title="homeendTelno" id="homeendTelno" class="f_txt w_70" maxlength="4" />
                                             </td>
                                         </tr>
                                         <tr>
