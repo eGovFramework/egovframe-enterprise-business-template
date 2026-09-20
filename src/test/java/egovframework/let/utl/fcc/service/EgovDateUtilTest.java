@@ -239,6 +239,20 @@ class EgovDateUtilTest {
         assertThrows(IllegalArgumentException.class, () -> EgovDateUtil.formatDate("200304", "."));
     }
 
+    // ===================== validDate =====================
+
+    @Test
+    @DisplayName("validDate - 8자리 날짜는 유효로 판정")
+    void validDate_eightDigits_valid() {
+        assertTrue(EgovDateUtil.validDate("20060228"));
+    }
+
+    @Test
+    @DisplayName("validDate - 하이픈 포함 날짜(yyyy-MM-dd)도 유효로 판정")
+    void validDate_hyphenFormat_valid() {
+        assertTrue(EgovDateUtil.validDate("2026-01-15"));
+    }
+
     // ===================== validChkDate =====================
 
     @Test

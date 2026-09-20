@@ -667,7 +667,7 @@ public class EgovDateUtil {
 
 		String retYMD = retYear + retMonth + retDay;
 
-		if (sDate.equals(retYMD)) {
+		if (dateStr.equals(retYMD)) {
 			ret = true;
 		}
 
