@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import org.egovframe.rte.fdl.cmmn.exception.BaseRuntimeException;
 import org.egovframe.rte.fdl.excel.EgovExcelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,9 +58,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴 상세정보를 조회
 	 * @param vo ComDefaultVO
 	 * @return MenuManageVO
-	 * @exception Exception
 	 */
-	public MenuManageVO selectMenuManage(ComDefaultVO vo) throws Exception {
+	public MenuManageVO selectMenuManage(ComDefaultVO vo) {
 		return menuManageDAO.selectMenuManage(vo);
 	}
 
@@ -67,9 +67,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴 목록을 조회
 	 * @param vo ComDefaultVO
 	 * @return List
-	 * @exception Exception
 	 */
-	public List<?> selectMenuManageList(ComDefaultVO vo) throws Exception {
+	public List<?> selectMenuManageList(ComDefaultVO vo) {
 		return menuManageDAO.selectMenuManageList(vo);
 	}
 
@@ -77,9 +76,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴목록 총건수를 조회한다.
 	 * @param vo ComDefaultVO
 	 * @return int
-	 * @exception Exception
 	 */
-	public int selectMenuManageListTotCnt(ComDefaultVO vo) throws Exception {
+	public int selectMenuManageListTotCnt(ComDefaultVO vo) {
 		return menuManageDAO.selectMenuManageListTotCnt(vo);
 	}
 
@@ -87,9 +85,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴번호를 상위메뉴로 참조하고 있는 메뉴 존재여부를 조회
 	 * @param vo ComDefaultVO
 	 * @return int
-	 * @exception Exception
 	 */
-	public int selectUpperMenuNoByPk(MenuManageVO vo) throws Exception {
+	public int selectUpperMenuNoByPk(MenuManageVO vo) {
 		return menuManageDAO.selectUpperMenuNoByPk(vo);
 	}
 
@@ -97,51 +94,46 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴번호 존재 여부를 조회한다.
 	 * @param vo ComDefaultVO
 	 * @return int
-	 * @exception Exception
 	 */
-	public int selectMenuNoByPk(MenuManageVO vo) throws Exception {
+	public int selectMenuNoByPk(MenuManageVO vo) {
 		return menuManageDAO.selectMenuNoByPk(vo);
 	}
 
 	/**
 	 * 메뉴 정보를 등록
 	 * @param vo MenuManageVO
-	 * @exception Exception
 	 */
-	public void insertMenuManage(MenuManageVO vo) throws Exception {
+	public void insertMenuManage(MenuManageVO vo) {
 		menuManageDAO.insertMenuManage(vo);
 	}
 
 	/**
 	 * 메뉴 정보를 수정
 	 * @param vo MenuManageVO
-	 * @exception Exception
 	 */
-	public void updateMenuManage(MenuManageVO vo) throws Exception {
+	public void updateMenuManage(MenuManageVO vo) {
 		menuManageDAO.updateMenuManage(vo);
 	}
 
 	/**
 	 * 메뉴 정보를 삭제
 	 * @param vo MenuManageVO
-	 * @exception Exception
 	 */
-	public void deleteMenuManage(MenuManageVO vo) throws Exception {
+	public void deleteMenuManage(MenuManageVO vo) {
 		menuManageDAO.deleteMenuManage(vo);
 	}
 
 	/**
 	 * 화면에 조회된 메뉴 목록 정보를 데이터베이스에서 삭제
 	 * @param checkedMenuNoForDel String
-	 * @exception Exception
 	 */
-	public void deleteMenuManageList(String checkedMenuNoForDel) throws Exception {
+	public void deleteMenuManageList(String checkedMenuNoForDel) {
 		MenuManageVO vo = null;
 
 		String[] delMenuNo = checkedMenuNoForDel.split(",");
 
 		if (delMenuNo == null || (delMenuNo.length == 0)) {
-			throw new Exception("String Split Error!");
+			throw new BaseRuntimeException("String Split Error!");
 		}
 		for (int i = 0; i < delMenuNo.length; i++) {
 			vo = new MenuManageVO();
@@ -155,9 +147,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	/**
 	 * 메뉴 목록을 조회
 	 * @return List
-	 * @exception Exception
 	 */
-	public List<?> selectMenuList() throws Exception {
+	public List<?> selectMenuList() {
 		return menuManageDAO.selectMenuList();
 	}
 
@@ -166,9 +157,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * MainMenu Head Menu 조회
 	 * @param vo MenuManageVO
 	 * @return List
-	 * @exception Exception
 	 */
-	public List<?> selectMainMenuHead(MenuManageVO vo) throws Exception {
+	public List<?> selectMainMenuHead(MenuManageVO vo) {
 		return menuManageDAO.selectMainMenuHead(vo);
 	}
 
@@ -176,9 +166,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * MainMenu Head Left 조회
 	 * @param vo MenuManageVO
 	 * @return List
-	 * @exception Exception
 	 */
-	public List<?> selectMainMenuLeft(MenuManageVO vo) throws Exception {
+	public List<?> selectMainMenuLeft(MenuManageVO vo) {
 		return menuManageDAO.selectMainMenuLeft(vo);
 	}
 
@@ -187,9 +176,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @param  iMenuNo  int
 	 * @param  sUniqId  String
 	 * @return String
-	 * @exception Exception
 	 */
-	public String selectLastMenuURL(int iMenuNo, String sUniqId) throws Exception {
+	public String selectLastMenuURL(int iMenuNo, String sUniqId) {
 		MenuManageVO vo = new MenuManageVO();
 		vo.setMenuNo(selectLastMenuNo(iMenuNo, sUniqId));
 		return menuManageDAO.selectLastMenuURL(vo);
@@ -200,9 +188,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @param  iMenuNo  int
 	 * @param  sUniqId  String
 	 * @return String
-	 * @exception Exception
 	 */
-	private int selectLastMenuNo(int iMenuNo, String sUniqId) throws Exception {
+	private int selectLastMenuNo(int iMenuNo, String sUniqId) {
 		int chkMenuNo = iMenuNo;
 		int cntMenuNo = 0;
 		for (; chkMenuNo > -1;) {
@@ -219,9 +206,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * @param  iMenuNo  int
 	 * @param  sUniqId  String
 	 * @return String
-	 * @exception Exception
 	 */
-	private int selectLastMenuNoChk(int iMenuNo, String sUniqId) throws Exception {
+	private int selectLastMenuNoChk(int iMenuNo, String sUniqId) {
 		MenuManageVO vo = new MenuManageVO();
 		vo.setMenuNo(iMenuNo);
 		vo.setTempValue(sUniqId);
@@ -240,9 +226,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	/**
 	 * 메뉴일괄초기화 프로세스 메뉴목록테이블, 프로그램 목록테이블 전체 삭제
 	 * @return boolean
-	 * @exception Exception
 	 */
-	public boolean menuBndeAllDelete() throws Exception {
+	public boolean menuBndeAllDelete() {
 		//if(!deleteAllProgrmDtls()){return false;} // 프로그램변경요청 테이블
 		if (!deleteAllMenuList()) {
 			return false;
@@ -257,9 +242,8 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴일괄등록 프로세스
 	 * @param  vo MenuManageVO
 	 * @param  inputStream InputStream
-	 * @exception Exception
 	 */
-	public String menuBndeRegist(MenuManageVO vo, InputStream inputStream) throws Exception {
+	public String menuBndeRegist(MenuManageVO vo, InputStream inputStream) {
 
 		String message = bndeRegist(inputStream);
 		String sMessage = null;
@@ -306,7 +290,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴목록_프로그램목록 일괄생성
 	 * @param  inputStream InputStream
 	 * @return  String
-	 * @exception Exception
 	 */
 	private String bndeRegist(InputStream inputStream) {
 		boolean success = false;
@@ -389,7 +372,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 프로그램목록 일괄등록
 	 * @param  progrmSheet HSSFSheet
 	 * @return  boolean
-	 * @exception Exception
 	 */
 	private boolean progrmRegist(Sheet progrmSheet) {
 		int count = 0;
@@ -445,7 +427,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴정보 일괄등록
 	 * @param menuSheet HSSFSheet
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean menuRegist(Sheet menuSheet) {
 		boolean success = false;
@@ -513,7 +494,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	/**
 	 * 메뉴정보 전체데이타 초기화
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean deleteAllMenuList() {
 		return menuManageDAO.deleteAllMenuList();
@@ -523,7 +503,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 프로그램 정보를 등록
 	 * @param  vo ProgrmManageVO
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean insertProgrm(ProgrmManageVO vo) {
 		progrmManageDAO.insertProgrm(vo);
@@ -534,7 +513,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	 * 메뉴정보를 일괄 등록
 	 * @param  vo MenuManageVO
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean insertMenuManageBind(MenuManageVO vo) {
 		menuManageDAO.insertMenuManage(vo);
@@ -544,7 +522,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	/**
 	 * 프로그램 정보 전체데이타 초기화
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean deleteAllProgrm() {
 		progrmManageDAO.deleteAllProgrm();
@@ -554,7 +531,6 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 	/**
 	 * 프로그램변경내역 정보 전체데이타 초기화
 	 * @return boolean
-	 * @exception Exception
 	 */
 	private boolean deleteAllProgrmDtls() {
 		progrmManageDAO.deleteAllProgrmDtls();
